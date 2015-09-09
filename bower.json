@@ -1,0 +1,21 @@
+{
+  "name": "Tofino",
+  "version": "1.0",
+  "authors": [
+    "Daniel Hewes <daniel@lambdacreatives.com>",
+    "Jake Gully <jake@yadda.co.uk>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "v4-dev",
+    "svg4everybody": "~2.0.0"
+  }
+}

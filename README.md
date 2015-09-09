@@ -1,0 +1,1 @@
+# Tofino a WordPress theme.
