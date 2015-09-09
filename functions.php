@@ -9,7 +9,7 @@
  *
  */
 $tofino_includes = [
-  'vendor/autoload.php',  // Composer Autoload classes
+  //'vendor/autoload.php',  // Composer Autoload classes
 ];
 foreach ($tofino_includes as $file) {
   if (!$filepath = locate_template($file)) {
