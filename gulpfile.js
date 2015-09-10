@@ -16,22 +16,15 @@ function handleError(err) {
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
   var merged = merge();
-  console.log(manifest);
-  console.log('-------------');
   manifest.forEachDependency('js', function(dep) {
-    console.log(dep);
-    console.log('--------');
     merged.add(
-
       gulp.src(dep.globs, {base: 'scripts', merge: true})
         .pipe(plugins.concat(dep.name))
         .pipe(plugins.uglify())
-
     );
   });
   return merged
-
-    //.pipe(gulp.dest(path.dist));
+  .pipe(gulp.dest(path.dist));
 });
 
 // Min / Crush images
