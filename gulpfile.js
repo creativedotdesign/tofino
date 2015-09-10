@@ -2,10 +2,12 @@ var gulp            = require('gulp'),
     manifest        = require('asset-builder')('./assets/manifest.json'),
     gulpLoadPlugins = require('gulp-load-plugins'),
     merge           = require('merge-stream'),
+    changed         = require('gulp-changed'),
     plugins         = gulpLoadPlugins();
 
 var path  = manifest.paths, //path.source, path.dest etc
-    globs = manifest.globs; //globs.images, globs.bower etc
+    globs = manifest.globs, //globs.images, globs.bower etc
+    project = manifest.getProjectGlobs();
 
 function handleError(err) {
   plugins.util.log(plugins.util.colors.red('[ERROR] ' + err.toString()));
@@ -16,21 +18,19 @@ function handleError(err) {
 //Compile SCSS to CSS
 gulp.task('styles', function() {
   var merged = merge();
-    manifest.forEachDependency('css', function(dep) {
-      console.log(dep);
-      console.log('----------');
-      merged.add(
-        gulp.src(dep.globs, {base: 'styles'})
-          .pipe(plugins.sass({ style: 'expanded' }))
-          .pipe(plugins.concat(dep.name))
-          //.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
-          .pipe(plugins.minifyCss())
-        );
-      });
-      console.log(merged);
-    return merged
 
-      .pipe(gulp.dest(path.dist));
+  manifest.forEachDependency('css', function(dep) {
+   merged.add(
+     gulp.src(dep.globs, {base: 'styles'})
+       .pipe(plugins.sass({ style: 'expanded' }))
+       .pipe(plugins.concat(dep.name))
+        //.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+       .pipe(plugins.minifyCss())
+   );
+  });
+  
+  return merged
+    .pipe(gulp.dest(path.dist));
 });
 
 // Concatenate & Minify JS

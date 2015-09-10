@@ -22,9 +22,11 @@
     "gulp-svgmin": "*",
     "gulp-uglify": "*",
     "gulp-util": "*",
-    "gulp-imagemin": "*",
     "asset-builder": "*",
     "merge-stream": "*",
     "gulp-load-plugins": "*"
+  },
+  "dependencies": {
+    "gulp-changed": "^1.3.0"
   }
 }
