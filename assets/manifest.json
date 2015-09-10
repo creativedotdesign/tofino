@@ -1,12 +1,24 @@
 {
   "dependencies": {
-    "app.js": {
+    "main.js": {
       "files": ["scripts/main.js"],
       "main": true
     },
+    "main.css": {
+      "files": ["styles/main.scss"],
+      "main": true
+    },
+    "jquery.js": {
+      "bower": ["jquery"]
+    },
+    "bootstrap.js": {
+      "bower": ["bootstrap"]
+    }
   },
   "paths": {
     "source": "assets/",
-    "dist": "dist/"
+    "dist": "dist/",
+    "images": "images/",
+    "svgs": "svgs/"
   }
 }
