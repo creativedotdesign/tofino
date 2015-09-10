@@ -23,7 +23,6 @@
     "gulp-uglify": "*",
     "gulp-util": "*",
     "gulp-imagemin": "*",
-    "wiredep": "*",
     "asset-builder": "*",
     "merge-stream": "*",
     "gulp-load-plugins": "*"
