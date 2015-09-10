@@ -13,6 +13,26 @@ function handleError(err) {
   this.emit('end');
 }
 
+//Compile SCSS to CSS
+gulp.task('styles', function() {
+  var merged = merge();
+    manifest.forEachDependency('css', function(dep) {
+      console.log(dep);
+      console.log('----------');
+      merged.add(
+        gulp.src(dep.globs, {base: 'styles'})
+          .pipe(plugins.sass({ style: 'expanded' }))
+          .pipe(plugins.concat(dep.name))
+          //.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+          .pipe(plugins.minifyCss())
+        );
+      });
+      console.log(merged);
+    return merged
+
+      .pipe(gulp.dest(path.dist));
+});
+
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
   var merged = merge();
