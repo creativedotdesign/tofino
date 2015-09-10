@@ -13,3 +13,6 @@ bower_components/
 
 # ignore composer dependency directories
 vendor/
+
+# ignore dist directories
+dist/
