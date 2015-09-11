@@ -79,21 +79,21 @@ gulp.task('build', ['clean', 'images', 'svgs', 'styles', 'scripts']);
 // Watch Files For Changes
 gulp.task('watch', function() {
   plugins.livereload.listen(35729, function(err) {
-      if(err) return plugins.util.log(err);
+    if(err) return plugins.util.log(err);
   });
 
   plugins.util.log('Watching source files for changes... Press ' + plugins.util.colors.cyan('CTRL + C') + ' to stop.');
 
   gulp.watch(path.source + 'styles/**/*.scss', ['styles']).on('change', function(file) {
-      plugins.util.log('File Changed: ' + file.path + '');
+    plugins.util.log('File Changed: ' + file.path + '');
   });
 
   gulp.watch(path.source + 'scripts/*.js', ['scripts']).on('change', function(file) {
-      plugins.util.log('File Changed: ' + file.path + '');
+    plugins.util.log('File Changed: ' + file.path + '');
   });
 
   gulp.watch('*.php').on('change', function(file) {
-      plugins.util.log('File Changed: ' + file.path + '');
-      plugins.livereload.changed(file.path);
+    plugins.util.log('File Changed: ' + file.path + '');
+    plugins.livereload.changed(file.path);
   });
 });
