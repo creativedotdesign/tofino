@@ -1,5 +1,5 @@
 <?php get_header(); ?>
 
-Hello.
+<?php get_template_part('templates/content', 'page'); ?>
 
-<?php get_footer(): ?>
+<?php get_footer(); ?>
