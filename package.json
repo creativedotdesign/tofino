@@ -22,6 +22,8 @@
     "gulp-svgmin": "*",
     "gulp-uglify": "*",
     "gulp-util": "*",
+    "gulp-if": "*",
+    "yargs": "*",
     "asset-builder": "*",
     "merge-stream": "*",
     "gulp-load-plugins": "*"

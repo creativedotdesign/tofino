@@ -2,6 +2,7 @@ var gulp            = require('gulp'),
     manifest        = require('asset-builder')('./assets/manifest.json'),
     gulpLoadPlugins = require('gulp-load-plugins'),
     merge           = require('merge-stream'),
+    argv            = require('yargs').argv,
     plugins         = gulpLoadPlugins();
 
 var path  = manifest.paths, //path.source, path.dest etc
@@ -24,12 +25,12 @@ gulp.task('styles', function() {
        .pipe(plugins.sass({ style: 'expanded' }))
        .pipe(plugins.concat(dep.name))
         //.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
-       .pipe(plugins.minifyCss())
-   );
-  });
-
-  return merged
-    .pipe(gulp.dest(path.dist));
+       .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
+       .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
+     );
+   });
+   return merged
+   .pipe(gulp.dest(path.dist));
 });
 
 // Concatenate & Minify JS
@@ -39,7 +40,8 @@ gulp.task('scripts', function() {
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
         .pipe(plugins.concat(dep.name))
-        .pipe(plugins.uglify())
+        .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
+        .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
     );
   });
   return merged
