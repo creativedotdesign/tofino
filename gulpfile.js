@@ -72,6 +72,10 @@ gulp.task('svgs', function () {
 
 // Deletes the build folder entirely.
 gulp.task('clean', require('del').bind(null, [path.dist]));
+
+// Generic build task. Use with '--production' for minified js / css
+gulp.task('build', ['clean', 'images', 'svgs', 'styles', 'scripts']);
+
 // Watch Files For Changes
 gulp.task('watch', function() {
   plugins.livereload.listen(35729, function(err) {
