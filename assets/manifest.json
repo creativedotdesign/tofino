@@ -12,7 +12,7 @@
   "paths": {
     "source": "assets/",
     "dist": "dist/",
-    "images": "images/",
-    "svgs": "svgs/"
+    "images": "assets/images/",
+    "svgs": "assets/svgs/"
   }
 }
