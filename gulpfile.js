@@ -57,16 +57,10 @@ gulp.task('images', function () {
 
 // Convert SVGs to Sprites
 gulp.task('svgs', function () {
-  return gulp.src(globs.svgs)
+  return gulp.src(path.svgs + '**/*.svg')
     .pipe(plugins.svgmin())
-    .pipe(plugins.svgSprites({
-      mode: "symbols",
-      svgId: "svg-%f",
-      preview: false,
-      svg: {
-        symbols: "svg-sprite.svg"
-      }
-    }))
+    .pipe(plugins.svgSprite({ mode: { symbol: true } }))
+    .on('error', handleError)
     .pipe(gulp.dest(path.dist));
 });
 
