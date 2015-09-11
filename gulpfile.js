@@ -18,19 +18,23 @@ function handleError(err) {
 //Compile SCSS to CSS
 gulp.task('styles', function() {
   var merged = merge();
-
   manifest.forEachDependency('css', function(dep) {
-   merged.add(
-     gulp.src(dep.globs, {base: 'styles'})
-       .pipe(plugins.sass({ style: 'expanded' }))
-       .pipe(plugins.concat(dep.name))
+    merged.add(
+      gulp.src(dep.globs, {base: 'styles'})
+        .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
+        .pipe(plugins.sass({ style: 'expanded' }))
+        .pipe(plugins.concat(dep.name))
         //.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
-       .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
-       .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
-     );
-   });
-   return merged
-   .pipe(gulp.dest(path.dist));
+        .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.', {
+          includeContent: false,
+          sourceRoot: path.styles
+        })))
+        .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
+        .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
+    );
+  });
+  return merged
+  .pipe(gulp.dest(path.dist));
 });
 
 // Concatenate & Minify JS
@@ -40,6 +44,9 @@ gulp.task('scripts', function() {
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
         .pipe(plugins.concat(dep.name))
+        .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.', {
+          sourceRoot: path.scripts
+        })))
         .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
         .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
     );
