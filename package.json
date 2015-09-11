@@ -16,7 +16,7 @@
     "gulp-livereload": "*",
     "gulp-minify-css": "*",
     "gulp-rename": "*",
-    "gulp-sass": "*",
+    "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "*",
     "gulp-svg-sprite": "*",
     "gulp-svgmin": "*",

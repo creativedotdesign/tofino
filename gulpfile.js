@@ -21,10 +21,12 @@ gulp.task('styles', function() {
   manifest.forEachDependency('css', function(dep) {
     merged.add(
       gulp.src(dep.globs, {base: 'styles'})
+      .pipe(plugins.sass({ style: 'nested' }))
         .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
-        .pipe(plugins.sass({ style: 'expanded' }))
         .pipe(plugins.concat(dep.name))
-        //.pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+        .pipe(plugins.autoprefixer({
+            browsers: ['last 2 versions']
+          }))
         .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.', {
           includeContent: false,
           sourceRoot: path.styles
