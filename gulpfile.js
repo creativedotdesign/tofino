@@ -2,7 +2,6 @@ var gulp            = require('gulp'),
     manifest        = require('asset-builder')('./assets/manifest.json'),
     gulpLoadPlugins = require('gulp-load-plugins'),
     merge           = require('merge-stream'),
-    changed         = require('gulp-changed'),
     plugins         = gulpLoadPlugins();
 
 var path  = manifest.paths, //path.source, path.dest etc
@@ -28,7 +27,7 @@ gulp.task('styles', function() {
        .pipe(plugins.minifyCss())
    );
   });
-  
+
   return merged
     .pipe(gulp.dest(path.dist));
 });
