@@ -8,12 +8,16 @@
   "author": "Daniel Hewes <daniel@lambdacreatives.com>",
   "license": "ISC",
   "devDependencies": {
+    "asset-builder": "*",
+    "del": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
+    "gulp-if": "*",
     "gulp-imagemin": "*",
     "gulp-jshint": "*",
     "gulp-livereload": "*",
+    "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
     "gulp-rename": "*",
     "gulp-sass": "^2.0.4",
@@ -22,11 +26,7 @@
     "gulp-svgmin": "*",
     "gulp-uglify": "*",
     "gulp-util": "*",
-    "gulp-if": "*",
-    "yargs": "*",
-    "del": "*",
-    "asset-builder": "*",
     "merge-stream": "*",
-    "gulp-load-plugins": "*"
+    "yargs": "*"
   }
 }
