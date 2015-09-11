@@ -24,6 +24,7 @@
     "gulp-util": "*",
     "gulp-if": "*",
     "yargs": "*",
+    "del": "*",
     "asset-builder": "*",
     "merge-stream": "*",
     "gulp-load-plugins": "*"

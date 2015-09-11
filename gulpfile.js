@@ -70,6 +70,8 @@ gulp.task('svgs', function () {
     .pipe(gulp.dest(path.dist));
 });
 
+// Deletes the build folder entirely.
+gulp.task('clean', require('del').bind(null, [path.dist]));
 // Watch Files For Changes
 gulp.task('watch', function() {
   plugins.livereload.listen(35729, function(err) {
