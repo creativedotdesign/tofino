@@ -15,7 +15,6 @@
   ],
   "require": {
     "tgmpa/tgm-plugin-activation": "2.5.2",
-    "mrchimp/wp-bootstrap-navwalker": "bootstrap4-dev",
     "twittem/wp-bootstrap-navwalker": "dev-master"
   },
   "autoload": {

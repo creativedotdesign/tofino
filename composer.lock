@@ -4,38 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d45000f25d09543e96d8939eb8405347",
+    "hash": "0f507c35cf5f9167492b247f6d6b89da",
     "packages": [
-        {
-            "name": "mrchimp/wp-bootstrap-navwalker",
-            "version": "dev-bootstrap4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mrchimp/wp-bootstrap-navwalker.git",
-                "reference": "528057043a58678f897d832b3b18d4184804daaa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mrchimp/wp-bootstrap-navwalker/zipball/528057043a58678f897d832b3b18d4184804daaa",
-                "reference": "528057043a58678f897d832b3b18d4184804daaa",
-                "shasum": ""
-            },
-            "type": "library",
-            "license": [
-                "GNU-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "mrchimp",
-                    "email": "chimpytk@gmail.com"
-                }
-            ],
-            "description": "Wordpress nav walker for Bootstrap 4 menus.",
-            "support": {
-                "source": "https://github.com/mrchimp/wp-bootstrap-navwalker/tree/bootstrap4"
-            },
-            "time": "2015-09-12 19:16:31"
-        },
         {
             "name": "tgmpa/tgm-plugin-activation",
             "version": "2.5.2",
@@ -107,7 +77,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mrchimp/wp-bootstrap-navwalker": 20,
         "twittem/wp-bootstrap-navwalker": 20
     },
     "prefer-stable": false,
