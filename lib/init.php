@@ -15,8 +15,5 @@ function setup() {
     'primary_navigation' => __('Primary Navigation', 'tofino')
   ]);
 
-  // Add post thumbnails
-  add_theme_support('post-thumbnails');
-
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
