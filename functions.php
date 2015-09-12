@@ -39,13 +39,10 @@ function tf_acf_settings_dir( $dir ) {
   return $dir;
 }
 
-function add_styles() {
-  wp_enqueue_style('main', get_template_directory_uri().'/dist/css/main.css', [] /* @todo - versioning */);
-}
-
-function add_scripts () {
+function add_assets() {
+  wp_enqueue_style('main', get_template_directory_uri().'/dist/css/main.css' /* @todo - versioning */);
   wp_enqueue_script('main', get_template_directory_uri().'/dist/js/main.js', [], null);  
 }
 
-add_action('wp_enqueue_scripts', 'add_scripts');
+add_action('wp_enqueue_scripts', 'add_assets');
 
