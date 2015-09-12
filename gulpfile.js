@@ -37,7 +37,7 @@ gulp.task('styles', function() {
     );
   });
   return merged
-  .pipe(gulp.dest(path.dist));
+  .pipe(gulp.dest(path.dist + '/css'));
 });
 
 // Concatenate & Minify JS
@@ -55,7 +55,7 @@ gulp.task('scripts', function() {
     );
   });
   return merged
-  .pipe(gulp.dest(path.dist));
+  .pipe(gulp.dest(path.dist + '/js'));
 });
 
 // Min / Crush images
@@ -63,9 +63,9 @@ gulp.task('images', function () {
   return gulp.src(globs.images)
     .pipe(plugins.imagemin({
       progressive: true,
-      use: [pngquant()] 
+      use: [pngquant()]
     }))
-    .pipe(gulp.dest(path.dist + 'images'));
+    .pipe(gulp.dest(path.dist + 'img'));
 });
 
 // Convert SVGs to Sprites
@@ -74,7 +74,7 @@ gulp.task('svgs', function () {
     .pipe(plugins.svgmin())
     .pipe(plugins.svgSprite({ mode: { symbol: true } }))
     .on('error', handleError)
-    .pipe(gulp.dest(path.dist));
+    .pipe(gulp.dest(path.dist + 'svg'));
 });
 
 // Deletes the build folder entirely.
@@ -104,3 +104,5 @@ gulp.task('watch', function() {
     plugins.livereload.changed(file.path);
   });
 });
+
+gulp.task('default', ['build']);

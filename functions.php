@@ -40,3 +40,14 @@ function tf_acf_settings_dir( $dir ) {
   $dir = get_stylesheet_directory_uri() . "/vendor/advanced-custom-fields/advanced-custom-fields-pro/";
   return $dir;
 }
+
+function add_styles() {
+  wp_enqueue_style('main', get_template_directory_uri().'/dist/css/main.css', [] /* @todo - versioning */);
+}
+
+function add_scripts () {
+  wp_enqueue_script('main', get_template_directory_uri().'/dist/js/main.js', [], null);  
+}
+
+add_action('wp_enqueue_scripts', 'add_scripts');
+
