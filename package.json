@@ -15,7 +15,7 @@
     "gulp-concat": "*",
     "gulp-if": "*",
     "gulp-imagemin": "*",
-    "gulp-jshint": "*",
+    "gulp-jshint": "^1.11.2",
     "gulp-livereload": "*",
     "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
@@ -27,6 +27,7 @@
     "gulp-uglify": "*",
     "gulp-util": "*",
     "imagemin-pngquant": "^4.2.0",
+    "jshint-stylish": "^2.0.1",
     "merge-stream": "*",
     "yargs": "*"
   }

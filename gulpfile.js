@@ -42,7 +42,7 @@ gulp.task('styles', function() {
 });
 
 // Concatenate & Minify JS
-gulp.task('scripts', function() {
+gulp.task('scripts', ['jshint'], function() {
   var merged = merge();
   manifest.forEachDependency('js', function(dep) {
     merged.add(
@@ -57,6 +57,14 @@ gulp.task('scripts', function() {
   });
   return merged
   .pipe(gulp.dest(path.dist + '/js'));
+});
+
+// Lints configuration JSON and project JS.
+gulp.task('jshint', function() {
+  return gulp.src(['bower.json', 'gulpfile.js'].concat(project.js))
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('jshint-stylish'))
+    .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail')));
 });
 
 // Min / Crush images
