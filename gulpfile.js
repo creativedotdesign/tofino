@@ -23,6 +23,7 @@ gulp.task('styles', function() {
     merged.add(
       gulp.src(dep.globs, {base: 'styles'})
       .pipe(plugins.sass({ style: 'nested' }))
+      .on('error', handleError)
         .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
         .pipe(plugins.concat(dep.name))
         .pipe(plugins.autoprefixer({
