@@ -1,6 +1,6 @@
 
 @import "../../bower_components/bootstrap/scss/bootstrap.scss";
 
-.hello {
-	color: red;
-}
+@import "structure";
+@import "nav";
+

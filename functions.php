@@ -9,7 +9,7 @@
  *
  */
 $tofino_includes = [
-  //'vendor/autoload.php',  // Composer Autoload classes
+  'vendor/autoload.php',  // Composer Autoload classes
   'lib/assets.php',
   'lib/init.php'
 ];
@@ -41,10 +41,4 @@ function tf_acf_settings_dir( $dir ) {
   return $dir;
 }
 
-function add_assets() {
-  wp_enqueue_style('main', get_template_directory_uri().'/dist/css/main.css' /* @todo - versioning */);
-  wp_enqueue_script('main', get_template_directory_uri().'/dist/js/main.js', [], null);  
-}
-
-add_action('wp_enqueue_scripts', 'add_assets');
 
