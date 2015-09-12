@@ -3,6 +3,7 @@ var gulp            = require('gulp'),
     gulpLoadPlugins = require('gulp-load-plugins'),
     merge           = require('merge-stream'),
     argv            = require('yargs').argv,
+    pngquant        = require('imagemin-pngquant'),
     plugins         = gulpLoadPlugins();
 
 var path  = manifest.paths, //path.source, path.dest etc
@@ -60,7 +61,10 @@ gulp.task('scripts', function() {
 // Min / Crush images
 gulp.task('images', function () {
   return gulp.src(globs.images)
-    .pipe(plugins.imagemin({ progressive: true }))
+    .pipe(plugins.imagemin({
+      progressive: true,
+      use: [pngquant()] 
+    }))
     .pipe(gulp.dest(path.dist + 'images'));
 });
 

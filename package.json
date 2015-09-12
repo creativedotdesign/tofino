@@ -26,6 +26,7 @@
     "gulp-svgmin": "*",
     "gulp-uglify": "*",
     "gulp-util": "*",
+    "imagemin-pngquant": "^4.2.0",
     "merge-stream": "*",
     "yargs": "*"
   }
