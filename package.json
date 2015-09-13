@@ -21,6 +21,7 @@
     "gulp-minify-css": "*",
     "gulp-rename": "*",
     "gulp-sass": "^2.0.4",
+    "gulp-sass-lint": "^1.0.1",
     "gulp-sourcemaps": "*",
     "gulp-svg-sprite": "*",
     "gulp-svgmin": "*",

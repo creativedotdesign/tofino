@@ -17,7 +17,7 @@ function handleError(err) {
 }
 
 //Compile SCSS to CSS
-gulp.task('styles', function() {
+gulp.task('styles', ['sass-lint'], function() {
   var merged = merge();
   manifest.forEachDependency('css', function(dep) {
     merged.add(
@@ -39,6 +39,14 @@ gulp.task('styles', function() {
   });
   return merged
   .pipe(gulp.dest(path.dist + '/css'));
+});
+
+// Lints scss files
+gulp.task('sass-lint', function() {
+  return gulp.src(path.source + 'styles/**/*.scss')
+    .pipe(plugins.sassLint())
+    .pipe(plugins.sassLint.format())
+    .pipe(plugins.if(argv.production, plugins.sassLint.failOnError()));
 });
 
 // Concatenate & Minify JS
