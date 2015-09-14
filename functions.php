@@ -20,25 +20,3 @@ foreach ($tofino_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
-
-/**
- * ACF Filters
-*/
-
-//Update ACF settings path
-add_filter('acf/settings/path', 'tf_acf_settings_path');
-
-function tf_acf_settings_path( $path ) {
-  $path = get_stylesheet_directory() . "/vendor/advanced-custom-fields/advanced-custom-fields-pro/";
-  return $path;
-}
-
-//Update ACF settings dir
-add_filter('acf/settings/dir', 'tf_acf_settings_dir');
-
-function tf_acf_settings_dir( $dir ) {
-  $dir = get_stylesheet_directory_uri() . "/vendor/advanced-custom-fields/advanced-custom-fields-pro/";
-  return $dir;
-}
-
-
