@@ -7,6 +7,9 @@
     "main.css": {
       "files": ["styles/main.scss"],
       "main": true
+    },
+    "wp-admin.css": {
+      "files": ["styles/wp-admin.scss"]
     }
   },
   "paths": {

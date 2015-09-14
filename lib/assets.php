@@ -14,6 +14,15 @@ function styles() {
   wp_enqueue_style('base'); // Enqueue it!
 }
 
+// Load admin styles
+add_action('login_head', __NAMESPACE__ . '\\admin_styles');
+
+function admin_styles() {
+  $stylesheet_base = '/dist/css/wp-admin.css';
+  wp_register_style('admin',  get_template_directory_uri() . $stylesheet_base . '?v=' . filemtime(get_template_directory() . $stylesheet_base), array(), '', 'all');
+  wp_enqueue_style('admin');
+}
+
 // Load scripts
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\scripts');
 
