@@ -20,7 +20,7 @@ var tofino = {
   common: {
     init: function() {
       // JavaScript to be fired on all pages
-
+      svg4everybody();
     }
   },
   // Home page
