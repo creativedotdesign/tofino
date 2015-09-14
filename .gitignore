@@ -16,3 +16,6 @@ vendor/
 
 # ignore dist directories
 dist/
+
+# ignore composer.lock
+composer.lock
