@@ -15,7 +15,8 @@
   ],
   "require": {
     "tgmpa/tgm-plugin-activation": "2.5.2",
-    "twittem/wp-bootstrap-navwalker": "dev-master"
+    "twittem/wp-bootstrap-navwalker": "dev-master",
+    "valendesigns/option-tree": "2.5.5"
   },
   "autoload": {
     "files": ["vendor/twittem/wp-bootstrap-navwalker/wp_bootstrap_navwalker.php"]
