@@ -16,6 +16,7 @@ function styles() {
 
 // Load admin styles
 add_action('login_head', __NAMESPACE__ . '\\admin_styles');
+add_action('admin_head', __NAMESPACE__ . '\\admin_styles');
 
 function admin_styles() {
   $stylesheet_base = '/dist/css/wp-admin.css';
