@@ -30,3 +30,4 @@
   </div>
 </nav>
 
+<?php dynamic_sidebar('sidebar-above-content'); ?>

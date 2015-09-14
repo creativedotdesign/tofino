@@ -1,3 +1,5 @@
+<?php dynamic_sidebar('sidebar-below-content'); ?>
+
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
