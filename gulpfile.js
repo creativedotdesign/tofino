@@ -13,6 +13,7 @@ var path  = manifest.paths, //path.source, path.dest etc
 function handleError(err) {
   plugins.util.log(plugins.util.colors.red('[ERROR] ' + err.toString()));
   plugins.util.beep();
+  plugins.notify("An error has occured. Check the console.");
   this.emit('end');
 }
 
@@ -38,7 +39,8 @@ gulp.task('styles', ['sass-lint'], function() {
     );
   });
   return merged
-  .pipe(gulp.dest(path.dist + '/css'));
+  .pipe(gulp.dest(path.dist + '/css'))
+  .pipe(plugins.notify("Styles task complete"));
 });
 
 // Lints scss files
@@ -64,7 +66,8 @@ gulp.task('scripts', ['jshint'], function() {
     );
   });
   return merged
-  .pipe(gulp.dest(path.dist + '/js'));
+  .pipe(gulp.dest(path.dist + '/js'))
+  .pipe(plugins.notify("Scripts task complete"));
 });
 
 // Lints configuration JSON and project JS.
@@ -82,7 +85,8 @@ gulp.task('images', function () {
       progressive: true,
       use: [pngquant()]
     }))
-    .pipe(gulp.dest(path.dist + 'img'));
+    .pipe(gulp.dest(path.dist + 'img'))
+    .pipe(plugins.notify("Images task complete"));
 });
 
 // Convert SVGs to Sprites
@@ -91,7 +95,8 @@ gulp.task('svgs', function () {
     .pipe(plugins.svgmin())
     .pipe(plugins.svgSprite({ mode: { symbol: true } }))
     .on('error', handleError)
-    .pipe(gulp.dest(path.dist + 'svg'));
+    .pipe(gulp.dest(path.dist + 'svg'))
+    .pipe(plugins.notify("SVG task complete"));
 });
 
 // Deletes the build folder entirely.

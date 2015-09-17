@@ -19,6 +19,7 @@
     "gulp-livereload": "*",
     "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
+    "gulp-notify": "^2.2.0",
     "gulp-rename": "*",
     "gulp-sass": "^2.0.4",
     "gulp-sass-lint": "^1.0.1",
