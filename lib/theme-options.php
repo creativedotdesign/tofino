@@ -133,12 +133,12 @@ function custom_theme_options() {
             'src'   => ''
           ),
           array(
-            'value'  => 'Centre',
-            'label'  => __( 'Centre', 'option-tree-theme' ),
+            'value'  => 'center',
+            'label'  => __( 'Center', 'option-tree-theme' ),
             'src'    => ''
           ),
           array(
-            'value' => 'Right',
+            'value' => 'right',
             'label' => __( 'Right', 'option-tree-theme' ),
             'src'   => ''
           )
