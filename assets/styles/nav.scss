@@ -44,3 +44,23 @@
 /**
  * End bootstrap extensions
  */
+
+/* Helper class to center unknown width ul nav bar */
+.menu-center {
+  .navbar-brand {
+    left: 0;
+    position: absolute;
+  }
+
+  .navbar-nav {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.menu-right {
+  .navbar-nav {
+    @extend .pull-right;
+  }
+}

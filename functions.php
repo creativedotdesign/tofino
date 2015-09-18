@@ -22,3 +22,27 @@ foreach ($tofino_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
+
+
+//TODO: Move this function out of functions.php
+function menu_position() {
+
+  $position = ot_get_option( 'menu_position_select' );
+
+  switch ( $position ) {
+    case 'left':
+      $class = '';
+      break;
+    case 'center':
+      $class = 'menu-center';
+      break;
+    case 'right';
+      $class = 'menu-right';
+      break;
+    default:
+      $class = null;
+  }
+
+  return $class;
+
+}
