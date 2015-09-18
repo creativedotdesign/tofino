@@ -12,7 +12,8 @@ $tofino_includes = [
   'vendor/autoload.php',  // Composer Autoload classes
   'lib/assets.php',
   'lib/init.php',
-  'lib/theme-options.php'
+  'lib/theme-options.php',
+  'lib/required-plugins.php'
 ];
 foreach ($tofino_includes as $file) {
   if (!$filepath = locate_template($file)) {
