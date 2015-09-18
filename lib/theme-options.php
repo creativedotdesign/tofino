@@ -114,14 +114,14 @@ function custom_theme_options() {
         'choices' => array(
           array(
             'value' => false,
-            'label' => __( 'Disable Sticky Menu', 'option-tree-theme' ),
+            'label' => __( 'Disable Sticky Menu', 'tofino' ),
             'src'   => ''
           ),
         )
       ),
       array(
         'id'      => 'menu_position_select',
-        'label'   => __( 'Menu Position', 'option-tree-theme' ),
+        'label'   => __( 'Menu Position', 'tofino' ),
         'desc'    => '',
         'std'     => '',
         'type'    => 'select',
@@ -129,17 +129,17 @@ function custom_theme_options() {
         'choices' => array(
           array(
             'value' => 'left',
-            'label' => __( 'Left', 'option-tree-theme' ),
+            'label' => __( 'Left', 'tofino' ),
             'src'   => ''
           ),
           array(
             'value'  => 'center',
-            'label'  => __( 'Center', 'option-tree-theme' ),
+            'label'  => __( 'Center', 'tofino' ),
             'src'    => ''
           ),
           array(
             'value' => 'right',
-            'label' => __( 'Right', 'option-tree-theme' ),
+            'label' => __( 'Right', 'tofinoe' ),
             'src'   => ''
           )
         )
