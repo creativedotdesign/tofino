@@ -55,15 +55,6 @@ function custom_theme_options() {
     ),
     'settings' => array(
       array(
-        'id'      => 'logo_website_id',
-        'label'   => __( 'Website Logo', 'tofino' ),
-        'desc'    => '',
-        'std'     => '',
-        'type'    => 'upload',
-        'section' => 'general_settings',
-        'class'   => 'ot-upload-attachment-id',
-      ),
-      array(
         'id'      => 'logo_admin_id',
         'label'   => __( 'Admin Login Logo', 'tofino' ),
         'desc'    => '',
