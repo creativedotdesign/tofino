@@ -40,7 +40,14 @@ gulp.task('styles', ['sass-lint'], function() {
   });
   return merged
   .pipe(gulp.dest(path.dist + '/css'))
-  .pipe(plugins.notify("Styles task complete"));
+  .pipe(plugins.notify({
+      "title": "Gulp Notification",
+      "subtitle": "Task Complete",
+      "message": "Styles task complete",
+      "sound": "Frog",
+      "onLast": true,
+      "wait": true
+    }));
 });
 
 // Lints scss files
@@ -67,7 +74,14 @@ gulp.task('scripts', ['jshint'], function() {
   });
   return merged
   .pipe(gulp.dest(path.dist + '/js'))
-  .pipe(plugins.notify("Scripts task complete"));
+  .pipe(plugins.notify({
+      "title": "Gulp Notification",
+      "subtitle": "Task Complete",
+      "message": "Scripts task complete",
+      "sound": "Frog",
+      "onLast": true,
+      "wait": true
+    }));
 });
 
 // Lints configuration JSON and project JS.
