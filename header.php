@@ -8,11 +8,11 @@
 </head>
 <body <?php body_class(); ?>>
 <nav class="navbar navbar-light navbar-fixed-top bg-faded">
+  <a class="navbar-brand" href="<?php echo home_url() ?>"><?php echo bloginfo('name') ?></a>
   <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-menu">
     &#9776;
   </button>
   <div id="main-menu" class="collapse navbar-toggleable-xs">
-    <a class="navbar-brand" href="<?php echo home_url() ?>"><?php echo bloginfo('name') ?></a>
     <?php
       wp_nav_menu( array(
         'menu'              => 'nav_menu',
