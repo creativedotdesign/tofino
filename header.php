@@ -8,7 +8,7 @@
 </head>
 <body <?php body_class(); ?>>
 <nav class="navbar navbar-light navbar-fixed-top bg-faded">
-  <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="main-menu">
+  <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-menu">
     &#9776;
   </button>
   <div id="main-menu" class="collapse navbar-toggleable-xs">
