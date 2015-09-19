@@ -8,7 +8,7 @@ function required_plugins() {
     array(
       'name'         => 'WP Clean',
       'slug'         => 'wp-clean',
-      'source'       => 'https://github.com/danimalweb/wp-clean/archive/modules.zip',
+      'source'       => 'https://github.com/danimalweb/wp-clean/archive/master.zip',
       'required'     => false,
       'external_url' => 'https://github.com/danimalweb/wp-clean',
     ),
