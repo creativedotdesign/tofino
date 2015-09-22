@@ -99,7 +99,7 @@ function custom_theme_options() {
         'id'      => 'footer_text',
         'label'   => __( 'Footer Text', 'tofino' ),
         'desc'    => '',
-        'std'     => '',
+        'std'     => '<a href="https://github.com/mrchimp/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.',
         'type'    => 'textarea-simple',
         'section' => 'general_settings',
         'rows'    => '3',

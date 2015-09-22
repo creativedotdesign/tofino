@@ -3,8 +3,10 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-       <footer>
-        <a href="https://github.com/mrchimp/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>
+       <footer><?php
+        if ( ot_get_option( 'footer_text' ) ) :
+          echo ot_get_option( 'footer_text' );
+        endif; ?>
       </footer>
     </div>
   </div>
