@@ -26,9 +26,7 @@ unset($file, $filepath);
 
 //TODO: Move this function out of functions.php
 function menu_position() {
-
   $position = ot_get_option( 'menu_position_select' );
-
   switch ( $position ) {
     case 'left':
       $class = '';
@@ -42,6 +40,8 @@ function menu_position() {
     default:
       $class = null;
   }
+  return $class;
+}
 
 //TODO: Move this function out of functions.php
 function menu_sticky() {
