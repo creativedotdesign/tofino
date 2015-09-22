@@ -43,6 +43,23 @@ function menu_position() {
       $class = null;
   }
 
+//TODO: Move this function out of functions.php
+function menu_sticky() {
+  $is_disabled = ot_get_option( 'menu_sticky_checkbox' );
+  if ( !$is_disabled ) {
+    $class = 'navbar-fixed-top';
+  } else {
+    $class = null;
+  }
   return $class;
-
 }
+
+function add_body_class( $classes ) {
+  $is_disabled = ot_get_option( 'menu_sticky_checkbox' );
+  if ( !$is_disabled ) {
+    $classes[] = 'menu-sticky';
+  }
+  return $classes;
+}
+
+add_filter( 'body_class', 'add_body_class' );
