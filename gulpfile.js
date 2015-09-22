@@ -107,9 +107,15 @@ gulp.task('images', function () {
 gulp.task('svgs', function () {
   return gulp.src(path.svgs + '**/*.svg')
     .pipe(plugins.svgmin())
-    .pipe(plugins.svgSprite({ mode: { symbol: true } }))
+    .pipe(plugins.svgSprite({
+      mode: {
+        symbol: {
+          dest: '.'
+        }
+      }
+    }))
     .on('error', handleError)
-    .pipe(gulp.dest(path.dist + 'svg'))
+    .pipe(gulp.dest(path.dist))
     .pipe(plugins.notify("SVG task complete"));
 });
 
