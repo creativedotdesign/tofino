@@ -55,7 +55,7 @@ function custom_theme_options() {
     ),
     'settings' => array(
       array(
-        'id'      => 'logo_admin_id',
+        'id'      => 'admin_login_logo_id',
         'label'   => __( 'Admin Login Logo', 'tofino' ),
         'desc'    => '',
         'std'     => '',
@@ -183,5 +183,23 @@ function google_analytics() {
       ga('send', 'pageview');
 
     </script><?php
+  }
+}
+
+/**
+ | Chnage admin login screen logo
+*/
+add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
+
+function admin_login_logo() {
+  if ( ot_get_option( 'admin_login_logo_id' ) ) {
+    $src = wp_get_attachment_image_src( ot_get_option( 'admin_login_logo_id' ), 'original' ); ?>
+    <style type="text/css">
+      .login h1 a {
+        background-image: url(<?php echo $src[0]; ?>);
+        padding-bottom: 30px;
+      }
+    </style>
+    <?php
   }
 }
