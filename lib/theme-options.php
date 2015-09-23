@@ -52,6 +52,10 @@ function custom_theme_options() {
         'id'    => 'menu_settings',
         'title' => __( 'Menu', 'tofino' )
       ),
+      array(
+        'id'    => 'other_settings',
+        'title' => __( 'Other', 'tofino' )
+      ),
     ),
     'settings' => array(
       array(
@@ -142,6 +146,21 @@ function custom_theme_options() {
             'label' => __( 'Right', 'tofinoe' ),
             'src'   => ''
           )
+        )
+      ),
+      array(
+        'id'      => 'footer_sticky_checkbox',
+        'label'   => __( 'Sticky Footer', 'tofino' ),
+        'desc'    => 'Works for Flexbox enabled browsers only.',
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => false,
+            'label' => __( 'Enable Sticky Footer', 'tofino' ),
+            'src'   => ''
+          ),
         )
       ),
     )

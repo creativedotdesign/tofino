@@ -1,5 +1,18 @@
+html { height: 100%; }
+
 body {
   &.menu-sticky {
     margin-top: 70px;
+  }
+  
+  &.footer-sticky { //Flexbox supported browsers only.
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .wrapper {
+      flex: 1 0 auto;
+    }
   }
 }

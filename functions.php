@@ -64,10 +64,18 @@ function menu_sticky() {
   return $class;
 }
 
+//This added the menu-sticky and/or the footer sticky classes to the body.
 function add_body_class( $classes ) {
-  $is_disabled = ot_get_option( 'menu_sticky_checkbox' );
-  if ( !$is_disabled ) {
+  //Menu Sticky
+  $menu_sticky_disabled = ot_get_option( 'menu_sticky_checkbox' );
+  if ( !$menu_sticky_disabled ) {
     $classes[] = 'menu-sticky';
+  }
+
+  //Footer Sticky
+  $footer_sticky_enabled = ot_get_option( 'footer_sticky_checkbox' );
+  if ( $footer_sticky_enabled ) {
+    $classes[] = 'footer-sticky';
   }
   return $classes;
 }
