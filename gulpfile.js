@@ -62,6 +62,7 @@ gulp.task('sass-lint', function() {
 gulp.task('scripts', ['jshint'], function() {
   var merged = merge();
   manifest.forEachDependency('js', function(dep) {
+    console.log(dep);
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
         .pipe(plugins.concat(dep.name))
