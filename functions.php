@@ -1,4 +1,13 @@
 <?php
+
+
+$theme_config = [
+  'svg' => [
+    'sprite_file' => get_template_directory_uri() . '/dist/svg/sprite.symbol.svg'
+  ]
+];
+
+
 /**
  * Tofino includes
  *
@@ -12,9 +21,11 @@ $tofino_includes = [
   'vendor/autoload.php',  // Composer Autoload classes
   'lib/assets.php',
   'lib/init.php',
+  'lib/svg.php',
   'lib/theme-options.php',
   'lib/required-plugins.php'
 ];
+
 foreach ($tofino_includes as $file) {
   if (!$filepath = locate_template($file)) {
     trigger_error(sprintf(__('Error locating %s for inclusion', 'tofino'), $file), E_USER_ERROR);
@@ -22,7 +33,6 @@ foreach ($tofino_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
-
 
 //TODO: Move this function out of functions.php
 function menu_position() {
