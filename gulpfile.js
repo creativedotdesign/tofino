@@ -61,8 +61,8 @@ gulp.task('sass-lint', function() {
 // Concatenate & Minify JS
 gulp.task('scripts', ['jshint'], function() {
   var merged = merge();
+
   manifest.forEachDependency('js', function(dep) {
-    console.log(dep);
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
         .pipe(plugins.concat(dep.name))
@@ -71,10 +71,11 @@ gulp.task('scripts', ['jshint'], function() {
         })))
         .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
         .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
-    );
+    )
+    .pipe(gulp.dest(path.dist + '/js'));
   });
+
   return merged
-  .pipe(gulp.dest(path.dist + '/js'))
   .pipe(plugins.notify({
       "title": "Gulp Notification",
       "subtitle": "Task Complete",

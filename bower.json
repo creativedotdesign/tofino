@@ -17,5 +17,10 @@
   "dependencies": {
     "bootstrap": "v4-dev",
     "svg4everybody": "~2.0.0"
+  },
+  "overrides": {
+    "svg4everybody": {
+      "main": "dist/svg4everybody.js"
+    }
   }
 }

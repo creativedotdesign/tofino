@@ -4,6 +4,9 @@
       "files": ["scripts/main.js"],
       "main": true
     },
+    "head.js": {
+      "files": ["../bower_components/svg4everybody/dist/svg4everybody.legacy.js"]
+    },
     "main.css": {
       "files": ["styles/main.scss"],
       "main": true
