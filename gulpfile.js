@@ -35,7 +35,6 @@ gulp.task('styles', ['sass-lint'], function() {
           sourceRoot: path.styles
         })))
         .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
-        .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
     );
   });
   return merged
@@ -70,7 +69,6 @@ gulp.task('scripts', ['jshint'], function() {
           sourceRoot: path.scripts
         })))
         .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
-        .pipe(plugins.if(argv.production, plugins.rename({suffix: '.min'}))) //If prod add .min
     )
     .pipe(gulp.dest(path.dist + '/js'));
   });
