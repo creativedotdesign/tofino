@@ -2,11 +2,11 @@ html { height: 100%; }
 
 body {
   &.menu-sticky {
-    margin-top: 70px;
+    padding-top: $navbar-height;
   }
 
   &.footer-sticky { //Flexbox supported browsers only.
-    padding-top: 70px;
+    padding-top: $navbar-height;
     display: flex;
     flex-direction: column;
     height: 100%;
