@@ -9,6 +9,7 @@
   "license": "ISC",
   "devDependencies": {
     "asset-builder": "*",
+    "browser-sync": "^2.9.6",
     "del": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
@@ -16,7 +17,6 @@
     "gulp-if": "*",
     "gulp-imagemin": "*",
     "gulp-jshint": "^1.11.2",
-    "gulp-livereload": "*",
     "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
     "gulp-notify": "^2.2.0",

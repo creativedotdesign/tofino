@@ -4,11 +4,13 @@ var gulp            = require('gulp'),
     merge           = require('merge-stream'),
     argv            = require('yargs').argv,
     pngquant        = require('imagemin-pngquant'),
+    browserSync     = require('browser-sync').create(),
     plugins         = gulpLoadPlugins();
 
-var path  = manifest.paths, //path.source, path.dest etc
-    globs = manifest.globs, //globs.images, globs.bower etc
-    project = manifest.getProjectGlobs();
+var path    = manifest.paths, //path.source, path.dest etc
+    globs   = manifest.globs, //globs.images, globs.bower etc
+    project = manifest.getProjectGlobs(),
+    config  = manifest.config || {};
 
 function handleError(err) {
   plugins.util.log(plugins.util.colors.red('[ERROR] ' + err.toString()));
@@ -39,6 +41,7 @@ gulp.task('styles', ['sass-lint'], function() {
   });
   return merged
   .pipe(gulp.dest(path.dist + '/css'))
+  .pipe(browserSync.stream())
   .pipe(plugins.notify({
       "title": "Gulp Notification",
       "subtitle": "Task Complete",
@@ -71,6 +74,7 @@ gulp.task('scripts', ['jshint'], function() {
         .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
     )
     .pipe(gulp.dest(path.dist + '/js'));
+    .pipe(browserSync.stream())
   });
 
   return merged
@@ -127,8 +131,22 @@ gulp.task('build', ['clean', 'images', 'svgs', 'styles', 'scripts']);
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-  plugins.livereload.listen(35729, function(err) {
-    if(err) return plugins.util.log(err);
+
+  var ghost = false;
+
+  //if gulp watch --chill then BrowserSync will not pass clicks, forms, scroll to other browsers.
+  if(argv.chill) {
+    ghost = true;
+  }
+
+  browserSync.init({
+    files: ['{lib,templates}/**/*.php', '*.php'],
+    proxy: config.devUrl,
+    ghostMode: ghost,
+    snippetOptions: {
+    //  whitelist: ['/wp-admin/admin-ajax.php'],
+      blacklist: ['/wp-admin/**']
+    }
   });
 
   plugins.util.log('Watching source files for changes... Press ' + plugins.util.colors.cyan('CTRL + C') + ' to stop.');
@@ -141,10 +159,6 @@ gulp.task('watch', function() {
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
-  gulp.watch('*.php').on('change', function(file) {
-    plugins.util.log('File Changed: ' + file.path + '');
-    plugins.livereload.changed(file.path);
-  });
 });
 
 gulp.task('default', ['build']);
