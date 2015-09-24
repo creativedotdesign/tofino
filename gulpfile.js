@@ -113,7 +113,7 @@ gulp.task('svgs', function () {
     .pipe(plugins.svgSprite({
       mode: {
         symbol: {
-          dest: '.'
+          dest: '.' //Sets default path (svg) and stopped the folders nesting.
         }
       }
     }))
