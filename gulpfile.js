@@ -41,7 +41,7 @@ gulp.task('styles', ['sass-lint'], function() {
   });
   return merged
   .pipe(gulp.dest(path.dist + '/css'))
-  .pipe(browserSync.stream())
+  .pipe(browserSync.reload({stream:true}))
   .pipe(plugins.notify({
       "title": "Gulp Notification",
       "subtitle": "Task Complete",
