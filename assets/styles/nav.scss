@@ -45,6 +45,23 @@
  * End bootstrap extensions
  */
 
+/**
+  * Override classes for responsive menu
+  */
+.navbar-toggleable {
+  &-xs {
+    @include media-breakpoint-down(xs) {
+      clear: both;
+      .navbar-nav .menu-item {
+        float: none;
+      }
+      .dropdown-menu {
+        float: none;
+        position: relative;
+      }
+    }
+  }
+}
 /* Helper class to center unknown width ul nav bar */
 .menu-center {
   .navbar-brand {
