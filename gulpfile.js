@@ -74,7 +74,6 @@ gulp.task('scripts', ['jshint'], function() {
         .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
     )
     .pipe(gulp.dest(path.dist + '/js'));
-    .pipe(browserSync.stream())
   });
 
   return merged
@@ -144,7 +143,7 @@ gulp.task('watch', function() {
     proxy: config.devUrl,
     ghostMode: ghost,
     snippetOptions: {
-    //  whitelist: ['/wp-admin/admin-ajax.php'],
+      whitelist: ['/wp-admin/admin-ajax.php'],
       blacklist: ['/wp-admin/**']
     }
   });
