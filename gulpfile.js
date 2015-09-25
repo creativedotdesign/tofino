@@ -22,24 +22,23 @@ function handleError(err) {
 //Compile SCSS to CSS
 gulp.task('styles', ['sass-lint'], function() {
   var merged = merge();
+
   manifest.forEachDependency('css', function(dep) {
     merged.add(
-      gulp.src(dep.globs, {base: 'styles'})
+      gulp.src(dep.globs)
+      .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
       .pipe(plugins.sass({ style: 'nested' }))
       .on('error', handleError)
-        .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
-        .pipe(plugins.concat(dep.name))
-        .pipe(plugins.autoprefixer({
-            browsers: ['last 2 versions']
-          }))
-        .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.', {
-          includeContent: false,
-          sourceRoot: path.styles
-        })))
-        .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
+      .pipe(plugins.concat(dep.name))
+      .pipe(plugins.autoprefixer({
+          browsers: ['last 2 versions']
+        }))
+      .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
     );
   });
   return merged
+
+  .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.')))
   .pipe(gulp.dest(path.dist + '/css'))
   .pipe(browserSync.reload({stream:true}))
   .pipe(plugins.notify({
@@ -67,11 +66,12 @@ gulp.task('scripts', ['jshint'], function() {
   manifest.forEachDependency('js', function(dep) {
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
+        .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
         .pipe(plugins.concat(dep.name))
+        .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
         .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.', {
           sourceRoot: path.scripts
         })))
-        .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
     )
     .pipe(gulp.dest(path.dist + '/js'));
   });
