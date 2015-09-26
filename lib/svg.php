@@ -1,5 +1,7 @@
 <?php
 
+namespace Tofino\Svg;
+
 add_shortcode('svg', 'svg_shortcode');
 
 function svg_shortcode($atts) {
@@ -31,5 +33,3 @@ function svg_shortcode($atts) {
   return '<svg ' . $atr_str . '><use xlink:href="' . $theme_config['svg']['sprite_file'] . '#' . $sprite . '"></svg>';
 
 }
-
-
