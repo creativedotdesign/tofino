@@ -1,6 +1,6 @@
 <?php
 
-namespace Tofino\Options;
+namespace Tofino\ThemeOptions;
 
 //Remove layout option
 add_filter( 'ot_show_new_layout', '__return_false' );
