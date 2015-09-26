@@ -107,8 +107,8 @@ gulp.task('images', function () {
 });
 
 // Convert SVGs to Sprites
-gulp.task('svgs', function () {
-  return gulp.src(path.svgs + '**/*.svg')
+gulp.task('svg-sprite', function () {
+  return gulp.src(path.svgs + 'sprite/*.svg')
     .pipe(plugins.svgmin())
     .pipe(plugins.svgSprite({
       mode: {
@@ -117,9 +117,15 @@ gulp.task('svgs', function () {
         }
       }
     }))
-    .on('error', handleError)
     .pipe(gulp.dest(path.dist))
     .pipe(plugins.notify("SVG task complete"));
+});
+
+//Minify SVGS + run sprite task
+gulp.task('svgs', ['svg-sprite'], function () {
+  return gulp.src(path.svgs + '**/*.svg')
+    .pipe(plugins.svgmin())
+    .pipe(gulp.dest(path.dist))
 });
 
 // Deletes the build folder entirely.
