@@ -19,13 +19,6 @@
     "valendesigns/option-tree": "2.5.5"
   },
   "autoload": {
-    "files": [
-      "vendor/twittem/wp-bootstrap-navwalker/wp_bootstrap_navwalker.php",
-      "lib/init.php",
-      "lib/assets.php",
-      "lib/required-plugins.php",
-      "lib/svg.php",
-      "lib/theme-options.php"
-    ]
+    "files": ["vendor/twittem/wp-bootstrap-navwalker/wp_bootstrap_navwalker.php"]
   }
 }
