@@ -123,9 +123,9 @@ gulp.task('svg-sprite', function () {
 
 //Minify SVGS + run sprite task
 gulp.task('svgs', ['svg-sprite'], function () {
-  return gulp.src(path.svgs + '**/*.svg')
+  return gulp.src(path.svgs + '*.svg')
     .pipe(plugins.svgmin())
-    .pipe(gulp.dest(path.dist))
+    .pipe(gulp.dest(path.dist + 'svg'))
 });
 
 // Deletes the build folder entirely.
