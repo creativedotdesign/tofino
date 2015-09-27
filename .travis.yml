@@ -1,5 +1,7 @@
 language: php
 
+sudo: true
+
 notifications:
   email:
     on_success: never
