@@ -17,10 +17,13 @@ matrix:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
 
-before_script:
-  - npm test
-  - composer install
+before_install:
+  - npm install -g npm
   - npm install -g bower
+  - node -v
+
+before_script:
+  - composer install
   - bower install
   - npm install
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
