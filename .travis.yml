@@ -18,8 +18,8 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=1
 
 before_install:
-  - npm install -g n
-  - n stable
+  - sudo npm install -g n
+  - sudo n stable
   - node -v
   - npm install -g bower
 
