@@ -18,10 +18,9 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=1
 
 before_script:
-  - curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-  - source ~/.nvm/nvm.sh
-  - nvm install 4.0
-  - nvm use 4.0
+  - sudo npm cache clean -f
+  - sudo npm install -g n
+  - sudo n stable
   - node --version
   - npm install -g bower
   - composer install
