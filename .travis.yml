@@ -1,5 +1,4 @@
 language: php
-
 sudo: true
 
 notifications:
@@ -12,17 +11,20 @@ php:
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
-  - TRAVIS_NODE_VERSION="4"
 
 matrix:
   include:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
 
+addons:
+  apt:
+    - curl
+
 before_install:
-  - sudo npm install -g n
-  - sudo n stable
-  - node -v
+  - curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+  - sudo apt-get install -y nodejs
+  - node --version
   - npm install -g bower
 
 before_script:
