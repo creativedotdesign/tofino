@@ -23,6 +23,9 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=1
 
 before_script:
+  - npm cache clean -f
+  - npm install -g n
+  - n stable
   - composer install
   - npm install -g bower
   - bower install
