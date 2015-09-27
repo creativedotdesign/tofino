@@ -17,13 +17,13 @@ matrix:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
 
-before_install:
+before_script:
   - curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
+  - source ~/.nvm/nvm.sh
+  - nvm install 4.0
+  - nvm use 4.0
   - node --version
   - npm install -g bower
-
-before_script:
   - composer install
   - bower install
   - npm install
