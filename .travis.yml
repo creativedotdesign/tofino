@@ -18,9 +18,10 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=1
 
 before_install:
-  - npm install -g npm
-  - npm install -g bower
+  - npm install -g n
+  - n stable
   - node -v
+  - npm install -g bower
 
 before_script:
   - composer install
