@@ -1,5 +1,4 @@
 language: php
-sudo: true
 
 notifications:
   email:
@@ -18,9 +17,9 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=1
 
 before_script:
-  - sudo npm cache clean -f
-  - sudo npm install -g n
-  - sudo n stable
+  - npm cache clean -f
+  - npm install -g n
+  - n stable
   - node --version
   - npm install -g bower
   - composer install
