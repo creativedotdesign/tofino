@@ -143,7 +143,7 @@ function custom_theme_options() {
           ),
           array(
             'value' => 'right',
-            'label' => __( 'Right', 'tofinoe' ),
+            'label' => __( 'Right', 'tofino' ),
             'src'   => ''
           )
         )
