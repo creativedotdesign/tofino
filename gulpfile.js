@@ -41,14 +41,14 @@ gulp.task('styles', ['sass-lint'], function() {
   .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.')))
   .pipe(gulp.dest(path.dist + '/css'))
   .pipe(browserSync.reload({stream:true}))
-  .pipe(plugins.notify({
+  .pipe(plugins.if(!argv.production, plugins.notify({
       "title": "Gulp Notification",
       "subtitle": "Task Complete",
       "message": "Styles task complete",
       "sound": "Frog",
       "onLast": true,
       "wait": true
-    }));
+    })));
 });
 
 // Lints scss files
@@ -77,14 +77,14 @@ gulp.task('scripts', ['jshint'], function() {
   });
 
   return merged
-  .pipe(plugins.notify({
+  .pipe(plugins.if(!argv.production, plugins.notify({
       "title": "Gulp Notification",
       "subtitle": "Task Complete",
       "message": "Scripts task complete",
       "sound": "Frog",
       "onLast": true,
       "wait": true
-    }));
+    })));
 });
 
 // Lints configuration JSON and project JS.
@@ -103,7 +103,7 @@ gulp.task('images', function () {
       use: [pngquant()]
     }))
     .pipe(gulp.dest(path.dist + 'img'))
-    .pipe(plugins.notify("Images task complete"));
+    .pipe(plugins.if(!argv.production, plugins.notify("Images task complete")));
 });
 
 // Convert SVGs to Sprites
@@ -118,7 +118,7 @@ gulp.task('svg-sprite', function () {
       }
     }))
     .pipe(gulp.dest(path.dist))
-    .pipe(plugins.notify("SVG task complete"));
+    .pipe(plugins.if(!argv.production, plugins.notify("SVG task complete")));
 });
 
 //Minify SVGS + run sprite task
