@@ -108,7 +108,7 @@ gulp.task('images', function () {
 
 // Convert SVGs to Sprites
 gulp.task('svg-sprite', function () {
-  return gulp.src(path.svgs + 'sprite/*.svg')
+  return gulp.src(path.svgs + 'sprites/*.svg')
     .pipe(plugins.svgmin())
     .pipe(plugins.svgSprite({
       mode: {
