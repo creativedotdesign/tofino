@@ -163,6 +163,15 @@ function custom_theme_options() {
           ),
         )
       ),
+      array(
+        'id'      => 'notification_text',
+        'label'   => __('Notification Text', 'tofino' ),
+        'desc'    => 'Notification is shown until dismissed (at which point a cookie is set).',
+        'std'     => '',
+        'type'    => 'textarea-simple',
+        'section' => 'other_settings',
+        'rows'    => '3'
+      )
     )
   );
 
@@ -186,8 +195,8 @@ function custom_theme_options() {
 add_action( 'admin_init',  __NAMESPACE__ . '\\custom_theme_options' );
 
 /**
- | Load Google Analyrics
-*/
+ * Load Google Analyrics
+ */
 add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
 
 function google_analytics() {
@@ -206,8 +215,8 @@ function google_analytics() {
 }
 
 /**
- | Chnage admin login screen logo
-*/
+ * Change admin login screen logo
+ */
 add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
 
 function admin_login_logo() {

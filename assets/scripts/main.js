@@ -16,11 +16,14 @@
 // Use this variable to set up the common and page specific functions. If you
 // rename this variable, you will also need to rename the namespace below.
 var tofino = {
-  // All pages
+  // JavaScript to be fired on all pages
   common: {
     init: function() {
-      // JavaScript to be fired on all pages
       svg4everybody();
+
+      $('#tofino-notification .close').on('click', function () {
+        Cookies.set('tofino-notification-closed', 'yes');
+      });
     }
   },
   // Home page
@@ -28,8 +31,7 @@ var tofino = {
     init: function() {
 
     }
-  },
-
+  }
 };
 
 // The routing fires all common scripts, followed by the page specific scripts.
