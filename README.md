@@ -1,14 +1,12 @@
 [![Build Status](https://travis-ci.org/mrchimp/tofino.svg)](https://travis-ci.org/mrchimp/tofino)  [![Dev Dependencies](https://david-dm.org/mrchimp/tofino.svg)](https://devid-dm.org/mrchimpy/tofino)
+
 ![Tofino](https://raw.githubusercontent.com/mrchimp/tofino/master/screenshot.png)
 
-# Tofino WordPress Theme
+# Tofino
 
-**Lead Developers:**
-[Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https://github.com/mrchimp)
+A WordPress starter theme for jumpstarting custom theme development.
 
-## Description
-
-Tofino is a WordPress starter theme and should be used to jump start custom theme development.
+Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https://github.com/mrchimp).
 
 ## Requirements
 
@@ -23,7 +21,6 @@ Tofino is a WordPress starter theme and should be used to jump start custom them
 ## Features
 
 * [Bootstrap 4](http://getbootstrap.com/)
-
 * Theme Options Panel ([Option Tree](https://github.com/valendesigns/option-tree))
 	* Admin login screen logo
 	* Google Analytics
@@ -31,22 +28,16 @@ Tofino is a WordPress starter theme and should be used to jump start custom them
 	* Sticky menu
 	* Sticky footer
 	* Left/Center/Right Menu Positions
-	* Telepohone number
+	* Telephone number
 	* Email address
 	* Footer text
-
+	* Notification Text
 * [DOM-based routing](http://goo.gl/EUTi53)
-
 * SCSS
-
 * [Gulp](http://gulpjs.com/) build script
-
 * [Bower](http://bower.io/) for front-end package management
-
 * [Composer](https://getcomposer.org/) for PHP package management
-
 * [TGM Plugin Activation](https://github.com/TGMPA/TGM-Plugin-Activation)
-
 * [WP-Bootstrap-Navwalker](https://github.com/twittem/wp-bootstrap-navwalker)
-
-* SVG Sprite Shortcode [svg sprite="my-sptite-icon"]
+* SVG Sprite Shortcode `[svg sprite="my-sptite-icon"]`
+* SVG Sprite helper for templates `svg('sprite-name')` or `svg(['sprite'=>'sprite-name'])`
