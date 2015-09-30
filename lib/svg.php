@@ -1,9 +1,14 @@
 <?php
-namespace Tofino\SVG;
 
-function svg_shortcode($atts) {
+function svg($atts) {
 
   global $theme_config;
+
+  if (gettype($atts) === 'string') {
+    $atts = array(
+      'sprite' => $atts
+    );
+  }
 
   $atts = shortcode_atts(array(
     'class' => '',
@@ -31,4 +36,4 @@ function svg_shortcode($atts) {
 
 }
 
-add_shortcode('svg',  __NAMESPACE__ . '\\svg_shortcode');
+add_shortcode('svg',  __NAMESPACE__ . '\\svg');

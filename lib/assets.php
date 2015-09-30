@@ -6,9 +6,9 @@ namespace Tofino\Assets;
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\styles');
 
 /**
- | @todo: Allow for deregistering via an array
- | @todo: Maybe replace filemtime with another solution
-*/
+ * @todo: Allow for deregistering via an array
+ * @todo: Maybe replace filemtime with another solution
+ */
 function styles() {
   $stylesheet_base = '/dist/css/main.css';
   wp_register_style('base',  get_template_directory_uri() . $stylesheet_base . '?v=' . filemtime(get_template_directory() . $stylesheet_base), array(), '', 'all');
@@ -17,8 +17,8 @@ function styles() {
 
 
 /**
- | Load admin styles
-*/
+ * Load admin styles
+ */
 add_action('login_head', __NAMESPACE__ . '\\admin_styles');
 add_action('admin_head', __NAMESPACE__ . '\\admin_styles');
 
@@ -30,8 +30,8 @@ function admin_styles() {
 
 
 /**
- | Load scripts
-*/
+ * Load scripts
+ */
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\scripts');
 
 function scripts() {
