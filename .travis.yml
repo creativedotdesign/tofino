@@ -5,6 +5,10 @@ notifications:
     on_success: never
     on_failure: change
 
+slack:
+  rooms:
+    secure: "gT4Mv8HWLDWGfjZ2eXrQfOqtagfcP5xFYr/Ye+XpcZ3aIVpak5IJy2ZuRXsNklwjIZ6rbbkcR68ROtMgsgex+qR07vizeS24ws2p7lONSyroUavx05o1Yi9oEsOJPFn+a9++/EgXLy6o+QEM5mlKjb0408yyfEVkNFRU+LiEYaC1AH11zSS1M73ipJcWvpyayge50V+AyAKWMGHDSC6OeC9NClxTPLJavXSOwR9kNwuoGRvAJ5UB3B3qWBvUtPtj43HnX/CMGNpH/MqPp50Mw72Qk5NmVpEklfw4y4aIqpO1LxouvsPb4wn9v0lSAXYhfrXlzucCdRUDXUvKM4IY33z1olzweGhsscejpXNT4W9KjTiDmMca5afLPgA7YEn3TR5qiM5I7PX0qxLHLzuaKpJB2it3A0dRDqcx11QR/W2j5juIU7Mie+7pYsJNegn2oHPOdUVZY9LJjJLa5xcNcX5StXwRQLnRU9KV231XQOkb8LBSc4FPua5dwU0pGmmAWPAy1rSCUXoXUumm4yKU/Tr/bK1LMTQz1YrnLn28ZhFFkd10qvDj2F9R5ntSqn+cUyy//vlWEaJ7cnTo0ChbYhbcpRbCDsLXblp6T9+ZqnmO7j2/+yqnVA059686OjEnHMoMAJRgCW5DVyJDpy04Hq0p70yNVeXzvBHxLAJqEaI="
+
 php:
   - 5.6
 
