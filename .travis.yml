@@ -1,51 +1,35 @@
 language: php
-
 notifications:
   email:
     on_success: never
     on_failure: change
   slack:
-    on_success: always
-
-slack:
-  rooms:
-    secure: "S0TqxJjgILshBUsdBZfgJpqh8HyW34L1VZD+K4d+rsEO6XqgPP1F0IsxGgghbRE3+VIkq9PBLye4b4W/ftZIWpJ5DXQa+qFPlPP5vftMILQDBydaXPUiVQMtVEUDBA0Ks0QNd46/aCnya8ICmswSTbm3PDgHnycTaMaonLD+Z7gxH9HGk4Wj84olHIbwAThvGsdVMKw0lJUiYuwsfYsZ4IPP1NOmOqeV9pB5UqOp5BPGTceKsJt1bFaWZ1NP4+WJuaPKMSQlTcxFxI42ja0X+bCcdUbLErnSmvD7hBbW34/UJAxNYqCrRupYNBf9NM7RwFYc72wO/p+EuGPCWQx78gUl/7g9aYhXYU7ld25EFcXUeI7rY0KV6GJuGpCOZZNVioURmJ7TwIu2fZuNbjlDL3EUfhkIVGe3W+K/DcwiqQG721Jh+vfYyO6hQvLWTqJPkXlnlZYlxzIKi9RjrZM8NDw0JeYERgb7IQROZuZ070kKx1fyGjjilTpwEkVSPvjzBlV2o2Wdnv0HQDTA8DD+W/X27nHDbQbx4ywHSBIJFvV6uGlsS3XzbULacShxYDEkZBJqm3kZpDrCIytmz7bj4pdM6aAWISS8Nt9luNiZq53ZOu3Eoc82C+Fh+KPK8CQb8Z8xMENG9JAWwSt6OBTbY2wrvhrZimtbCvMqI4LzGEw="
-
+    secure: rxzCs2IkdPN0/ayYBsLoZT51qfT6o9e1vCN6B+ZJ6ikEqRcluLhuopJ3sMaqNGqb5cZGFhlorApFnr+tY0FiPpIPT2e0TQuFvZO4cgltQjstjRcnoN2B9DJiOFEIj23J48x3Wp/VThD+8PgcrKEoUJELdOr1bJGrEgnGVJa7Us0yJYnQHOnOSnfCPZ0yu5qToP9SqlLga5fFs2hPyyyFbx8SUFxotJz2cm3u0AM5I96ljP1qMq46CrEygn5I2QBUkEv1wqKlVf3ACsfXP2q9Y3VL2SNyZLLnaqQ0YA/nV0ag3jMRy2QfnOCxieh/sTD5CbqmFZs3NjX1fOSRr6YDib0vOu36vmuPJl5FjXxusCY9onQdYHn89m8FLiBwrgcKn0PbECrIue5cCOhQhcPPwfyf3dJscu/AT9P+UV5aqsXye7DFq6QpHmhVSVNJMSqQ/vv5aCcyeAnx925Cd6G/1NCjwn7BAB5g2OVsH+ZP1maT16Yy6Hmp6QYg7kT/JUOyxKLi+hqgEZGr8uALGChka9BWce+10xAdRwUVoo15D0/Jyh2FHUITGilyB7Wy175Ss01IHg9CRTPIllpAVsYKMHyL3yXk/6PomyQnd7rXfYHcS4mxJwUspvuzOSZMWg6KnB3QhFc+HeLnUEQzNhy+Cg1WPrkp/S/us3yQf+5gIms=
 php:
-  - 5.6
-
+- 5.6
 env:
-  - WP_VERSION=latest WP_MULTISITE=0
-
+- WP_VERSION=latest WP_MULTISITE=0
 matrix:
   include:
-    - php: 5.3
-      env: WP_VERSION=latest WP_MULTISITE=1
-
-
+  - php: 5.3
+    env: WP_VERSION=latest WP_MULTISITE=1
 before_install:
-
-  - echo $TRAVIS_OS_NAME
-  # node
-  # ------------------------
-  - export PATH=./node_modules/.bin/:$PATH
-  - rm -rf ~/.nvm && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
-  - source ~/.nvm/nvm.sh
-  - nvm install 4.0.0
-  - nvm use 4
-
+- echo $TRAVIS_OS_NAME
+- export PATH=./node_modules/.bin/:$PATH
+- rm -rf ~/.nvm && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
+- source ~/.nvm/nvm.sh
+- nvm install 4.0.0
+- nvm use 4
 before_script:
-  - npm install -g bower
-  - composer install
-  - bower install
-  - npm install --loglevel error
-  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-
+- npm install -g bower
+- composer install
+- bower install
+- npm install --loglevel error
+- bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 after_success:
-  - mkdir build
-  - mv * build
-  - tar -czf package.tgz build
-
+- mkdir build
+- mv * build
+- tar -czf package.tgz build
 script:
-  - phpunit
-  - gulp --production
+- phpunit
+- gulp --production
