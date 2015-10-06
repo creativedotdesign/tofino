@@ -14,6 +14,7 @@
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
+    "gulp-debug": "^2.1.1",
     "gulp-if": "*",
     "gulp-imagemin": "*",
     "gulp-jshint": "^1.11.2",
