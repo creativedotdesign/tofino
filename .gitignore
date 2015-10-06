@@ -6,6 +6,7 @@
 !.gitkeep
 !.travis.yml
 !.gitattributes
+!.jshintrc
 
 # ignore node/grunt dependency directories
 node_modules/
