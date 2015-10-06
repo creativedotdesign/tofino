@@ -11,9 +11,9 @@ function svg($atts) {
   }
 
   $atts = shortcode_atts(array(
-    'class' => '',
-    'title' => '',
-    'id' => '',
+    'class'  => '',
+    'title'  => '',
+    'id'     => '',
     'sprite' => ''
   ), $atts, 'svg');
 
@@ -36,4 +36,4 @@ function svg($atts) {
 
 }
 
-add_shortcode('svg',  __NAMESPACE__ . '\\svg');
+add_shortcode('svg', 'svg');
