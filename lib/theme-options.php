@@ -109,8 +109,8 @@ function custom_theme_options() {
         'rows'    => '3',
       ),
       array(
-        'id'      => 'menu_sticky_checkbox',
-        'label'   => __( 'Sticky Menu', 'tofino' ),
+        'id'      => 'menu_fixed_checkbox',
+        'label'   => __( 'Menu', 'tofino' ),
         'desc'    => '',
         'std'     => '',
         'type'    => 'checkbox',
@@ -118,7 +118,7 @@ function custom_theme_options() {
         'choices' => array(
           array(
             'value' => false,
-            'label' => __( 'Disable Sticky Menu', 'tofino' ),
+            'label' => __( 'Disable Fixed Menu', 'tofino' ),
             'src'   => ''
           ),
         )

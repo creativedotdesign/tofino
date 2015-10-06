@@ -37,8 +37,8 @@ function menu_position() {
 }
 
 //TODO: Move this function out of functions.php
-function menu_sticky() {
-  $is_disabled = ot_get_option( 'menu_sticky_checkbox' );
+function menu_fixed() {
+  $is_disabled = ot_get_option( 'menu_fixed_checkbox' );
   if ( !$is_disabled ) {
     $class = 'navbar-fixed-top';
   } else {
@@ -50,9 +50,9 @@ function menu_sticky() {
 //This added the menu-sticky and/or the footer sticky classes to the body.
 function add_body_class( $classes ) {
   //Menu Sticky
-  $menu_sticky_disabled = ot_get_option( 'menu_sticky_checkbox' );
+  $menu_sticky_disabled = ot_get_option( 'menu_fixed_checkbox' );
   if ( !$menu_sticky_disabled ) {
-    $classes[] = 'menu-sticky';
+    $classes[] = 'menu-fixed';
   }
 
   //Footer Sticky

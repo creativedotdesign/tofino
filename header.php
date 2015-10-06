@@ -7,7 +7,7 @@
   <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-<nav class="navbar navbar-light <?php echo menu_sticky(); ?> bg-faded <?php echo menu_position(); ?>">
+<nav class="navbar navbar-light <?php echo menu_fixed(); ?> bg-faded <?php echo menu_position(); ?>">
   <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
   <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-menu">
     &#9776;
