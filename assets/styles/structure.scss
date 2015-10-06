@@ -6,7 +6,6 @@ body {
   }
 
   &.footer-sticky { //Flexbox supported browsers only.
-    padding-top: $navbar-height;
     display: flex;
     flex-direction: column;
     height: 100%;
