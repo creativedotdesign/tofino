@@ -19,7 +19,8 @@
     "source": "assets/",
     "dist": "dist/",
     "images": "assets/images/",
-    "svgs": "assets/svgs/"
+    "svgs": "assets/svgs/",
+    "scripts": "assets/scripts/"
   },
   "config": {
     "devUrl": "http://tofino.dev"
