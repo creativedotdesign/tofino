@@ -37,3 +37,9 @@ function svg($atts) {
 }
 
 add_shortcode('svg', 'svg');
+
+function copyright() {
+  return '&copy; ' . date('Y') . ' <span class="copyright-site-name">' . get_bloginfo('name') . '</span>.';
+}
+
+add_shortcode('copyright', 'copyright');

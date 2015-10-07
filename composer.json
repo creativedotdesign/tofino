@@ -24,7 +24,7 @@
       "lib/init.php",
       "lib/assets.php",
       "lib/required-plugins.php",
-      "lib/svg.php",
+      "lib/shortcodes.php",
       "lib/theme-options.php"
     ]
   }

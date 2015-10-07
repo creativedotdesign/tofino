@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-xs-12"><?php
           if ( ot_get_option( 'footer_text' ) ) :
-            echo ot_get_option( 'footer_text' );
+            echo do_shortcode( ot_get_option( 'footer_text' ) ); //Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
           endif; ?>
       </div>
     </div>
