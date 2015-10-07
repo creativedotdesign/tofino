@@ -1,7 +1,5 @@
-/**
- * Extend the wordpress menu classes to use Boostrap styles
- * It's probably best to leave this section alone and add your own overrides afterwards.
- */
+// Extend the wordpress menu classes to use Boostrap styles
+// It's probably best to leave this section alone and add your own overrides afterwards.
 .nav.navbar-nav {
   & > .menu-item {
     @extend .nav-item;
@@ -41,16 +39,11 @@
     }
   }
 }
-/**
- * End bootstrap extensions
- */
 
-/**
-  * Override classes for responsive menu
-  */
+// Override classes for responsive menu
 .navbar-toggleable {
   &-xs {
-    .menu-center & { //Flexbox based centered menu. Warpped in toggleable coz BS4 ways.
+    .menu-center & { // Flexbox based centered menu. Wrapped in toggleable coz BS4 ways.
       @include media-breakpoint-up(sm) {
         display: flex !important;
         justify-content: center;
@@ -63,9 +56,11 @@
 
     @include media-breakpoint-down(xs) {
       clear: both;
+
       .navbar-nav .menu-item {
         float: none;
       }
+
       .dropdown-menu {
         float: none;
         position: relative;
@@ -74,7 +69,7 @@
   }
 }
 
-/* Helper class to center unknown width ul nav bar */
+// Helper class to center unknown width ul nav bar
 .menu-center {
   .navbar-brand {
     position: absolute;
@@ -88,5 +83,5 @@
 }
 
 .navbar-toggler {
- float: right;
+  float: right;
 }

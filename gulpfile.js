@@ -9,7 +9,6 @@ var gulp            = require('gulp'),
 
 var path    = manifest.paths, //path.source, path.dest etc
     globs   = manifest.globs, //globs.images, globs.bower etc
-    project = manifest.getProjectGlobs(),
     config  = manifest.config || {};
 
 function handleError(err) {
@@ -94,7 +93,7 @@ gulp.task('jshint', function() {
   return gulp.src(['bower.json', 'gulpfile.js', path.scripts + '/**/*.js'])
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
-    //.pipe(plugins.if(argv.production, plugins.jshint.reporter('fail'))); Currently fails on vendor scripts.
+    .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail'))); // Currently fails on vendor scripts.
 });
 
 // Min / Crush images
@@ -130,7 +129,7 @@ gulp.task('svgs', ['svg-sprite'], function () {
   return gulp.src(path.svgs + '*.svg')
     .pipe(plugins.debug( { title: "svg-file:" } ))
     .pipe(plugins.svgmin())
-    .pipe(gulp.dest(path.dist + 'svg'))
+    .pipe(gulp.dest(path.dist + 'svg'));
 });
 
 // Deletes the build folder entirely.

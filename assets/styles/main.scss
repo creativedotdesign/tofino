@@ -1,9 +1,10 @@
+@import 'common/variables';
+@import 'common/mixins';
 
-$enable-flex:   true;
-$navbar-height: 4.375rem;
+@import 'base/main'; // Tofino base styles
 
-@import '../../bower_components/bootstrap/scss/bootstrap';
+@import 'components/buttons';
+@import 'components/nav';
+@import 'components/structure';
 
-@import 'structure';
-@import 'nav';
-@import 'alerts';
+@import 'layouts/footer';
