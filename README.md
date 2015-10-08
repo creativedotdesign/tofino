@@ -39,5 +39,5 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * [Composer](https://getcomposer.org/) for PHP package management
 * [TGM Plugin Activation](https://github.com/TGMPA/TGM-Plugin-Activation)
 * [WP-Bootstrap-Navwalker](https://github.com/twittem/wp-bootstrap-navwalker)
-* SVG Sprite Shortcode `[svg sprite="my-sptite-icon"]`
+* SVG Sprite Shortcode `[svg sprite="my-sprite-icon"]`
 * SVG Sprite helper for templates `svg('sprite-name')` or `svg(['sprite'=>'sprite-name'])`
