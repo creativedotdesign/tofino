@@ -100,6 +100,23 @@ function custom_theme_options() {
        'section'     => 'general_settings',
       ),
       array(
+        'id'      => 'address',
+        'label'   => __( 'Address', 'tofino' ),
+        'desc'    => '',
+        'std'     => '',
+        'type'    => 'textarea-simple',
+        'section' => 'general_settings',
+        'rows'    => '4',
+      ),
+      array(
+        'id'          => 'company_number',
+        'label'       => __( 'Company Number', 'tofino' ),
+        'desc'        => '',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'general_settings',
+       ),
+      array(
         'id'      => 'footer_text',
         'label'   => __( 'Footer Text', 'tofino' ),
         'desc'    => '',
