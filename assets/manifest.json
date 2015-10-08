@@ -12,7 +12,7 @@
       "main": true
     },
     "wp-admin.css": {
-      "files": ["styles/wp-admin.scss"]
+      "files": ["styles/base/wp-admin.scss"]
     }
   },
   "paths": {
