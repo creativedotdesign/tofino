@@ -164,6 +164,10 @@ gulp.task('watch', function() {
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
+  gulp.watch(path.source + 'svgs/**/*.svg', ['svgs']).on('change', function(file) {
+    plugins.util.log('File Changed: ' + file.path + '');
+  });
+
   gulp.watch(path.source + 'scripts/*.js', ['scripts']).on('change', function(file) {
     plugins.util.log('File Changed: ' + file.path + '');
   });
