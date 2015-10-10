@@ -25,7 +25,6 @@ gulp.task('styles', ['sass-lint'], function() {
   manifest.forEachDependency('css', function(dep) {
     merged.add(
       gulp.src(dep.globs)
-      .pipe(plugins.debug( { title: "css-file:" } ))
       .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
       .pipe(plugins.sass({ style: 'nested' }))
       .on('error', handleError)
@@ -66,7 +65,6 @@ gulp.task('scripts', ['jshint'], function() {
   manifest.forEachDependency('js', function(dep) {
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
-        .pipe(plugins.debug( { title: "js-file:" } ))
         .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
         .pipe(plugins.concat(dep.name))
         .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
@@ -99,7 +97,6 @@ gulp.task('jshint', function() {
 // Min / Crush images
 gulp.task('images', function () {
   return gulp.src(globs.images)
-    .pipe(plugins.debug( { title: "image-file:" } ))
     .pipe(plugins.imagemin({
       progressive: true,
       use: [pngquant()]
@@ -111,7 +108,6 @@ gulp.task('images', function () {
 // Convert SVGs to Sprites
 gulp.task('svg-sprite', function () {
   return gulp.src(path.svgs + 'sprites/*.svg')
-    .pipe(plugins.debug( { title: "svg-sprite-file:" } ))
     .pipe(plugins.svgmin())
     .pipe(plugins.svgSprite({
       mode: {
@@ -127,7 +123,6 @@ gulp.task('svg-sprite', function () {
 //Minify SVGS + run sprite task
 gulp.task('svgs', ['svg-sprite'], function () {
   return gulp.src(path.svgs + '*.svg')
-    .pipe(plugins.debug( { title: "svg-file:" } ))
     .pipe(plugins.svgmin())
     .pipe(gulp.dest(path.dist + 'svg'));
 });
