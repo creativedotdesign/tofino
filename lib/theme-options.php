@@ -14,6 +14,9 @@ add_filter( 'ot_header_logo_link', '__return_false' );
 //Set 'ot_theme_mode' filter to true.
 add_filter( 'ot_theme_mode', '__return_true' );
 
+//Hide Option Tree settings menu item
+add_filter( 'ot_show_pages', '__return_false' );
+
 //Remove default social media types
 add_filter( 'ot_type_social_links_load_defaults', '__return_false' );
 
