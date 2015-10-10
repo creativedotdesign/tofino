@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lambdacreatives/tofino.svg)](https://travis-ci.org/lambdacreatives/tofino)  [![Dev Dependencies](https://david-dm.org/lambdacreatives/tofino.svg)](https://devid-dm.org/lambdacreatives/tofino)  [![Deployment status from DeployBot](https://lambdacreatives.deploybot.com/badge/77558060036000/47551.svg)](http://deploybot.com)
+[![Build Status](https://travis-ci.org/lambdacreatives/tofino.svg)](https://travis-ci.org/lambdacreatives/tofino) [![devDependency Status](https://david-dm.org/lambdacreatives/tofino/dev-status.svg)](https://david-dm.org/lambdacreatives/tofino#info=devDependencies) [![Deployment status from DeployBot](https://lambdacreatives.deploybot.com/badge/77558060036000/47551.svg)](http://deploybot.com)
 
 ![Tofino](https://raw.githubusercontent.com/mrchimp/tofino/master/screenshot.png)
 
