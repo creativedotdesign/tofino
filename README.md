@@ -18,6 +18,12 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 | Bower >= 1.5.x | `bower -v`   | `npm install -g bower` |
 | Composer >= 1.0.0-alpha10 | `composer -V`   | [getcomposer.org](http://getcomposer.org) |
 
+## Installation
+
+* Download a pre-complied version of the master branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip)
+* Download the latest tagged release (Coming Soon).
+* Clone the git repo and work the magic (Update this).
+
 ## Features
 
 * [Bootstrap 4](http://getbootstrap.com/)
