@@ -11,12 +11,23 @@ var path    = manifest.paths, //path.source, path.dest etc
     globs   = manifest.globs, //globs.images, globs.bower etc
     config  = manifest.config || {};
 
-function handleError(err) {
-  plugins.util.log(plugins.util.colors.red('[ERROR] ' + err.toString()));
-  plugins.util.beep();
-  plugins.notify("An error has occured. Check the console.");
-  this.emit('end');
-}
+//Override standard gulp.src task
+//Use notify and gulp util as error notifcation
+var _gulpsrc = gulp.src;
+gulp.src = function() {
+  return _gulpsrc.apply(gulp, arguments)
+    .pipe(plugins.plumber({
+      errorHandler: function(err) {
+        plugins.notify.onError({
+          title:    "Gulp Error",
+          message:  "Error: <%= error.message %>",
+          sound:    "Bottle"
+        })(err);
+        plugins.util.log(plugins.util.colors.red('[ERROR] ' + err.toString()));
+        this.emit('end');
+      }
+    }));
+};
 
 //Compile SCSS to CSS
 gulp.task('styles', ['sass-lint'], function() {
@@ -27,7 +38,6 @@ gulp.task('styles', ['sass-lint'], function() {
       gulp.src(dep.globs)
       .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
       .pipe(plugins.sass({ style: 'nested' }))
-      .on('error', handleError)
       .pipe(plugins.concat(dep.name))
       .pipe(plugins.autoprefixer({
           browsers: ['last 2 versions']
