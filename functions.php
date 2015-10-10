@@ -15,7 +15,30 @@ $theme_config = [
  * Use 'composer dump-autoload -o' after adding new files.
  *
  */
-require_once 'vendor/autoload.php';
+if ( file_exists( get_template_directory() . '/vendor/autoload.php' ) ) { //Check composer autoload file exists. Result is cached by PHP.
+  require_once 'vendor/autoload.php';
+} else {
+  add_action( 'admin_notices', 'composer_error_notice' );
+}
+
+//Check for missing dist directory. Result is cached by PHP.
+if ( !is_dir( get_template_directory() . '/dist' ) ) {
+  add_action( 'admin_notices', 'missing_dist_error_notice' );
+}
+
+//Admin notice for missing composer autoload.
+function composer_error_notice() { ?>
+  <div class="error notice">
+    <p><?php _e( 'Composer autoload file not found. Run composer install on the comannd line.', 'tofino' ); ?></p>
+  </div><?php
+}
+
+//Admin notice for missing dist directory.
+function missing_dist_error_notice() { ?>
+  <div class="error notice">
+    <p><?php _e( '/dist directory not found. You probably want to run npm install and gulp on the comannd line.', 'tofino' ); ?></p>
+  </div><?php
+}
 
 //TODO: Move this function out of functions.php
 function menu_position() {
