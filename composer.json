@@ -18,6 +18,9 @@
     "twittem/wp-bootstrap-navwalker": "dev-master",
     "valendesigns/option-tree": "2.5.5"
   },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "2.*"
+  },
   "autoload": {
     "files": [
       "vendor/twittem/wp-bootstrap-navwalker/wp_bootstrap_navwalker.php",
