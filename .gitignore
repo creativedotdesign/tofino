@@ -7,6 +7,7 @@
 !.travis.yml
 !.gitattributes
 !.jshintrc
+!.sass-lint.yml
 
 # ignore node/grunt dependency directories
 node_modules/
