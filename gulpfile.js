@@ -137,6 +137,12 @@ gulp.task('svgs', ['svg-sprite'], function () {
     .pipe(gulp.dest(path.dist + 'svg'));
 });
 
+//Copy font files from assets to dist
+gulp.task('fonts', function () {
+  return gulp.src(path.fonts + '*')
+    .pipe(gulp.dest(path.dist + 'fonts'));
+});
+
 gulp.task('php', function () {
   return gulp.src(['**/*.php', '!vendor/**/*.*'])
     .pipe(plugins.phpcs({   // Validate files using PHP Code Sniffer
@@ -151,7 +157,7 @@ gulp.task('php', function () {
 gulp.task('clean', require('del').bind(null, [path.dist]));
 
 // Generic build task. Use with '--production' for minified js / css
-gulp.task('build', ['clean', 'images', 'svgs', 'styles', 'scripts']);
+gulp.task('build', ['clean', 'images', 'svgs', 'styles', 'scripts', 'fonts']);
 
 // Watch Files For Changes
 gulp.task('watch', function() {

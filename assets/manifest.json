@@ -20,7 +20,8 @@
     "dist": "dist/",
     "images": "assets/images/",
     "svgs": "assets/svgs/",
-    "scripts": "assets/scripts/"
+    "scripts": "assets/scripts/",
+    "fonts": "assets/fonts/"
   },
   "config": {
     "devUrl": "http://tofino.dev"
