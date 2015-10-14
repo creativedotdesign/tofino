@@ -147,7 +147,7 @@ gulp.task('php', function () {
   return gulp.src(['**/*.php', '!vendor/**/*.*'])
     .pipe(plugins.phpcs({   // Validate files using PHP Code Sniffer
       bin: 'vendor/bin/phpcs',
-        standard: 'PSR2',
+        standard: 'ruleset.xml',
         warningSeverity: 0
       }))
     .pipe(plugins.phpcs.reporter('log')); // Log all problems that was found
