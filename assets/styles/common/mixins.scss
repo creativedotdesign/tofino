@@ -1,0 +1,11 @@
+// Mixin for font declaration syntax
+@mixin declare-font-face($font-family, $font-filename, $font-weight: normal, $font-style: normal, $font-stretch: normal) {
+  @font-face {
+    font-family: '#{$font-family}';
+    src: url( '/dist/fonts/#{$font-filename}.woff2') format('woff2'),
+    url( '/dist/fonts/#{$font-filename}.woff') format('woff');
+    font-weight: $font-weight;
+    font-style: $font-style;
+    font-stretch: $font-stretch;
+  }
+}
