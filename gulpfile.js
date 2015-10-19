@@ -143,21 +143,34 @@ gulp.task('fonts', ['clean'], function () {
     .pipe(gulp.dest(path.dist + 'fonts'));
 });
 
-gulp.task('php', function () {
-  return gulp.src(['**/*.php', '!vendor/**/*.*'])
-    .pipe(plugins.phpcs({   // Validate files using PHP Code Sniffer
+//Lint PHP files using ruleset.xml.
+gulp.task('php:lint', function () {
+  return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
+    .pipe(plugins.phpcs({ // Validate files using PHP Code Sniffer
       bin: 'vendor/bin/phpcs',
         standard: 'ruleset.xml',
         warningSeverity: 0
       }))
-    .pipe(plugins.phpcs.reporter('log')); // Log all problems that was found
+    .pipe(plugins.phpcs.reporter('log'));
+});
+
+//Fix PHP based on ruleset.xml. This will override existing PHP files
+gulp.task('php:fix', function () {
+  return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
+    .pipe(plugins.phpcbf({
+      bin: 'vendor/bin/phpcbf',
+      standard: 'ruleset.xml',
+      warningSeverity: 0
+    }))
+    .on('error', plugins.util.log)
+    .pipe(gulp.dest('.'));
 });
 
 // Deletes the build folder entirely.
 gulp.task('clean', require('del').bind(null, [path.dist]));
 
 // Generic build task. Use with '--production' for minified js / css
-gulp.task('build', ['clean', 'images', 'svgs', 'styles', 'scripts', 'fonts']);
+gulp.task('build', ['clean', 'images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint']);
 
 // Watch Files For Changes
 gulp.task('watch', function() {

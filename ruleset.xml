@@ -32,6 +32,7 @@
     <exclude-pattern>archive.php</exclude-pattern>
     <exclude-pattern>page.php</exclude-pattern>
     <exclude-pattern>single.php</exclude-pattern>
+    <exclude-pattern>home.php</exclude-pattern>
   </rule>
 
   <!-- Force 2 spaces indentation -->
@@ -42,6 +43,4 @@
     </properties>
   </rule>
 
-  <!-- Verify that operators have valid spacing surrounding them -->
-  <rule ref="Squiz.WhiteSpace.OperatorSpacing"></rule>
 </ruleset>
