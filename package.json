@@ -40,6 +40,8 @@
     "gulp": "*",
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
+    "gulp-confirm": "^1.0.4",
+    "gulp-fixmyjs": "^1.0.2",
     "gulp-help": "^1.6.1",
     "gulp-if": "*",
     "gulp-imagemin": "*",

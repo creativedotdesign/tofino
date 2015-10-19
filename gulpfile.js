@@ -16,6 +16,7 @@ var gulpHelp = {
   stylesLint: 'Lints all SCSS files.',
   scripts: 'Contact js files with sourcemaps. Also runs scripts:lint.',
   scriptsLint: 'Lints all js files.',
+  scriptsFix: 'Fix all fixable JS lint errors. This will update existing files.',
   images: 'Compress JPG and PNG files.',
   svgs: 'Minify SVG files. Also runs svg:sprite.',
   svgSprite: 'Concat and minify SVG files in to a single SVG sprite file.',
@@ -137,6 +138,17 @@ gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
   }
 });
 
+// Fix JS files
+gulp.task('scripts:fix', gulpHelp.scriptsFix, function() {
+  return gulp.src(path.scripts + '/**/*.js', { base: "./" }) //Set a base so dist can map the save path.
+  .pipe(plugins.confirm({
+    question: 'WARNING: This will update existing files. Continue (y/n)?',
+    input: '_key:y'
+  }))
+  .pipe(plugins.fixmyjs()) //Uses options defined in .jshint
+  .pipe(gulp.dest('.')); //Save files in orginal locations
+});
+
 // Min / Crush images
 gulp.task('images', gulpHelp.images, ['clean'], function () {
   return gulp.src(globs.images)
@@ -190,6 +202,10 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
 //Fix PHP based on ruleset.xml. This will update existing PHP files
 gulp.task('php:fix', gulpHelp.phpFix, function () {
   return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
+    .pipe(plugins.confirm({
+    question: 'WARNING: This will update existing files. Continue (y/n)?',
+      input: '_key:y'
+    }))
     .pipe(plugins.phpcbf({
       bin: 'vendor/bin/phpcbf',
       standard: 'ruleset.xml',
