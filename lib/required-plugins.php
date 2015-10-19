@@ -27,7 +27,7 @@ function required_plugins() {
     'message'      => '',                      // Message to output right before the plugins table.
   );
 
-  tgmpa( $plugins, $config );
+  tgmpa($plugins, $config);
 }
 
-add_action( 'tgmpa_register',  __NAMESPACE__ . '\\required_plugins' );
+add_action('tgmpa_register', __NAMESPACE__ . '\\required_plugins');

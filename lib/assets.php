@@ -11,7 +11,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\styles');
  */
 function styles() {
   $stylesheet_base = '/dist/css/main.css';
-  wp_register_style('base',  get_template_directory_uri() . $stylesheet_base . '?v=' . filemtime(get_template_directory() . $stylesheet_base), array(), '', 'all');
+  wp_register_style('base', get_template_directory_uri() . $stylesheet_base . '?v=' . filemtime(get_template_directory() . $stylesheet_base), array(), '', 'all');
   wp_enqueue_style('base'); // Enqueue it!
 }
 
@@ -24,7 +24,7 @@ add_action('admin_head', __NAMESPACE__ . '\\admin_styles');
 
 function admin_styles() {
   $stylesheet_base = '/dist/css/wp-admin.css';
-  wp_register_style('admin',  get_template_directory_uri() . $stylesheet_base . '?v=' . filemtime(get_template_directory() . $stylesheet_base), array(), '', 'all');
+  wp_register_style('admin', get_template_directory_uri() . $stylesheet_base . '?v=' . filemtime(get_template_directory() . $stylesheet_base), array(), '', 'all');
   wp_enqueue_style('admin');
 }
 

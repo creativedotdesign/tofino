@@ -14,7 +14,7 @@
   </button>
   <div id="main-menu" class="collapse navbar-toggleable-xs">
     <?php
-      wp_nav_menu( array(
+      wp_nav_menu(array(
         'menu'              => 'nav_menu',
         'theme_location'    => 'primary_navigation',
         'depth'             => 2,

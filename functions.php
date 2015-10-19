@@ -15,42 +15,44 @@ $theme_config = [
  * Use 'composer dump-autoload -o' after adding new files.
  *
  */
-if ( file_exists( get_template_directory() . '/vendor/autoload.php' ) ) { //Check composer autoload file exists. Result is cached by PHP.
+if (file_exists(get_template_directory() . '/vendor/autoload.php')) { //Check composer autoload file exists. Result is cached by PHP.
   require_once 'vendor/autoload.php';
 } else {
-  add_action( 'admin_notices', 'composer_error_notice' );
+  add_action('admin_notices', 'composer_error_notice');
 }
 
 //Check for missing dist directory. Result is cached by PHP.
-if ( !is_dir( get_template_directory() . '/dist' ) ) {
-  add_action( 'admin_notices', 'missing_dist_error_notice' );
+if (!is_dir(get_template_directory() . '/dist')) {
+  add_action('admin_notices', 'missing_dist_error_notice');
 }
 
 //Admin notice for missing composer autoload.
-function composer_error_notice() { ?>
+function composer_error_notice() {
+  ?>
   <div class="error notice">
-    <p><?php _e( 'Composer autoload file not found. Run composer install on the comannd line.', 'tofino' ); ?></p>
+    <p><?php _e('Composer autoload file not found. Run composer install on the comannd line.', 'tofino'); ?></p>
   </div><?php
 }
 
 //Admin notice for missing dist directory.
-function missing_dist_error_notice() { ?>
+function missing_dist_error_notice() {
+  ?>
   <div class="error notice">
-    <p><?php _e( '/dist directory not found. You probably want to run npm install and gulp on the comannd line.', 'tofino' ); ?></p>
+    <p><?php _e('/dist directory not found. You probably want to run npm install and gulp on the comannd line.', 'tofino'); ?></p>
   </div><?php
 }
 
 //TODO: Move this function out of functions.php
 function menu_position() {
-  $position = ot_get_option( 'menu_position_select' );
-  switch ( $position ) {
+  $position = ot_get_option('menu_position_select');
+  switch ($position) {
     case 'left':
       $class = '';
       break;
     case 'center':
       $class = 'menu-center';
       break;
-    case 'right';
+    case 'right':
       $class = 'menu-right';
       break;
     default:
@@ -61,8 +63,8 @@ function menu_position() {
 
 //TODO: Move this function out of functions.php
 function menu_fixed() {
-  $is_disabled = ot_get_option( 'menu_fixed_checkbox' );
-  if ( !$is_disabled ) {
+  $is_disabled = ot_get_option('menu_fixed_checkbox');
+  if (!$is_disabled) {
     $class = 'navbar-fixed-top';
   } else {
     $class = null;
@@ -71,19 +73,19 @@ function menu_fixed() {
 }
 
 //This added the menu-sticky and/or the footer sticky classes to the body.
-function add_body_class( $classes ) {
+function add_body_class($classes) {
   //Menu Sticky
-  $menu_sticky_disabled = ot_get_option( 'menu_fixed_checkbox' );
-  if ( !$menu_sticky_disabled ) {
+  $menu_sticky_disabled = ot_get_option('menu_fixed_checkbox');
+  if (!$menu_sticky_disabled) {
     $classes[] = 'menu-fixed';
   }
 
   //Footer Sticky
-  $footer_sticky_enabled = ot_get_option( 'footer_sticky_checkbox' );
-  if ( $footer_sticky_enabled ) {
+  $footer_sticky_enabled = ot_get_option('footer_sticky_checkbox');
+  if ($footer_sticky_enabled) {
     $classes[] = 'footer-sticky';
   }
   return $classes;
 }
 
-add_filter( 'body_class', 'add_body_class' );
+add_filter('body_class', 'add_body_class');

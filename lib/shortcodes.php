@@ -45,13 +45,13 @@ function copyright() {
 add_shortcode('copyright', 'copyright');
 
 //Get a theme option as a shortcode. Only for text based values.
-function ot_shortcode( $atts ) {
-  extract( shortcode_atts( array(
+function ot_shortcode($atts) {
+  extract(shortcode_atts(array(
     'id' => '',
     'default'   => ''
-  ), $atts ) );
+  ), $atts));
 
-  return ot_get_option( $id, $default );
+  return ot_get_option($id, $default);
 }
 
 add_shortcode('option', 'ot_shortcode');
