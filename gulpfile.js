@@ -101,7 +101,7 @@ gulp.task('jshint', function() {
   return gulp.src(['bower.json', 'gulpfile.js', path.scripts + '/**/*.js'])
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
-    .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail'))); // Currently fails on vendor scripts.
+    .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail')));
 });
 
 // Min / Crush images
