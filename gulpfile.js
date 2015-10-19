@@ -30,7 +30,7 @@ gulp.src = function() {
 };
 
 //Compile SCSS to CSS
-gulp.task('styles', ['sass-lint'], function() {
+gulp.task('styles', ['sass-lint', 'clean'], function() {
   var merged = merge();
 
   manifest.forEachDependency('css', function(dep) {
@@ -69,7 +69,7 @@ gulp.task('sass-lint', function() {
 });
 
 // Concatenate & Minify JS
-gulp.task('scripts', ['jshint'], function() {
+gulp.task('scripts', ['jshint', 'clean'], function() {
   var merged = merge();
 
   manifest.forEachDependency('js', function(dep) {
@@ -105,7 +105,7 @@ gulp.task('jshint', function() {
 });
 
 // Min / Crush images
-gulp.task('images', function () {
+gulp.task('images', ['clean'], function () {
   return gulp.src(globs.images)
     .pipe(plugins.imagemin({
       progressive: true,
@@ -116,7 +116,7 @@ gulp.task('images', function () {
 });
 
 // Convert SVGs to Sprites
-gulp.task('svg-sprite', function () {
+gulp.task('svg-sprite', ['clean'], function () {
   return gulp.src(path.svgs + 'sprites/*.svg')
     .pipe(plugins.svgmin())
     .pipe(plugins.svgSprite({
@@ -138,7 +138,7 @@ gulp.task('svgs', ['svg-sprite'], function () {
 });
 
 //Copy font files from assets to dist
-gulp.task('fonts', function () {
+gulp.task('fonts', ['clean'], function () {
   return gulp.src(path.fonts + '*')
     .pipe(gulp.dest(path.dist + 'fonts'));
 });
