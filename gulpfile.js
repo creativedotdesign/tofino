@@ -21,7 +21,7 @@ var gulpHelp = {
   svgSprite: 'Concat and minify SVG files in to a single SVG sprite file.',
   fonts: 'Copy the fonts directory to dist.',
   phpLint: 'Lint theme PHP files based on PSR-2.',
-  phpFix: 'Fix all fixable PHP lint errors. This will override existing files.',
+  phpFix: 'Fix all fixable PHP lint errors. This will update existing files.',
   clean: 'Deletes the dist directory.',
   build: 'Main build task. Runs clean, styles, scripts, images, svgs, fonts and php:lint.',
   watch: 'Watch SCSS, JS, SVG and PHP files. Uses browserSync via proxy.',
@@ -187,7 +187,7 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
     .pipe(plugins.phpcs.reporter('log'));
 });
 
-//Fix PHP based on ruleset.xml. This will override existing PHP files
+//Fix PHP based on ruleset.xml. This will update existing PHP files
 gulp.task('php:fix', gulpHelp.phpFix, function () {
   return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
     .pipe(plugins.phpcbf({
