@@ -80,7 +80,7 @@ function menu_fixed() {
   return $class;
 }
 
-//This added the menu-sticky and/or the footer sticky classes to the body.
+//This adds menu-sticky and/or the footer sticky classes to the body.
 function add_body_class($classes) {
   //Menu Sticky
   $menu_sticky_disabled = ot_get_option('menu_fixed_checkbox');
@@ -92,6 +92,12 @@ function add_body_class($classes) {
   $footer_sticky_enabled = ot_get_option('footer_sticky_checkbox');
   if ($footer_sticky_enabled) {
     $classes[] = 'footer-sticky';
+  }
+
+  //Post name
+  global $post;
+  if (isset($post)) {
+    $classes[] = $post->post_type . '-' . $post->post_name;
   }
   return $classes;
 }
