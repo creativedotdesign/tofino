@@ -24,9 +24,9 @@ var gulpHelp = {
   phpLint: 'Lint theme PHP files based on PSR-2.',
   phpFix: 'Fix all fixable PHP lint errors. This will update existing files.',
   clean: 'Deletes the dist directory.',
-  build: 'Main build task. Runs clean, styles, scripts, images, svgs, fonts and php:lint.',
+  build: 'Main build task. Runs styles, scripts, images, svgs, fonts and php:lint. Does NOT delete dist directory.',
   watch: 'Watch SCSS, JS, SVG and PHP files. Uses browserSync via proxy.',
-  default: 'Runs the build task.'
+  default: 'Runs the build task. Deleting the dist directory first.'
 };
 
 //Override standard gulp.src task
@@ -48,7 +48,7 @@ gulp.src = function() {
 };
 
 //Compile SCSS to CSS
-gulp.task('styles', gulpHelp.styles, ['styles:lint', 'clean'], function() {
+gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
   var merged = merge();
 
   manifest.forEachDependency('css', function(dep) {
@@ -95,7 +95,7 @@ gulp.task('styles:lint', gulpHelp.stylesLint, function() {
 });
 
 // Concatenate & Minify JS
-gulp.task('scripts', gulpHelp.scripts, ['scripts:lint', 'clean'], function() {
+gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
   var merged = merge();
 
   manifest.forEachDependency('js', function(dep) {
@@ -150,7 +150,7 @@ gulp.task('scripts:fix', gulpHelp.scriptsFix, function() {
 });
 
 // Min / Crush images
-gulp.task('images', gulpHelp.images, ['clean'], function () {
+gulp.task('images', gulpHelp.images, function () {
   return gulp.src(globs.images)
     .pipe(plugins.imagemin({
       progressive: true,
@@ -168,7 +168,7 @@ gulp.task('svgs', gulpHelp.svgs, ['svg:sprite'], function () {
 });
 
 // Convert SVGs to Sprites
-gulp.task('svg:sprite', gulpHelp.svgSprite, ['clean'], function () {
+gulp.task('svg:sprite', gulpHelp.svgSprite, function () {
   return gulp.src(path.svgs + 'sprites/*.svg')
     .pipe(plugins.svgmin())
     .pipe(plugins.svgSprite({
@@ -183,7 +183,7 @@ gulp.task('svg:sprite', gulpHelp.svgSprite, ['clean'], function () {
 });
 
 //Copy font files from assets to dist
-gulp.task('fonts', gulpHelp.fonts, ['clean'], function () {
+gulp.task('fonts', gulpHelp.fonts, function () {
   return gulp.src(path.fonts + '*')
     .pipe(gulp.dest(path.dist + 'fonts'));
 });
@@ -219,7 +219,7 @@ gulp.task('php:fix', gulpHelp.phpFix, function () {
 gulp.task('clean', gulpHelp.clean, require('del').bind(null, [path.dist]));
 
 // Generic build task. Use with '--production' for minified js / css
-gulp.task('build', gulpHelp.build, ['clean', 'images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint']);
+gulp.task('build', gulpHelp.build, ['images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint']);
 
 // Watch Files For Changes
 gulp.task('watch', gulpHelp.watch, function() {
@@ -261,4 +261,6 @@ gulp.task('watch', gulpHelp.watch, function() {
   }
 });
 
-gulp.task('default', gulpHelp.default, ['build']);
+gulp.task('default', gulpHelp.default, ['clean'], function() {
+  gulp.start('build');
+});
