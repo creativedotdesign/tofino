@@ -25,6 +25,9 @@
     },
     "bootstrap": {
       "dependencies": {}
+    },
+    "jquery": {
+      "main": []
     }
   }
 }
