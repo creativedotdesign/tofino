@@ -60,6 +60,10 @@ function custom_theme_options() {
         'id'    => 'other_settings',
         'title' => __('Other', 'tofino')
       ),
+      array(
+        'id'    => 'contact_form',
+        'title' => __('Contact Form', 'tofino')
+      ),
     ),
     'settings' => array(
       array(
@@ -192,7 +196,55 @@ function custom_theme_options() {
         'type'    => 'textarea-simple',
         'section' => 'other_settings',
         'rows'    => '3'
-      )
+      ),
+      array(
+        'id'          => 'send_from_email_address',
+        'label'       => __('Send from email address', 'tofino'),
+        'desc'        => 'Email address used to send the form emails. Leave blank for server default.',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'contact_form',
+       ),
+      array(
+        'id'      => 'form_success_message',
+        'label'   => __('Success Message', 'tofino'),
+        'desc'    => 'Message displayed to use after form action is successful.',
+        'std'     => "Thanks, we'll be in touch soon.",
+        'type'    => 'textarea-simple',
+        'section' => 'contact_form',
+        'rows'    => '3'
+      ),
+      array(
+        'id'      => 'disable_captcha_checkbox',
+        'label'   => __('Disable reCaptcha', 'tofino'),
+        'desc'    => 'Disable Google reCaptcha "I am not a robot".',
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'contact_form',
+        'choices' => array(
+          array(
+            'value' => false,
+            'label' => __('Disable reCaptcha', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
+        'id'          => 'captcha_site_key',
+        'label'       => __('reCaptcha Site Key', 'tofino'),
+        'desc'        => '',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'contact_form',
+      ),
+      array(
+        'id'          => 'captcha_secret',
+        'label'       => __('reCaptcha Secret Key', 'tofino'),
+        'desc'        => '',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'contact_form',
+      ),
     )
   );
 

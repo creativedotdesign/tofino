@@ -42,7 +42,12 @@ function scripts() {
     wp_register_script('js-all', get_template_directory_uri() . $js_all . '?v=' . filemtime(get_template_directory() . $js_all), array('jquery'), '', true); // Custom scripts
     wp_enqueue_script('js-all'); // Enqueue it!
 
-    wp_register_script('init', get_template_directory_uri() . '/dist/js/head.js' . '?v=' . filemtime(get_template_directory() . $js_all), array(), '', false); // Init scripts
+    //Set vars for ajax and nonce
+    wp_localize_script('js-all', 'tofinoAjax', array(
+      'ajaxUrl'   => admin_url('admin-ajax.php'),
+      'nextNonce' => wp_create_nonce('next_nonce')
+    ));
+
     $js_head = '/dist/js/head.js';
     wp_register_script('init', get_template_directory_uri() . '/dist/js/head.js' . '?v=' . filemtime(get_template_directory() . $js_head), array(), '', false); // Head scripts
     wp_enqueue_script('init'); // Enqueue it!

@@ -16,7 +16,8 @@
   "require": {
     "tgmpa/tgm-plugin-activation": "2.5.2",
     "twittem/wp-bootstrap-navwalker": "dev-master",
-    "valendesigns/option-tree": "2.5.5"
+    "valendesigns/option-tree": "2.5.5",
+    "google/recaptcha": "~1.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*"
@@ -26,6 +27,7 @@
       "vendor/twittem/wp-bootstrap-navwalker/wp_bootstrap_navwalker.php",
       "lib/init.php",
       "lib/assets.php",
+      "lib/contact-form.php",
       "lib/required-plugins.php",
       "lib/shortcodes.php",
       "lib/theme-options.php"

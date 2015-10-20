@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "main.js": {
-      "files": ["scripts/main.js"],
+      "files": ["scripts/contact-form.js", "scripts/main.js"],
       "main": true
     },
     "head.js": {
