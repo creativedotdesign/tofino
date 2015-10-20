@@ -43,6 +43,8 @@ function scripts() {
     wp_enqueue_script('js-all'); // Enqueue it!
 
     wp_register_script('init', get_template_directory_uri() . '/dist/js/head.js' . '?v=' . filemtime(get_template_directory() . $js_all), array(), '', false); // Init scripts
+    $js_head = '/dist/js/head.js';
+    wp_register_script('init', get_template_directory_uri() . '/dist/js/head.js' . '?v=' . filemtime(get_template_directory() . $js_head), array(), '', false); // Head scripts
     wp_enqueue_script('init'); // Enqueue it!
   }
 }
