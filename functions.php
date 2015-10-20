@@ -18,12 +18,20 @@ $theme_config = [
 if (file_exists(get_template_directory() . '/vendor/autoload.php')) { //Check composer autoload file exists. Result is cached by PHP.
   require_once 'vendor/autoload.php';
 } else {
-  add_action('admin_notices', 'composer_error_notice');
+  if (is_admin()) {
+    add_action('admin_notices', 'composer_error_notice');
+  } else {
+    wp_die(composer_error_notice(), 'An error occured.');
+  }
 }
 
 //Check for missing dist directory. Result is cached by PHP.
 if (!is_dir(get_template_directory() . '/dist')) {
-  add_action('admin_notices', 'missing_dist_error_notice');
+  if (is_admin()) {
+    add_action('admin_notices', 'missing_dist_error_notice');
+  } else {
+    wp_die(missing_dist_error_notice(), 'An error occured.');
+  }
 }
 
 //Admin notice for missing composer autoload.
