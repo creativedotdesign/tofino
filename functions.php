@@ -38,7 +38,7 @@ if (!is_dir(get_template_directory() . '/dist')) {
 function composer_error_notice() {
   ?>
   <div class="error notice">
-    <p><?php _e('Composer autoload file not found. Run composer install on the comannd line.', 'tofino'); ?></p>
+    <p><?php _e('Composer autoload file not found. Run composer install on the command line.', 'tofino'); ?></p>
   </div><?php
 }
 
@@ -46,7 +46,7 @@ function composer_error_notice() {
 function missing_dist_error_notice() {
   ?>
   <div class="error notice">
-    <p><?php _e('/dist directory not found. You probably want to run npm install and gulp on the comannd line.', 'tofino'); ?></p>
+    <p><?php _e('/dist directory not found. You probably want to run npm install and gulp on the command line.', 'tofino'); ?></p>
   </div><?php
 }
 
