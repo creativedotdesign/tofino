@@ -39,7 +39,7 @@ function scripts() {
     //wp_deregister_script('jquery'); //It's best practice to use WordPress jQuery and some plugin depend on it.
 
     $js_all = '/dist/js/main.js';
-    wp_register_script('js-all', get_template_directory_uri() . $js_all . '?v=' . filemtime(get_template_directory() . $js_all), array(), '', true); // Custom scripts
+    wp_register_script('js-all', get_template_directory_uri() . $js_all . '?v=' . filemtime(get_template_directory() . $js_all), array('jquery'), '', true); // Custom scripts
     wp_enqueue_script('js-all'); // Enqueue it!
 
     wp_register_script('init', get_template_directory_uri() . '/dist/js/head.js' . '?v=' . filemtime(get_template_directory() . $js_all), array(), '', false); // Init scripts
