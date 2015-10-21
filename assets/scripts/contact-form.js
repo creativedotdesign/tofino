@@ -37,6 +37,8 @@
 
     request.fail(function(response, textStatus, errorThrown) {
       $result_box.addClass('failed').html('An error occured.');
+      $form.find(":input").prop('disabled', false); // Re-enable fields
+      $form.find(":submit").text('Send').prop('disabled', false); // Reset submit btn
       //console.error("The following error occured: " + textStatus, errorThrown);
     });
   });
