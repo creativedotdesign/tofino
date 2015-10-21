@@ -58,17 +58,9 @@ function ajax_contact_form() {
     }
   }
 
-  if (ot_get_option('email_address')) { //Get email address from theme options
-    $recipient = ot_get_option('email_address');
-  } else {
-    $response = array(
-      'success' => false,
-      'message' => __('No recipient email address.', 'tofino')
-    );
-    send_json_repsonse($response);
-  }
 
   $subject    = __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME'];
+  $send_to    = get_recipient();
   $email_body = build_email_body($form_data);
   $send_mail  = send_mail($recipient, $subject, $email_body, $from = null);
 
@@ -85,6 +77,21 @@ function ajax_contact_form() {
   }
 
   send_json_response($response);
+}
+
+function get_recipient() {
+  if (ot_get_option('contact_form_to_address')) { // Email address from contact form options
+    $recipient = ot_get_option('contact_form_to_address');
+  } elseif (ot_get_option('email_address')) { // Email address from general options
+    $recipient = ot_get_option('email_address');
+  } else {
+    $response = array(
+      'success' => false,
+      'message' => __('No recipient email address.', 'tofino')
+    );
+    send_json_response($response);
+  }
+  return $recipient;
 }
 
 function build_email_body($form_data) {
