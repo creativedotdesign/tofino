@@ -1,6 +1,6 @@
 (function($) {
   var request,
-      $form = $('#contact-form'),
+      $form = $('.contact-form'),
       $result_box = $('.js-form-result');
 
   $form.on('submit', function(e) {

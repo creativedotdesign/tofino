@@ -5,10 +5,10 @@
         <?php while (have_posts()) : the_post(); ?>
           <h1><?php the_title(); ?></h1>
 
-          <form name="contact" id="contact-form">
           <!-- Empty div container for form response -->
           <div class="js-form-result"></div>
 
+          <form name="contact" class="contact-form">
 
             <!-- Name / Text input -->
             <fieldset class="form-group">
