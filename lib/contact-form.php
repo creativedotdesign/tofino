@@ -14,7 +14,7 @@ function ajax_contact_form() {
     wp_die('Security check failed.', 'An error occured.');
   }
 
-  $reCaptcha_disabled = ot_get_option('disable_captcha_checkbox');
+  $reCaptcha_enabled = ot_get_option('enable_captcha_checkbox');
 
   $form_data = array();
   parse_str($_POST['data'], $form_data); // Give it the POST data
@@ -28,8 +28,8 @@ function ajax_contact_form() {
     }*/
   }
 
-  // reCaptcha NOT disabled
-  if (!$reCaptcha_disabled) {
+  // reCaptcha enabled
+  if ($reCaptcha_enabled) {
     // Captcha secret check
     if (ot_get_option('captcha_secret')) { //Get email address from theme options
       $secret = ot_get_option('captcha_secret');

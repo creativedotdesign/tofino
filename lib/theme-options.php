@@ -215,16 +215,16 @@ function custom_theme_options() {
         'rows'    => '3'
       ),
       array(
-        'id'      => 'disable_captcha_checkbox',
-        'label'   => __('Disable reCaptcha', 'tofino'),
-        'desc'    => 'Disable Google reCaptcha "I am not a robot".',
+        'id'      => 'enable_captcha_checkbox',
+        'label'   => __('Enable reCaptcha', 'tofino'),
+        'desc'    => 'Enable Google reCaptcha "I am not a robot".',
         'std'     => '',
         'type'    => 'checkbox',
         'section' => 'contact_form',
         'choices' => array(
           array(
-            'value' => false,
-            'label' => __('Disable reCaptcha', 'tofino'),
+            'value' => true,
+            'label' => __('Enable reCaptcha', 'tofino'),
             'src'   => ''
           ),
         )
