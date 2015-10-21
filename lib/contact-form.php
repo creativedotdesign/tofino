@@ -59,11 +59,10 @@ function ajax_contact_form() {
     }
   }
 
-
-  $subject    = __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME'];
   $send_to    = get_recipient();
+  $subject    = (ot_get_option('contact_form_email_subject') ? ot_get_option('contact_form_email_subject') : __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME']);
   $email_body = build_email_body($form_data);
-  $send_mail  = send_mail($recipient, $subject, $email_body, $from = null);
+  $send_mail  = send_mail($send_to, $subject, $email_body, $send_from);
 
   if (true === $send_mail) {
     $response = array(
