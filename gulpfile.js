@@ -247,15 +247,15 @@ gulp.task('watch', gulpHelp.watch, function() {
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
-  gulp.watch(path.source + 'svgs/**/*.svg', ['svgs']).on('change', function(file) {
+  gulp.watch(path.svgs + '**/*.svg', ['svgs']).on('change', function(file) {
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
-  gulp.watch(path.source + 'scripts/*.js', ['scripts']).on('change', function(file) {
   gulp.watch(path.images + '*.*', ['images']).on('change', function(file) {
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
+  gulp.watch(path.scripts + '*.js', ['scripts']).on('change', function(file) {
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
