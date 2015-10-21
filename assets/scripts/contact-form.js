@@ -1,7 +1,7 @@
 (function($) {
   var request,
       $form = $('#contact-form'),
-      $result_box = $form.find('.js-form-result');
+      $result_box = $('.js-form-result');
 
   $form.on('submit', function(e) {
     e.preventDefault(); // Don't really submit.
