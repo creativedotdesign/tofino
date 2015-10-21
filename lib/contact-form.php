@@ -84,22 +84,20 @@ function ajax_contact_form() {
 }
 
 function build_email_body($form_data) {
-  $msg = '<html><body>
-          <table border="0"><tr><td>
-          <h3>New form submission:</h3>';
-
   if (array_key_exists('g-recaptcha-response', $form_data)) {
     unset($form_data['g-recaptcha-response']);
   }
 
+  // Loop through each array item ouput the key value as a string
+  $content = null;
   foreach ($form_data as $key => $value) {
-    $msg .= $key . ': ' . $value . '<br>';
+    $content .= $key . ': ' . $value . '<br>';
   }
 
-  $msg .= '</td></tr></table>
-           </body></html>';
+  $message = file_get_contents(get_template_directory() . '/templates/email/contact-form.html'); // Get the template.
+  $message = str_replace('%message%', $content, $message);
 
-  return $msg;
+  return $message;
 }
 
 function send_json_repsonse($response) {
