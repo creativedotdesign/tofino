@@ -36,7 +36,7 @@ function ajax_contact_form() {
   // reCaptcha enabled
   if ($reCaptcha_enabled) {
     // Captcha secret check
-    if (ot_get_option('captcha_secret')) { //Get email address from theme options
+    if (ot_get_option('captcha_secret')) { //Get from theme options
       $secret = ot_get_option('captcha_secret');
     } else {
       $response = array(
@@ -95,6 +95,7 @@ function get_recipient() {
 }
 
 function build_email_body($form_data) {
+  // Remove reCaptcha from message content
   if (array_key_exists('g-recaptcha-response', $form_data)) {
     unset($form_data['g-recaptcha-response']);
   }
