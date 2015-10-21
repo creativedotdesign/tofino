@@ -60,6 +60,7 @@ function ajax_contact_form() {
   }
 
   $send_to    = get_recipient();
+  $send_from  = (ot_get_option('contact_form_from_address') ? ot_get_option('contact_form_from_address') : null);
   $subject    = (ot_get_option('contact_form_email_subject') ? ot_get_option('contact_form_email_subject') : __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME']);
   $email_body = build_email_body($form_data);
   $send_mail  = send_mail($send_to, $subject, $email_body, $send_from);
@@ -122,7 +123,9 @@ function send_json_response($response) {
 function send_mail($recipient, $subject, $email_body, $from = null) {
   $mail = new PHPMailer;
 
-  $result = mail($recipient, $subject, $email_body, $headers);
+  if ($from) {
+    $mail->setFrom($from);
+  }
 
   $mail->addAddress($recipient);
   $mail->addCC('daniel@lambdacreatives.com');
