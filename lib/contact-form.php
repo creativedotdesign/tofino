@@ -68,12 +68,13 @@ function ajax_contact_form() {
   if (true === $send_mail) {
     $response = array(
       'success' => true,
-      'message' => ot_get_option('form_success_message')
+      'message' => ot_get_option('contact_form_success_message')
     );
   } else {
     $response = array(
       'success' => false,
-      'message' => __('Unable to complete request due to a system error. Send mail failed.', 'tofino')
+      'message' => $send_mail
+      //'message' => __('Unable to complete request due to a system error. Send mail failed.', 'tofino')
     );
   }
 
