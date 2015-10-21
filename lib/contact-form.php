@@ -23,9 +23,13 @@ function ajax_contact_form() {
   foreach ($form_data as $key => $value) {
     $form_data[$key] = filter_var($value, FILTER_SANITIZE_STRING);
 
-    /*if (strpos($form_item,'email') !== false) { // Hunting for email
-      $valid_email = filter_input($form_item, FILTER_VALIDATE_EMAIL);
-    }*/
+    if (strpos($form_data[$key],'email') !== false && filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
+      $response = array(
+        'success' => false,
+        'message' => __('Invalid email address.', 'tofino')
+      );
+      send_json_response($response);
+    }
   }
 
   // reCaptcha enabled
