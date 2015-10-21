@@ -34,11 +34,11 @@ function ajax_contact_form() {
     if (ot_get_option('captcha_secret')) { //Get email address from theme options
       $secret = ot_get_option('captcha_secret');
     } else {
-      $resposne = array(
+      $response = array(
         'success' => false,
         'message' => __('reCaptcha sitekey and/or secret not found. Set this up in the theme options.', 'tofino')
       );
-      send_json_repsonse($resposne);
+      send_json_repsonse($response);
     }
 
     // Captcha validation check
@@ -46,22 +46,22 @@ function ajax_contact_form() {
     $resp = $recaptcha->verify($form_data['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
     if (!$resp->isSuccess()) {
       $errors = $resp->getErrorCodes(); // Should we send some real error codes back to the user?
-      $resposne = array(
+      $response = array(
         'success' => false,
         'message' => __('Captcha failed.', 'tofino')
       );
-      send_json_repsonse($resposne);
+      send_json_repsonse($response);
     }
   }
 
   if (ot_get_option('email_address')) { //Get email address from theme options
     $recipient = ot_get_option('email_address');
   } else {
-    $resposne = array(
+    $response = array(
       'success' => false,
       'message' => __('No recipient email address.', 'tofino')
     );
-    send_json_repsonse($resposne);
+    send_json_repsonse($response);
   }
 
   $subject    = __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME'];
