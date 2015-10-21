@@ -12,8 +12,8 @@
 
     var serializedData = $(this).serialize();
 
-    $(this).find(":input").prop("disabled", true);
-    $(this).find(':submit').text("Sending").prop("disabled", true);
+    $(this).find(':input').prop('disabled', true);
+    $(this).find(':submit').text('Sending').prop('disabled', true);
 
     request = $.post(
       tofinoAjax.ajaxUrl, {
@@ -23,12 +23,14 @@
     });
 
     request.done(function(response, textStatus, errorThrown) {
-      $form.find(":input").text('Send').prop('disabled', false);
       if (response.success === true) {
-        $form.find(':input').val(''); // Reset fields.
         $result_box.addClass('success').html(response.message);
+        $form.find(':input').val(''); // Reset fields.
+        $form.hide(); // Hide form
       } else {
         $result_box.addClass('failed').html(response.message);
+        $form.find(":input").prop('disabled', false); // Re-enable fields
+        $form.find(":submit").text('Send').prop('disabled', false); // Reset submit btn
         //console.error("The following error occured: " + textStatus, errorThrown);
       }
     });
