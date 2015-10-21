@@ -17,7 +17,8 @@
     "tgmpa/tgm-plugin-activation": "2.5.2",
     "twittem/wp-bootstrap-navwalker": "dev-master",
     "valendesigns/option-tree": "2.5.5",
-    "google/recaptcha": "~1.1"
+    "google/recaptcha": "~1.1",
+    "phpmailer/phpmailer": "~5.2"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*"
