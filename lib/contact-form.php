@@ -38,7 +38,7 @@ function ajax_contact_form() {
         'success' => false,
         'message' => __('reCaptcha sitekey and/or secret not found. Set this up in the theme options.', 'tofino')
       );
-      send_json_repsonse($response);
+      send_json_response($response);
     }
 
     // Captcha validation check
@@ -50,7 +50,7 @@ function ajax_contact_form() {
         'success' => false,
         'message' => __('Captcha failed.', 'tofino')
       );
-      send_json_repsonse($response);
+      send_json_response($response);
     }
   }
 
@@ -80,7 +80,7 @@ function ajax_contact_form() {
     );
   }
 
-  send_json_repsonse($response);
+  send_json_response($response);
 }
 
 function build_email_body($form_data) {
@@ -100,7 +100,7 @@ function build_email_body($form_data) {
   return $message;
 }
 
-function send_json_repsonse($response) {
+function send_json_response($response) {
   header('Content-type: application/json');
   $response = json_encode($response);
   echo $response;
