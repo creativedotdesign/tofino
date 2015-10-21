@@ -60,6 +60,10 @@ function custom_theme_options() {
         'id'    => 'other_settings',
         'title' => __('Other', 'tofino')
       ),
+      array(
+        'id'    => 'contact_form',
+        'title' => __('Contact Form', 'tofino')
+      ),
     ),
     'settings' => array(
       array(
@@ -192,7 +196,79 @@ function custom_theme_options() {
         'type'    => 'textarea-simple',
         'section' => 'other_settings',
         'rows'    => '3'
-      )
+      ),
+      array(
+        'id'          => 'contact_form_to_address',
+        'label'       => __('TO email address', 'tofino'),
+        'desc'        => 'Email address used in the TO field. Leave blank to use the email address defined in General Settings.',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'contact_form',
+       ),
+       array(
+         'id'          => 'contact_form_cc_address',
+         'label'       => __('CC email address', 'tofino'),
+         'desc'        => 'Email address used in the CC field.',
+         'std'         => '',
+         'type'        => 'text',
+         'section'     => 'contact_form',
+        ),
+      array(
+        'id'          => 'contact_form_from_address',
+        'label'       => __('FROM email address', 'tofino'),
+        'desc'        => 'Email address used in the FROM field. Leave blank for server default.',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'contact_form',
+       ),
+       array(
+         'id'          => 'contact_form_email_subject',
+         'label'       => __('Email Subject', 'tofino'),
+         'desc'        => 'The subject field. Leave blank for "Form submission from SERVER_NAME".',
+         'std'         => '',
+         'type'        => 'text',
+         'section'     => 'contact_form',
+        ),
+      array(
+        'id'      => 'contact_form_success_message',
+        'label'   => __('Success Message', 'tofino'),
+        'desc'    => 'Message displayed to use after form action is successful.',
+        'std'     => "Thanks, we'll be in touch soon.",
+        'type'    => 'textarea-simple',
+        'section' => 'contact_form',
+        'rows'    => '3'
+      ),
+      array(
+        'id'      => 'enable_captcha_checkbox',
+        'label'   => __('Enable reCaptcha', 'tofino'),
+        'desc'    => 'Enable Google reCaptcha "I am not a robot".',
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'contact_form',
+        'choices' => array(
+          array(
+            'value' => true,
+            'label' => __('Enable reCaptcha', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
+        'id'          => 'captcha_site_key',
+        'label'       => __('reCaptcha Site Key', 'tofino'),
+        'desc'        => '',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'contact_form',
+      ),
+      array(
+        'id'          => 'captcha_secret',
+        'label'       => __('reCaptcha Secret Key', 'tofino'),
+        'desc'        => '',
+        'std'         => '',
+        'type'        => 'text',
+        'section'     => 'contact_form',
+      ),
     )
   );
 
