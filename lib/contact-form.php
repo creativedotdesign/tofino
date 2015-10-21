@@ -2,6 +2,7 @@
 
 namespace Tofino\ContactForm;
 
+use PHPMailer;
 /**
  * AJAX Contact Form
  */
@@ -119,12 +120,19 @@ function send_json_response($response) {
 }
 
 function send_mail($recipient, $subject, $email_body, $from = null) {
-  $headers  = "MIME-Version: 1.0\r\n";
-  $headers .= "Cc: daniel@lambdacreatives.com\r\n";
-  $headers .= "Content-type: text/html; charset=utf-8\r\n";
-  $headers .= "From: server@lambdacreatives.com\r\n";
+  $mail = new PHPMailer;
 
   $result = mail($recipient, $subject, $email_body, $headers);
 
-  return $result;
+  $mail->addAddress($recipient);
+  $mail->addCC('daniel@lambdacreatives.com');
+  $mail->Subject = $subject;
+  $mail->MsgHTML($email_body);
+  $mail->IsHTML(true);
+
+  if(!$mail->send()) {
+    return $mail->ErrorInfo; // Return error message on fail
+  } else {
+    return true;
+  }
 }
