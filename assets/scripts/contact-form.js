@@ -1,4 +1,4 @@
-var TofinoContactForm = (function($) {
+(function($) {
   var request,
       $form = $('#contact-form'),
       $result_box = $form.find('.js-form-result');
