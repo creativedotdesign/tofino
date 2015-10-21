@@ -252,6 +252,10 @@ gulp.task('watch', gulpHelp.watch, function() {
   });
 
   gulp.watch(path.source + 'scripts/*.js', ['scripts']).on('change', function(file) {
+  gulp.watch(path.images + '*.*', ['images']).on('change', function(file) {
+    plugins.util.log('File Changed: ' + file.path + '');
+  });
+
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
