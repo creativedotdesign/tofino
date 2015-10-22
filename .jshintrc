@@ -2,5 +2,5 @@
   "unused": true,
   "undef": true,
   "devel": false,
-  "predef": ["document", "window", "jQuery", "svg4everybody", "Cookies", "require"]
+  "predef": ["document", "window", "jQuery", "svg4everybody", "Cookies", "require", "tofinoAjax", "TofinoContactForm"]
 }
