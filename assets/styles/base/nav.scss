@@ -1,18 +1,20 @@
 // Extend the wordpress menu classes to use Boostrap styles
 // It's probably best to leave this section alone and add your own overrides afterwards.
-.nav.navbar-nav {
-  & > .menu-item {
-    @extend .nav-item;
-
-    & > a {
-      @extend .nav-link;
-    }
-
-    &.menu-item-has-children {
-      @extend .dropdown;
+.nav {
+  &.navbar-nav {
+    & > .menu-item {
+      @extend .nav-item;
 
       & > a {
-        @extend .dropdown-toggle;
+        @extend .nav-link;
+      }
+
+      &.menu-item-has-children {
+        @extend .dropdown;
+
+        & > a {
+          @extend .dropdown-toggle;
+        }
       }
     }
   }
@@ -48,8 +50,10 @@
         display: flex !important;
         justify-content: center;
 
-        .nav.navbar-nav {
-          display: flex;
+        .nav {
+          &.navbar-nav {
+            display: flex;
+          }
         }
       }
     }
@@ -57,8 +61,10 @@
     @include media-breakpoint-down(xs) {
       clear: both;
 
-      .navbar-nav .menu-item {
-        float: none;
+      .navbar-nav {
+        .menu-item {
+          float: none;
+        }
       }
 
       .dropdown-menu {
