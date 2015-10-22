@@ -9,3 +9,16 @@
     font-stretch: $font-stretch;
   }
 }
+
+// Strip them units
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+// Return a rem value based on px. Uses $font-size-root from BS4 variables file.
+@function rem($px-value) {
+  $root-value: strip-unit($font-size-root);
+  $value: strip-unit($px-value);
+  $rem-value: ($value / $root-value) + rem;
+  @return $rem-value;
+}
