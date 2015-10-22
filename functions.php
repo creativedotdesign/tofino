@@ -84,7 +84,7 @@ function menu_fixed() {
  * Helper function to get the pagename.
  * @todo: Move out of functions.php
  */
-function get_pagename($page_id = null) {
+function get_page_name($page_id = null) {
   global $pagename;
   if (! $pagename) { //Not found in the query_var. Permalinks is probably not enabled.
     global $wp_query;
