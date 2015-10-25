@@ -5,6 +5,7 @@ var gulp            = require('gulp-help')(require('gulp'), {hideDepsMessage: tr
     argv            = require('yargs').argv,
     pngquant        = require('imagemin-pngquant'),
     browserSync     = require('browser-sync').create(),
+    fs              = require('fs'),
     plugins         = gulpLoadPlugins();
 
 var path    = manifest.paths, //path.source, path.dest etc
@@ -52,6 +53,14 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
   var merged = merge();
 
   manifest.forEachDependency('css', function(dep) {
+    dep.globs.forEach(function (path) {
+      try {
+        fs.accessSync(path);
+      } catch (e) {
+        plugins.util.log(plugins.util.colors.red('Warning! ' + path + ' does not exist.'));
+      }
+    });
+
     merged.add(
       gulp.src(dep.globs)
       .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
@@ -99,6 +108,14 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
   var merged = merge();
 
   manifest.forEachDependency('js', function(dep) {
+    dep.globs.forEach(function (path) {
+      try {
+        fs.accessSync(path);
+      } catch (e) {
+        plugins.util.log(plugins.util.colors.red('Warning! ' + path + ' does not exist.'));
+      }
+    });
+
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
         .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
