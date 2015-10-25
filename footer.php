@@ -1,5 +1,9 @@
 <?php dynamic_sidebar('sidebar-below-content'); ?>
 
+<?php if (ot_get_option('footer_sticky_checkbox')) : ?>
+  </div>
+<?php endif; ?>
+
 <footer>
   <div class="container">
     <div class="row">

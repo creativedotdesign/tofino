@@ -1,4 +1,4 @@
-<main class="wrapper" role="main">
+<main role="main">
   <div class="container">
     <div class="row">
       <div class="col-xs-12">

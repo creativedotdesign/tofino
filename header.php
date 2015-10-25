@@ -30,4 +30,8 @@
   </div>
 </nav>
 
+<?php if (ot_get_option('footer_sticky_checkbox')) : ?>
+  <div class="wrapper">
+<?php endif; ?>
+
 <?php dynamic_sidebar('sidebar-above-content'); ?>
