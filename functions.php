@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * Config array
+ */
 $theme_config = [
   'svg' => [
     'sprite_file' => get_template_directory_uri() . '/dist/svg/sprite.symbol.svg'
