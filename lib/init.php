@@ -48,3 +48,17 @@ function widgets_init() {
   ]);
 }
 add_action('widgets_init', __NAMESPACE__ . '\\widgets_init');
+
+/**
+ * Add post_name to body class
+ */
+function add_post_name_body_class($classes) {
+  //Post name
+  global $post;
+  if (isset($post)) {
+    $classes[] = $post->post_type . '-' . $post->post_name;
+  }
+  return $classes;
+}
+
+add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');

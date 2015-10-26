@@ -326,3 +326,59 @@ function admin_login_logo() {
     <?php
   }
 }
+
+/**
+ * Add menu-sticky and/or the footer sticky classes to the body.
+ */
+function add_theme_options_body_class($classes) {
+  //Menu Sticky
+  $menu_sticky_disabled = ot_get_option('menu_fixed_checkbox');
+  if (!$menu_sticky_disabled) {
+    $classes[] = 'menu-fixed';
+  }
+
+  //Footer Sticky
+  $footer_sticky_enabled = ot_get_option('footer_sticky_checkbox');
+  if ($footer_sticky_enabled) {
+    $classes[] = 'footer-sticky';
+  }
+
+  return $classes;
+}
+
+add_filter('body_class', __NAMESPACE__ . '\\add_theme_options_body_class');
+
+/**
+ * Return menu position classes based on theme option.
+ */
+function menu_position() {
+  $position = ot_get_option('menu_position_select');
+  switch ($position) {
+    case 'left':
+      $class = '';
+      break;
+    case 'center':
+      $class = 'menu-center';
+      break;
+    case 'right':
+      $class = 'menu-right';
+      break;
+    default:
+      $class = null;
+  }
+  return $class;
+}
+
+/**
+ * Return menu fixed class based on theme option.
+ */
+function menu_fixed() {
+  $is_disabled = ot_get_option('menu_fixed_checkbox');
+  if (!$is_disabled) {
+    $class = 'navbar-fixed-top';
+  } else {
+    $class = null;
+  }
+  return $class;
+}
+

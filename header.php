@@ -7,7 +7,7 @@
   <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-<nav class="navbar navbar-light <?php echo menu_fixed(); ?> bg-faded <?php echo menu_position(); ?>">
+<nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_fixed(); ?> bg-faded <?php echo \Tofino\ThemeOptions\menu_position(); ?> fixedsticky">
   <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-menu">
     &#9776;
   </button>
