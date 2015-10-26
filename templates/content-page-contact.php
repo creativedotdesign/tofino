@@ -5,7 +5,7 @@
         <?php while (have_posts()) : the_post(); ?>
           <h1><?php the_title(); ?></h1>
 
-          <!-- Empty div container for form response -->
+          <!-- Empty div for form response -->
           <div class="js-form-result"></div>
 
           <form name="contact" class="contact-form">
