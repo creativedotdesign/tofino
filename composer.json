@@ -1,4 +1,26 @@
 {
+  "name": "lambdacreatives/tofino",
+  "type": "project",
+  "license": "MIT",
+  "description": "A WordPress starter theme for jumpstarting custom theme development.",
+  "homepage": "https://github.com/lambdacreatives/tofino",
+  "authors": [
+    {
+      "name": "Daniel Hewes",
+      "email": "daniel@lambdacreatives.com",
+      "homepage": "https://github.com/danimalweb"
+    },
+    {
+      "name": "Jake Gully",
+      "email": "chimpytk@gmail.com",
+      "homepage": "https://github.com/mrchimp"
+    }
+  ],
+  "keywords": [
+    "WordPress",
+    "theme",
+    "tofino"
+  ],
   "repositories": [
     {
       "type": "package",
