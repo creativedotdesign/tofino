@@ -113,6 +113,8 @@ function build_email_body($form_data) {
 
   $message = file_get_contents(get_template_directory() . '/templates/email/contact-form.html'); // Get the template.
   $message = str_replace('%message%', $content, $message);
+  $message = str_replace('%ip_address%', __('Client IP Address: ') . $_SERVER['REMOTE_ADDR'], $message);
+  $message = str_replace('%referrer%', __('Referrer: ') . $_SERVER['HTTP_REFERER'], $message);
 
   return $message;
 }
