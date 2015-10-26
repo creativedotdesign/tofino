@@ -55,7 +55,8 @@
       "lib/contact-form.php",
       "lib/required-plugins.php",
       "lib/shortcodes.php",
-      "lib/theme-options.php"
+      "lib/theme-options.php",
+      "lib/helpers.php"
     ]
   }
 }
