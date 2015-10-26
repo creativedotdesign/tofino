@@ -23,14 +23,22 @@
   ],
   "repositories": [
     {
-      "type": "git",
-      "url": "git@github.com:lambdacreatives/wp-bootstrap-navwalker.git"
+      "type": "package",
+      "package": {
+        "name": "twittem/wp-bootstrap-navwalker",
+        "version": "dev-master",
+        "source": {
+          "url": "https://github.com/twittem/wp-bootstrap-navwalker",
+          "type": "git",
+          "reference": "origin/master"
+        }
+      }
     }
   ],
   "require": {
     "composer/installers": "~1.0",
     "tgmpa/tgm-plugin-activation": "2.5.2",
-    "lambdacreatives/wp-bootstrap-navwalker": "dev-master",
+    "twittem/wp-bootstrap-navwalker": "dev-master",
     "valendesigns/option-tree": "2.5.5",
     "google/recaptcha": "~1.1",
     "phpmailer/phpmailer": "~5.2"
