@@ -43,6 +43,7 @@
     "google/recaptcha": "~1.1",
     "phpmailer/phpmailer": "~5.2"
   },
+  "minimum-stability": "dev",
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*"
   },
