@@ -198,6 +198,26 @@ function custom_theme_options() {
         'rows'    => '3'
       ),
       array(
+        'id'      => 'notification_position',
+        'label'   => __('Notification Position', 'tofino'),
+        'desc'    => 'Notification position. Bottom = Fixed over footer. Top = Fixed above top menu.',
+        'std'     => 'bottom',
+        'type'    => 'select',
+        'section' => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => 'top',
+            'label' => __('Top', 'tofino'),
+            'src'   => ''
+          ),
+          array(
+            'value'  => 'bottom',
+            'label'  => __('Bottom', 'tofino'),
+            'src'    => ''
+          ),
+        )
+      ),
+      array(
         'id'          => 'contact_form_to_address',
         'label'       => __('TO email address', 'tofino'),
         'desc'        => 'Email address used in the TO field. Leave blank to use the email address defined in General Settings.',
