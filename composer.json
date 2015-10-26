@@ -36,6 +36,7 @@
     }
   ],
   "require": {
+    "composer/installers": "~1.0",
     "tgmpa/tgm-plugin-activation": "2.5.2",
     "twittem/wp-bootstrap-navwalker": "dev-master",
     "valendesigns/option-tree": "2.5.5",
