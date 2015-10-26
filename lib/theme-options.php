@@ -402,3 +402,17 @@ function menu_fixed() {
   return $class;
 }
 
+function notification($position) {
+  if ($position == ot_get_option('notification_position')) {
+    if (ot_get_option('notification_text') && !isset($_COOKIE['tofino-notification-closed'])) : ?>
+      <!-- Notifcation <?php echo $position; ?> -->
+      <div class="alert alert-info fixed-bottom" id="tofino-notification">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <?php echo ot_get_option('notification_text') ?>
+      </div><?php
+    endif;
+  }
+} 
