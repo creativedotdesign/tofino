@@ -17,7 +17,10 @@
     // JavaScript to be fired on all pages
     common: {
       init: function () {
+        //Iniitalize svg4everybody
         svg4everybody();
+
+        //List for notication close
         $('#tofino-notification .close').on('click', function () {
           Cookies.set('tofino-notification-closed', 'yes');
         });
