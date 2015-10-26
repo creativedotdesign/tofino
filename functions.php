@@ -9,7 +9,6 @@ $theme_config = [
   ]
 ];
 
-
 /**
  * Tofino includes
  *
