@@ -6,6 +6,7 @@
 namespace Tofino\ContactForm;
 
 use PHPMailer;
+
 /**
  * AJAX Contact Form
  */
@@ -27,7 +28,7 @@ function ajax_contact_form() {
   foreach ($form_data as $key => $value) {
     $form_data[$key] = filter_var($value, FILTER_SANITIZE_STRING);
 
-    if (strpos($form_data[$key],'email') !== false && filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
+    if (strpos($form_data[$key], 'email') !== false && filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
       $response = array(
         'success' => false,
         'message' => __('Invalid email address.', 'tofino')
@@ -139,7 +140,7 @@ function send_mail($recipient, $subject, $email_body, $from = null) {
   $mail->MsgHTML($email_body);
   $mail->IsHTML(true);
 
-  if(!$mail->send()) {
+  if (!$mail->send()) {
     return $mail->ErrorInfo; // Return error message on fail
   } else {
     return true;
