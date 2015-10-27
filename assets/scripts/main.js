@@ -24,6 +24,25 @@
         $('#tofino-notification .close').on('click', function () {
           Cookies.set('tofino-notification-closed', 'yes');
         });
+
+        //Assign sticky
+        var $sticky = $('.sticky');
+
+        //Sticky polyfill for css position: sticky
+        $sticky.Stickyfill();
+
+        //Assign stick offset
+        var stickyTop = $('.sticky').offset().top;
+
+        $(window).scroll(function(){
+          if ($(this).scrollTop() > stickyTop){
+            $sticky.addClass('stuck');
+            //$('body').addClass('menu-fixed');
+          } else {
+            $sticky.removeClass('stuck');
+            //$('body').removeClass('menu-fixed');
+          }
+        });
       }
     },
     // Home page

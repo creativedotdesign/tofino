@@ -1,0 +1,23 @@
+.sticky {
+  //position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  /*&.stuck ~ .wrapper {
+    margin-top: $navbar-height;
+  }*/
+}
+
+.sticky-menu {
+  z-index: 1;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}

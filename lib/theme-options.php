@@ -395,7 +395,7 @@ function menu_position() {
 function menu_fixed() {
   $is_disabled = ot_get_option('menu_fixed_checkbox');
   if (!$is_disabled) {
-    $class = 'navbar-fixed-top';
+    $class = 'sticky sticky-menu';
   } else {
     $class = null;
   }

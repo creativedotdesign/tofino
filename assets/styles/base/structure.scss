@@ -1,9 +1,9 @@
 html { height: 100%; }
 
 body {
-  &.menu-fixed {
+  /*&.menu-fixed {
     padding-top: $navbar-height;
-  }
+  }*/
 
   &.footer-sticky { //Flexbox supported browsers only.
     display: flex;
