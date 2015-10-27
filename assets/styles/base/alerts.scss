@@ -1,13 +1,28 @@
 .alert {
-  &.fixed-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 0;
-    margin-bottom: 0;
+  border-radius: 0;
+  border: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding: 0;
+
+  p {
+    margin: auto;
+  }
+
+  &.notification {
+    &.bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    &.top {
+      position: relative;
+    }
+  }
+
   }
 }
