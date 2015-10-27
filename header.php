@@ -10,6 +10,12 @@
 
 <?php \Tofino\ThemeOptions\notification('top'); ?>
 <nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_fixed(); ?> bg-faded <?php echo \Tofino\ThemeOptions\menu_position(); ?> fixedsticky">
+
+<!--[if lte IE 9]>
+  <div class="alert alert-danger browser-warning">
+    <p><?php _e('You are using an <strong>outdated</strong> browser. <a href="http://browsehappy.com/">Update your browser</a> to improve your experience.', 'tofino'); ?></p>
+  </div>
+<![endif]-->
   <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-menu">
     &#9776;
   </button>
