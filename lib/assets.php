@@ -37,7 +37,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\scripts');
 function scripts() {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
     wp_deregister_script('jquery');
-    wp_register_script('jquery', "http" . get_template_directory_uri() . '/dist/js/jquery.js', false, null);
+    wp_register_script('jquery', get_template_directory_uri() . '/dist/js/jquery.js', false, null);
     wp_enqueue_script('jquery');
 
     $js_all = '/dist/js/main.js';
