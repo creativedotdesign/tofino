@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "jquery.js": {
+      "files": ["../bower_components/jquery/dist/jquery.js"]
+    },
     "main.js": {
       "files": ["scripts/contact-form.js", "scripts/main.js"],
       "main": true

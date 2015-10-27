@@ -36,7 +36,9 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\scripts');
 
 function scripts() {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    //wp_deregister_script('jquery'); //It's best practice to use WordPress jQuery and some plugin depend on it.
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', "http" . get_template_directory_uri() . '/dist/js/jquery.js', false, null);
+    wp_enqueue_script('jquery');
 
     $js_all = '/dist/js/main.js';
     wp_register_script('js-all', get_template_directory_uri() . $js_all . '?v=' . filemtime(get_template_directory() . $js_all), array('jquery'), '', true); // Custom scripts
