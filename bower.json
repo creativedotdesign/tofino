@@ -22,9 +22,6 @@
   "overrides": {
     "svg4everybody": {
       "main": "dist/svg4everybody.js"
-    },
-    "bootstrap": {
-      "dependencies": {}
     }
   }
 }
