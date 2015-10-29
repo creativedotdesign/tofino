@@ -276,6 +276,8 @@ gulp.task('watch', gulpHelp.watch, function() {
     plugins.util.log('File Changed: ' + file.path + '');
   });
 
+  gulp.watch(['**/*.php', '!vendor/**/*.php'], ['php:lint']); //No need to log the filename. BrowserSync does this.
+
 }, {
   options: {
     'chill': 'Do not pass clicks, forms or scroll to other browsers.'
