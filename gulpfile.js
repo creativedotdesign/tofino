@@ -261,19 +261,19 @@ gulp.task('watch', gulpHelp.watch, function() {
   plugins.util.log('Watching source files for changes... Press ' + plugins.util.colors.cyan('CTRL + C') + ' to stop.');
 
   gulp.watch(path.source + 'styles/**/*.scss', ['styles']).on('change', function(file) {
-    plugins.util.log('File Changed: ' + file.path + '');
+    plugins.util.log('SCSS file changed: ' + file.path + '');
   });
 
   gulp.watch(path.svgs + '**/*.svg', ['svgs']).on('change', function(file) {
-    plugins.util.log('File Changed: ' + file.path + '');
+    plugins.util.log('SVG file changed: ' + file.path + '');
   });
 
   gulp.watch(path.images + '*.*', ['images']).on('change', function(file) {
-    plugins.util.log('File Changed: ' + file.path + '');
+    plugins.util.log('Image file changed: ' + file.path + '');
   });
 
   gulp.watch(path.scripts + '*.js', ['scripts']).on('change', function(file) {
-    plugins.util.log('File Changed: ' + file.path + '');
+    plugins.util.log('JS file changed: ' + file.path + '');
   });
 
   gulp.watch(['**/*.php', '!vendor/**/*.php'], ['php:lint']); //No need to log the filename. BrowserSync does this.
