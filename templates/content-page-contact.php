@@ -46,8 +46,11 @@
         <?php endwhile; ?>
       </div>
       <div class="col-xs-4 col-xs-offset-2">
-        <?php echo ot_shortcode('address'); ?>
-        <?php echo ot_shortcode('telephone_number'); ?>
+        <address>
+        <?php echo nl2br(ot_shortcode('address')); ?>
+        </address>
+
+        <?php echo ot_shortcode('telephone_number'); ?><br>
         <?php echo ot_shortcode('email_address'); ?>
       </div>
     </div>
