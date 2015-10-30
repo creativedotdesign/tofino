@@ -1,17 +1,13 @@
 html { height: 100%; }
 
 body {
-  /*&.menu-fixed {
-    padding-top: $navbar-height;
-  }*/
-
   &.footer-sticky { //Flexbox supported browsers only.
     display: flex;
+    min-height: 100vh;
     flex-direction: column;
-    height: 100%;
 
     .wrapper {
-      flex: 1 0 auto;
+      flex: 1;
     }
   }
 }
