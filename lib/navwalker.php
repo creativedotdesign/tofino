@@ -46,6 +46,7 @@ class NavWalker extends \Walker_Nav_Menu {
     $this->has_children = !empty($children_elements[$element->$id_field]);
     parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
   }
+}
 
 /**
  * Filters
