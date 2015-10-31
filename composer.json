@@ -21,35 +21,19 @@
     "theme",
     "tofino"
   ],
-  "repositories": [
-    {
-      "type": "package",
-      "package": {
-        "name": "twittem/wp-bootstrap-navwalker",
-        "version": "dev-master",
-        "source": {
-          "url": "https://github.com/twittem/wp-bootstrap-navwalker",
-          "type": "git",
-          "reference": "origin/master"
-        }
-      }
-    }
-  ],
   "require": {
     "composer/installers": "~1.0",
     "tgmpa/tgm-plugin-activation": "2.5.2",
-    "twittem/wp-bootstrap-navwalker": "dev-master",
     "valendesigns/option-tree": "2.5.5",
     "google/recaptcha": "~1.1",
     "phpmailer/phpmailer": "~5.2"
   },
-  "minimum-stability": "dev",
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*"
   },
   "autoload": {
     "files": [
-      "vendor/twittem/wp-bootstrap-navwalker/wp_bootstrap_navwalker.php",
+      "lib/navwalker.php",
       "lib/init.php",
       "lib/assets.php",
       "lib/contact-form.php",

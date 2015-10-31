@@ -24,16 +24,15 @@
   <div id="main-menu" class="collapse navbar-toggleable-xs">
     <?php
       wp_nav_menu(array(
-        'menu'              => 'nav_menu',
-        'theme_location'    => 'primary_navigation',
-        'depth'             => 2,
-        'container'         => '',
-        'container_class'   => '',
-        'container_id'      => '',
-        'menu_class'        => 'nav navbar-nav',
-        'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
-        'items_wrap'        => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-        'walker'            => new wp_bootstrap_navwalker()
+        'menu'            => 'nav_menu',
+        'theme_location'  => 'primary_navigation',
+        'depth'           => 2,
+        'container'       => '',
+        'container_class' => '',
+        'container_id'    => '',
+        'menu_class'      => 'nav navbar-nav',
+        'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+        'walker'          => new Tofino\Nav\NavWalker()
       ));
     ?>
   </div>
