@@ -78,6 +78,10 @@ class NavWalker extends \Walker_Nav_Menu {
       $classes[] = 'nav-item';
     }
 
+    if (strcasecmp($item->attr_title, 'header') == 0) {
+      $classes[] = 'dropdown-header';
+    }
+
     $slug = sanitize_title($item->title);
 
     if ($this->cpt) {
@@ -87,7 +91,7 @@ class NavWalker extends \Walker_Nav_Menu {
       }
     }
 
-    $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', 'active', $classes);
+    $classes = preg_replace('/(current(-menu-|[-_]page[-_])(item|parent|ancestor))/', '', $classes);
     $classes = preg_replace('/^((menu|page)[-_\w+]+)+/', '', $classes);
     $classes[] = 'menu-' . $slug;
     $classes = array_unique($classes);
@@ -103,14 +107,26 @@ class NavWalker extends \Walker_Nav_Menu {
    */
    // @codingStandardsIgnoreStart
   public function filter_menu_link_atts($atts, $item, $args) {
-    $atts['class'] = 'nav-link';
+
+    $classes   = array();
+    $classes[] = 'nav-link';
 
     if ($args->walker->has_children) {
       $atts['data-toggle']   = 'dropdown';
-      $atts['class']         = 'dropdown-toggle nav-link';
+      $classes[]             = 'dropdown-toggle';
       $atts['aria-haspopup'] = 'true';
       $args->link_after      = ' <i class="caret"></i>';
     }
+
+    if (strcasecmp($item->attr_title, 'disabled') == 0) {
+      $classes[] = 'disabled';
+    }
+
+    if ($item->current == 1) {
+      $classes[] = 'active';
+    }
+
+    $atts['class'] = implode(' ', $classes);
 
     return $atts;
   }
@@ -126,7 +142,7 @@ class NavWalker extends \Walker_Nav_Menu {
     if (strcasecmp($item->attr_title, 'divider') == 0 && $depth === 1) {
       $item_output .= $indent . '<li role="presentation" class="dropdown-divider">';
     } else if ((strcasecmp($item->attr_title, 'header') == 0 && $depth === 1) && $depth === 1) {
-      $item_output = $indent . '<h6 class="dropdown-header">' . esc_attr($item->title) . '</h6>';
+      $item_output = $indent . '<h6>' . esc_attr($item->title) . '</h6>';
     }
 
     $args->link_before = '';
