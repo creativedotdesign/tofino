@@ -16,7 +16,7 @@
   </div>
 <![endif]-->
 
-<nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_fixed(); ?> bg-faded <?php echo \Tofino\ThemeOptions\menu_position(); ?>">
+<nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_fixed(); ?> <?php echo \Tofino\ThemeOptions\menu_position(); ?>">
   <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#main-menu">
     &#9776;
   </button>
