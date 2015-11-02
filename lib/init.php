@@ -18,7 +18,7 @@ function setup() {
     'primary_navigation' => __('Primary Navigation', 'tofino')
   ]);
 
-  //Allow editor role to edit theme options.
+  // Allow editor role to edit theme options.
   get_role('editor')->add_cap('edit_theme_options');
 
 }
