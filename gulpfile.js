@@ -15,7 +15,7 @@ var path    = manifest.paths, //path.source, path.dest etc
 var gulpHelp = {
   styles: 'Compile and concat SCSS to CSS with sourcemaps and autoprefixer. Also runs styles:lint.',
   stylesLint: 'Lints all SCSS files.',
-  scripts: 'Contact js files with sourcemaps. Also runs scripts:lint.',
+  scripts: 'Concat js files with sourcemaps. Also runs scripts:lint.',
   scriptsLint: 'Lints all js files.',
   scriptsFix: 'Fix all fixable JS lint errors. This will update existing files.',
   images: 'Compress JPG and PNG files.',
