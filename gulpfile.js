@@ -28,6 +28,7 @@ var gulpHelp = {
   build: 'Main build task. Runs styles, scripts, images, svgs, fonts and php:lint. Does NOT delete dist directory.',
   watch: 'Watch SCSS, JS, SVG and PHP files. Uses browserSync via proxy.',
   default: 'Runs the build task. Deleting the dist directory first.'
+  translate  : 'Generate a POT file in languages directory for easy translation. This will override existing file.',
 };
 
 //Override standard gulp.src task
@@ -233,7 +234,7 @@ gulp.task('php:fix', gulpHelp.phpFix, function () {
 });
 
 // Genereate POT file of translatable strings
-gulp.task('translate', function () {
+gulp.task('translate', gulpHelp.translate, function () {
   return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
     .pipe(plugins.sort())
     .pipe(plugins.wpPot({domain: 'tofino'}))
