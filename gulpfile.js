@@ -245,7 +245,7 @@ gulp.task('translate', gulpHelp.translate, function () {
 gulp.task('clean', gulpHelp.clean, require('del').bind(null, [path.dist]));
 
 // Generic build task. Use with '--production' for minified js / css
-gulp.task('build', gulpHelp.build, ['images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint']);
+gulp.task('build', gulpHelp.build, ['images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint', 'translate']);
 
 // Watch Files For Changes
 gulp.task('watch', gulpHelp.watch, function() {
