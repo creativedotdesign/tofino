@@ -45,9 +45,9 @@ function scripts() {
     wp_enqueue_script('js-all'); // Enqueue it!
 
     //Set vars for ajax and nonce
-    wp_localize_script('js-all', 'tofinoAjax', array(
       'ajaxUrl'   => admin_url('admin-ajax.php'),
       'nextNonce' => wp_create_nonce('next_nonce')
+    wp_localize_script('js-all', 'tofinoJS', array(
     ));
 
     $js_head = '/dist/js/head.js';

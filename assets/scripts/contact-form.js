@@ -16,10 +16,10 @@
     $(this).find(':submit').text('Sending').prop('disabled', true);
 
     request = $.post(
-      tofinoAjax.ajaxUrl, {
+      tofinoJS.ajaxUrl, {
         action: 'contact-form',
         data: serializedData,
-        nextNonce: tofinoAjax.nextNonce
+        nextNonce: tofinoJS.nextNonce
     });
 
     request.done(function(response, textStatus, errorThrown) { // jshint ignore:line
