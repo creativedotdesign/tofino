@@ -22,7 +22,7 @@
         nextNonce: tofinoAjax.nextNonce
     });
 
-    request.done(function(response, textStatus, errorThrown) {
+    request.done(function(response, textStatus, errorThrown) { // jshint ignore:line
       if (response.success === true) {
         $result_box.addClass('success').html(response.message);
         $form.find(':input').val(''); // Reset fields.
@@ -35,7 +35,7 @@
       }
     });
 
-    request.fail(function(response, textStatus, errorThrown) {
+    request.fail(function(response, textStatus, errorThrown) { // jshint ignore:line
       $result_box.addClass('failed').html('An error occured.');
       $form.find(":input").prop('disabled', false); // Re-enable fields
       $form.find(":submit").text('Send').prop('disabled', false); // Reset submit btn
