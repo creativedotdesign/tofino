@@ -10,6 +10,9 @@ function setup() {
   // Enable plugins to manage the document title
   add_theme_support('title-tag');
 
+  // Enable featured images for Posts
+  add_theme_support('post-thumbnails', array('post'));
+
   // Register wp_nav_menu() menus
   register_nav_menus([
     'primary_navigation' => __('Primary Navigation', 'tofino')
