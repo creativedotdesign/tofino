@@ -198,6 +198,14 @@ function custom_theme_options() {
         'rows'    => '3'
       ),
       array(
+        'id'      => 'cookie_expires',
+        'label'   => __('Cookie Expires', 'tofino'),
+        'desc'    => __('Number of days until the cookie expires', 'tofino'),
+        'std'     => '',
+        'type'    => 'text',
+        'section' => 'other_settings',
+      ),
+      array(
         'id'      => 'notification_position',
         'label'   => __('Notification Position', 'tofino'),
         'desc'    => __('Notification position. Bottom = Fixed over footer. Top = Fixed above top menu.', 'tofino'),

@@ -163,78 +163,86 @@ msgid "Notification is shown until dismissed (at which point a cookie is set)."
 msgstr ""
 
 #: lib/theme-options.php:202
-msgid "Notification Position"
+msgid "Cookie Expires"
 msgstr ""
 
 #: lib/theme-options.php:203
-msgid "Notification position. Bottom = Fixed over footer. Top = Fixed above top menu."
+msgid "Number of days until the cookie expires"
 msgstr ""
 
 #: lib/theme-options.php:210
+msgid "Notification Position"
+msgstr ""
+
+#: lib/theme-options.php:211
+msgid "Notification position. Bottom = Fixed over footer. Top = Fixed above top menu."
+msgstr ""
+
+#: lib/theme-options.php:218
 msgid "Top"
 msgstr ""
 
-#: lib/theme-options.php:215
+#: lib/theme-options.php:223
 msgid "Bottom"
 msgstr ""
 
-#: lib/theme-options.php:222
+#: lib/theme-options.php:230
 msgid "TO email address"
 msgstr ""
 
-#: lib/theme-options.php:223
+#: lib/theme-options.php:231
 msgid "Email address used in the TO field. Leave blank to use the email address defined in General Settings."
 msgstr ""
 
-#: lib/theme-options.php:230
+#: lib/theme-options.php:238
 msgid "CC email address"
 msgstr ""
 
-#: lib/theme-options.php:231
+#: lib/theme-options.php:239
 msgid "Email address used in the CC field."
 msgstr ""
 
-#: lib/theme-options.php:238
+#: lib/theme-options.php:246
 msgid "FROM email address"
 msgstr ""
 
-#: lib/theme-options.php:239
+#: lib/theme-options.php:247
 msgid "Email address used in the FROM field. Leave blank for server default."
 msgstr ""
 
-#: lib/theme-options.php:246
+#: lib/theme-options.php:254
 msgid "Email Subject"
 msgstr ""
 
-#: lib/theme-options.php:247
+#: lib/theme-options.php:255
 msgid "The subject field. Leave blank for "Form submission from SERVER_NAME"."
 msgstr ""
 
-#: lib/theme-options.php:254
+#: lib/theme-options.php:262
 msgid "Success Message"
 msgstr ""
 
-#: lib/theme-options.php:255
+#: lib/theme-options.php:263
 msgid "Message displayed to use after form action is successful."
 msgstr ""
 
-#: lib/theme-options.php:256
+#: lib/theme-options.php:264
 msgid "Thanks, we'll be in touch soon."
 msgstr ""
 
-#: lib/theme-options.php:263, lib/theme-options.php:271
+#: lib/theme-options.php:271, lib/theme-options.php:279
 msgid "Enable reCaptcha"
 msgstr ""
 
-#: lib/theme-options.php:264
+#: lib/theme-options.php:272
 msgid "Enable Google reCaptcha "I am not a robot"."
 msgstr ""
 
-#: lib/theme-options.php:278
+#: lib/theme-options.php:286
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: lib/theme-options.php:286
+#: lib/theme-options.php:294
 msgid "reCaptcha Secret Key"
 msgstr ""
 

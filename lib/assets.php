@@ -45,9 +45,10 @@ function scripts() {
     wp_enqueue_script('js-all'); // Enqueue it!
 
     //Set vars for ajax and nonce
-      'ajaxUrl'   => admin_url('admin-ajax.php'),
-      'nextNonce' => wp_create_nonce('next_nonce')
     wp_localize_script('js-all', 'tofinoJS', array(
+      'ajaxUrl'       => admin_url('admin-ajax.php'),
+      'nextNonce'     => wp_create_nonce('next_nonce'),
+      'cookieExpires' => (ot_get_option('cookie_expires') ? ot_get_option('cookie_expires') : "")
     ));
 
     $js_head = '/dist/js/head.js';

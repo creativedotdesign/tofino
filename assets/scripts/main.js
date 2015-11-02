@@ -22,7 +22,11 @@
 
         //List for notication close
         $('#tofino-notification .close').on('click', function () {
-          Cookies.set('tofino-notification-closed', 'yes');
+          if (tofinoJS.cookieExpires) {
+            Cookies.set('tofino-notification-closed', 'yes', { expires: parseInt(tofinoJS.cookieExpires) });
+          } else {
+            Cookies.set('tofino-notification-closed', 'yes');
+          }
         });
 
         //Assign sticky
