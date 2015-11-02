@@ -19,6 +19,7 @@
     clear: both;
 
     .navbar-nav {
+      width: 100%;
       .nav-item {
         float: none;
 
@@ -41,8 +42,23 @@
 
     padding: 0;
   }
+}
 
+.navbar {
   background-color: $gray-lightest;
+  padding: 0;
+
+  .navbar-nav {
+    display: inline-block;
+  }
+}
+
+.navbar-toggler {
+  float: right;
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .dropdown-header {
@@ -60,12 +76,15 @@
   }
 }
 
-.menu-right {
-  .navbar-nav {
-    @extend .pull-right;
-  }
-}
+@include media-breakpoint-up(sm) {
+  .menu-right {
+    .navbar-nav {
+      float: right;
+      padding-right: 5px;
+    }
 
-.navbar-toggler {
-  float: right;
+    .dropdown-menu {
+      @extend .dropdown-menu-right;
+    }
+  }
 }
