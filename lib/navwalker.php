@@ -115,7 +115,6 @@ class NavWalker extends \Walker_Nav_Menu {
       $atts['data-toggle']   = 'dropdown';
       $classes[]             = 'dropdown-toggle';
       $atts['aria-haspopup'] = 'true';
-      $args->link_after      = ' <i class="caret"></i>';
     }
 
     if (strcasecmp($item->attr_title, 'disabled') == 0) {
