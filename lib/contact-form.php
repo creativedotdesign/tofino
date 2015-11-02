@@ -64,10 +64,11 @@ function ajax_contact_form() {
   }
 
   $send_to    = get_recipient();
+  $send_cc    = (ot_get_option('contact_form_cc_address') ? ot_get_option('contact_form_cc_address') : null);
   $send_from  = (ot_get_option('contact_form_from_address') ? ot_get_option('contact_form_from_address') : null);
   $subject    = (ot_get_option('contact_form_email_subject') ? ot_get_option('contact_form_email_subject') : __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME']);
   $email_body = build_email_body($form_data);
-  $send_mail  = send_mail($send_to, $subject, $email_body, $send_from);
+  $send_mail  = send_mail($send_to, $send_cc, $subject, $email_body, $send_from);
 
   if (true === $send_mail) {
     $response = array(
@@ -127,7 +128,7 @@ function send_json_response($response) {
   exit;
 }
 
-function send_mail($recipient, $subject, $email_body, $from = null) {
+function send_mail($recipient, $recipient_cc, $subject, $email_body, $from = null) {
   $mail = new PHPMailer;
 
   if ($from) {
@@ -135,7 +136,11 @@ function send_mail($recipient, $subject, $email_body, $from = null) {
   }
 
   $mail->addAddress($recipient);
-  $mail->addCC('daniel@lambdacreatives.com');
+
+  if ($recipient_cc) {
+    $mail->addCC($recipient_cc);
+  }
+
   $mail->Subject = $subject;
   $mail->MsgHTML($email_body);
   $mail->IsHTML(true);
