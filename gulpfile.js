@@ -38,12 +38,8 @@ gulp.src = function() {
   return _gulpsrc.apply(gulp, arguments)
     .pipe(plugins.plumber({
       errorHandler: function(err) {
-        plugins.notify.onError({
-          title:    "Gulp Error",
-          message:  "Error: <%= error.message %>",
-          sound:    "Bottle"
-        })(err);
-        plugins.util.log(plugins.util.colors.red('[ERROR] ' + err.toString()));
+        //plugins.notify.onError("Error: <%= error.message %>")(err);
+        plugins.notify.onError("Error: " + err.toString())(err);
         this.emit('end');
       }
     }));
@@ -79,12 +75,9 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
   .pipe(gulp.dest(path.dist + '/css'))
   .pipe(browserSync.reload({stream:true}))
   .pipe(plugins.if(!argv.production, plugins.notify({
-      "title": "Gulp Notification",
       "subtitle": "Task Complete",
       "message": "Styles task complete",
-      "sound": "Frog",
-      "onLast": true,
-      "wait": true
+      "onLast": true
     })));
 }, {
   options: {
@@ -131,12 +124,9 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 
   return merged
   .pipe(plugins.if(!argv.production, plugins.notify({
-      "title": "Gulp Notification",
       "subtitle": "Task Complete",
       "message": "Scripts task complete",
-      "sound": "Frog",
-      "onLast": true,
-      "wait": true
+      "onLast": true
     })));
 }, {
   options: {
