@@ -21,6 +21,9 @@ function setup() {
   // Allow editor role to edit theme options.
   get_role('editor')->add_cap('edit_theme_options');
 
+  // Load language file
+  load_theme_textdomain('tofino', get_template_directory() . '/languages');
+
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 

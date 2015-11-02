@@ -232,6 +232,14 @@ gulp.task('php:fix', gulpHelp.phpFix, function () {
     .pipe(gulp.dest('.'));
 });
 
+// Genereate POT file of translatable strings
+gulp.task('translate', function () {
+  return gulp.src(['**/*.php'])
+    .pipe(plugins.sort())
+    .pipe(plugins.wpPot({domain: 'tofino'}))
+    .pipe(gulp.dest('languages'));
+});
+
 // Deletes the build folder entirely.
 gulp.task('clean', gulpHelp.clean, require('del').bind(null, [path.dist]));
 
