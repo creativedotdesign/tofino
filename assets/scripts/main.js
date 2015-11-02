@@ -26,13 +26,13 @@
         });
 
         //Assign sticky
-        var $sticky = $('.sticky');
+        var $sticky = $('.navbar-sticky-top');
 
         //Sticky polyfill for css position: sticky
         $sticky.Stickyfill();
 
         //Assign stick offset
-        var stickyTop = $('.sticky').offset().top;
+        var stickyTop = $('.navbar-sticky-top').offset().top;
 
         $(window).scroll(function(){
           if ($(this).scrollTop() > stickyTop){

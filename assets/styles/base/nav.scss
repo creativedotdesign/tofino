@@ -1,77 +1,71 @@
-// Extend the wordpress menu classes to use Boostrap styles
 // It's probably best to leave this section alone and add your own overrides afterwards.
-.nav {
-  &.navbar-nav {
-    & > .menu-item {
-      @extend .nav-item;
-
-      & > a {
-        @extend .nav-link;
-      }
-
-      &.menu-item-has-children {
-        @extend .dropdown;
-
-        & > a {
-          @extend .dropdown-toggle;
-        }
-      }
-    }
-  }
-}
-
-.dropdown-menu {
-  .menu-item {
-    @extend .dropdown-item;
-
-    &.active {
-      a {
-        color: $dropdown-link-active-color;
-      }
-    }
-
-    & > a {
-      @extend .dropdown-item;
-
-      padding: 0;
-
-      &:hover {
-        background: transparent;
-      }
-    }
-  }
-}
 
 // Override classes for responsive menu
-.navbar-toggleable {
-  &-xs {
-    .menu-center & { // Flexbox based centered menu. Wrapped in toggleable coz BS4 ways.
-      @include media-breakpoint-up(sm) {
-        display: flex !important;
-        justify-content: center;
+.navbar-wrapper {
+  @include media-breakpoint-up(sm) {
+    .menu-center & { // Flexbox based centered menu.
+      display: flex !important;
+      justify-content: center;
 
-        .nav {
-          &.navbar-nav {
-            display: flex;
-          }
+      .nav {
+        &.navbar-nav {
+          display: flex;
         }
       }
     }
+  }
 
-    @include media-breakpoint-down(xs) {
-      clear: both;
+  @include media-breakpoint-down(xs) {
+    clear: both;
 
-      .navbar-nav {
-        .menu-item {
-          float: none;
-        }
-      }
-
-      .dropdown-menu {
+    .navbar-nav {
+      width: 100%;
+      .nav-item {
         float: none;
-        position: relative;
+
+        & + .nav-item {
+          margin-left: 0;
+        }
+      }
+
+      .nav-link {
+        text-align: center;
       }
     }
+  }
+
+  .dropdown-menu {
+    @include media-breakpoint-down(xs) {
+      float: none;
+      position: relative;
+    }
+
+    padding: 0;
+  }
+}
+
+.navbar {
+  background-color: $gray-lightest;
+  padding: 0;
+
+  .navbar-nav {
+    display: inline-block;
+  }
+}
+
+.navbar-toggler {
+  float: right;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.dropdown-header {
+  h6 {
+    padding-top:    .425rem;
+    padding-bottom: .425rem;
+    margin-bottom: 0;
   }
 }
 
@@ -82,12 +76,15 @@
   }
 }
 
-.menu-right {
-  .navbar-nav {
-    @extend .pull-right;
-  }
-}
+@include media-breakpoint-up(sm) {
+  .menu-right {
+    .navbar-nav {
+      float: right;
+      padding-right: 5px;
+    }
 
-.navbar-toggler {
-  float: right;
+    .dropdown-menu {
+      @extend .dropdown-menu-right;
+    }
+  }
 }

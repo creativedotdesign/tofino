@@ -1,11 +1,14 @@
 options:
   formatter: stylish
 rules:
-  # Extends 
+  # Extends
   placeholder-in-extend: 0
 
   # Style Guide
   property-sort-order: 0
+
+  # Important
+  no-important: 0
 
   # Nesting
   nesting-depth:
