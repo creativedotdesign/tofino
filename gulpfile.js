@@ -234,7 +234,7 @@ gulp.task('php:fix', gulpHelp.phpFix, function () {
 
 // Genereate POT file of translatable strings
 gulp.task('translate', function () {
-  return gulp.src(['**/*.php'])
+  return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
     .pipe(plugins.sort())
     .pipe(plugins.wpPot({domain: 'tofino'}))
     .pipe(gulp.dest('languages'));
