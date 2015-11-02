@@ -22,6 +22,15 @@ function setup() {
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
 /**
+ * Set max content width
+ */
+function content_width() {
+  $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 640);
+}
+
+add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
+
+/**
  * Remove admin bar
 **/
 add_filter('show_admin_bar', '__return_false');
