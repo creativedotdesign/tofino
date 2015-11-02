@@ -42,15 +42,15 @@ msgstr ""
 msgid "Captcha failed."
 msgstr ""
 
-#: lib/contact-form.php:68
+#: lib/contact-form.php:69
 msgid "Form submission from "
 msgstr ""
 
-#: lib/contact-form.php:81
+#: lib/contact-form.php:82
 msgid "Unable to complete request due to a system error. Send mail failed."
 msgstr ""
 
-#: lib/contact-form.php:96
+#: lib/contact-form.php:97
 msgid "No recipient email address."
 msgstr ""
 
@@ -90,6 +90,10 @@ msgstr ""
 msgid "Google Analytics UA Code"
 msgstr ""
 
+#: lib/theme-options.php:81
+msgid "Only runs GA Script when WP_DEBUG is false."
+msgstr ""
+
 #: lib/theme-options.php:88
 msgid "Social Links"
 msgstr ""
@@ -112,6 +116,10 @@ msgstr ""
 
 #: lib/theme-options.php:129
 msgid "Footer Text"
+msgstr ""
+
+#: lib/theme-options.php:131
+msgid "<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>."
 msgstr ""
 
 #: lib/theme-options.php:146
@@ -138,6 +146,10 @@ msgstr ""
 msgid "Sticky Footer"
 msgstr ""
 
+#: lib/theme-options.php:179
+msgid "Flexbox supported browsers only."
+msgstr ""
+
 #: lib/theme-options.php:186
 msgid "Enable Sticky Footer"
 msgstr ""
@@ -146,8 +158,16 @@ msgstr ""
 msgid "Notification Text"
 msgstr ""
 
+#: lib/theme-options.php:194
+msgid "Notification is shown until dismissed (at which point a cookie is set)."
+msgstr ""
+
 #: lib/theme-options.php:202
 msgid "Notification Position"
+msgstr ""
+
+#: lib/theme-options.php:203
+msgid "Notification position. Bottom = Fixed over footer. Top = Fixed above top menu."
 msgstr ""
 
 #: lib/theme-options.php:210
@@ -162,24 +182,52 @@ msgstr ""
 msgid "TO email address"
 msgstr ""
 
+#: lib/theme-options.php:223
+msgid "Email address used in the TO field. Leave blank to use the email address defined in General Settings."
+msgstr ""
+
 #: lib/theme-options.php:230
 msgid "CC email address"
+msgstr ""
+
+#: lib/theme-options.php:231
+msgid "Email address used in the CC field."
 msgstr ""
 
 #: lib/theme-options.php:238
 msgid "FROM email address"
 msgstr ""
 
+#: lib/theme-options.php:239
+msgid "Email address used in the FROM field. Leave blank for server default."
+msgstr ""
+
 #: lib/theme-options.php:246
 msgid "Email Subject"
+msgstr ""
+
+#: lib/theme-options.php:247
+msgid "The subject field. Leave blank for "Form submission from SERVER_NAME"."
 msgstr ""
 
 #: lib/theme-options.php:254
 msgid "Success Message"
 msgstr ""
 
+#: lib/theme-options.php:255
+msgid "Message displayed to use after form action is successful."
+msgstr ""
+
+#: lib/theme-options.php:256
+msgid "Thanks, we'll be in touch soon."
+msgstr ""
+
 #: lib/theme-options.php:263, lib/theme-options.php:271
 msgid "Enable reCaptcha"
+msgstr ""
+
+#: lib/theme-options.php:264
+msgid "Enable Google reCaptcha "I am not a robot"."
 msgstr ""
 
 #: lib/theme-options.php:278
