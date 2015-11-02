@@ -78,7 +78,7 @@ function custom_theme_options() {
       array(
         'id'      => 'google_analytics',
         'label'   => __('Google Analytics UA Code', 'tofino'),
-        'desc'    => 'Only runs GA Script when WP_DEBUG is false.',
+        'desc'    => __('Only runs GA Script when WP_DEBUG is false.', 'tofino'),
         'std'     => '',
         'type'    => 'text',
         'section' => 'general_settings'
@@ -128,7 +128,7 @@ function custom_theme_options() {
         'id'      => 'footer_text',
         'label'   => __('Footer Text', 'tofino'),
         'desc'    => '',
-        'std'     => '<a href="https://github.com/mrchimp/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.',
+        'std'     => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino'),
         'type'    => 'textarea-simple',
         'section' => 'general_settings',
         'rows'    => '3',
@@ -176,7 +176,7 @@ function custom_theme_options() {
       array(
         'id'      => 'footer_sticky_checkbox',
         'label'   => __('Sticky Footer', 'tofino'),
-        'desc'    => 'Works for Flexbox enabled browsers only.',
+        'desc'    => __('Flexbox supported browsers only.', 'tofino'),
         'std'     => '',
         'type'    => 'checkbox',
         'section' => 'other_settings',
@@ -191,7 +191,7 @@ function custom_theme_options() {
       array(
         'id'      => 'notification_text',
         'label'   => __('Notification Text', 'tofino'),
-        'desc'    => 'Notification is shown until dismissed (at which point a cookie is set).',
+        'desc'    => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
         'std'     => '',
         'type'    => 'textarea-simple',
         'section' => 'other_settings',
@@ -200,7 +200,7 @@ function custom_theme_options() {
       array(
         'id'      => 'notification_position',
         'label'   => __('Notification Position', 'tofino'),
-        'desc'    => 'Notification position. Bottom = Fixed over footer. Top = Fixed above top menu.',
+        'desc'    => __('Notification position. Bottom = Fixed over footer. Top = Fixed above top menu.', 'tofino'),
         'std'     => 'bottom',
         'type'    => 'select',
         'section' => 'other_settings',
@@ -220,7 +220,7 @@ function custom_theme_options() {
       array(
         'id'          => 'contact_form_to_address',
         'label'       => __('TO email address', 'tofino'),
-        'desc'        => 'Email address used in the TO field. Leave blank to use the email address defined in General Settings.',
+        'desc'        => __('Email address used in the TO field. Leave blank to use the email address defined in General Settings.', 'tofino'),
         'std'         => '',
         'type'        => 'text',
         'section'     => 'contact_form',
@@ -228,7 +228,7 @@ function custom_theme_options() {
       array(
         'id'          => 'contact_form_cc_address',
         'label'       => __('CC email address', 'tofino'),
-        'desc'        => 'Email address used in the CC field.',
+        'desc'        => __('Email address used in the CC field.', 'tofino'),
         'std'         => '',
         'type'        => 'text',
         'section'     => 'contact_form',
@@ -236,7 +236,7 @@ function custom_theme_options() {
       array(
         'id'          => 'contact_form_from_address',
         'label'       => __('FROM email address', 'tofino'),
-        'desc'        => 'Email address used in the FROM field. Leave blank for server default.',
+        'desc'        => __('Email address used in the FROM field. Leave blank for server default.', 'tofino'),
         'std'         => '',
         'type'        => 'text',
         'section'     => 'contact_form',
@@ -244,7 +244,7 @@ function custom_theme_options() {
       array(
         'id'          => 'contact_form_email_subject',
         'label'       => __('Email Subject', 'tofino'),
-        'desc'        => 'The subject field. Leave blank for "Form submission from SERVER_NAME".',
+        'desc'        => __('The subject field. Leave blank for "Form submission from SERVER_NAME".', 'tofino'),
         'std'         => '',
         'type'        => 'text',
         'section'     => 'contact_form',
@@ -252,8 +252,8 @@ function custom_theme_options() {
       array(
         'id'      => 'contact_form_success_message',
         'label'   => __('Success Message', 'tofino'),
-        'desc'    => 'Message displayed to use after form action is successful.',
-        'std'     => "Thanks, we'll be in touch soon.",
+        'desc'    => __('Message displayed to use after form action is successful.', 'tofino'),
+        'std'     => __("Thanks, we'll be in touch soon.", 'tofino'),
         'type'    => 'textarea-simple',
         'section' => 'contact_form',
         'rows'    => '3'
@@ -261,7 +261,7 @@ function custom_theme_options() {
       array(
         'id'      => 'enable_captcha_checkbox',
         'label'   => __('Enable reCaptcha', 'tofino'),
-        'desc'    => 'Enable Google reCaptcha "I am not a robot".',
+        'desc'    => __('Enable Google reCaptcha "I am not a robot".', 'tofino'),
         'std'     => '',
         'type'    => 'checkbox',
         'section' => 'contact_form',
