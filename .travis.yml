@@ -13,18 +13,35 @@ php:
 - 5.4
 - 5.3
 - hhvm
-- 7.0
+- 7
+- nightly
 
 env:
 - WP_VERSION=latest WP_MULTISITE=0
 
 matrix:
-  include:
-  - php: 5.3
-    env: WP_VERSION=latest WP_MULTISITE=1
+  allow_failures:
+    - php: nightly
+
+cache:
+  directories:
+    - bower_components
+    - node_modules
+
+install:
+  - npm install -g npm@latest
+  - npm install -g bower gulp jscs
+  - npm install
+  - composer self-update && composer --version
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer global require squizlabs/php_codesniffer
 
 before_script:
-- bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script:
-- phpunit
+  - phpunit
+  - npm run build
+  - npm run jshint
+  - npm run jscs
+  - phpcs --standard=ruleset.xml --extensions=php -n -s .
