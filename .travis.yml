@@ -32,7 +32,7 @@ install:
   - npm install -g npm@latest
   - npm install -g bower gulp jscs
   - npm install
-  - composer self-update && composer --version
+#  - composer self-update && composer --version
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer global require squizlabs/php_codesniffer
 
