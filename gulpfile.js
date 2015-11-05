@@ -136,10 +136,12 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 
 // Lints configuration JSON and project JS.
 gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
-  return gulp.src(['bower.json', 'gulpfile.js', path.scripts + '/**/*.js'])
+  return gulp.src(path.scripts + '/**/*.js')
     .pipe(plugins.jshint())
     .pipe(plugins.jshint.reporter('jshint-stylish'))
-    .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail')));
+    .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail')))
+    .pipe(plugins.jscs())
+    .pipe(plugins.jscs.reporter());
 }, {
   options: {
     'production': 'Fail on error.'

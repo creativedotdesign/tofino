@@ -48,6 +48,7 @@
     "gulp-help": "^1.6.1",
     "gulp-if": "*",
     "gulp-imagemin": "*",
+    "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^1.11.2",
     "gulp-load-plugins": "*",
     "gulp-minify-css": "*",
