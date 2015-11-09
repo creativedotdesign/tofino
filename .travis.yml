@@ -10,8 +10,6 @@ notifications:
 php:
 - 5.6
 - 5.5
-- 5.4
-- 5.3
 - hhvm
 - 7
 - nightly
@@ -30,11 +28,13 @@ cache:
 
 install:
   - npm install -g npm@latest
-  - npm install -g bower gulp jscs
+  - npm install -g bower gulp
   - npm install
 #  - composer self-update && composer --version
   - /home/travis/.phpenv/versions/5.6/bin/composer self-update
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer install
+  - bower install
 #  - composer global require squizlabs/php_codesniffer
 
 before_script:
@@ -43,6 +43,6 @@ before_script:
 script:
   - phpunit
   - npm run build
-  - npm run jshint
-  - npm run jscs
+  #- npm run jshint
+  #- npm run jscs
   #- phpcs --standard=ruleset.xml --extensions=php -n -s .
