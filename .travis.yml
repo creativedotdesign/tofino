@@ -23,7 +23,7 @@ matrix:
 
 cache:
   directories:
-    - bower_components
+#    - bower_components
     - node_modules
 
 install:
