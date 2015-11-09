@@ -24,7 +24,7 @@ matrix:
 cache:
   directories:
 #    - bower_components
-    - node_modules
+#    - node_modules
 
 install:
   - npm install -g npm@latest
@@ -42,7 +42,8 @@ before_script:
 
 script:
   - phpunit
-  - npm run build
+  - gulp
+  #- npm run build
   #- npm run jshint
   #- npm run jscs
   #- phpcs --standard=ruleset.xml --extensions=php -n -s .
