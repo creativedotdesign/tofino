@@ -40,7 +40,8 @@
       "lib/required-plugins.php",
       "lib/shortcodes.php",
       "lib/theme-options.php",
-      "lib/helpers.php"
+      "lib/helpers.php",
+      "lib/relative-urls.php"
     ]
   }
 }
