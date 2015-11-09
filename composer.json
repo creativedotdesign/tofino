@@ -33,7 +33,7 @@
   },
   "autoload": {
     "files": [
-      "lib/navwalker.php",
+      "lib/nav-walker.php",
       "lib/init.php",
       "lib/assets.php",
       "lib/contact-form.php",
