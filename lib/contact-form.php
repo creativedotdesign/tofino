@@ -19,7 +19,11 @@ function ajax_contact_form() {
   $nonce = $_POST['nextNonce']; // Nonce from POST request
 
   if (!wp_verify_nonce($nonce, 'next_nonce')) { // Compare to server generated nonce
-    wp_die('Security check failed.', 'An error occured.');
+    $response = array(
+      'success' => false,
+      'message' => __('Security check failed.', 'tofino')
+    );
+    send_json_response($response);
   }
 
   $reCaptcha_enabled = ot_get_option('enable_captcha_checkbox');
