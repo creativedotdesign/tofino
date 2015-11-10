@@ -14,7 +14,10 @@ add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 
 function ajax_contact_form() {
+
+  $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS
   $nonce = $_POST['nextNonce']; // Nonce from POST request
+
   if (!wp_verify_nonce($nonce, 'next_nonce')) { // Compare to server generated nonce
     wp_die('Security check failed.', 'An error occured.');
   }
@@ -24,11 +27,10 @@ function ajax_contact_form() {
   $form_data = array();
   parse_str($_POST['data'], $form_data); // Give it the POST data
 
-  // Basic sanitization
-  foreach ($form_data as $key => $value) {
-    $form_data[$key] = filter_var($value, FILTER_SANITIZE_STRING);
-
-    if (strpos($form_data[$key], 'email') !== false && filter_var($value, FILTER_VALIDATE_EMAIL) === false) {
+  if (array_key_exists('email', $form_data)) { // Found email field
+    $emailArray = explode('@', $form_data['email']); // Split it on @
+    $hostname   = $emailArray[1];
+    if (filter_var($form_data['email'], FILTER_VALIDATE_EMAIL) === false || checkdnsrr($hostname, 'MX') === false || gethostbyname($hostname) === $hostname) { //DNS lookup of MX or A/CNAME record
       $response = array(
         'success' => false,
         'message' => __('Invalid email address.', 'tofino')
