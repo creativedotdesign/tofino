@@ -30,27 +30,31 @@ msgstr ""
 msgid "You are using an <strong>outdated</strong> browser. <a href="http://browsehappy.com/">Update your browser</a> to improve your experience."
 msgstr ""
 
-#: lib/contact-form.php:34
+#: lib/contact-form.php:24
+msgid "Security check failed."
+msgstr ""
+
+#: lib/contact-form.php:40
 msgid "Invalid email address."
 msgstr ""
 
-#: lib/contact-form.php:48
+#: lib/contact-form.php:54
 msgid "reCaptcha sitekey and/or secret not found. Set this up in the theme options."
 msgstr ""
 
-#: lib/contact-form.php:60
+#: lib/contact-form.php:66
 msgid "Captcha failed."
 msgstr ""
 
-#: lib/contact-form.php:69
+#: lib/contact-form.php:75
 msgid "Form submission from "
 msgstr ""
 
-#: lib/contact-form.php:82
+#: lib/contact-form.php:88
 msgid "Unable to complete request due to a system error. Send mail failed."
 msgstr ""
 
-#: lib/contact-form.php:97
+#: lib/contact-form.php:103
 msgid "No recipient email address."
 msgstr ""
 
