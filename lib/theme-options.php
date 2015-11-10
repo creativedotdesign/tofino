@@ -338,8 +338,6 @@ add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
 /**
  * Change admin login screen logo
  */
-add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
-
 function admin_login_logo() {
   if (ot_get_option('admin_login_logo_id')) {
     $src = wp_get_attachment_image_src(ot_get_option('admin_login_logo_id'), 'original'); ?>
