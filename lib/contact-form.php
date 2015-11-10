@@ -10,9 +10,6 @@ use PHPMailer;
 /**
  * AJAX Contact Form
  */
-add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
-add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
-
 function ajax_contact_form() {
 
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS
@@ -91,6 +88,8 @@ function ajax_contact_form() {
 
   send_json_response($response);
 }
+add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
+add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 
 function get_recipient() {
   if (ot_get_option('contact_form_to_address')) { // Email address from contact form options

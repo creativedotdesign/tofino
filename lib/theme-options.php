@@ -322,8 +322,6 @@ add_action('admin_init', __NAMESPACE__ . '\\custom_theme_options');
 /**
  * Load Google Analyrics
  */
-add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
-
 function google_analytics() {
   if (!WP_DEBUG && ot_get_option('google_analytics')) { ?>
     <script>
@@ -336,6 +334,8 @@ function google_analytics() {
     </script><?php
   }
 }
+
+add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
 
 /**
  * Change admin login screen logo
@@ -354,6 +354,8 @@ function admin_login_logo() {
     <?php
   }
 }
+
+add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
 
 /**
  * Add menu-sticky and/or the footer sticky classes to the body.
