@@ -28,6 +28,11 @@
     margin-left: ($line-height / 2) + rem;
   }
 }
+
+// Enable responsive images in WP content
+img {
+  &[class*='wp-image-'] {
+    @include img-fluid;
   }
 }
 
