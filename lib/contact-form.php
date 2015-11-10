@@ -1,7 +1,4 @@
 <?php
-/**
- * @todo: Document these functions.
- */
 
 namespace Tofino\ContactForm;
 
@@ -91,6 +88,9 @@ function ajax_contact_form() {
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 
+/**
+ * Get receipient from theme options
+ */
 function get_recipient() {
   if (ot_get_option('contact_form_to_address')) { // Email address from contact form options
     $recipient = ot_get_option('contact_form_to_address');
@@ -106,6 +106,9 @@ function get_recipient() {
   return $recipient;
 }
 
+/**
+ * Genereate email body using html template
+ */
 function build_email_body($form_data) {
   // Remove reCaptcha from message content
   if (array_key_exists('g-recaptcha-response', $form_data)) {
@@ -126,6 +129,9 @@ function build_email_body($form_data) {
   return $message;
 }
 
+/**
+ * Send JSON and only JSON, then exit.
+ */
 function send_json_response($response) {
   header('Content-type: application/json');
   $response = json_encode($response);
@@ -133,6 +139,9 @@ function send_json_response($response) {
   exit;
 }
 
+/**
+ * Send mail. Uses PHPMailer.
+ */
 function send_mail($recipient, $recipient_cc, $subject, $email_body, $from = null) {
   $mail = new PHPMailer;
 

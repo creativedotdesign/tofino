@@ -42,7 +42,6 @@ function custom_theme_options() {
    * Custom settings array that will eventually be
    * passes to the OptionTree Settings API Class.
    */
-
   $custom_settings = array(
     'contextual_help' => array(
       'content'       => array(),
@@ -311,7 +310,6 @@ function custom_theme_options() {
   /* Lets OptionTree know the UI Builder is being overridden */
   global $ot_has_custom_theme_options;
   $ot_has_custom_theme_options = true;
-
 }
 
 /**
@@ -412,6 +410,9 @@ function menu_fixed() {
   return $class;
 }
 
+/**
+ * Display notification Top/Bottom based on theme option.
+ */
 function notification($position) {
   if ($position == ot_get_option('notification_position')) {
     if (ot_get_option('notification_text') && !isset($_COOKIE['tofino-notification-closed'])) : ?>
