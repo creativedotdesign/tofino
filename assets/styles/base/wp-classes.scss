@@ -14,16 +14,20 @@
 
 .alignleft,
 .alignright {
-  margin-bottom: ($line-height / 2);
+  margin-bottom: ($line-height / 2) + rem;
 }
 
 @include media-breakpoint-up(sm) { // Only float if not on a small device
   .alignleft {
     @include pull-left;
+    margin-right: ($line-height / 2) + rem;
   }
 
   .alignright {
     @include pull-right;
+    margin-left: ($line-height / 2) + rem;
+  }
+}
   }
 }
 
