@@ -27,23 +27,26 @@ cache:
 #    - node_modules
 
 install:
-  - npm install -g npm@latest
   - npm install -g bower gulp
   - npm install
 #  - composer self-update && composer --version
   - /home/travis/.phpenv/versions/5.6/bin/composer self-update
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer install
-  - bower install
 #  - composer global require squizlabs/php_codesniffer
 
 before_script:
+  - echo $TRAVIS_OS_NAME
+  - export PATH=./node_modules/.bin/:$PATH
+  - rm -rf ~/.nvm && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
+  - source ~/.nvm/nvm.sh
+  - nvm install 4.0.0
+  - nvm use 4
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script:
   - phpunit
-  - gulp
-  #- npm run build
+  - npm run build
   #- npm run jshint
   #- npm run jscs
   #- phpcs --standard=ruleset.xml --extensions=php -n -s .
