@@ -30,223 +30,223 @@ msgstr ""
 msgid "You are using an <strong>outdated</strong> browser. <a href="http://browsehappy.com/">Update your browser</a> to improve your experience."
 msgstr ""
 
-#: lib/contact-form.php:24
+#: lib/contact-form.php:18
 msgid "Security check failed."
 msgstr ""
 
-#: lib/contact-form.php:40
+#: lib/contact-form.php:34
 msgid "Invalid email address."
 msgstr ""
 
-#: lib/contact-form.php:54
+#: lib/contact-form.php:48
 msgid "reCaptcha sitekey and/or secret not found. Set this up in the theme options."
 msgstr ""
 
-#: lib/contact-form.php:66
+#: lib/contact-form.php:60
 msgid "Captcha failed."
 msgstr ""
 
-#: lib/contact-form.php:75
+#: lib/contact-form.php:69
 msgid "Form submission from "
 msgstr ""
 
-#: lib/contact-form.php:88
+#: lib/contact-form.php:82
 msgid "Unable to complete request due to a system error. Send mail failed."
 msgstr ""
 
-#: lib/contact-form.php:103
+#: lib/contact-form.php:102
 msgid "No recipient email address."
 msgstr ""
 
-#: lib/init.php:18
+#: lib/init.php:17
 msgid "Primary Navigation"
 msgstr ""
 
-#: lib/init.php:49
+#: lib/init.php:48
 msgid "Above Content"
 msgstr ""
 
-#: lib/init.php:57
+#: lib/init.php:56
 msgid "Below Content"
 msgstr ""
 
-#: lib/theme-options.php:53
+#: lib/theme-options.php:52
 msgid "General"
 msgstr ""
 
-#: lib/theme-options.php:57, lib/theme-options.php:138
+#: lib/theme-options.php:56, lib/theme-options.php:137
 msgid "Menu"
 msgstr ""
 
-#: lib/theme-options.php:61
+#: lib/theme-options.php:60
 msgid "Other"
 msgstr ""
 
-#: lib/theme-options.php:65
+#: lib/theme-options.php:64
 msgid "Contact Form"
 msgstr ""
 
-#: lib/theme-options.php:71
+#: lib/theme-options.php:70
 msgid "Admin Login Logo"
 msgstr ""
 
-#: lib/theme-options.php:80
+#: lib/theme-options.php:79
 msgid "Google Analytics UA Code"
 msgstr ""
 
-#: lib/theme-options.php:81
+#: lib/theme-options.php:80
 msgid "Only runs GA Script when WP_DEBUG is false."
 msgstr ""
 
-#: lib/theme-options.php:88
+#: lib/theme-options.php:87
 msgid "Social Links"
 msgstr ""
 
-#: lib/theme-options.php:96
+#: lib/theme-options.php:95
 msgid "Telephone Number"
 msgstr ""
 
-#: lib/theme-options.php:104
+#: lib/theme-options.php:103
 msgid "Email Address"
 msgstr ""
 
-#: lib/theme-options.php:112
+#: lib/theme-options.php:111
 msgid "Address"
 msgstr ""
 
-#: lib/theme-options.php:121
+#: lib/theme-options.php:120
 msgid "Company Number"
 msgstr ""
 
-#: lib/theme-options.php:129
+#: lib/theme-options.php:128
 msgid "Footer Text"
 msgstr ""
 
-#: lib/theme-options.php:131
+#: lib/theme-options.php:130
 msgid "<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>."
 msgstr ""
 
-#: lib/theme-options.php:146
+#: lib/theme-options.php:145
 msgid "Disable Fixed Menu"
 msgstr ""
 
-#: lib/theme-options.php:153
+#: lib/theme-options.php:152
 msgid "Menu Position"
 msgstr ""
 
-#: lib/theme-options.php:161
+#: lib/theme-options.php:160
 msgid "Left"
 msgstr ""
 
-#: lib/theme-options.php:166
+#: lib/theme-options.php:165
 msgid "Center"
 msgstr ""
 
-#: lib/theme-options.php:171
+#: lib/theme-options.php:170
 msgid "Right"
 msgstr ""
 
-#: lib/theme-options.php:178
+#: lib/theme-options.php:177
 msgid "Sticky Footer"
 msgstr ""
 
-#: lib/theme-options.php:179
+#: lib/theme-options.php:178
 msgid "Flexbox supported browsers only."
 msgstr ""
 
-#: lib/theme-options.php:186
+#: lib/theme-options.php:185
 msgid "Enable Sticky Footer"
 msgstr ""
 
-#: lib/theme-options.php:193
+#: lib/theme-options.php:192
 msgid "Notification Text"
 msgstr ""
 
-#: lib/theme-options.php:194
+#: lib/theme-options.php:193
 msgid "Notification is shown until dismissed (at which point a cookie is set)."
 msgstr ""
 
-#: lib/theme-options.php:202
+#: lib/theme-options.php:201
 msgid "Cookie Expires"
 msgstr ""
 
-#: lib/theme-options.php:203
+#: lib/theme-options.php:202
 msgid "Number of days until the cookie expires"
 msgstr ""
 
-#: lib/theme-options.php:210
+#: lib/theme-options.php:209
 msgid "Notification Position"
 msgstr ""
 
-#: lib/theme-options.php:211
+#: lib/theme-options.php:210
 msgid "Notification position. Bottom = Fixed over footer. Top = Fixed above top menu."
 msgstr ""
 
-#: lib/theme-options.php:218
+#: lib/theme-options.php:217
 msgid "Top"
 msgstr ""
 
-#: lib/theme-options.php:223
+#: lib/theme-options.php:222
 msgid "Bottom"
 msgstr ""
 
-#: lib/theme-options.php:230
+#: lib/theme-options.php:229
 msgid "TO email address"
 msgstr ""
 
-#: lib/theme-options.php:231
+#: lib/theme-options.php:230
 msgid "Email address used in the TO field. Leave blank to use the email address defined in General Settings."
 msgstr ""
 
-#: lib/theme-options.php:238
+#: lib/theme-options.php:237
 msgid "CC email address"
 msgstr ""
 
-#: lib/theme-options.php:239
+#: lib/theme-options.php:238
 msgid "Email address used in the CC field."
 msgstr ""
 
-#: lib/theme-options.php:246
+#: lib/theme-options.php:245
 msgid "FROM email address"
 msgstr ""
 
-#: lib/theme-options.php:247
+#: lib/theme-options.php:246
 msgid "Email address used in the FROM field. Leave blank for server default."
 msgstr ""
 
-#: lib/theme-options.php:254
+#: lib/theme-options.php:253
 msgid "Email Subject"
 msgstr ""
 
-#: lib/theme-options.php:255
+#: lib/theme-options.php:254
 msgid "The subject field. Leave blank for "Form submission from SERVER_NAME"."
 msgstr ""
 
-#: lib/theme-options.php:262
+#: lib/theme-options.php:261
 msgid "Success Message"
 msgstr ""
 
-#: lib/theme-options.php:263
+#: lib/theme-options.php:262
 msgid "Message displayed to use after form action is successful."
 msgstr ""
 
-#: lib/theme-options.php:264
+#: lib/theme-options.php:263
 msgid "Thanks, we'll be in touch soon."
 msgstr ""
 
-#: lib/theme-options.php:271, lib/theme-options.php:279
+#: lib/theme-options.php:270, lib/theme-options.php:278
 msgid "Enable reCaptcha"
 msgstr ""
 
-#: lib/theme-options.php:272
+#: lib/theme-options.php:271
 msgid "Enable Google reCaptcha "I am not a robot"."
 msgstr ""
 
-#: lib/theme-options.php:286
+#: lib/theme-options.php:285
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: lib/theme-options.php:294
+#: lib/theme-options.php:293
 msgid "reCaptcha Secret Key"
 msgstr ""
 
