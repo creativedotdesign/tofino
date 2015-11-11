@@ -3,7 +3,6 @@
 namespace Tofino\RelativeUrls;
 
 function relative_urls() {
-
   if (is_admin() || preg_match('/sitemap(_index)?\.xml/', $_SERVER['REQUEST_URI']) || in_array($GLOBALS['pagenow'], ['wp-login.php', 'wp-register.php'])) {
     return;
   }
@@ -27,7 +26,6 @@ function relative_urls() {
   foreach ($filters as $filter) {
     add_filter($filter, 'wp_make_link_relative');
   }
-
 }
 
 add_action('template_redirect', __NAMESPACE__ . '\\relative_urls');

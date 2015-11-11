@@ -63,14 +63,14 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
       .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
       .pipe(plugins.sass({ style: 'nested' }))
       .pipe(plugins.concat(dep.name))
-      .pipe(plugins.autoprefixer({
-          browsers: ['last 2 versions']
-        }))
       .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
     );
   });
   return merged
 
+  .pipe(plugins.autoprefixer({
+    browsers: ['last 2 versions']
+  }))
   .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.')))
   .pipe(gulp.dest(path.dist + '/css'))
   .pipe(browserSync.reload({stream:true}))

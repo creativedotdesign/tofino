@@ -6,7 +6,6 @@ namespace Tofino\Init;
  * Theme setup
  */
 function setup() {
-
   // Enable plugins to manage the document title
   add_theme_support('title-tag');
 
@@ -23,8 +22,8 @@ function setup() {
 
   // Load language file
   load_theme_textdomain('tofino', get_template_directory() . '/languages');
-
 }
+
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
 /**

@@ -42,7 +42,6 @@ function custom_theme_options() {
    * Custom settings array that will eventually be
    * passes to the OptionTree Settings API Class.
    */
-
   $custom_settings = array(
     'contextual_help' => array(
       'content'       => array(),
@@ -311,7 +310,6 @@ function custom_theme_options() {
   /* Lets OptionTree know the UI Builder is being overridden */
   global $ot_has_custom_theme_options;
   $ot_has_custom_theme_options = true;
-
 }
 
 /**
@@ -322,8 +320,6 @@ add_action('admin_init', __NAMESPACE__ . '\\custom_theme_options');
 /**
  * Load Google Analyrics
  */
-add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
-
 function google_analytics() {
   if (!WP_DEBUG && ot_get_option('google_analytics')) { ?>
     <script>
@@ -337,11 +333,11 @@ function google_analytics() {
   }
 }
 
+add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
+
 /**
  * Change admin login screen logo
  */
-add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
-
 function admin_login_logo() {
   if (ot_get_option('admin_login_logo_id')) {
     $src = wp_get_attachment_image_src(ot_get_option('admin_login_logo_id'), 'original'); ?>
@@ -354,6 +350,8 @@ function admin_login_logo() {
     <?php
   }
 }
+
+add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
 
 /**
  * Add menu-sticky and/or the footer sticky classes to the body.
@@ -410,6 +408,9 @@ function menu_fixed() {
   return $class;
 }
 
+/**
+ * Display notification Top/Bottom based on theme option.
+ */
 function notification($position) {
   if ($position == ot_get_option('notification_position')) {
     if (ot_get_option('notification_text') && !isset($_COOKIE['tofino-notification-closed'])) : ?>
