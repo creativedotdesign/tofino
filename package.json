@@ -11,9 +11,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "bower install && gulp",
-    "jshint": "gulp scripts:lint",
-    "jscs": "jscs gulpfile.js assets/scripts/*.js"
+    "build": "bower install && gulp --production"
   },
   "author": "Daniel Hewes <daniel@lambdacreatives.com>",
   "contributors": [
