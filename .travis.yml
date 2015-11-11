@@ -23,11 +23,10 @@ matrix:
 
 cache:
   directories:
-#    - bower_components
-#    - node_modules
+    - bower_components
+    - node_modules
 
 install:
-#  - composer self-update && composer --version
   - echo $TRAVIS_OS_NAME
   - export PATH=./node_modules/.bin/:$PATH
   - rm -rf ~/.nvm && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
@@ -39,7 +38,6 @@ install:
   - /home/travis/.phpenv/versions/5.6/bin/composer self-update
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer install
-#  - composer global require squizlabs/php_codesniffer
 
 before_script:
   - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
@@ -47,6 +45,3 @@ before_script:
 script:
   - phpunit
   - npm run build
-  #- npm run jshint
-  #- npm run jscs
-  #- phpcs --standard=ruleset.xml --extensions=php -n -s .
