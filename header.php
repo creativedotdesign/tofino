@@ -23,7 +23,7 @@
   <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
   <div id="main-menu" class="collapse navbar-toggleable-xs navbar-wrapper">
     <?php
-    if(has_nav_menu('primary_navigation')) :
+    if (has_nav_menu('primary_navigation')) :
       wp_nav_menu(array(
         'menu'            => 'nav_menu',
         'theme_location'  => 'primary_navigation',
