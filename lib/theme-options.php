@@ -225,6 +225,37 @@ function custom_theme_options() {
         )
       ),
       array(
+        'id'      => 'theme_tracker_enabled',
+        'label'   => __('Theme Tracker', 'tofino'),
+        'desc'    => __('Sends theme name, version, site url and ip address to a tracker every 15 days. This data is used to plan future updates.', 'tofino'),
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => true,
+            'label' => __('Enable theme tracking', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
+        'id'        => 'theme_tracker_api_key',
+        'label'     => __('Theme Tracker API Key', 'tofino'),
+        'desc'      => __('API key required to connect to the tracker. If empty or invalid the data will not be sent.', 'tofino'),
+        'std'       => '131208163a853909fc993624cdeccc26',
+        'type'      => 'text',
+        'section'   => 'other_settings',
+      ),
+      array(
+        'id'        => 'theme_tracker_api_url',
+        'label'     => __('Theme Tracker API URL', 'tofino'),
+        'desc'      => __('The API endpoint to send the theme data.', 'tofino'),
+        'std'       => 'http://tracker.dev/api/theme',
+        'type'      => 'text',
+        'section'   => 'other_settings',
+      ),
+      array(
         'id'          => 'contact_form_to_address',
         'label'       => __('TO email address', 'tofino'),
         'desc'        => __('Email address used in the TO field. Leave blank to use the email address defined in General Settings.', 'tofino'),
