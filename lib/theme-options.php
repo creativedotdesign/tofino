@@ -501,10 +501,9 @@ function theme_tracker() {
         'headers' => $headers,
         'timeout' => 10,
         'body' => json_encode($data)
-        )
-      );
+      ));
 
-      if(is_wp_error($response)) { // Request error occured.
+      if (is_wp_error($response)) { // Request error occured.
         $error_message = $response->get_error_message();
         error_log('[' . __('Theme Tracker API Error', 'tofino') . '] ' . $error_message); // Log error in webservers errorlog
         $result = false;
@@ -512,7 +511,7 @@ function theme_tracker() {
         exit;
       }
 
-      if(json_decode($response['body'])) { // Response body is valid JSON
+      if (json_decode($response['body'])) { // Response body is valid JSON
         $json_response = json_decode($response['body']);
 
         if ($json_response->error == false) {
