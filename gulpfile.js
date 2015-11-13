@@ -36,13 +36,13 @@ var gulpHelp = {
 var _gulpsrc = gulp.src;
 gulp.src = function() {
   return _gulpsrc.apply(gulp, arguments)
-    .pipe(plugins.plumber({
+    .pipe(plugins.if(!argv.production, plugins.plumber({
       errorHandler: function(err) {
         //plugins.notify.onError("Error: <%= error.message %>")(err);
         plugins.notify.onError("Error: " + err.toString())(err);
         this.emit('end');
       }
-    }));
+    })));
 };
 
 //Compile SCSS to CSS
@@ -138,7 +138,7 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
   return gulp.src(path.scripts + '/**/*.js')
     .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('jshint-stylish'))
+    .pipe(plugins.if(!argv.production, plugins.jshint.reporter('jshint-stylish')))
     .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail')))
     .pipe(plugins.jscs())
     .pipe(plugins.jscs.reporter());
@@ -206,8 +206,13 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
         standard: 'ruleset.xml',
         warningSeverity: 0
       }))
-    .pipe(plugins.phpcs.reporter('log'));
-});
+    .pipe(plugins.if(!argv.production, plugins.phpcs.reporter('log')))
+    .pipe(plugins.if(argv.production, plugins.phpcs.reporter('fail')));
+  }, {
+    options: {
+      'production': 'Fail on error.'
+    }
+  });
 
 //Fix PHP based on ruleset.xml. This will update existing PHP files
 gulp.task('php:fix', gulpHelp.phpFix, function () {
