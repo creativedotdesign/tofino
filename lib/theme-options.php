@@ -497,7 +497,7 @@ function theme_tracker() {
       );
 
       // Use wp_remote_post to make the http request
-      $response = wp_remote_post($url, array(
+      $response = wp_remote_post(esc_url_raw($url), array(
         'headers' => $headers,
         'timeout' => 10,
         'body' => json_encode($data)
@@ -512,7 +512,7 @@ function theme_tracker() {
       }
 
       if (json_decode($response['body'])) { // Response body is valid JSON
-        $json_response = json_decode($response['body']);
+        $json_response = json_decode(wp_remote_retrieve_body($response));
 
         if ($json_response->error == false) {
           $result = true;
