@@ -493,6 +493,7 @@ function theme_tracker() {
 
       // Send the API key as a http header
       $headers = array(
+        'Content-Type'  => 'application/json',
         'Authorization' => $api_key
       );
 
