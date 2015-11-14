@@ -493,7 +493,7 @@ function theme_tracker() {
 
       // Send the API key as a http header
       $headers = array(
-        'Authorization:' => $api_key
+        'Authorization' => $api_key
       );
 
       // Use wp_remote_post to make the http request
