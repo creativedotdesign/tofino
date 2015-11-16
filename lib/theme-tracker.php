@@ -64,6 +64,14 @@ function theme_tracker() {
 
     if (false === ($result = get_transient('theme_tracking'))) {
 
+      //Check for uid, else generate one. Uid is per site and generated once.
+      if (get_option('theme_tracking_uid')) {
+        $uid = get_option('theme_tracking_uid');
+      } else {
+        $uid = uniqid();
+        add_option('theme_tracking_uid', $uid);
+      }
+
       $url           = ot_get_option('theme_tracker_api_url');
       $api_key       = ot_get_option('theme_tracker_api_key');
       $theme_data    = wp_get_theme();
@@ -73,6 +81,7 @@ function theme_tracker() {
       $server_ip     = (!empty($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown');
 
       $data = array(
+        'uid'               => $uid,
         'theme_name'        => $theme_name,
         'theme_version'     => $theme_version,
         'theme_author'      => $theme_author,
