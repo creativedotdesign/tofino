@@ -23,6 +23,9 @@
   "overrides": {
     "svg4everybody": {
       "main": "dist/svg4everybody.js"
+    },
+    "jquery": {
+      "main": []
     }
   }
 }
