@@ -267,7 +267,7 @@ msgid "Theme Tracker API Key"
 msgstr ""
 
 #: lib/theme-tracker.php:39
-msgid "API key required to connect to the tracker API. If empty or invalid data will not be sent."
+msgid "API key required to connect to the tracker."
 msgstr ""
 
 #: lib/theme-tracker.php:46
@@ -278,11 +278,11 @@ msgstr ""
 msgid "The API endpoint to send the theme data."
 msgstr ""
 
-#: lib/theme-tracker.php:100, lib/theme-tracker.php:112, lib/theme-tracker.php:116
+#: lib/theme-tracker.php:109, lib/theme-tracker.php:121, lib/theme-tracker.php:125
 msgid "Theme Tracker API Error"
 msgstr ""
 
-#: lib/theme-tracker.php:116
+#: lib/theme-tracker.php:125
 msgid "Invalid resposne (not JSON) received from the API endpoint."
 msgstr ""
 
