@@ -2,11 +2,11 @@
 
 namespace Tofino\ThemeTracker;
 
+/**
+ * Custom settings array that is merged with the main theme options array.
+ */
 function theme_tracker_options() {
 
-  /**
-   * Custom settings array that is merged with the main theme options array.
-   */
   return array(
     'contextual_help' => array(
       'content'       => array(),
@@ -36,7 +36,7 @@ function theme_tracker_options() {
       array(
         'id'        => 'theme_tracker_api_key',
         'label'     => __('Theme Tracker API Key', 'tofino'),
-        'desc'      => __('API key required to connect to the tracker API. If empty or invalid data will not be sent.', 'tofino'),
+        'desc'      => __('API key required to connect to the tracker.', 'tofino'),
         'std'       => '',
         'type'      => 'text',
         'section'   => 'tracker',
@@ -64,7 +64,7 @@ function theme_tracker() {
 
     if (false === ($result = get_transient('theme_tracking'))) {
 
-      //Check for uid, else generate one. Uid is per site and generated once.
+      // Check for uid, else generate one. Uid is per site and generated once.
       if (get_option('theme_tracking_uid')) {
         $uid = get_option('theme_tracking_uid');
       } else {
