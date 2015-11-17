@@ -54,6 +54,15 @@ function theme_tracker_options() {
 
 }
 
+function missing_apikey_notice() {
+  if (ot_get_option('theme_tracker_enabled') && !ot_get_option('theme_tracker_api_key')) { ?>
+    <div class="error notice">
+      <p><?php _e('Theme tracking is enabled but is missing the API Key.', 'tofino'); ?></p>
+    </div><?php
+  }
+}
+add_action( 'admin_init', __NAMESPACE__ . '\\missing_apikey_notice', 1 );
+
 /**
  * Track theme usage.
  */
