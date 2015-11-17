@@ -45,7 +45,7 @@ function theme_tracker_options() {
         'id'        => 'theme_tracker_api_url',
         'label'     => __('Theme Tracker API URL', 'tofino'),
         'desc'      => __('The API endpoint to send the theme data.', 'tofino'),
-        'std'       => 'http://tracker.dev/api/theme',
+        'std'       => 'http://tracker.lambdacreatives.com/api/v1/theme',
         'type'      => 'text',
         'section'   => 'tracker',
       ),
