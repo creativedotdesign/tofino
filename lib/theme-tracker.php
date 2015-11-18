@@ -61,7 +61,7 @@ function missing_apikey_notice() {
     </div><?php
   }
 }
-add_action( 'admin_init', __NAMESPACE__ . '\\missing_apikey_notice', 1 );
+add_action('admin_init', __NAMESPACE__ . '\\missing_apikey_notice', 1);
 
 /**
  * Track theme usage.
