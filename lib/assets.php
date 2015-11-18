@@ -28,10 +28,6 @@ add_action('admin_head', __NAMESPACE__ . '\\admin_styles');
  */
 function scripts() {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    wp_deregister_script('jquery');
-    wp_register_script('jquery', get_template_directory_uri() . '/dist/js/jquery.js', false, null);
-    wp_enqueue_script('jquery');
-
     $main_js = '/dist/js/main.js';
     wp_register_script('tofino/js', get_template_directory_uri() . $main_js . '?v=' . filemtime(get_template_directory() . $main_js), array('jquery'), '', true); // Custom scripts
     wp_enqueue_script('tofino/js'); // Enqueue it!
