@@ -97,7 +97,8 @@ gulp.task('styles:lint', gulpHelp.stylesLint, function() {
     .pipe(plugins.if(production, plugins.if(!allowlint, plugins.sassLint.failOnError())));
 }, {
   options: {
-    'production': 'Fail on error.'
+    'production': 'Fail on error.',
+    'allowlint': 'Do not fail on error, when used with --production.'
   }
 });
 
@@ -148,7 +149,8 @@ gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
     .pipe(plugins.jscs.reporter());
 }, {
   options: {
-    'production': 'Fail on error.'
+    'production': 'Fail on error.',
+    'allowlint': 'Do not fail on error, when used with --production.'
   }
 });
 
@@ -214,7 +216,8 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
     .pipe(plugins.if(production, plugins.if(!allowlint, plugins.phpcs.reporter('fail'))));
   }, {
     options: {
-      'production': 'Fail on error.'
+      'production': 'Fail on error.',
+      'allowlint': 'Do not fail on error, when used with --production.'
     }
   });
 
