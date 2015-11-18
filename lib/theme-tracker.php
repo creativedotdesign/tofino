@@ -22,14 +22,19 @@ function theme_tracker_options() {
         'id'      => 'theme_tracker_enabled',
         'label'   => __('Enable Theme Tracker', 'tofino'),
         'desc'    => __('Send theme name, theme version, site url, ip address and WP version to the tracker API every 7 days. This data is used to plan future updates.', 'tofino'),
-        'std'     => '',
-        'type'    => 'checkbox',
+        'std'     => 'enabled',
+        'type'    => 'select',
         'section' => 'tracker',
         'choices' => array(
           array(
-            'value' => true,
-            'label' => __('Enable theme tracking', 'tofino'),
+            'value' => 'enabled',
+            'label' => __('Enabled', 'tofino'),
             'src'   => ''
+          ),
+          array(
+            'value'  => 'disabled',
+            'label'  => __('Disabled', 'tofino'),
+            'src'    => ''
           ),
         )
       ),
@@ -70,7 +75,7 @@ function theme_tracker_options() {
 }
 
 function missing_apikey_notice() {
-  if (ot_get_option('theme_tracker_enabled') && !ot_get_option('theme_tracker_api_key')) { ?>
+  if (ot_get_option('theme_tracker_enabled') !== 'disabled' && !ot_get_option('theme_tracker_api_key')) { ?>
     <div class="error notice">
       <p><?php _e('Theme tracking is enabled but is missing the API Key.', 'tofino'); ?></p>
     </div><?php
@@ -82,7 +87,7 @@ add_action('admin_init', __NAMESPACE__ . '\\missing_apikey_notice', 1);
  * Track theme usage.
  */
 function theme_tracker() {
-  if (ot_get_option('theme_tracker_enabled')) { // Only if enabled
+  if (ot_get_option('theme_tracker_enabled') !== 'disabled') { // Only if enabled
 
     if (ot_get_option('theme_tracker_debug')) {
       delete_transient('theme_tracking'); // Used to clear the transient for testing
@@ -105,7 +110,7 @@ function theme_tracker() {
       $theme_version = $theme_data->get('Version');
       $theme_author  = $theme_data->get('Author');
       $server_ip     = (!empty($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown');
-      $environment   = (!empty(getenv('WP_ENV')) ? getenv('WP_ENV') : 'Unknown'); // For Bedrock installs
+      $environment   = (getenv('WP_ENV') ? getenv('WP_ENV') : 'Unknown'); // For Bedrock installs
 
       $data = array(
         'uid'               => $uid,
