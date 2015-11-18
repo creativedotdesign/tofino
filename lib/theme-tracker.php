@@ -49,6 +49,21 @@ function theme_tracker_options() {
         'type'      => 'text',
         'section'   => 'tracker',
       ),
+      array(
+        'id'      => 'theme_tracker_debug',
+        'label'   => __('Theme Tracker Debug Mode', 'tofino'),
+        'desc'    => __('Send data continuously. Ignore transient time.', 'tofino'),
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'tracker',
+        'choices' => array(
+          array(
+            'value' => true,
+            'label' => __('Enable debug mode', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
     )
   );
 
@@ -69,7 +84,9 @@ add_action('admin_init', __NAMESPACE__ . '\\missing_apikey_notice', 1);
 function theme_tracker() {
   if (ot_get_option('theme_tracker_enabled')) { // Only if enabled
 
-    delete_transient('theme_tracking'); // Used to clear the transient for testing
+    if (ot_get_option('theme_tracker_debug')) {
+      delete_transient('theme_tracking'); // Used to clear the transient for testing
+    }
 
     if (false === ($result = get_transient('theme_tracking'))) {
 
