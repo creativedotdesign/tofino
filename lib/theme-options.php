@@ -299,6 +299,12 @@ function custom_theme_options() {
     )
   );
 
+  // Get theme tracker options array
+  $tracker_theme_options = \Tofino\ThemeTracker\theme_tracker_options();
+
+  // Merge arrays
+  $custom_settings = array_merge_recursive($custom_settings, $tracker_theme_options);
+
   /* allow settings to be filtered before saving */
   $custom_settings = apply_filters(ot_settings_id() . '_args', $custom_settings);
 

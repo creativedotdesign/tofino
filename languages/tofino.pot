@@ -250,6 +250,66 @@ msgstr ""
 msgid "reCaptcha Secret Key"
 msgstr ""
 
+#: lib/theme-tracker.php:17
+msgid "Theme Tracker"
+msgstr ""
+
+#: lib/theme-tracker.php:23
+msgid "Enable Theme Tracker"
+msgstr ""
+
+#: lib/theme-tracker.php:24
+msgid "Send theme name, theme version, site url, ip address and WP version to the tracker API every 7 days. This data is used to plan future updates."
+msgstr ""
+
+#: lib/theme-tracker.php:31
+msgid "Enabled"
+msgstr ""
+
+#: lib/theme-tracker.php:36
+msgid "Disabled"
+msgstr ""
+
+#: lib/theme-tracker.php:43
+msgid "Theme Tracker API Key"
+msgstr ""
+
+#: lib/theme-tracker.php:44
+msgid "API key required to connect to the tracker."
+msgstr ""
+
+#: lib/theme-tracker.php:51
+msgid "Theme Tracker API Url"
+msgstr ""
+
+#: lib/theme-tracker.php:52
+msgid "The API endpoint to send the theme data."
+msgstr ""
+
+#: lib/theme-tracker.php:59
+msgid "Theme Tracker Debug Mode"
+msgstr ""
+
+#: lib/theme-tracker.php:60
+msgid "Send data continuously. Ignore transient time."
+msgstr ""
+
+#: lib/theme-tracker.php:67
+msgid "Enable debug mode"
+msgstr ""
+
+#: lib/theme-tracker.php:80
+msgid "Theme tracking is enabled but is missing the API Key."
+msgstr ""
+
+#: lib/theme-tracker.php:142, lib/theme-tracker.php:154, lib/theme-tracker.php:158
+msgid "Theme Tracker API Error"
+msgstr ""
+
+#: lib/theme-tracker.php:158
+msgid "Invalid resposne (not JSON) received from the API endpoint."
+msgstr ""
+
 #: templates/content-page-contact.php:15
 msgid "Name"
 msgstr ""

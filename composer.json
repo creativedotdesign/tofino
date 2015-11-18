@@ -41,7 +41,8 @@
       "lib/shortcodes.php",
       "lib/theme-options.php",
       "lib/helpers.php",
-      "lib/relative-urls.php"
+      "lib/relative-urls.php",
+      "lib/theme-tracker.php"
     ]
   }
 }
