@@ -20,7 +20,7 @@ function theme_tracker_options() {
     'settings' => array(
       array(
         'id'      => 'theme_tracker_enabled',
-        'label'   => __('Theme Tracker', 'tofino'),
+        'label'   => __('Enable Theme Tracker', 'tofino'),
         'desc'    => __('Send theme name, theme version, site url, ip address and WP version to the tracker API every 7 days. This data is used to plan future updates.', 'tofino'),
         'std'     => '',
         'type'    => 'checkbox',
@@ -43,7 +43,7 @@ function theme_tracker_options() {
       ),
       array(
         'id'        => 'theme_tracker_api_url',
-        'label'     => __('Theme Tracker API URL', 'tofino'),
+        'label'     => __('Theme Tracker API Url', 'tofino'),
         'desc'      => __('The API endpoint to send the theme data.', 'tofino'),
         'std'       => 'http://tracker.lambdacreatives.com/api/v1/theme',
         'type'      => 'text',
