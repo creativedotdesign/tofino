@@ -105,6 +105,7 @@ function theme_tracker() {
       $theme_version = $theme_data->get('Version');
       $theme_author  = $theme_data->get('Author');
       $server_ip     = (!empty($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown');
+      $environment   = (!empty(getenv('WP_ENV')) ? getenv('WP_ENV') : 'Unknown'); // For Bedrock installs
 
       $data = array(
         'uid'               => $uid,
@@ -114,6 +115,7 @@ function theme_tracker() {
         'site_name'         => get_bloginfo('name'),
         'site_url'          => get_site_url(),
         'ip_address'        => $server_ip,
+        'environment'       => $environment,
         'wordpress_version' => get_bloginfo('version')
       );
 
