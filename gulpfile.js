@@ -8,9 +8,13 @@ var gulp            = require('gulp-help')(require('gulp'), {hideDepsMessage: tr
     fs              = require('fs'),
     plugins         = gulpLoadPlugins();
 
-var path   = manifest.paths, //path.source, path.dest etc
-    globs  = manifest.globs, //globs.images, globs.bower etc
-    config = manifest.config || {};
+var path       = manifest.paths, //path.source, path.dest etc
+    globs      = manifest.globs, //globs.images, globs.bower etc
+    config     = manifest.config || {},
+    production = argv.production || false,
+    minify     = (production ? true : false),
+    sourcemaps = (production ? false : true),
+    allowlint  = argv.allowlint || false;
 
 var gulpHelp = {
   styles     : 'Compile and concat SCSS to CSS with sourcemaps and autoprefixer. Also runs styles:lint.',
@@ -36,13 +40,13 @@ var gulpHelp = {
 var _gulpsrc = gulp.src;
 gulp.src = function() {
   return _gulpsrc.apply(gulp, arguments)
-    .pipe(plugins.if(!argv.production, plugins.plumber({
+    .pipe(plugins.if(!production, plugins.plumber({
       errorHandler: function(err) {
         //plugins.notify.onError("Error: <%= error.message %>")(err);
         plugins.notify.onError("Error: " + err.toString())(err);
         this.emit('end');
       }
-    })));
+    }))); // Seriously?
 };
 
 //Compile SCSS to CSS
@@ -60,10 +64,10 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
 
     merged.add(
       gulp.src(dep.globs)
-      .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
+      .pipe(plugins.if(sourcemaps, plugins.sourcemaps.init())) //If NOT prod use maps
       .pipe(plugins.sass({ style: 'nested' }))
       .pipe(plugins.concat(dep.name))
-      .pipe(plugins.if(argv.production, plugins.minifyCss())) //If prod minify
+      .pipe(plugins.if(minify, plugins.minifyCss())) //If prod minify
     );
   });
   return merged
@@ -71,10 +75,10 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
   .pipe(plugins.autoprefixer({
     browsers: ['last 2 versions']
   }))
-  .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.')))
+  .pipe(plugins.if(sourcemaps, plugins.sourcemaps.write('.')))
   .pipe(gulp.dest(path.dist + '/css'))
   .pipe(browserSync.reload({stream:true}))
-  .pipe(plugins.if(!argv.production, plugins.notify({
+  .pipe(plugins.if(!production, plugins.notify({
       "subtitle": "Task Complete",
       "message": "Styles task complete",
       "onLast": true
@@ -112,10 +116,10 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
-        .pipe(plugins.if(!argv.production, plugins.sourcemaps.init())) //If NOT prod use maps
+        .pipe(plugins.if(sourcemaps, plugins.sourcemaps.init())) //If NOT prod use maps
         .pipe(plugins.concat(dep.name))
-        .pipe(plugins.if(argv.production, plugins.uglify())) //If prod minify
-        .pipe(plugins.if(!argv.production, plugins.sourcemaps.write('.', {
+        .pipe(plugins.if(minify, plugins.uglify())) //If prod minify
+        .pipe(plugins.if(sourcemaps, plugins.sourcemaps.write('.', {
           sourceRoot: path.scripts
         })))
     )
@@ -138,8 +142,8 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
   return gulp.src(path.scripts + '/**/*.js')
     .pipe(plugins.jshint())
-    .pipe(plugins.if(!argv.production, plugins.jshint.reporter('jshint-stylish')))
     .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail')))
+    .pipe(plugins.if(!production, plugins.jshint.reporter('jshint-stylish')))
     .pipe(plugins.jscs())
     .pipe(plugins.jscs.reporter());
 }, {
@@ -167,7 +171,7 @@ gulp.task('images', gulpHelp.images, function () {
       use: [pngquant()]
     }))
     .pipe(gulp.dest(path.dist + 'img'))
-    .pipe(plugins.if(!argv.production, plugins.notify("Images task complete")));
+    .pipe(plugins.if(!production, plugins.notify("Images task complete")));
 });
 
 //Minify SVGS + run sprite task
@@ -189,7 +193,7 @@ gulp.task('svg:sprite', gulpHelp.svgSprite, function () {
       }
     }))
     .pipe(gulp.dest(path.dist))
-    .pipe(plugins.if(!argv.production, plugins.notify("SVG task complete")));
+    .pipe(plugins.if(!production, plugins.notify("SVG task complete")));
 });
 
 //Copy font files from assets to dist
@@ -207,7 +211,7 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
         warningSeverity: 0
       }))
     .pipe(plugins.if(!argv.production, plugins.phpcs.reporter('log')))
-    .pipe(plugins.if(argv.production, plugins.phpcs.reporter('fail')));
+    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.phpcs.reporter('fail'))));
   }, {
     options: {
       'production': 'Fail on error.'
