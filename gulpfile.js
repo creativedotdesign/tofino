@@ -94,7 +94,7 @@ gulp.task('styles:lint', gulpHelp.stylesLint, function() {
   return gulp.src(path.source + 'styles/**/*.scss')
     .pipe(plugins.sassLint())
     .pipe(plugins.sassLint.format())
-    .pipe(plugins.if(argv.production, plugins.sassLint.failOnError()));
+    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.sassLint.failOnError())));
 }, {
   options: {
     'production': 'Fail on error.'
@@ -142,8 +142,8 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
   return gulp.src(path.scripts + '/**/*.js')
     .pipe(plugins.jshint())
-    .pipe(plugins.if(argv.production, plugins.jshint.reporter('fail')))
     .pipe(plugins.if(!production, plugins.jshint.reporter('jshint-stylish')))
+    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.jshint.reporter('fail'))))
     .pipe(plugins.jscs())
     .pipe(plugins.jscs.reporter());
 }, {
@@ -210,7 +210,7 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
         standard: 'ruleset.xml',
         warningSeverity: 0
       }))
-    .pipe(plugins.if(!argv.production, plugins.phpcs.reporter('log')))
+    .pipe(plugins.if(!production, plugins.phpcs.reporter('log')))
     .pipe(plugins.if(production, plugins.if(!allowlint, plugins.phpcs.reporter('fail'))));
   }, {
     options: {
