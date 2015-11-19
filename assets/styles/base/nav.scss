@@ -54,14 +54,6 @@
   margin-left: 1rem;
 }
 
-.navbar-toggler {
-  float: right;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
 .dropdown-header {
   h6 {
     padding-top:    .425rem;
@@ -86,6 +78,70 @@
 
     .dropdown-menu {
       @extend .dropdown-menu-right;
+    }
+  }
+}
+
+.navbar-toggler {
+  float: right;
+  padding: .5rem;
+  display: block;
+  position: absolute;
+  top: 2px;
+  right: .25rem;
+  width: $bar-width * 2;
+
+  &:focus {
+    outline: 0;
+  }
+
+  .bar-wrapper {
+    width: $bar-width;
+    height: ($bar-height * 3 + $bar-spacing * 2);
+  }
+
+  .bar {
+    transition: top 250ms ease, transform 250ms ease 250ms;
+    display: block;
+    background: $color;
+    width: $bar-width;
+    height: $bar-height;
+    position: relative;
+    transform: translate3d(0, 0, 0);
+
+    &:nth-child(1) {
+      top: $bar-spacing + $bar-height;
+      transform: rotate(45deg);
+    }
+
+    &:nth-child(2) {
+      opacity: 0;
+    }
+
+    &:nth-child(3) {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &.collapsed {
+    .bar {
+      transition: transform 250ms ease, top 250ms ease 250ms;
+
+      &:nth-child(1) {
+        top: 0;
+        transform: rotate(0);
+      }
+
+      &:nth-child(2) {
+        top: $bar-spacing;
+        opacity: 1;
+      }
+
+      &:nth-child(3) {
+        top: $bar-spacing * 2;
+        transform: rotate(0);
+      }
     }
   }
 }
