@@ -22,11 +22,11 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 
 * Download a pre-complied version of the master branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip)
 * Download the latest tagged release (Coming Soon).
-* Clone the git repo and work the magic (Update this).
+* Clone the git repo and run `bin/setup.sh`
 
 ## Features
 
-* [Bootstrap 4](http://getbootstrap.com/)
+* [Bootstrap 4](http://getbootstrap.com/) (Pre-release)
 * Theme Options Panel ([Option Tree](https://github.com/valendesigns/option-tree))
 	* Admin login screen logo
 	* Google Analytics
@@ -36,14 +36,23 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 	* Left/Center/Right Menu Positions
 	* Telephone number
 	* Email address
+	* Company number
 	* Footer text
-	* Notification Text
+	* Notification text / EU Cookie notice with top/bottom positions
+	* Contact form with [Google reCaptcha](https://www.google.com/recaptcha) and custom email template
+	* [Theme Tracker](https://github.com/lambdacreatives/tracker)
 * [DOM-based routing](http://goo.gl/EUTi53)
-* SCSS
+* [SCSS](http://sass-lang.com/)
 * [Gulp](http://gulpjs.com/) build script
+	* Includes [JSHint](https://github.com/spalger/gulp-jshint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 * [Bower](http://bower.io/) for front-end package management
 * [Composer](https://getcomposer.org/) for PHP package management
 * [TGM Plugin Activation](https://github.com/TGMPA/TGM-Plugin-Activation)
-* [WP-Bootstrap-Navwalker](https://github.com/twittem/wp-bootstrap-navwalker)
+* [Asset Builder](https://github.com/austinpray/asset-builder) for easy asset pipeline management
+* Custom Nav-walker Bootstrap 4 ready
+* Relative URLs
+* Namespaced functions
+* 2 Widget areas
+* Auto post type / slug based template routing
 * SVG Sprite Shortcode `[svg sprite="my-sprite-icon"]`
 * SVG Sprite helper for templates `svg('sprite-name')` or `svg(['sprite'=>'sprite-name'])`
