@@ -87,7 +87,7 @@
   padding: .5rem;
   display: block;
   position: absolute;
-  top: 2px;
+  top: 5px;
   right: .25rem;
   width: $bar-width * 2;
 
@@ -101,7 +101,7 @@
   }
 
   .bar {
-    transition: top 250ms ease, transform 250ms ease 250ms;
+    transition: top 250ms ease, transform 250ms ease 250ms, opacity 100ms ease 250ms;
     display: block;
     background: $color;
     width: $bar-width;
@@ -115,6 +115,7 @@
     }
 
     &:nth-child(2) {
+      top: $bar-spacing;
       opacity: 0;
     }
 
@@ -126,7 +127,7 @@
 
   &.collapsed {
     .bar {
-      transition: transform 250ms ease, top 250ms ease 250ms;
+      transition: transform 250ms ease, top 250ms ease 250ms, opacity 100ms ease 250ms;
 
       &:nth-child(1) {
         top: 0;
