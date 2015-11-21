@@ -61,3 +61,26 @@ function ot_shortcode($atts) {
 }
 
 add_shortcode('option', 'ot_shortcode');
+
+function social_icons($atts = array()) {
+  $social_links = ot_get_option('social_links', array());
+  $output = '';
+
+  $atts = shortcode_atts(array(
+    'class' => ''
+  ), $atts, 'option');
+
+  if (!empty($social_links)) {
+    $output .= '<ul class="social-icons ' . $atts['class'] . '">';
+
+    foreach ($social_links as $social_link) {
+      $output .= '<li><a href="' . $social_link['href'] . '" title="' . $social_link['name'] . '">' . svg($social_link['title']) . '</a></li>';
+    }
+
+    $output .= '</ul>';
+  }
+
+  return $output;
+}
+
+add_shortcode('social_icons', 'social_icons');

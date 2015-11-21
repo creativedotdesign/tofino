@@ -8,6 +8,8 @@ A WordPress starter theme for jumpstarting custom theme development.
 
 Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https://github.com/mrchimp).
 
+[Demo](http://tofino.lambdacreatives.com)
+
 ## Requirements
 
 | Prerequisite    | How to check | How to install
@@ -27,13 +29,15 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 ## Features
 
 * [Bootstrap 4](http://getbootstrap.com/) (Pre-release)
+* Multilingual ready (POT file included)
+* Responsive
 * Theme Options Panel ([Option Tree](https://github.com/valendesigns/option-tree))
 	* Admin login screen logo
 	* Google Analytics
 	* Social links
 	* Sticky menu
 	* Sticky footer
-	* Left/Center/Right Menu Positions
+	* Left/Center/Right menu positions
 	* Telephone number
 	* Email address
 	* Company number
@@ -45,6 +49,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * [SCSS](http://sass-lang.com/)
 * [Gulp](http://gulpjs.com/) build script
 	* Includes [JSHint](https://github.com/spalger/gulp-jshint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+	* Use `gulp help` for a full task list with descriptions
 * [Bower](http://bower.io/) for front-end package management
 * [Composer](https://getcomposer.org/) for PHP package management
 * [TGM Plugin Activation](https://github.com/TGMPA/TGM-Plugin-Activation)
