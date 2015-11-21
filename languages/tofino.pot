@@ -62,11 +62,19 @@ msgstr ""
 msgid "Primary Navigation"
 msgstr ""
 
-#: lib/init.php:48
+#: lib/init.php:35, lib/theme-options.php:229
+msgid "Maintenance Mode"
+msgstr ""
+
+#: lib/init.php:35
+msgid "I understand"
+msgstr ""
+
+#: lib/init.php:65
 msgid "Above Content"
 msgstr ""
 
-#: lib/init.php:56
+#: lib/init.php:73
 msgid "Below Content"
 msgstr ""
 
@@ -190,63 +198,79 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: lib/theme-options.php:229
-msgid "TO email address"
-msgstr ""
-
 #: lib/theme-options.php:230
-msgid "Email address used in the TO field. Leave blank to use the email address defined in General Settings."
+msgid "Enabling maintenance mode shows a message on each page in the admin area."
 msgstr ""
 
 #: lib/theme-options.php:237
-msgid "CC email address"
+msgid "Enable maintenance mode"
 msgstr ""
 
-#: lib/theme-options.php:238
-msgid "Email address used in the CC field."
-msgstr ""
-
-#: lib/theme-options.php:245
-msgid "FROM email address"
+#: lib/theme-options.php:244
+msgid "Maintenance Mode Text"
 msgstr ""
 
 #: lib/theme-options.php:246
-msgid "Email address used in the FROM field. Leave blank for server default."
+msgid "This site is currently in maintenance mode. Any changes you make may be overwritten or removed."
 msgstr ""
 
 #: lib/theme-options.php:253
-msgid "Email Subject"
+msgid "TO email address"
 msgstr ""
 
 #: lib/theme-options.php:254
-msgid "The subject field. Leave blank for "Form submission from SERVER_NAME"."
+msgid "Email address used in the TO field. Leave blank to use the email address defined in General Settings."
 msgstr ""
 
 #: lib/theme-options.php:261
-msgid "Success Message"
+msgid "CC email address"
 msgstr ""
 
 #: lib/theme-options.php:262
-msgid "Message displayed to use after form action is successful."
+msgid "Email address used in the CC field."
 msgstr ""
 
-#: lib/theme-options.php:263
-msgid "Thanks, we'll be in touch soon."
+#: lib/theme-options.php:269
+msgid "FROM email address"
 msgstr ""
 
-#: lib/theme-options.php:270, lib/theme-options.php:278
-msgid "Enable reCaptcha"
+#: lib/theme-options.php:270
+msgid "Email address used in the FROM field. Leave blank for server default."
 msgstr ""
 
-#: lib/theme-options.php:271
-msgid "Enable Google reCaptcha "I am not a robot"."
+#: lib/theme-options.php:277
+msgid "Email Subject"
+msgstr ""
+
+#: lib/theme-options.php:278
+msgid "The subject field. Leave blank for "Form submission from SERVER_NAME"."
 msgstr ""
 
 #: lib/theme-options.php:285
+msgid "Success Message"
+msgstr ""
+
+#: lib/theme-options.php:286
+msgid "Message displayed to use after form action is successful."
+msgstr ""
+
+#: lib/theme-options.php:287
+msgid "Thanks, we'll be in touch soon."
+msgstr ""
+
+#: lib/theme-options.php:294, lib/theme-options.php:302
+msgid "Enable reCaptcha"
+msgstr ""
+
+#: lib/theme-options.php:295
+msgid "Enable Google reCaptcha "I am not a robot"."
+msgstr ""
+
+#: lib/theme-options.php:309
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: lib/theme-options.php:293
+#: lib/theme-options.php:317
 msgid "reCaptcha Secret Key"
 msgstr ""
 

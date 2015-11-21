@@ -243,7 +243,7 @@ function custom_theme_options() {
         'id'      => 'maintenance_mode_text',
         'label'   => __('Maintenance Mode Text', 'tofino'),
         'desc'    => '',
-        'std'     => 'This site is currently in maintenance mode. Any changes you make may be overwritten or removed.',
+        'std'     => __('This site is currently in maintenance mode. Any changes you make may be overwritten or removed.', 'tofino'),
         'type'    => 'textarea-simple',
         'section' => 'other_settings',
         'rows'    => '4',
