@@ -225,6 +225,30 @@ function custom_theme_options() {
         )
       ),
       array(
+        'id'          => 'maintenance_mode_enabled',
+        'label'       => __('Maintenance Mode', 'tofino'),
+        'desc'        => __('Enabling maintenance mode shows a message on each page in the admin area.', 'tofino'),
+        'std'         => '',
+        'type'        => 'checkbox',
+        'section'     => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => true,
+            'label' => __('Enable maintenance mode', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
+        'id'      => 'maintenance_mode_text',
+        'label'   => __('Maintenance Mode Text', 'tofino'),
+        'desc'    => '',
+        'std'     => 'This site is currently in maintenance mode. Any changes you make may be overwritten or removed.',
+        'type'    => 'textarea-simple',
+        'section' => 'other_settings',
+        'rows'    => '4',
+      ),
+      array(
         'id'          => 'contact_form_to_address',
         'label'       => __('TO email address', 'tofino'),
         'desc'        => __('Email address used in the TO field. Leave blank to use the email address defined in General Settings.', 'tofino'),
