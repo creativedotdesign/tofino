@@ -26,6 +26,21 @@ function setup() {
 
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
+
+/**
+ * Show maintenance mode message
+ */
+function show_maintenance_message() {
+  if (ot_get_option('maintenance_mode_enabled')) {
+    echo '<div class="maintenance-mode-alert"><h1>Maintenance Mode</h1><p>' . ot_get_option('maintenance_mode_text') . '</p><button>I understand</button></div>';
+    // @todo - Move this to a separate admin js file
+    echo '<script>jQuery(\'.maintenance-mode-alert button\').on(\'click\', function () {jQuery(\'.maintenance-mode-alert\').fadeOut(\'fast\');});</script>';
+  }
+}
+
+add_action('admin_footer', __NAMESPACE__ . '\\show_maintenance_message');
+
+
 /**
  * Set max content width
  */
@@ -35,10 +50,12 @@ function content_width() {
 
 add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 
+
 /**
  * Remove admin bar
 **/
 add_filter('show_admin_bar', '__return_false');
+
 
 /**
  * Register sidebars
@@ -61,17 +78,20 @@ function widgets_init() {
     'after_title'   => '</h3>'
   ]);
 }
+
 add_action('widgets_init', __NAMESPACE__ . '\\widgets_init');
+
 
 /**
  * Add post_name to body class
  */
 function add_post_name_body_class($classes) {
-  //Post name
   global $post;
+
   if (isset($post)) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
+
   return $classes;
 }
 
