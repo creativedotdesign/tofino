@@ -32,7 +32,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
  */
 function show_maintenance_message() {
   if (ot_get_option('maintenance_mode_enabled')) {
-    echo '<div class="maintenance-mode-alert"><h1>Maintenance Mode</h1><p>' . ot_get_option('maintenance_mode_text') . '</p><button>I understand</button></div>';
+    echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . ot_get_option('maintenance_mode_text') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
     // @todo - Move this to a separate admin js file
     echo '<script>jQuery(\'.maintenance-mode-alert button\').on(\'click\', function () {jQuery(\'.maintenance-mode-alert\').fadeOut(\'fast\');});</script>';
   }
