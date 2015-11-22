@@ -14,7 +14,8 @@ function svg($atts) {
     'class'  => '',
     'title'  => '',
     'id'     => '',
-    'sprite' => ''
+    'sprite' => '',
+    'preserveAspectRatio' => ''
   ), $atts, 'svg');
 
   if (!$atts['sprite']) {
