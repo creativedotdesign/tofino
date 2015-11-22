@@ -13,6 +13,10 @@
     },
     "wp-admin.css": {
       "files": ["styles/base/wp-admin.scss"]
+    },
+    "wp-admin.js": {
+      "bower": ["js-cookie"],
+      "files": ["scripts/wp-admin.js"]
     }
   },
   "paths": {
