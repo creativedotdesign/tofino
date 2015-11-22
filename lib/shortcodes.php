@@ -74,7 +74,7 @@ function social_icons($atts = array()) {
     $output .= '<ul class="social-icons ' . $atts['class'] . '">';
 
     foreach ($social_links as $social_link) {
-      $output .= '<li><a href="' . $social_link['href'] . '" title="' . $social_link['name'] . '">' . svg($social_link['title']) . '</a></li>';
+      $output .= '<li><a href="' . $social_link['href'] . '" title="' . $social_link['name'] . '">' . svg(sanitize_title($social_link['name'])) . '</a></li>';
     }
 
     $output .= '</ul>';
