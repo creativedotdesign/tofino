@@ -4,7 +4,7 @@ Scripts go here.
 
 ## install-wp-tests.sh
 
-@todo
+Sets up the WordPress test suite used by (PHPUnit)[https://phpunit.de/] for the test files located in `/tests`. This script also runs as part of the Travis CI build.
 
 ## setup.sh
 

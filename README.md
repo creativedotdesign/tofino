@@ -69,7 +69,7 @@ Docs are provided by README.md files in each directory.
 
 ### Shortcodes
 
-The following shortcodes are availble as shortcodes in Wordpress content as well as functions in your template files.
+The following shortcodes are available as shortcodes in Wordpress content as well as functions in your template files.
 
 * `svg` - Generate SVG sprite code for files from assets/svgs/sprites
 * `copyright` - Generate copyright string, probably for use in the footer.
