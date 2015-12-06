@@ -3,8 +3,10 @@
 ## manifest.json
 
 Contains arrays of JS and CSS files which are concatinated using gulp.
-Contains an array of paths used by the gulp file.
-Update the devUrl for use with the gulp watch task (uses browserSync proxy).
+
+Contains an array of paths used by `gulpfile.js`.
+
+Update the `devUrl` for use with the gulp watch task (uses browserSync proxy).
 
 ## /fonts
 
