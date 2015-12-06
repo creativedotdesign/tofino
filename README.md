@@ -12,19 +12,19 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 
 ## Requirements
 
-| Prerequisite    | How to check | How to install
-| --------------- | ------------ | ------------- |
-| PHP >= 5.3.x    | `php -v`     | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 4.x.x  | `node -v`    | [nodejs.org](http://nodejs.org/) |
-| gulp >= 3.9  | `gulp -v`    | `npm install -g gulp` |
-| Bower >= 1.5.x | `bower -v`   | `npm install -g bower` |
-| Composer >= 1.0.0-alpha10 | `composer -V`   | [getcomposer.org](http://getcomposer.org) |
+| Prerequisite              | How to check  | How to install                                  |
+| ------------------------- | ------------- | ----------------------------------------------- |
+| PHP >= 5.4.x              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 4.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
+| Bower >= 1.5.x            | `bower -v`    | `npm install -g bower`                          |
+| Composer >= 1.0.0-alpha10 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
-* Download a pre-complied version of the master branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip)
+* Download a pre-complied version of the master branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip).
 * Download the latest tagged release (Coming Soon).
-* Clone the git repo and run `bin/setup.sh`
+* Clone the git repo and run `bin/setup.sh` (from your dev machine).
 
 ## Features
 
@@ -56,7 +56,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * [TGM Plugin Activation](https://github.com/TGMPA/TGM-Plugin-Activation)
 * [Asset Builder](https://github.com/austinpray/asset-builder) for easy asset pipeline management
 * Custom Nav-walker Bootstrap 4 ready
-* Relative URLs
+* [Relative URLs](https://codex.wordpress.org/Function_Reference/wp_make_link_relative)
 * Namespaced functions
 * 2 Widget areas
 * Auto post type / slug based template routing
@@ -80,10 +80,14 @@ The following shortcodes are available as shortcodes in Wordpress content as wel
 
 @todo
 
-### Relative Links
-
-@todo
-
 ## Contributing
 
-**@todo - Rules for contributing go here...**
+Updates and pull requests should be done on the dev branch.
+
+New features should be done in a separate branch and sent as a pull request.
+
+Nothing should be merged into the master branch until it has been tested on dev and (preferably) approved by all devs.
+
+The dev branch is automatically deployed to http://tofino.lambdacreatives.com so you can test there.
+
+No breaking changes except at major versions.
