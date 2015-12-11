@@ -31,14 +31,18 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
  * Show maintenance mode message
  */
 function show_maintenance_message() {
-  if (ot_get_option('maintenance_mode_enabled')) {
-    echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . ot_get_option('maintenance_mode_text') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
-    // @todo - Move this to a separate admin js file
-    echo '<script>jQuery(\'.maintenance-mode-alert button\').on(\'click\', function () {jQuery(\'.maintenance-mode-alert\').fadeOut(\'fast\');});</script>';
+  if (ot_get_option('maintenance_mode_enabled')) { ?>
+    <div class="error notice">
+      <p><strong><?php _e(__('Maintenance Mode', 'tofino') . '</strong> - ' . ot_get_option('maintenance_mode_text'), 'tofino'); ?></p>
+    </div><?php
+
+    if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
+      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . ot_get_option('maintenance_mode_text') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
+    }
   }
 }
 
-add_action('admin_footer', __NAMESPACE__ . '\\show_maintenance_message');
+add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
 
 
 /**
