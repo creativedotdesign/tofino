@@ -27,7 +27,7 @@ msgid "/dist directory not found. You probably want to run npm install and gulp 
 msgstr ""
 
 #: header.php:15
-msgid "You are using an <strong>outdated</strong> browser. <a href="http://browsehappy.com/">Update your browser</a> to improve your experience."
+msgid "You are using an <strong>outdated</strong> browser. <a href=\"http://browsehappy.com/\">Update your browser</a> to improve your experience."
 msgstr ""
 
 #: lib/contact-form.php:18
@@ -62,19 +62,23 @@ msgstr ""
 msgid "Primary Navigation"
 msgstr ""
 
-#: lib/init.php:35, lib/theme-options.php:229
+#: lib/init.php:36
+msgid "__Maintenance Mode"
+msgstr ""
+
+#: lib/init.php:36, lib/init.php:40, lib/theme-options.php:229
 msgid "Maintenance Mode"
 msgstr ""
 
-#: lib/init.php:35
+#: lib/init.php:40
 msgid "I understand"
 msgstr ""
 
-#: lib/init.php:65
+#: lib/init.php:69
 msgid "Above Content"
 msgstr ""
 
-#: lib/init.php:73
+#: lib/init.php:77
 msgid "Below Content"
 msgstr ""
 
@@ -131,7 +135,7 @@ msgid "Footer Text"
 msgstr ""
 
 #: lib/theme-options.php:130
-msgid "<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>."
+msgid "<a href=\"https://github.com/lambdacreatives/tofino\">Tofino</a> theme by <a href=\"https://github.com/mrchimp\">MrChimp</a> and <a href=\"https://github.com/danimalweb\">Danimalweb</a>."
 msgstr ""
 
 #: lib/theme-options.php:145
@@ -243,7 +247,7 @@ msgid "Email Subject"
 msgstr ""
 
 #: lib/theme-options.php:278
-msgid "The subject field. Leave blank for "Form submission from SERVER_NAME"."
+msgid "The subject field. Leave blank for \"Form submission from SERVER_NAME\"."
 msgstr ""
 
 #: lib/theme-options.php:285
@@ -263,7 +267,7 @@ msgid "Enable reCaptcha"
 msgstr ""
 
 #: lib/theme-options.php:295
-msgid "Enable Google reCaptcha "I am not a robot"."
+msgid "Enable Google reCaptcha \"I am not a robot\"."
 msgstr ""
 
 #: lib/theme-options.php:309
