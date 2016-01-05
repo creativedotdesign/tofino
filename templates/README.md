@@ -9,6 +9,9 @@ Template files go here. The naming of your template files is important. By namin
  * `content-single.php`
  * `content-page-{slug}.php`
  * `content-page.php`
+ * `archive-{category}.php`
+ * `archive-{taxonomy}-{term}.php`
+ * `archive-{posttype}-{taxonomy}-{term}.php`
  * `archive-{post-type}.php`
  * `archive.php`
 
