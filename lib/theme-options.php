@@ -451,7 +451,7 @@ function notification($position) {
             <div class="col-xs-12">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><?php echo svg('icon-close'); ?></span>
-                <span class="sr-only">Close</span>
+                <span class="sr-only"><?php _e('Close', 'tofino'); ?></span>
               </button>
               <p><?php echo nl2br(ot_get_option('notification_text')); ?></p>
             </div>
