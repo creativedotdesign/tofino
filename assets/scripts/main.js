@@ -32,21 +32,23 @@
         //Assign sticky
         var $sticky = $('.navbar-sticky-top');
 
-        //Sticky polyfill for css position: sticky
-        $sticky.Stickyfill();
+        if ($sticky.length) {
+          //Sticky polyfill for css position: sticky
+          $sticky.Stickyfill();
 
-        //Assign stick offset
-        var stickyTop = $('.navbar-sticky-top').offset().top;
+          //Assign stick offset
+          var stickyTop = $('.navbar-sticky-top').offset().top;
 
-        $(window).scroll(function() {
-          if ($(this).scrollTop() > stickyTop) {
-            $sticky.addClass('stuck');
-            //$('body').addClass('menu-fixed');
-          } else {
-            $sticky.removeClass('stuck');
-            //$('body').removeClass('menu-fixed');
-          }
-        });
+          $(window).scroll(function() {
+            if ($(this).scrollTop() > stickyTop) {
+              $sticky.addClass('stuck');
+              //$('body').addClass('menu-fixed');
+            } else {
+              $sticky.removeClass('stuck');
+              //$('body').removeClass('menu-fixed');
+            }
+          });
+        }
       }
     },
     // Home page
