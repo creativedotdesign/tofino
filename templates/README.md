@@ -22,10 +22,9 @@ Wordpress gives some default templates in the root theme folder. Apart from `hea
 Therefore *do not edit or create these files*:
 
 * archive.php
-* home.php
 * index.php
-* frontpage.php
 * single.php
+* page.php
 
 ## Front page
 
