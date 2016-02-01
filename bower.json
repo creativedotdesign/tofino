@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "v4-dev",
+    "bootstrap": "v4.0.0-alpha.2",
     "svg4everybody": "~2.0.0",
     "js-cookie": "~2.0.3",
     "Stickyfill": "~1.1.3",

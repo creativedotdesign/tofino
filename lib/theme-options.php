@@ -248,86 +248,18 @@ function custom_theme_options() {
         'section' => 'other_settings',
         'rows'    => '4',
       ),
-      array(
-        'id'          => 'contact_form_to_address',
-        'label'       => __('TO email address', 'tofino'),
-        'desc'        => __('Email address used in the TO field. Leave blank to use the email address defined in General Settings.', 'tofino'),
-        'std'         => '',
-        'type'        => 'text',
-        'section'     => 'contact_form',
-      ),
-      array(
-        'id'          => 'contact_form_cc_address',
-        'label'       => __('CC email address', 'tofino'),
-        'desc'        => __('Email address used in the CC field.', 'tofino'),
-        'std'         => '',
-        'type'        => 'text',
-        'section'     => 'contact_form',
-      ),
-      array(
-        'id'          => 'contact_form_from_address',
-        'label'       => __('FROM email address', 'tofino'),
-        'desc'        => __('Email address used in the FROM field. Leave blank for server default.', 'tofino'),
-        'std'         => '',
-        'type'        => 'text',
-        'section'     => 'contact_form',
-      ),
-      array(
-        'id'          => 'contact_form_email_subject',
-        'label'       => __('Email Subject', 'tofino'),
-        'desc'        => __('The subject field. Leave blank for "Form submission from SERVER_NAME".', 'tofino'),
-        'std'         => '',
-        'type'        => 'text',
-        'section'     => 'contact_form',
-      ),
-      array(
-        'id'      => 'contact_form_success_message',
-        'label'   => __('Success Message', 'tofino'),
-        'desc'    => __('Message displayed to use after form action is successful.', 'tofino'),
-        'std'     => __("Thanks, we'll be in touch soon.", 'tofino'),
-        'type'    => 'textarea-simple',
-        'section' => 'contact_form',
-        'rows'    => '3'
-      ),
-      array(
-        'id'      => 'enable_captcha_checkbox',
-        'label'   => __('Enable reCaptcha', 'tofino'),
-        'desc'    => __('Enable Google reCaptcha "I am not a robot".', 'tofino'),
-        'std'     => '',
-        'type'    => 'checkbox',
-        'section' => 'contact_form',
-        'choices' => array(
-          array(
-            'value' => true,
-            'label' => __('Enable reCaptcha', 'tofino'),
-            'src'   => ''
-          ),
-        )
-      ),
-      array(
-        'id'          => 'captcha_site_key',
-        'label'       => __('reCaptcha Site Key', 'tofino'),
-        'desc'        => '',
-        'std'         => '',
-        'type'        => 'text',
-        'section'     => 'contact_form',
-      ),
-      array(
-        'id'          => 'captcha_secret',
-        'label'       => __('reCaptcha Secret Key', 'tofino'),
-        'desc'        => '',
-        'std'         => '',
-        'type'        => 'text',
-        'section'     => 'contact_form',
-      ),
     )
   );
 
   // Get theme tracker options array
   $tracker_theme_options = \Tofino\ThemeTracker\theme_tracker_options();
 
+  // Get contact form options array
+  $contact_form_options = \Tofino\ContactForm\theme_options();
+
   // Merge arrays
   $custom_settings = array_merge_recursive($custom_settings, $tracker_theme_options);
+  $custom_settings = array_merge_recursive($custom_settings, $contact_form_options);
 
   /* allow settings to be filtered before saving */
   $custom_settings = apply_filters(ot_settings_id() . '_args', $custom_settings);
@@ -451,7 +383,7 @@ function notification($position) {
             <div class="col-xs-12">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><?php echo svg('icon-close'); ?></span>
-                <span class="sr-only">Close</span>
+                <span class="sr-only"><?php _e('Close', 'tofino'); ?></span>
               </button>
               <p><?php echo nl2br(ot_get_option('notification_text')); ?></p>
             </div>

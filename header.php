@@ -23,6 +23,7 @@
       <span class="bar"></span>
       <span class="bar"></span>
     </div>
+    <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
   </button>
   <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
   <div id="main-menu" class="collapse navbar-toggleable-xs navbar-wrapper">
