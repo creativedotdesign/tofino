@@ -108,24 +108,26 @@ class NavWalker extends \Walker_Nav_Menu {
    // @codingStandardsIgnoreStart
   public function filter_menu_link_atts($atts, $item, $args) {
 
-    $classes   = array();
-    $classes[] = 'nav-link';
+    if (is_object($args->walker)) { // Filter if custom walker
+      $classes   = array();
+      $classes[] = 'nav-link';
 
-    if ($args->walker->has_children) {
-      $atts['data-toggle']   = 'dropdown';
-      $classes[]             = 'dropdown-toggle';
-      $atts['aria-haspopup'] = 'true';
+      if ($args->walker->has_children) {
+        $atts['data-toggle']   = 'dropdown';
+        $classes[]             = 'dropdown-toggle';
+        $atts['aria-haspopup'] = 'true';
+      }
+
+      if (strcasecmp($item->attr_title, 'disabled') == 0) {
+        $classes[] = 'disabled';
+      }
+
+      if ($item->current == 1) {
+        $classes[] = 'active';
+      }
+
+      $atts['class'] = implode(' ', $classes);
     }
-
-    if (strcasecmp($item->attr_title, 'disabled') == 0) {
-      $classes[] = 'disabled';
-    }
-
-    if ($item->current == 1) {
-      $classes[] = 'active';
-    }
-
-    $atts['class'] = implode(' ', $classes);
 
     return $atts;
   }
