@@ -13,7 +13,6 @@ var path       = manifest.paths, //path.source, path.dest etc
     config     = manifest.config || {},
     production = argv.production || false,
     minify     = (production ? true : false),
-    sourcemaps = (production ? false : true),
     allowlint  = argv.allowlint || false;
 
 var gulpHelp = {
@@ -64,7 +63,7 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
 
     merged.add(
       gulp.src(dep.globs)
-      .pipe(plugins.if(sourcemaps, plugins.sourcemaps.init())) //If NOT prod use maps
+      .pipe(plugins.sourcemaps.init({loadMaps: true}))
       .pipe(plugins.sass({ style: 'nested' }))
       .pipe(plugins.concat(dep.name))
       .pipe(plugins.if(minify, plugins.minifyCss())) //If prod minify
@@ -75,7 +74,7 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
   .pipe(plugins.autoprefixer({
     browsers: ['last 2 versions']
   }))
-  .pipe(plugins.if(sourcemaps, plugins.sourcemaps.write('.')))
+  .pipe(plugins.sourcemaps.write('.'))
   .pipe(gulp.dest(path.dist + '/css'))
   .pipe(browserSync.reload({stream:true}))
   .pipe(plugins.if(!production, plugins.notify({
@@ -117,12 +116,10 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 
     merged.add(
       gulp.src(dep.globs, {base: 'scripts', merge: true})
-        .pipe(plugins.if(sourcemaps, plugins.sourcemaps.init())) //If NOT prod use maps
+        .pipe(plugins.sourcemaps.init({loadMaps: true}))
         .pipe(plugins.concat(dep.name))
         .pipe(plugins.if(minify, plugins.uglify())) //If prod minify
-        .pipe(plugins.if(sourcemaps, plugins.sourcemaps.write('.', {
-          sourceRoot: path.scripts
-        })))
+        .pipe(plugins.sourcemaps.write('.'))
     )
     .pipe(gulp.dest(path.dist + '/js'));
   });
