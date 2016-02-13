@@ -93,6 +93,7 @@ function theme_options() {
   );
 }
 
+
 /**
  * AJAX Contact Form
  */
@@ -177,6 +178,7 @@ function ajax_contact_form() {
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 
+
 /**
  * Get receipient from theme options
  */
@@ -194,6 +196,7 @@ function get_recipient() {
   }
   return $recipient;
 }
+
 
 /**
  * Genereate email body using html template
@@ -217,6 +220,7 @@ function build_email_body($form_data) {
 
   return $message;
 }
+
 
 /**
  * Send JSON and only JSON, then exit.
