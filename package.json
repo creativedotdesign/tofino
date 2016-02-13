@@ -49,7 +49,7 @@
     "gulp-jscs": "~3.0.2",
     "gulp-jshint": "~2.0.0",
     "gulp-load-plugins": "~1.2.0",
-    "gulp-minify-css": "~1.2.2",
+    "gulp-cssnano": "~2.1.1",
     "gulp-notify": "~2.2.0",
     "gulp-phpcbf": "~0.1.2",
     "gulp-phpcs": "~1.0.0",

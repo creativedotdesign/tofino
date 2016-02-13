@@ -66,7 +66,7 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
       .pipe(plugins.sourcemaps.init({loadMaps: true}))
       .pipe(plugins.sass({ style: 'nested' }))
       .pipe(plugins.concat(dep.name))
-      .pipe(plugins.if(minify, plugins.minifyCss())) //If prod minify
+      .pipe(plugins.if(minify, plugins.cssnano())) //If prod minify
     );
   });
   return merged
