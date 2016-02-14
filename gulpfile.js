@@ -161,7 +161,7 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
 gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
   return gulp.src(path.scripts + '/**/*.js')
     .pipe(plugins.jshint())
-    .pipe(plugins.if(!production, plugins.jshint.reporter('jshint-stylish')))
+    .pipe(plugins.jshint.reporter('jshint-stylish'))
     .pipe(plugins.if(production, plugins.if(!allowlint, plugins.jshint.reporter('fail'))))
     .pipe(plugins.jscs())
     .pipe(plugins.jscs.reporter());
