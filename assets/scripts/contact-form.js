@@ -23,6 +23,7 @@
       });
 
     request.done(function(response, textStatus, errorThrown) { // jshint ignore:line
+      //console.log(response);
       if (response.success === true) {
         $result.addClass('success').html(response.message);
         $form.find(':input').val(''); // Reset fields.
@@ -36,6 +37,7 @@
     });
 
     request.fail(function(response, textStatus, errorThrown) { // jshint ignore:line
+      //console.log(response);
       $result.addClass('failed').html('An error occured.');
       $form.find(':input').prop('disabled', false); // Re-enable fields
       $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn

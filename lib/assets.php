@@ -8,7 +8,45 @@ function styles() {
   wp_register_style('tofino/css', get_template_directory_uri() . $main_css . '?v=' . filemtime(get_template_directory() . $main_css), array(), '', 'all');
   wp_enqueue_style('tofino/css');
 }
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\styles');
+
+
+/**
+ * Load CSS in footer using JS function
+ */
+function load_css() {
+  $main_css = '/dist/css/main.css'; ?>
+  <script id="loadcss">
+    loadCSS('<?php echo get_template_directory_uri() . $main_css . '?v=' . filemtime(get_template_directory() . $main_css); ?>', document.getElementById("loadcss"));
+  </script>
+  <noscript><link href="<?php echo get_template_directory_uri() . $main_css . '?v=' . filemtime(get_template_directory() . $main_css); ?>" rel="stylesheet"></noscript><?php
+}
+
+
+/**
+ * Load CSS in header or footer
+ */
+function call_css() {
+  // If Critical CSS enabled load CSS in the footer
+  if (ot_get_option('critical_css_checkbox') && file_exists(get_template_directory() . '/dist/css/critical.css')) {
+    add_action('wp_footer', __NAMESPACE__ . '\\load_css');
+  } else {
+    add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\styles');
+  }
+}
+add_action('init', __NAMESPACE__ . '\\call_css');
+
+
+/**
+ * Inline css from critical CSS file
+ */
+function inline_critical_css() {
+  if (ot_get_option('critical_css_checkbox') && file_exists(get_template_directory() . '/dist/css/critical.css')) {?>
+    <style>
+    <?php echo file_get_contents(get_template_directory_uri() . '/dist/css/critical.css'); ?>
+    </style><?php
+  }
+}
+add_action('wp_head', __NAMESPACE__ . '\\inline_critical_css');
 
 
 /**

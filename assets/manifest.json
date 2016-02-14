@@ -5,7 +5,7 @@
       "main": true
     },
     "head.js": {
-      "files": ["../bower_components/svg4everybody/dist/svg4everybody.legacy.js"]
+      "files": ["../bower_components/loadcss/loadCSS.js", "../bower_components/svg4everybody/dist/svg4everybody.legacy.js"]
     },
     "main.css": {
       "files": ["styles/main.scss"],
@@ -28,6 +28,7 @@
     "fonts": "assets/fonts/"
   },
   "config": {
-    "devUrl": "http://tofino.dev"
+    "devUrl": "http://tofino.dev",
+    "stagingUrl": "http://tofino.lambdacreatives.com"
   }
 }

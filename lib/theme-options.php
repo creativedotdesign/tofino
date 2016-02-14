@@ -188,6 +188,21 @@ function custom_theme_options() {
         )
       ),
       array(
+        'id'      => 'critical_css_checkbox',
+        'label'   => __('Critical CSS', 'tofino'),
+        'desc'    => __('Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.', 'tofino'),
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => false,
+            'label' => __('Enable Critical CSS', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
         'id'      => 'notification_text',
         'label'   => __('Notification Text', 'tofino'),
         'desc'    => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),

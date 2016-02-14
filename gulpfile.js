@@ -6,6 +6,7 @@ var gulp            = require('gulp-help')(require('gulp'), {hideDepsMessage: tr
     pngquant        = require('imagemin-pngquant'),
     browserSync     = require('browser-sync').create(),
     fs              = require('fs'),
+    critical        = require('critical'),
     plugins         = gulpLoadPlugins();
 
 var path       = manifest.paths, //path.source, path.dest etc
@@ -13,25 +14,27 @@ var path       = manifest.paths, //path.source, path.dest etc
     config     = manifest.config || {},
     production = argv.production || false,
     minify     = (production ? true : false),
-    allowlint  = argv.allowlint || false;
+    allowlint  = argv.allowlint || false,
+    stagingUrl = argv.stagingUrl || false;
 
 var gulpHelp = {
-  styles     : 'Compile and concat SCSS to CSS with sourcemaps and autoprefixer. Also runs styles:lint.',
-  stylesLint : 'Lints all SCSS files.',
-  scripts    : 'Concat js files with sourcemaps. Also runs scripts:lint.',
-  scriptsLint: 'Lints all js files.',
-  scriptsFix : 'Fix all fixable JS lint errors. This will update existing files.',
-  images     : 'Compress JPG and PNG files.',
-  svgs       : 'Minify SVG files. Also runs svg:sprite.',
-  svgSprite  : 'Concat and minify SVG files in to a single SVG sprite file.',
-  fonts      : 'Copy the fonts directory to dist.',
-  phpLint    : 'Lint theme PHP files based on PSR-2.',
-  phpFix     : 'Fix all fixable PHP lint errors. This will update existing files.',
-  translate  : 'Generate a POT file in languages directory for easy translation. This will override existing file.',
-  clean      : 'Deletes the dist directory.',
-  build      : 'Main build task. Runs styles, scripts, images, svgs, fonts and php:lint. Does NOT delete dist directory.',
-  watch      : 'Watch SCSS, JS, SVG and PHP files. Uses browserSync via proxy.',
-  default    : 'Runs the build task. Deleting the dist directory first.'
+  styles         : 'Compile and concat SCSS to CSS with sourcemaps and autoprefixer. Also runs styles:lint.',
+  stylesLint     : 'Lints all SCSS files.',
+  stylesCritical : 'Generates the Critical CSS file based on dimentions in the array.',
+  scripts        : 'Concat js files with sourcemaps. Also runs scripts:lint.',
+  scriptsLint    : 'Lints all js files.',
+  scriptsFix     : 'Fix all fixable JS lint errors. This will update existing files.',
+  images         : 'Compress JPG and PNG files.',
+  svgs           : 'Minify SVG files. Also runs svg:sprite.',
+  svgSprite      : 'Concat and minify SVG files in to a single SVG sprite file.',
+  fonts          : 'Copy the fonts directory to dist.',
+  phpLint        : 'Lint theme PHP files based on PSR-2.',
+  phpFix         : 'Fix all fixable PHP lint errors. This will update existing files.',
+  translate      : 'Generate a POT file in languages directory for easy translation. This will override existing file.',
+  clean          : 'Deletes the dist directory.',
+  build          : 'Main build task. Runs styles, scripts, images, svgs, fonts and php:lint. Does NOT delete dist directory.',
+  watch          : 'Watch SCSS, JS, SVG and PHP files. Uses browserSync via proxy.',
+  default        : 'Runs the build task. Deleting the dist directory first.'
 };
 
 //Override standard gulp.src task
@@ -99,6 +102,24 @@ gulp.task('styles:lint', gulpHelp.stylesLint, function() {
     'production': 'Fail on error.',
     'allowlint': 'Do not fail on error, when used with --production.'
   }
+});
+
+// Critical path css
+gulp.task('styles:critical', ['styles', 'styles:lint'], function() {
+  return critical.generate({
+    src: plugins.if(stagingUrl, config.stagingUrl, config.devUrl),
+    dest: path.dist + '/css/critical.css',
+    ignore: ['@font-face',/url\(/],
+    // pathPrefix: '/wp-content/themes/tofino/' + path.dist + 'fonts',
+    minify: true,
+    dimensions: [{
+      height: 627,
+      width: 370
+    }, {
+      height: 900,
+      width: 1200
+    }]
+  });
 });
 
 // Concatenate & Minify JS
