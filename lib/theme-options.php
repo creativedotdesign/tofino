@@ -203,6 +203,21 @@ function custom_theme_options() {
         )
       ),
       array(
+        'id'      => 'jquery_in_footer',
+        'label'   => __('jQuery in Footer', 'tofino'),
+        'desc'    => __('Move jQuery to the footer. Uncheck if you have compatability issues with plugins.', 'tofino'),
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => false,
+            'label' => __('Move jQuery to footer.', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
         'id'      => 'notification_text',
         'label'   => __('Notification Text', 'tofino'),
         'desc'    => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
