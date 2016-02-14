@@ -2,7 +2,11 @@
 
 namespace Tofino\Assets;
 
-// Load styles
+use Tofino\ThemeOptions;
+
+/**
+ * Load styles
+ */
 function styles() {
   $main_css = '/dist/css/main.css';
   wp_register_style('tofino/css', get_template_directory_uri() . $main_css . '?v=' . filemtime(get_template_directory() . $main_css), array(), '', 'all');
@@ -83,6 +87,7 @@ function scripts() {
   }
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\scripts');
+
 
 /**
  * Load admin scripts
