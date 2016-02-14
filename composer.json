@@ -22,6 +22,7 @@
     "tofino"
   ],
   "require": {
+    "php": ">=5.4.0",
     "composer/installers": "~1.0",
     "tgmpa/tgm-plugin-activation": "2.5.2",
     "valendesigns/option-tree": "2.6.0",
