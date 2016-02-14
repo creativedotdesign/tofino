@@ -34,91 +34,91 @@ msgstr ""
 msgid "Toggle Navigation Button"
 msgstr ""
 
-#: lib/contact-form.php:18, lib/theme-options.php:64
+#: lib/contact-form.php:16, lib/theme-options.php:64
 msgid "Contact Form"
 msgstr ""
 
-#: lib/contact-form.php:24
+#: lib/contact-form.php:22
 msgid "TO email address"
 msgstr ""
 
-#: lib/contact-form.php:25
+#: lib/contact-form.php:23
 msgid "Email address used in the TO field. Leave blank to use the email address defined in General Settings."
 msgstr ""
 
-#: lib/contact-form.php:32
+#: lib/contact-form.php:30
 msgid "CC email address"
 msgstr ""
 
-#: lib/contact-form.php:33
+#: lib/contact-form.php:31
 msgid "Email address used in the CC field."
 msgstr ""
 
-#: lib/contact-form.php:40
+#: lib/contact-form.php:38
 msgid "FROM email address"
 msgstr ""
 
-#: lib/contact-form.php:41
+#: lib/contact-form.php:39
 msgid "Email address used in the FROM field. Leave blank for server default."
 msgstr ""
 
-#: lib/contact-form.php:48
+#: lib/contact-form.php:46
 msgid "Email Subject"
 msgstr ""
 
-#: lib/contact-form.php:49
+#: lib/contact-form.php:47
 msgid "The subject field. Leave blank for \"Form submission from SERVER_NAME\"."
 msgstr ""
 
-#: lib/contact-form.php:56
+#: lib/contact-form.php:54
 msgid "Success Message"
 msgstr ""
 
-#: lib/contact-form.php:57
+#: lib/contact-form.php:55
 msgid "Message displayed to use after form action is successful."
 msgstr ""
 
-#: lib/contact-form.php:58
+#: lib/contact-form.php:56
 msgid "Thanks, we'll be in touch soon."
 msgstr ""
 
-#: lib/contact-form.php:65, lib/contact-form.php:73
+#: lib/contact-form.php:63, lib/contact-form.php:71
 msgid "Enable reCaptcha"
 msgstr ""
 
-#: lib/contact-form.php:66
+#: lib/contact-form.php:64
 msgid "Enable Google reCaptcha \"I am not a robot\"."
 msgstr ""
 
-#: lib/contact-form.php:80
+#: lib/contact-form.php:78
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: lib/contact-form.php:88
+#: lib/contact-form.php:86
 msgid "reCaptcha Secret Key"
 msgstr ""
 
-#: lib/contact-form.php:109
+#: lib/contact-form.php:108
 msgid "Security check failed."
 msgstr ""
 
-#: lib/contact-form.php:125
+#: lib/contact-form.php:124
 msgid "Invalid email address."
 msgstr ""
 
-#: lib/contact-form.php:139
+#: lib/contact-form.php:138
 msgid "reCaptcha sitekey and/or secret not found. Set this up in the theme options."
 msgstr ""
 
-#: lib/contact-form.php:151
+#: lib/contact-form.php:150
 msgid "Captcha failed."
 msgstr ""
 
-#: lib/contact-form.php:160
+#: lib/contact-form.php:159
 msgid "Form submission from "
 msgstr ""
 
-#: lib/contact-form.php:173
+#: lib/contact-form.php:172
 msgid "Unable to complete request due to a system error. Send mail failed."
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr ""
 msgid "__Maintenance Mode"
 msgstr ""
 
-#: lib/init.php:36, lib/init.php:40, lib/theme-options.php:229
+#: lib/init.php:36, lib/init.php:40, lib/theme-options.php:259
 msgid "Maintenance Mode"
 msgstr ""
 
@@ -235,54 +235,78 @@ msgid "Enable Sticky Footer"
 msgstr ""
 
 #: lib/theme-options.php:192
-msgid "Notification Text"
+msgid "Critical CSS"
 msgstr ""
 
 #: lib/theme-options.php:193
-msgid "Notification is shown until dismissed (at which point a cookie is set)."
+msgid "Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task."
 msgstr ""
 
-#: lib/theme-options.php:201
-msgid "Cookie Expires"
+#: lib/theme-options.php:200
+msgid "Enable Critical CSS"
 msgstr ""
 
-#: lib/theme-options.php:202
-msgid "Number of days until the cookie expires"
+#: lib/theme-options.php:207
+msgid "jQuery in Footer"
 msgstr ""
 
-#: lib/theme-options.php:209
-msgid "Notification Position"
+#: lib/theme-options.php:208
+msgid "Move jQuery to the footer. Uncheck if you have compatability issues with plugins."
 msgstr ""
 
-#: lib/theme-options.php:210
-msgid "Notification position. Bottom = Fixed over footer. Top = Fixed above top menu."
-msgstr ""
-
-#: lib/theme-options.php:217
-msgid "Top"
+#: lib/theme-options.php:215
+msgid "Move jQuery to footer."
 msgstr ""
 
 #: lib/theme-options.php:222
+msgid "Notification Text"
+msgstr ""
+
+#: lib/theme-options.php:223
+msgid "Notification is shown until dismissed (at which point a cookie is set)."
+msgstr ""
+
+#: lib/theme-options.php:231
+msgid "Cookie Expires"
+msgstr ""
+
+#: lib/theme-options.php:232
+msgid "Number of days until the cookie expires"
+msgstr ""
+
+#: lib/theme-options.php:239
+msgid "Notification Position"
+msgstr ""
+
+#: lib/theme-options.php:240
+msgid "Notification position. Bottom = Fixed over footer. Top = Fixed above top menu."
+msgstr ""
+
+#: lib/theme-options.php:247
+msgid "Top"
+msgstr ""
+
+#: lib/theme-options.php:252
 msgid "Bottom"
 msgstr ""
 
-#: lib/theme-options.php:230
+#: lib/theme-options.php:260
 msgid "Enabling maintenance mode shows a message on each page in the admin area."
 msgstr ""
 
-#: lib/theme-options.php:237
+#: lib/theme-options.php:267
 msgid "Enable maintenance mode"
 msgstr ""
 
-#: lib/theme-options.php:244
+#: lib/theme-options.php:274
 msgid "Maintenance Mode Text"
 msgstr ""
 
-#: lib/theme-options.php:246
+#: lib/theme-options.php:276
 msgid "This site is currently in maintenance mode. Any changes you make may be overwritten or removed."
 msgstr ""
 
-#: lib/theme-options.php:386
+#: lib/theme-options.php:416
 msgid "Close"
 msgstr ""
 
