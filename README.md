@@ -15,15 +15,15 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 | Prerequisite              | How to check  | How to install                                  |
 | ------------------------- | ------------- | ----------------------------------------------- |
 | PHP >= 5.4.x              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 4.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| Node.js >= 5.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
 | Bower >= 1.5.x            | `bower -v`    | `npm install -g bower`                          |
 | Composer >= 1.0.0-alpha10 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
-* Download a pre-complied version of the master branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip).
-* Download the latest tagged release (Coming Soon).
+* Download a pre-complied version of the dev branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip).
+* Download the latest [tagged release](https://github.com/lambdacreatives/tofino/releases).
 * Clone the git repo and run `bin/setup.sh` (from your dev machine).
 
 ## Features
@@ -45,6 +45,8 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 	* Notification text / EU Cookie notice with top/bottom positions
 	* Contact form with [Google reCaptcha](https://www.google.com/recaptcha) and custom email template
 	* Maintenance mode
+	* jQuery in footer
+	* Critical CSS (with loadCSS function)
 	* [Theme Tracker](https://github.com/lambdacreatives/tracker)
 * [DOM-based routing](http://goo.gl/EUTi53)
 * [SCSS](http://sass-lang.com/)
