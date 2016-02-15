@@ -33,7 +33,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 function show_maintenance_message() {
   if (ot_get_option('maintenance_mode_enabled')) { ?>
     <div class="error notice">
-      <p><strong><?php _e(__('Maintenance Mode', 'tofino') . '</strong> - ' . ot_get_option('maintenance_mode_text'), 'tofino'); ?></p>
+      <p><strong><?php echo __('Maintenance Mode', 'tofino') . '</strong> - ' . ot_get_option('maintenance_mode_text'); ?></p>
     </div><?php
 
     if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
