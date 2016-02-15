@@ -37,11 +37,13 @@
   "devDependencies": {
     "asset-builder": "~1.1.0",
     "browser-sync": "~2.11.0",
+    "critical": "^0.7.0",
     "del": "~2.2.0",
     "gulp": "~3.9.0",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-concat": "~2.6.0",
     "gulp-confirm": "~1.0.4",
+    "gulp-cssnano": "~2.1.1",
     "gulp-fixmyjs": "~1.0.2",
     "gulp-help": "~1.6.1",
     "gulp-if": "~2.0.0",
@@ -49,7 +51,7 @@
     "gulp-jscs": "~3.0.2",
     "gulp-jshint": "~2.0.0",
     "gulp-load-plugins": "~1.2.0",
-    "gulp-cssnano": "~2.1.1",
+    "gulp-newer": "^1.1.0",
     "gulp-notify": "~2.2.0",
     "gulp-phpcbf": "~0.1.2",
     "gulp-phpcs": "~1.0.0",
@@ -68,7 +70,6 @@
     "jshint": "~2.9.1",
     "jshint-stylish": "~2.1.0",
     "merge-stream": "~1.0.0",
-    "yargs": "~3.32.0",
-    "critical": "^0.7.0"
+    "yargs": "~3.32.0"
   }
 }

@@ -186,6 +186,7 @@ gulp.task('scripts:fix', gulpHelp.scriptsFix, function() {
 // Min / Crush images
 gulp.task('images', gulpHelp.images, function () {
   return gulp.src(globs.images)
+    .pipe(plugins.newer(path.dist + 'img'))
     .pipe(plugins.imagemin({
       progressive: true,
       use: [pngquant()]
