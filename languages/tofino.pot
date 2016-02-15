@@ -142,14 +142,6 @@ msgstr ""
 msgid "I understand"
 msgstr ""
 
-#: lib/init.php:69
-msgid "Above Content"
-msgstr ""
-
-#: lib/init.php:77
-msgid "Below Content"
-msgstr ""
-
 #: lib/theme-options.php:52
 msgid "General"
 msgstr ""
