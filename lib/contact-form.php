@@ -234,7 +234,7 @@ function send_json_response($response) {
 
 
 /**
- * Send mail. Uses wp_mail (PHPMailer_).
+ * Send mail. Uses wp_mail (PHPMailer).
  */
 function send_mail($recipient, $recipient_cc, $subject, $email_body, $from = null) {
 

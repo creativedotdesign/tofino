@@ -342,7 +342,6 @@ function admin_login_logo() {
     <?php
   }
 }
-
 add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
 
 /**
@@ -363,7 +362,6 @@ function add_theme_options_body_class($classes) {
 
   return $classes;
 }
-
 add_filter('body_class', __NAMESPACE__ . '\\add_theme_options_body_class');
 
 /**

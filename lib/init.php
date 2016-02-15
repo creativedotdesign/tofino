@@ -41,7 +41,6 @@ function show_maintenance_message() {
     }
   }
 }
-
 add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
 
 
@@ -51,7 +50,6 @@ add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
 function content_width() {
   $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 640);
 }
-
 add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 
 
@@ -66,12 +64,9 @@ add_filter('show_admin_bar', '__return_false');
  */
 function add_post_name_body_class($classes) {
   global $post;
-
   if (isset($post)) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
-
   return $classes;
 }
-
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
