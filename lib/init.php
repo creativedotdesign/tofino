@@ -33,7 +33,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 function show_maintenance_message() {
   if (ot_get_option('maintenance_mode_enabled')) { ?>
     <div class="error notice">
-      <p><strong><?php _e(__('Maintenance Mode', 'tofino') . '</strong> - ' . ot_get_option('maintenance_mode_text'), 'tofino'); ?></p>
+      <p><strong><?php echo __('Maintenance Mode', 'tofino') . '</strong> - ' . ot_get_option('maintenance_mode_text'); ?></p>
     </div><?php
 
     if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
@@ -41,7 +41,6 @@ function show_maintenance_message() {
     }
   }
 }
-
 add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
 
 
@@ -51,7 +50,6 @@ add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
 function content_width() {
   $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 640);
 }
-
 add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 
 
@@ -62,41 +60,13 @@ add_filter('show_admin_bar', '__return_false');
 
 
 /**
- * Register sidebars
- */
-function widgets_init() {
-  register_sidebar([
-    'name'          => __('Above Content', 'tofino'),
-    'id'            => 'sidebar-above-content',
-    'before_widget' => '<section class="widget %1$s %2$s">',
-    'after_widget'  => '</section>',
-    'before_title'  => '<h3>',
-    'after_title'   => '</h3>'
-  ]);
-  register_sidebar([
-    'name'          => __('Below Content', 'tofino'),
-    'id'            => 'sidebar-below-content',
-    'before_widget' => '<section class="widget %1$s %2$s">',
-    'after_widget'  => '</section>',
-    'before_title'  => '<h3>',
-    'after_title'   => '</h3>'
-  ]);
-}
-
-add_action('widgets_init', __NAMESPACE__ . '\\widgets_init');
-
-
-/**
  * Add post_name to body class
  */
 function add_post_name_body_class($classes) {
   global $post;
-
   if (isset($post)) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
-
   return $classes;
 }
-
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');

@@ -1,17 +1,27 @@
 html { height: 100%; }
 
 body {
-  &.footer-sticky { //Flexbox supported browsers only.
+  &.footer-sticky { // Flexbox supported browsers only.
     display: flex;
     min-height: 100vh;
     flex-direction: column;
 
     .wrapper {
-      flex: 1;
+      flex: 1 0 auto;
+      width: 100%;
     }
   }
 }
 
+header {
+  flex: none;
+}
+
+nav {
+  flex: none;
+}
+
 footer {
+  flex: none;
   background-color: $gray-lightest;
 }

@@ -37,15 +37,13 @@
           $sticky.Stickyfill();
 
           //Assign stick offset
-          var stickyTop = $('.navbar-sticky-top').offset().top;
+          var stickyTop = $sticky.offset().top;
 
           $(window).scroll(function() {
             if ($(this).scrollTop() > stickyTop) {
               $sticky.addClass('stuck');
-              //$('body').addClass('menu-fixed');
             } else {
               $sticky.removeClass('stuck');
-              //$('body').removeClass('menu-fixed');
             }
           });
         }

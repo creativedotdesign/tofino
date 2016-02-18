@@ -188,6 +188,36 @@ function custom_theme_options() {
         )
       ),
       array(
+        'id'      => 'critical_css_checkbox',
+        'label'   => __('Critical CSS', 'tofino'),
+        'desc'    => __('Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.', 'tofino'),
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => false,
+            'label' => __('Enable Critical CSS', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
+        'id'      => 'jquery_in_footer',
+        'label'   => __('jQuery in Footer', 'tofino'),
+        'desc'    => __('Move jQuery to the footer. Uncheck if you have compatability issues with plugins.', 'tofino'),
+        'std'     => '',
+        'type'    => 'checkbox',
+        'section' => 'other_settings',
+        'choices' => array(
+          array(
+            'value' => false,
+            'label' => __('Move jQuery to footer.', 'tofino'),
+            'src'   => ''
+          ),
+        )
+      ),
+      array(
         'id'      => 'notification_text',
         'label'   => __('Notification Text', 'tofino'),
         'desc'    => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
@@ -312,7 +342,6 @@ function admin_login_logo() {
     <?php
   }
 }
-
 add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
 
 /**
@@ -333,7 +362,6 @@ function add_theme_options_body_class($classes) {
 
   return $classes;
 }
-
 add_filter('body_class', __NAMESPACE__ . '\\add_theme_options_body_class');
 
 /**

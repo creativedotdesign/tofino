@@ -134,7 +134,7 @@ function theme_tracker() {
       $response = wp_remote_post(esc_url_raw($url), array(
         'headers' => $headers,
         'timeout' => 10,
-        'body' => json_encode($data)
+        'body'    => json_encode($data)
       ));
 
       if (is_wp_error($response)) { // Request error occured.
@@ -166,5 +166,4 @@ function theme_tracker() {
 
   }
 }
-
 add_action('wp_footer', __NAMESPACE__ . '\\theme_tracker');

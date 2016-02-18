@@ -1,5 +1,15 @@
 // It's probably best to leave this section alone and add your own overrides afterwards.
 
+.navbar-sticky-top {
+  top: 0;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+}
+
 // Override classes for responsive menu
 .navbar-wrapper {
   @include media-breakpoint-up(sm) {

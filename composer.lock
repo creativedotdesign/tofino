@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "df9ef8c4e8fb20ed2507a9cfa64b476c",
-    "content-hash": "86b597f9f0d268498a87ce713e60a6d1",
+    "hash": "f7531ebcb620a0e44ee72d358f968567",
+    "content-hash": "43d35ba84ba94464cd5e8a10c7275d5c",
     "packages": [
         {
             "name": "composer/installers",
@@ -151,67 +151,6 @@
             "time": "2015-09-02 17:23:59"
         },
         {
-            "name": "phpmailer/phpmailer",
-            "version": "v5.2.14",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "e774bc9152de85547336e22b8926189e582ece95"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/e774bc9152de85547336e22b8926189e582ece95",
-                "reference": "e774bc9152de85547336e22b8926189e582ece95",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.0.0"
-            },
-            "require-dev": {
-                "phpdocumentor/phpdocumentor": "*",
-                "phpunit/phpunit": "4.7.*"
-            },
-            "suggest": {
-                "league/oauth2-client": "Needed for XOAUTH2 authentication",
-                "league/oauth2-google": "Needed for Gmail XOAUTH2"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "class.phpmailer.php",
-                    "class.phpmaileroauth.php",
-                    "class.phpmaileroauthgoogle.php",
-                    "class.smtp.php",
-                    "class.pop3.php",
-                    "extras/EasyPeasyICS.php",
-                    "extras/ntlm_sasl_client.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "authors": [
-                {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
-                },
-                {
-                    "name": "Marcus Bointon",
-                    "email": "phpmailer@synchromedia.co.uk"
-                },
-                {
-                    "name": "Andy Prevost",
-                    "email": "codeworxtech@users.sourceforge.net"
-                },
-                {
-                    "name": "Brent R. Matzelle"
-                }
-            ],
-            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2015-11-01 10:15:28"
-        },
-        {
             "name": "tgmpa/tgm-plugin-activation",
             "version": "2.5.2",
             "source": {
@@ -268,16 +207,16 @@
         },
         {
             "name": "valendesigns/option-tree",
-            "version": "v2.5.5",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valendesigns/option-tree.git",
-                "reference": "fd8fce859a39645b3525f0ae7de80ba4bfdf5182"
+                "reference": "1f65d8000e608a3e36cebb5a4071a88fde809907"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valendesigns/option-tree/zipball/fd8fce859a39645b3525f0ae7de80ba4bfdf5182",
-                "reference": "fd8fce859a39645b3525f0ae7de80ba4bfdf5182",
+                "url": "https://api.github.com/repos/valendesigns/option-tree/zipball/1f65d8000e608a3e36cebb5a4071a88fde809907",
+                "reference": "1f65d8000e608a3e36cebb5a4071a88fde809907",
                 "shasum": ""
             },
             "type": "library",
@@ -287,14 +226,20 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv3"
+            ],
             "authors": [
                 {
                     "name": "Derek Herman",
-                    "email": "derek@valendesigns.com"
+                    "email": "derek@valendesigns.com",
+                    "homepage": "http://valendesigns.com",
+                    "role": "Developer"
                 }
             ],
             "description": "Theme Options UI Builder for WordPress.",
-            "time": "2015-05-01 07:06:10"
+            "homepage": "https://github.com/valendesigns/option-tree",
+            "time": "2016-02-10 06:25:31"
         }
     ],
     "packages-dev": [
@@ -381,6 +326,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.4.0"
+    },
     "platform-dev": []
 }

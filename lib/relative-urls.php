@@ -27,5 +27,4 @@ function relative_urls() {
     add_filter($filter, 'wp_make_link_relative');
   }
 }
-
 add_action('template_redirect', __NAMESPACE__ . '\\relative_urls');

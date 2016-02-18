@@ -2,8 +2,6 @@
 
 namespace Tofino\ContactForm;
 
-use PHPMailer;
-
 /**
  * Contact form theme options
  */
@@ -95,6 +93,7 @@ function theme_options() {
   );
 }
 
+
 /**
  * AJAX Contact Form
  */
@@ -169,8 +168,8 @@ function ajax_contact_form() {
   } else {
     $response = array(
       'success' => false,
-      'message' => $send_mail
-      //'message' => __('Unable to complete request due to a system error. Send mail failed.', 'tofino')
+      //'message' => $send_mail
+      'message' => __('Unable to complete request due to a system error. Send mail failed.', 'tofino')
     );
   }
 
@@ -178,6 +177,7 @@ function ajax_contact_form() {
 }
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
+
 
 /**
  * Get receipient from theme options
@@ -196,6 +196,7 @@ function get_recipient() {
   }
   return $recipient;
 }
+
 
 /**
  * Genereate email body using html template
@@ -220,6 +221,7 @@ function build_email_body($form_data) {
   return $message;
 }
 
+
 /**
  * Send JSON and only JSON, then exit.
  */
@@ -230,29 +232,27 @@ function send_json_response($response) {
   exit;
 }
 
+
 /**
- * Send mail. Uses PHPMailer.
+ * Send mail. Uses wp_mail (PHPMailer).
  */
 function send_mail($recipient, $recipient_cc, $subject, $email_body, $from = null) {
-  $mail = new PHPMailer;
+
+  $headers = ['Content-Type: text/html; charset=UTF-8'];
 
   if ($from) {
-    $mail->setFrom($from);
+    $headers[] = 'From: ' . $from;
   }
-
-  $mail->addAddress($recipient);
 
   if ($recipient_cc) {
-    $mail->addCC($recipient_cc);
+    $headers[] = 'Cc: ' . $recipient_cc;
   }
 
-  $mail->Subject = $subject;
-  $mail->MsgHTML($email_body);
-  $mail->IsHTML(true);
+  $mail = wp_mail($recipient, $subject, $email_body, $headers);
 
-  if (!$mail->send()) {
-    return $mail->ErrorInfo; // Return error message on fail
-  } else {
+  if ($mail) {
     return true;
+  } else {
+    return false;
   }
 }
