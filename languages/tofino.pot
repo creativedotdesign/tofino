@@ -130,10 +130,6 @@ msgstr ""
 msgid "Primary Navigation"
 msgstr ""
 
-#: lib/init.php:36
-msgid "__Maintenance Mode"
-msgstr ""
-
 #: lib/init.php:36, lib/init.php:40, lib/theme-options.php:259
 msgid "Maintenance Mode"
 msgstr ""
@@ -298,7 +294,7 @@ msgstr ""
 msgid "This site is currently in maintenance mode. Any changes you make may be overwritten or removed."
 msgstr ""
 
-#: lib/theme-options.php:416
+#: lib/theme-options.php:414
 msgid "Close"
 msgstr ""
 
