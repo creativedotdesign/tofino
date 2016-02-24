@@ -29,7 +29,6 @@ var gulpHelp = {
   svgSprite      : 'Concat and minify SVG files in to a single SVG sprite file.',
   fonts          : 'Copy the fonts directory to dist.',
   phpLint        : 'Lint theme PHP files based on PSR-2.',
-  phpFix         : 'Fix all fixable PHP lint errors. This will update existing files.',
   translate      : 'Generate a POT file in languages directory for easy translation. This will override existing file.',
   clean          : 'Deletes the dist directory.',
   build          : 'Main build task. Runs styles, scripts, images, svgs, fonts and php:lint. Does NOT delete dist directory.',
@@ -239,22 +238,6 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
       'allowlint': 'Do not fail on error, when used with --production.'
     }
   });
-
-//Fix PHP based on ruleset.xml. This will update existing PHP files
-gulp.task('php:fix', gulpHelp.phpFix, function () {
-  return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
-    .pipe(plugins.confirm({
-    question: 'WARNING: This will update existing files. Continue (y/n)?',
-      input: '_key:y'
-    }))
-    .pipe(plugins.phpcbf({
-      bin: 'vendor/bin/phpcbf',
-      standard: 'ruleset.xml',
-      warningSeverity: 0
-    }))
-    .on('error', plugins.util.log)
-    .pipe(gulp.dest('.'));
-});
 
 // Genereate POT file of translatable strings
 gulp.task('translate', gulpHelp.translate, function () {
