@@ -23,7 +23,6 @@ var gulpHelp = {
   stylesCritical : 'Generates the Critical CSS file based on dimentions in the array.',
   scripts        : 'Concat js files with sourcemaps. Also runs scripts:lint.',
   scriptsLint    : 'Lints all js files.',
-  scriptsFix     : 'Fix all fixable JS lint errors. This will update existing files.',
   images         : 'Compress JPG and PNG files.',
   svgs           : 'Minify SVG files. Also runs svg:sprite.',
   svgSprite      : 'Concat and minify SVG files in to a single SVG sprite file.',
@@ -169,17 +168,6 @@ gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
     'production': 'Fail on error.',
     'allowlint': 'Do not fail on error, when used with --production.'
   }
-});
-
-// Fix JS files
-gulp.task('scripts:fix', gulpHelp.scriptsFix, function() {
-  return gulp.src(path.scripts + '/**/*.js', { base: "./" }) //Set a base so dist can map the save path.
-  .pipe(plugins.confirm({
-    question: 'WARNING: This will update existing files. Continue (y/n)?',
-    input: '_key:y'
-  }))
-  .pipe(plugins.fixmyjs()) //Uses options defined in .jshint
-  .pipe(gulp.dest('.')); //Save files in orginal locations
 });
 
 // Min / Crush images
