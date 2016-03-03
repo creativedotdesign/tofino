@@ -1,34 +1,43 @@
 <?php
+/**
+ *
+ * Initialize and setup theme
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
 
 namespace Tofino\Init;
 
 /**
  * Theme setup
+ *
+ * @since 1.0.0
+ * @return void
  */
 function setup() {
-  // Enable plugins to manage the document title
-  add_theme_support('title-tag');
-
-  // Enable featured images for Posts
-  add_theme_support('post-thumbnails', array('post'));
+  add_theme_support('title-tag'); // Enable plugins to manage the document title
+  add_theme_support('post-thumbnails', array('post')); // Enable featured images for Posts
+  get_role('editor')->add_cap('edit_theme_options'); // Allow editor role to edit theme options.
+  load_theme_textdomain('tofino', get_template_directory() . '/languages'); // Load language file
 
   // Register wp_nav_menu() menus
   register_nav_menus([
     'primary_navigation' => __('Primary Navigation', 'tofino')
   ]);
-
-  // Allow editor role to edit theme options.
-  get_role('editor')->add_cap('edit_theme_options');
-
-  // Load language file
-  load_theme_textdomain('tofino', get_template_directory() . '/languages');
 }
-
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
 
 /**
- * Show maintenance mode message
+ * Show maintenance mode message in admin area
+ *
+ * Check the maintenance_mode_enabled Theme Option. If enabled display a notice in
+ * the admin area at the top of every screen. Also show a popup window to the user
+ * and set a cookie.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function show_maintenance_message() {
   if (ot_get_option('maintenance_mode_enabled')) { ?>
@@ -45,7 +54,10 @@ add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
 
 
 /**
- * Set max content width
+ * Set max content width GLOBAL
+ *
+ * @since 1.0.0
+ * @return void
  */
 function content_width() {
   $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 640);
@@ -60,7 +72,11 @@ add_filter('show_admin_bar', '__return_false');
 
 
 /**
- * Add post_name to body class
+ * Add post_type and post_name to body class
+ *
+ * @since 1.0.0
+ * @param array $classes array of current classes on the body tag
+ * @return array updated to include the post_type and post_name
  */
 function add_post_name_body_class($classes) {
   global $post;
