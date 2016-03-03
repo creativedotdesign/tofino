@@ -219,19 +219,11 @@ gulp.task('php:lint', gulpHelp.phpLint, function () {
       }))
     .pipe(plugins.if(!production, plugins.phpcs.reporter('log')))
     .pipe(plugins.if(production, plugins.if(!allowlint, plugins.phpcs.reporter('fail'))));
-  }, {
-    options: {
-      'production': 'Fail on error.',
-      'allowlint': 'Do not fail on error, when used with --production.'
-    }
-  });
-
-// Genereate POT file of translatable strings
-gulp.task('translate', gulpHelp.translate, function () {
-  return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
-    .pipe(plugins.sort())
-    .pipe(plugins.wpPot({domain: 'tofino'}))
-    .pipe(gulp.dest('languages'));
+}, {
+  options: {
+    'production': 'Fail on error.',
+    'allowlint': 'Do not fail on error, when used with --production.'
+  }
 });
 
 // Deletes the build folder entirely.
