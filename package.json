@@ -63,6 +63,6 @@
     "gulp-util": "~3.0.7",
     "imagemin-pngquant": "~4.2.0",
     "merge-stream": "~1.0.0",
-    "yargs": "~3.32.0"
+    "yargs": "~4.2.0"
   }
 }
