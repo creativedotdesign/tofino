@@ -22,7 +22,7 @@
         nextNonce: tofinoJS.nextNonce
       });
 
-    request.done(function(response, textStatus, errorThrown) { // jshint ignore:line
+    request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
       //console.log(response);
       if (response.success === true) {
         $result.addClass('success').html(response.message);
@@ -36,7 +36,7 @@
       }
     });
 
-    request.fail(function(response, textStatus, errorThrown) { // jshint ignore:line
+    request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
       //console.log(response);
       $result.addClass('failed').html('An error occured.');
       $form.find(':input').prop('disabled', false); // Re-enable fields

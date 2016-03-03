@@ -154,14 +154,12 @@ gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
   }
 });
 
-// Lints configuration JSON and project JS.
+// Lints project JS.
 gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
   return gulp.src(path.scripts + '/**/*.js')
-    .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('jshint-stylish'))
-    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.jshint.reporter('fail'))))
-    .pipe(plugins.jscs())
-    .pipe(plugins.jscs.reporter());
+    .pipe(plugins.eslint())
+    .pipe(plugins.eslint.format())
+    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.eslint.failAfterError())))
 }, {
   options: {
     'production': 'Fail on error.',
