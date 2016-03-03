@@ -42,7 +42,6 @@
     "gulp": "~3.9.0",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-concat": "~2.6.0",
-    "gulp-confirm": "~1.0.4",
     "gulp-cssnano": "~2.1.1",
     "gulp-eslint": "^2.0.0",
     "gulp-help": "~1.6.1",
