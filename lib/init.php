@@ -19,7 +19,6 @@ function setup() {
   add_theme_support('title-tag'); // Enable plugins to manage the document title
   add_theme_support('post-thumbnails', array('post')); // Enable featured images for Posts
   get_role('editor')->add_cap('edit_theme_options'); // Allow editor role to edit theme options.
-  load_theme_textdomain('tofino', get_template_directory() . '/languages'); // Load language file
 
   // Register wp_nav_menu() menus
   register_nav_menus([

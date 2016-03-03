@@ -29,7 +29,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 ## Features
 
 * [Bootstrap 4](http://getbootstrap.com/) (Pre-release)
-* Multilingual ready (POT file included)
+* Multilingual ready
 * Responsive
 * Theme Options Panel ([Option Tree](https://github.com/valendesigns/option-tree))
 	* Admin login screen logo

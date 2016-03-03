@@ -28,7 +28,6 @@ var gulpHelp = {
   svgSprite      : 'Concat and minify SVG files in to a single SVG sprite file.',
   fonts          : 'Copy the fonts directory to dist.',
   phpLint        : 'Lint theme PHP files based on PSR-2.',
-  translate      : 'Generate a POT file in languages directory for easy translation. This will override existing file.',
   clean          : 'Deletes the dist directory.',
   build          : 'Main build task. Runs styles, scripts, images, svgs, fonts and php:lint. Does NOT delete dist directory.',
   watch          : 'Watch SCSS, JS, SVG and PHP files. Uses browserSync via proxy.',
@@ -239,7 +238,7 @@ gulp.task('translate', gulpHelp.translate, function () {
 gulp.task('clean', gulpHelp.clean, require('del').bind(null, [path.dist]));
 
 // Generic build task. Use with '--production' for minified js / css
-gulp.task('build', gulpHelp.build, ['images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint', 'translate']);
+gulp.task('build', gulpHelp.build, ['images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint']);
 
 // Watch Files For Changes
 gulp.task('watch', gulpHelp.watch, function() {
