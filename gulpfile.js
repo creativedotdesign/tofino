@@ -64,9 +64,9 @@ gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
     merged.add(
       gulp.src(dep.globs)
       .pipe(plugins.sourcemaps.init({loadMaps: true}))
-      .pipe(plugins.sass({ style: 'nested' }))
+      .pipe(plugins.sass({outputStyle: 'nested'}))
       .pipe(plugins.concat(dep.name))
-      .pipe(plugins.if(minify, plugins.cssnano())) //If prod minify
+      .pipe(plugins.if(minify, plugins.cssnano({safe: true}))) //If prod minify
     );
   });
   return merged
