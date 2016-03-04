@@ -3,10 +3,8 @@ var gulp            = require('gulp-help')(require('gulp'), {hideDepsMessage: tr
     gulpLoadPlugins = require('gulp-load-plugins'),
     merge           = require('merge-stream'),
     argv            = require('yargs').argv,
-    pngquant        = require('imagemin-pngquant'),
-    browserSync     = require('browser-sync').create(),
+    //browserSync     = require('browser-sync').create(),
     fs              = require('fs'),
-    critical        = require('critical'),
     plugins         = gulpLoadPlugins();
 
 var path       = manifest.paths, //path.source, path.dest etc
@@ -15,7 +13,8 @@ var path       = manifest.paths, //path.source, path.dest etc
     production = argv.production || false,
     minify     = (production ? true : false),
     allowlint  = argv.allowlint || false,
-    stagingUrl = argv.stagingUrl || false;
+    stagingUrl = argv.stagingUrl || false,
+    chill      = argv.chill || false;
 
 var gulpHelp = {
   styles         : 'Compile and concat SCSS to CSS with sourcemaps and autoprefixer. Also runs styles:lint.',
@@ -49,52 +48,16 @@ gulp.src = function() {
 };
 
 //Compile SCSS to CSS
-gulp.task('styles', gulpHelp.styles, ['styles:lint'], function() {
-  var merged = merge();
-
-  manifest.forEachDependency('css', function(dep) {
-    dep.globs.forEach(function (path) {
-      try {
-        fs.accessSync(path);
-      } catch (e) {
-        plugins.util.log(plugins.util.colors.red('Warning! ' + path + ' does not exist.'));
-      }
-    });
-
-    merged.add(
-      gulp.src(dep.globs)
-      .pipe(plugins.sourcemaps.init({loadMaps: true}))
-      .pipe(plugins.sass({outputStyle: 'nested'}))
-      .pipe(plugins.concat(dep.name))
-      .pipe(plugins.if(minify, plugins.cssnano({safe: true}))) //If prod minify
-    );
-  });
-  return merged
-
-  .pipe(plugins.autoprefixer({
-    browsers: ['last 2 versions']
-  }))
-  .pipe(plugins.sourcemaps.write('.'))
-  .pipe(gulp.dest(path.dist + '/css'))
-  .pipe(browserSync.reload({stream:true}))
-  .pipe(plugins.if(!production, plugins.notify({
-      "subtitle": "Task Complete",
-      "message": "Styles task complete",
-      "onLast": true
-    })));
-}, {
+gulp.task('styles', gulpHelp.styles, ['styles:lint'],
+  require('./gulp-tasks/styles.js')(gulp, plugins, path, production, minify), {
   options: {
     'production': 'Minified without sourcemaps.'
   }
 });
 
 // Lints scss files
-gulp.task('styles:lint', gulpHelp.stylesLint, function() {
-  return gulp.src(path.source + 'styles/**/*.scss')
-    .pipe(plugins.sassLint())
-    .pipe(plugins.sassLint.format())
-    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.sassLint.failOnError())));
-}, {
+gulp.task('styles:lint', gulpHelp.stylesLint,
+  require('./gulp-tasks/styles-lint.js')(gulp, plugins, path, production, allowlint), {
   options: {
     'production': 'Fail on error.',
     'allowlint': 'Do not fail on error, when used with --production.'
@@ -102,65 +65,23 @@ gulp.task('styles:lint', gulpHelp.stylesLint, function() {
 });
 
 // Critical path css
-gulp.task('styles:critical', ['styles', 'styles:lint'], function() {
-  return critical.generate({
-    src: plugins.if(stagingUrl, config.stagingUrl, config.devUrl),
-    dest: path.dist + '/css/critical.css',
-    ignore: ['@font-face',/url\(/],
-    // pathPrefix: '/wp-content/themes/tofino/' + path.dist + 'fonts',
-    minify: true,
-    dimensions: [{
-      height: 627,
-      width: 370
-    }, {
-      height: 900,
-      width: 1200
-    }]
-  });
-});
+gulp.task(
+  'styles:critical',
+  ['styles', 'styles:lint'],
+  require('./gulp-tasks/styles-critical.js')(gulp, plugins, path, config, stagingUrl)
+);
 
 // Concatenate & Minify JS
-gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'], function() {
-  var merged = merge();
-
-  manifest.forEachDependency('js', function(dep) {
-    dep.globs.forEach(function (path) {
-      try {
-        fs.accessSync(path);
-      } catch (e) {
-        plugins.util.log(plugins.util.colors.red('Warning! ' + path + ' does not exist.'));
-      }
-    });
-
-    merged.add(
-      gulp.src(dep.globs, {base: 'scripts', merge: true})
-        .pipe(plugins.sourcemaps.init({loadMaps: true}))
-        .pipe(plugins.concat(dep.name))
-        .pipe(plugins.if(minify, plugins.uglify())) //If prod minify
-        .pipe(plugins.sourcemaps.write('.'))
-    )
-    .pipe(gulp.dest(path.dist + '/js'));
-  });
-
-  return merged
-  .pipe(plugins.if(!argv.production, plugins.notify({
-      "subtitle": "Task Complete",
-      "message": "Scripts task complete",
-      "onLast": true
-    })));
-}, {
+gulp.task('scripts', gulpHelp.scripts, ['scripts:lint'],
+  require('./gulp-tasks/scripts.js')(gulp, plugins, path, production, minify), {
   options: {
     'production': 'Minified without sourcemaps.'
   }
 });
 
 // Lints project JS.
-gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
-  return gulp.src(path.scripts + '/**/*.js')
-    .pipe(plugins.eslint())
-    .pipe(plugins.eslint.format())
-    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.eslint.failAfterError())))
-}, {
+gulp.task('scripts:lint', gulpHelp.scriptsLint,
+  require('./gulp-tasks/php-lint.js')(gulp, plugins, path, production, allowlint), {
   options: {
     'production': 'Fail on error.',
     'allowlint': 'Do not fail on error, when used with --production.'
@@ -168,61 +89,26 @@ gulp.task('scripts:lint', gulpHelp.scriptsLint, function() {
 });
 
 // Min / Crush images
-gulp.task('images', gulpHelp.images, function () {
-  return gulp.src(globs.images)
-    .pipe(plugins.newer(path.dist + 'img'))
-    .pipe(plugins.imagemin({
-      progressive: true,
-      use: [pngquant()]
-    }))
-    .pipe(gulp.dest(path.dist + 'img'))
-    .pipe(plugins.if(!production, plugins.notify("Images task complete")));
-});
+gulp.task('images', gulpHelp.images, require('./gulp-tasks/images')(gulp, plugins, globs, path, production));
 
 //Minify SVGS + run sprite task
-gulp.task('svgs', gulpHelp.svgs, ['svg:sprite'], function () {
-  return gulp.src(path.svgs + '*.svg')
-    .pipe(plugins.svgmin())
-    .pipe(gulp.dest(path.dist + 'svg'));
-});
+gulp.task('svgs', gulpHelp.svgs, ['svg:sprite'], require('./gulp-tasks/svgs')(gulp, plugins, path));
 
 // Convert SVGs to Sprites
-gulp.task('svg:sprite', gulpHelp.svgSprite, function () {
-  return gulp.src(path.svgs + 'sprites/*.svg')
-    .pipe(plugins.svgmin())
-    .pipe(plugins.svgSprite({
-      mode: {
-        symbol: {
-          dest: '.' //Sets default path (svg) and stopped the folders nesting.
-        }
-      }
-    }))
-    .pipe(gulp.dest(path.dist))
-    .pipe(plugins.if(!production, plugins.notify("SVG task complete")));
-});
+gulp.task('svg:sprite', gulpHelp.svgSprite, require('./gulp-tasks/svg-sprite')(gulp, plugins, path, production));
 
 //Copy font files from assets to dist
-gulp.task('fonts', gulpHelp.fonts, function () {
-  return gulp.src(path.fonts + '*')
-    .pipe(gulp.dest(path.dist + 'fonts'));
-});
+gulp.task('fonts', gulpHelp.fonts, require('./gulp-tasks/fonts')(gulp, plugins, path));
 
 //Lint PHP files using ruleset.xml.
-gulp.task('php:lint', gulpHelp.phpLint, function () {
-  return gulp.src(['**/*.php', '!vendor/**/*.*', '!tests/**/*.*'])
-    .pipe(plugins.phpcs({ // Validate files using PHP Code Sniffer
-      bin: 'vendor/bin/phpcs',
-        standard: 'ruleset.xml',
-        warningSeverity: 0
-      }))
-    .pipe(plugins.if(!production, plugins.phpcs.reporter('log')))
-    .pipe(plugins.if(production, plugins.if(!allowlint, plugins.phpcs.reporter('fail'))));
-}, {
-  options: {
-    'production': 'Fail on error.',
-    'allowlint': 'Do not fail on error, when used with --production.'
+gulp.task('php:lint', gulpHelp.phpLint,
+    require('./gulp-tasks/php-lint.js')(gulp, plugins, allowlint, production), {
+    options: {
+      'production': 'Fail on error.',
+      'allowlint': 'Do not fail on error, when used with --production.'
+    }
   }
-});
+);
 
 // Deletes the build folder entirely.
 gulp.task('clean', gulpHelp.clean, require('del').bind(null, [path.dist]));
@@ -231,46 +117,8 @@ gulp.task('clean', gulpHelp.clean, require('del').bind(null, [path.dist]));
 gulp.task('build', gulpHelp.build, ['images', 'svgs', 'styles', 'scripts', 'fonts', 'php:lint']);
 
 // Watch Files For Changes
-gulp.task('watch', gulpHelp.watch, function() {
-
-  var ghost = false;
-
-  //if gulp watch --chill then BrowserSync will not pass clicks, forms, scroll to other browsers.
-  if(argv.chill) {
-    ghost = true;
-  }
-
-  browserSync.init({
-    files: ['{lib,templates}/**/*.php', '*.php'],
-    proxy: config.devUrl,
-    ghostMode: ghost,
-    snippetOptions: {
-      whitelist: ['/wp-admin/admin-ajax.php'],
-      blacklist: ['/wp-admin/**']
-    }
-  });
-
-  plugins.util.log('Watching source files for changes... Press ' + plugins.util.colors.cyan('CTRL + C') + ' to stop.');
-
-  gulp.watch(path.source + 'styles/**/*.scss', ['styles']).on('change', function(file) {
-    plugins.util.log('SCSS file changed: ' + file.path + '');
-  });
-
-  gulp.watch(path.svgs + '**/*.svg', ['svgs']).on('change', function(file) {
-    plugins.util.log('SVG file changed: ' + file.path + '');
-  });
-
-  gulp.watch(path.images + '*.*', ['images']).on('change', function(file) {
-    plugins.util.log('Image file changed: ' + file.path + '');
-  });
-
-  gulp.watch(path.scripts + '*.js', ['scripts']).on('change', function(file) {
-    plugins.util.log('JS file changed: ' + file.path + '');
-  });
-
-  gulp.watch(['**/*.php', '!vendor/**/*.php'], ['php:lint']); //No need to log the filename. BrowserSync does this.
-
-}, {
+gulp.task('watch', gulpHelp.watch,
+  require('./gulp-tasks/watch.js')(gulp, plugins, path, config, chill), {
   options: {
     'chill': 'Do not pass clicks, forms or scroll to other browsers.'
   }
