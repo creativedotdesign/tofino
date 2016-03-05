@@ -110,7 +110,7 @@ bower_components
 gulp
 node_modules
 tests
-.eslint
+.eslintrc
 .gitattributes
 .sass-lint.yml
 .travis.yml
