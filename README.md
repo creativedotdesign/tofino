@@ -51,7 +51,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * [DOM-based routing](http://goo.gl/EUTi53)
 * [SCSS](http://sass-lang.com/)
 * [Gulp](http://gulpjs.com/) build script
-	* Includes [JSHint](https://github.com/spalger/gulp-jshint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+	* Includes [eslint](https://github.com/eslint/eslint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 	* Use `gulp help` for a full task list with descriptions
 * [Bower](http://bower.io/) for front-end package management
 * [Composer](https://getcomposer.org/) for PHP package management
