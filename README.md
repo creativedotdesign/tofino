@@ -94,7 +94,7 @@ No breaking changes except at major versions.
 We use [Deploybot](https://deploybot.com). The deployment VM is issued the following commands:
 
 ```
-composer install --no-dev
+composer install
 bower install
 npm install npm -g
 npm install --loglevel error
