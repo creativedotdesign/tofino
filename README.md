@@ -88,3 +88,38 @@ Nothing should be merged into the master branch until it has been tested on dev 
 The dev branch is automatically deployed to http://tofino.lambdacreatives.com so you can test there.
 
 No breaking changes except at major versions.
+
+## Deployment
+
+We use [Deploybot](https://deploybot.com). The deployment VM is issued the following commands:
+
+```
+composer install --no-dev
+bower install
+npm install npm -g
+npm install --loglevel error
+gulp --production
+```
+
+The following files and directories are excluded from being uploaded:
+
+```
+assets
+bin
+bower_components
+gulp
+node_modules
+tests
+.eslint
+.gitattributes
+.sass-lint.yml
+.travis.yml
+bower.json
+composer.json
+composer.lock
+gulpfile.js
+package.json
+phpunit.xml
+ruleset.xml
+**/*.md
+```
