@@ -1,5 +1,4 @@
 var gulp        = require('gulp-help')(require('gulp'), {hideDepsMessage: true}),
-    manifest    = require('asset-builder')('./assets/manifest.json'),
     argv        = require('yargs').argv,
     gulpif      = require('gulp-if'),
     plumber     = require('gulp-plumber'),
