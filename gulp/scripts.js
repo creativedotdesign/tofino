@@ -43,7 +43,8 @@ module.exports = function (gulp, production, browserSync) {
         "subtitle": "Task Complete",
         "message": "Scripts task complete",
         "onLast": true
-      })));
+      })))
+      .on('finish', browserSync.reload);
     }, {
       options: {
         'production': 'Minified without sourcemaps.'
