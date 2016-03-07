@@ -101,11 +101,17 @@ function ajax_contact_form() {
 
   $processor = new \Tofino\FormProcessor($_POST);
 
-  $form_name = 'contact';
+  $recipient = $processor->getRecipient('contact_form_to_address');
 
-  $result = $processor->process('contact');
+  $settings = [
+    'to'          => $recipient,
+    'subject'     => ot_get_option('contact_form_email_subject'),
+    'cc'          => ot_get_option('contact_form_cc_address'),
+    'from'        => ot_get_option('contact_form_from_address'),
+    'success_msg' => ot_get_option('contact_form_success_message')
+  ];
 
-  // Add callback for email address check
+  $processor->process($settings);
 
 }
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
