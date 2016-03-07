@@ -106,7 +106,7 @@ class FormProcessor
   /**
    * Genereate email body using html template
    */
-  private function buildEmailBody($template = 'contact-form.html')
+  private function buildEmailBody($template = 'default-form.html')
   {
     if (is_array($this->form_data)) {
       if (array_key_exists('g-recaptcha-response', $this->form_data)) { // Remove reCaptcha from message content
