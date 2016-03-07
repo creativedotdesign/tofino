@@ -43,6 +43,7 @@
       "lib/helpers.php",
       "lib/relative-urls.php",
       "lib/theme-tracker.php"
-    ]
+    ],
+    "psr-4": { "Tofino\\": "lib/" }
   }
 }
