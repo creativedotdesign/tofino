@@ -99,6 +99,20 @@ function theme_options() {
  */
 function ajax_contact_form() {
 
+  $processor = new \Tofino\FormProcessor($_POST);
+
+  $form_name = 'contact';
+
+  $result = $processor->process('contact');
+
+  // Add callback for email address check
+
+  var_dump($result);
+
+  die;
+
+
+/*
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS
   $nonce = $_POST['nextNonce']; // Nonce from POST request
 
