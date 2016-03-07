@@ -164,6 +164,7 @@ function localize_scripts() {
     ));
   }
 }
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
 
 
 /**
