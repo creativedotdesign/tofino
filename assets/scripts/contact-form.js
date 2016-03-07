@@ -25,11 +25,11 @@
     request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
       //console.log(response);
       if (response.success === true) {
-        $result.addClass('success').html(response.message);
+        $result.emoveClass('alert-danger').addClass('alert alert-success').html(response.message);
         $form.find(':input').val(''); // Reset fields.
         $form.hide(); // Hide form
       } else {
-        $result.addClass('failed').html(response.message);
+        $result.addClass('alert alert-danger').html(response.message);
         $form.find(':input').prop('disabled', false); // Re-enable fields
         $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
         //console.error("The following error occured: " + textStatus, errorThrown);
@@ -38,7 +38,7 @@
 
     request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
       //console.log(response);
-      $result.addClass('failed').html('An error occured.');
+      $result.addClass('alert alert-danger').html('An error occured.');
       $form.find(':input').prop('disabled', false); // Re-enable fields
       $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
       //console.error("The following error occured: " + textStatus, errorThrown);
