@@ -8,7 +8,7 @@
           <!-- Empty div for form response -->
           <div class="js-form-result"></div>
 
-          <form name="contact" class="contact-form">
+          <form name="contact" class="contact-form form-processor" id="contact-form">
 
             <!-- Name / Text input -->
             <fieldset class="form-group">
