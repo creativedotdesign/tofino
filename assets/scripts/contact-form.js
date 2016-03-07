@@ -25,7 +25,7 @@
     request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
       console.log(response);
       if (response.success === true) {
-        $result.emoveClass('alert-danger').addClass('alert alert-success').html(response.message);
+        $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
         $form.find(':input').val(''); // Reset fields.
         $form.hide(); // Hide form
       } else {
