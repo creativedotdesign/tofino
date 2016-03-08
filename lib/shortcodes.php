@@ -1,5 +1,20 @@
 <?php
+/**
+ *
+ * Shortcodes
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
 
+
+/**
+ * SVG Shortcode
+ *
+ * @since 1.0.0
+ * @param mixed $atts options attributes array or string with sprite reference
+ * @return string HTML SVG sprite code populated with parameters
+ */
 function svg($atts) {
 
   global $theme_config;
@@ -11,10 +26,10 @@ function svg($atts) {
   }
 
   $atts = shortcode_atts(array(
-    'class'  => '',
-    'title'  => '',
-    'id'     => '',
-    'sprite' => '',
+    'class'               => '',
+    'title'               => '',
+    'id'                  => '',
+    'sprite'              => '',
     'preserveAspectRatio' => ''
   ), $atts, 'svg');
 
@@ -34,11 +49,13 @@ function svg($atts) {
   }
 
   return '<svg ' . $atr_str . '><use xlink:href="' . $theme_config['svg']['sprite_file'] . '#' . $sprite . '"></svg>';
-
 }
-
 add_shortcode('svg', 'svg');
 
+/**
+ * Copyright Shortcode
+ * @return [type] [description]
+ */
 function copyright() {
   return '&copy; ' . date('Y') . ' <span class="copyright-site-name">' . get_bloginfo('name') . '</span>.';
 }
