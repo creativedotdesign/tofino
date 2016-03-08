@@ -148,6 +148,11 @@ class FormProcessor
    *
    * @since 1.2.0
    * @uses add_post_meta()
+   *
+   * @param integer $post_id The id of the post to attach the meta data.
+   * @param string $meta_key The key to use.
+   * @param array $data The data
+   *
    * @return integer|boolean The saved meta id or false if save failed.
    */
   public function saveData($post_id, $meta_key, $data = array())
