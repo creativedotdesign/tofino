@@ -26,11 +26,11 @@ class FormProcessor
     $this->form_data['date_time'] = time(); // Create timestamp for submission
   }
 
+
   /**
    * Nonce validation
    *
    * @since 1.2.0
-   *
    * @uses wp_verify_nonce()
    * @param string $nonce Token from frontend form
    * @return boolean If the token was valid or not.
@@ -44,6 +44,7 @@ class FormProcessor
       return true;
     }
   }
+
 
   /**
    * Captcha enabled
@@ -65,11 +66,11 @@ class FormProcessor
     }
   }
 
+
   /**
    * Captcha validation
    *
    * @since 1.2.0
-   *
    * @uses ReCaptcha to validate the aganist the Google ReCaptcha APU.
    * @see https://github.com/google/recaptcha
    * @param String $captcha_repsonse Capcha response string from front end form.
@@ -89,13 +90,13 @@ class FormProcessor
     }
   }
 
+
   /**
    * Email address validation
    *
    * Checks syntax, DNS MX record exists and hostname resloves to an IPV4 address.
    *
    * @since 1.2.0
-   *
    * @see http://php.net/manual/en/filter.filters.validate.php
    * @see http://php.net/manual/en/function.checkdnsrr.php
    * @see http://php.net/manual/en/function.gethostbyname.php
@@ -113,6 +114,7 @@ class FormProcessor
       return true;
     }
   }
+
 
   /**
    * Get recipient
@@ -138,6 +140,7 @@ class FormProcessor
     return $recipient;
   }
 
+
   /**
    * Save data
    *
@@ -159,6 +162,7 @@ class FormProcessor
       }
     }
   }
+
 
   /**
    * Build email body
@@ -200,6 +204,7 @@ class FormProcessor
     return $message;
   }
 
+
   /**
    * Send mail
    *
@@ -234,6 +239,7 @@ class FormProcessor
     }
   }
 
+
   /**
    * Add a callback
    * @param function $callback The callback
@@ -242,6 +248,7 @@ class FormProcessor
   {
     $this->callback[] = $callback;
   }
+
 
   /**
    * [process description]
