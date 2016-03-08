@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Load CSS and JS files
  *
  * @package Tofino

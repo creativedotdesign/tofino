@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Shortcodes
  *
  * @package Tofino
@@ -13,10 +12,9 @@
  *
  * @since 1.0.0
  * @param mixed $atts options attributes array or string with sprite reference
- * @return string HTML SVG sprite code populated with parameters
+ * @return string HTML SVG sprite code populated with parameters.
  */
 function svg($atts) {
-
   global $theme_config;
 
   if (gettype($atts) === 'string') {
@@ -52,17 +50,28 @@ function svg($atts) {
 }
 add_shortcode('svg', 'svg');
 
+
 /**
  * Copyright Shortcode
- * @return [type] [description]
+ *
+ * @since 1.0.0
+ * @return string HTML output copyright string.
  */
 function copyright() {
   return '&copy; ' . date('Y') . ' <span class="copyright-site-name">' . get_bloginfo('name') . '</span>.';
 }
-
 add_shortcode('copyright', 'copyright');
 
-//Get a theme option as a shortcode. Only for text based values.
+
+/**
+ * Optiontree option shortcode
+ *
+ * Get a theme option as a shortcode. Only for text based values.
+ *
+ * @since 1.0.0
+ * @param mixed $atts option id as string or array with id and a default value.
+ * @return string The option data value if found or the default value.
+ */
 function ot_shortcode($atts) {
   if (gettype($atts) === 'string') {
     $atts = array(
@@ -77,9 +86,16 @@ function ot_shortcode($atts) {
 
   return ot_get_option($atts['id'], $atts['default']);
 }
-
 add_shortcode('option', 'ot_shortcode');
 
+
+/**
+ * Social icons shortcode
+ *
+ * @since 1.0.0
+ * @param array $atts class value to include on the UL element.
+ * @return string HTML output of unordered list with social icons as SVGS with links.
+ */
 function social_icons($atts = array()) {
   $social_links = ot_get_option('social_links', array());
   $output = '';
@@ -100,5 +116,4 @@ function social_icons($atts = array()) {
 
   return $output;
 }
-
 add_shortcode('social_icons', 'social_icons');

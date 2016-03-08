@@ -1,12 +1,24 @@
 <?php
+/**
+ * Theme tracker
+ *
+ * Options and function for tracking theme usage.
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
 
 namespace Tofino\ThemeTracker;
 
 /**
+ * Theme tracker options
+ *
  * Custom settings array that is merged with the main theme options array.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function theme_tracker_options() {
-
   return array(
     'contextual_help' => array(
       'content'       => array(),
@@ -71,9 +83,18 @@ function theme_tracker_options() {
       ),
     )
   );
-
 }
 
+
+/**
+ * Missing API key notice
+ *
+ * Displays error notice at the top of the admin screen if theme tracking is enabled
+ * and the API key is missing.
+ *
+ * @since 1.0.0
+ * @return void
+ */
 function missing_apikey_notice() {
   if (ot_get_option('theme_tracker_enabled') !== 'disabled' && !ot_get_option('theme_tracker_api_key')) { ?>
     <div class="error notice">
@@ -83,8 +104,16 @@ function missing_apikey_notice() {
 }
 add_action('admin_notices', __NAMESPACE__ . '\\missing_apikey_notice', 1);
 
+
 /**
  * Track theme usage.
+ *
+ * Sends theme data via HTTP a request to the tracker API as JSON data.
+ * Uses transient for low performance impact.
+ * Hooked in to wp_footer action.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function theme_tracker() {
   if (ot_get_option('theme_tracker_enabled') !== 'disabled') { // Only if enabled
