@@ -98,21 +98,38 @@ function theme_options() {
  * AJAX Contact Form
  */
 function ajax_contact_form() {
+  $form = new \Tofino\AjaxForm(); // Required
 
-  $processor = new \Tofino\FormProcessor($_POST);
+  // Optional
+  $form->addValidator(function () {
+    return true;
+  });
 
-  $recipient = $processor->getRecipient('contact_form_to_address');
+  $form->validate(); // Required. Call validate
 
-  $settings = [
-    'to'          => $recipient,
-    'subject'     => ot_get_option('contact_form_email_subject'),
-    'cc'          => ot_get_option('contact_form_cc_address'),
-    'from'        => ot_get_option('contact_form_from_address'),
-    'success_msg' => ot_get_option('contact_form_success_message')
-  ];
+  //$data = $form->getData(); // Optional  Do what you want with the sanitized form data
 
-  $processor->process($settings);
+  $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
+  //$post_id = get_id_from_slug('contact-page');
 
+  $save_success = $form->saveData($post_id, 'contact_form'); // Optional Save the data as post_meta
+
+  if (!$save_success) {
+    $form->respond(false, __('Unable to save data.', 'tofino'));
+  }
+
+  $email_success = $form->sendEmail([ // Optional
+    'to'      => $form->getRecipient('contact_form_to_address'),
+    'subject' => ot_get_option('contact_form_email_subject'),
+    'cc'      => ot_get_option('contact_form_cc_address'),
+    'from'    => ot_get_option('contact_form_from_address')
+  ]);
+
+  if (!$email_success) {
+    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
+  }
+
+  $form->respond(true, ot_get_option('contact_form_success_message')); // Required
 }
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');

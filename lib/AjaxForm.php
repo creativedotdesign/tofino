@@ -8,21 +8,21 @@ namespace Tofino;
  * @package Tofino
  * @since 1.2.0
  */
-class FormProcessor
+class AjaxForm
 {
 
-  public $callbacks = [];
-  private $data     = [];
-  private $formData = [];
-  private $response = [
+  public $validators = [];
+  private $post      = [];
+  private $form_data = [];
+  private $response  = [
     'success' => false,
     'message' => ''
   ];
 
   public function __construct()
   {
-    $this->data = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS;
-    parse_str($this->data['data'], $this->form_data);
+    $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS;
+    parse_str($this->post['data'], $this->form_data);
     $this->form_data['date_time'] = time(); // Create timestamp for submission
   }
 
@@ -121,7 +121,7 @@ class FormProcessor
    *
    * Get recipient email address from the form specific Theme Options.
    * Fallback to general email address if not defined.
-   * Return error is JSON format if no email addresses found.
+   * Return error in JSON format if no email addresses found.
    *
    * @since 1.2.0
    * @param string $theme_option_field The option field to check for the email address.
@@ -155,17 +155,28 @@ class FormProcessor
    *
    * @return integer|boolean The saved meta id or false if save failed.
    */
-  public function saveData($post_id, $meta_key, $data = array())
+  public function saveData($post_id, $meta_key)
   {
-    if ($post_id && is_array($data)) {
-      $meta_id = add_post_meta($post_id, $meta_key, $data, false);
+    if ($post_id && $meta_key) {
+      $meta_id = add_post_meta($post_id, $meta_key, $this->form_data, false);
       if (0 < intval($meta_id)) {
         return $meta_id;
       } else {
-        $this->response['message'] =  __('Unable to save data.', 'tofino');
         return false;
       }
     }
+  }
+
+
+  /**
+   * Get the form data
+   *
+   * @since 1.2.0
+   * @return array The form data array
+   */
+  public function getData()
+  {
+    return $this->form_data;
   }
 
 
@@ -211,16 +222,17 @@ class FormProcessor
 
 
   /**
-   * Send mail
+   * Send Email
    *
    * Sends an email using WordPress function wp_mail
    *
    * @since 1.2.0
    * @uses wp_mail()
    * @uses buildEmailBody()
+   * @param array $settings The required parameters for wp_mail
    * @return boolean If the email was successfully sent.
    */
-  private function sendMail($settings)
+  public function sendEmail($settings)
   {
     $headers = ['Content-Type: text/html; charset=UTF-8'];
 
@@ -239,37 +251,40 @@ class FormProcessor
     if ($mail) {
       return true;
     } else {
-      $this->response['message'] = __('Unable to complete request due to a system error. Send mail failed.', 'tofino');
       return false;
     }
   }
 
 
   /**
-   * Add a callback
-   * @param function $callback The callback
+   * Add a Validator
+   *
+   * @since 1.2.0
+   * @param function $validator The validator function
    */
-  public function addCallback($callback)
+  public function addValidator($validator)
   {
-    $this->callback[] = $callback;
+    $this->validators[] = $validator;
   }
 
 
   /**
-   * [process description]
-   * @return boolean Success status
+   * Validate form data
+   *
+   * @since 1.2.0
+   * @return void
    */
-  public function process($settings)
+  public function validate()
   {
     // nonce check
-    if (!$this->isValidNonce($this->data['nextNonce'])) {
+    if (!$this->isValidNonce($this->post['nextNonce'])) {
       wp_send_json($this->response);
     }
 
     // captcha check
-    if (array_key_exists('g-recaptcha-response', $this->data)) {
+    if (array_key_exists('g-recaptcha-response', $this->post)) {
       if ($this->isCaptchaEnabled()) {
-        if (!$this->isValidCaptcha($this->data['g-recaptcha-response'])) {
+        if (!$this->isValidCaptcha($this->post['g-recaptcha-response'])) {
           wp_send_json($this->response);
         }
       }
@@ -282,19 +297,18 @@ class FormProcessor
       }
     }
 
-    foreach ($this->callbacks as $callback) {
-      $result = $callback();
-
+    foreach ($this->validators as $validator) {
+      $result = $validator();
       if (!$result) {
-        return $this->response;
+        wp_send_json($this->response);
       }
     }
+  }
 
-    if ($this->sendMail($settings)) {
-      $this->response['message'] = $settings['success_msg'];
-      $this->response['success'] = true;
-    }
-
+  public function respond($success, $message)
+  {
+    $this->response['success'] = $success;
+    $this->response['message'] = $message;
     wp_send_json($this->response);
   }
 }
