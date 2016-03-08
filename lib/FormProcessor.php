@@ -1,13 +1,13 @@
 <?php
+
+namespace Tofino;
+
 /**
  * Form Processor
  *
  * @package Tofino
  * @since 1.2.0
  */
-
-namespace Tofino;
-
 class FormProcessor
 {
 
