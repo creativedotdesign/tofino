@@ -59,10 +59,6 @@ function custom_theme_options() {
         'id'    => 'other_settings',
         'title' => __('Other', 'tofino')
       ),
-      array(
-        'id'    => 'contact_form',
-        'title' => __('Contact Form', 'tofino')
-      ),
     ),
     'settings' => array(
       array(

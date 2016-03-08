@@ -21,7 +21,7 @@ gulp.src = function() {
     })));
 };
 
-//Compile SCSS to CSS
+// Compile SCSS to CSS
 require('./gulp/styles')(gulp, production, browserSync);
 
 // Lints scss files
@@ -45,10 +45,10 @@ require('./gulp/svgs')(gulp);
 // Create SVG sprite file
 require('./gulp/svg-sprite')(gulp, production);
 
-//Copy font files from assets to dist
+// Copy font files from assets to dist
 require('./gulp/fonts')(gulp);
 
-//Lint PHP files using ruleset.xml
+// Lint PHP files using ruleset.xml
 require('./gulp/php-lint')(gulp, allowlint, production);
 
 // Deletes the build folder entirely.
