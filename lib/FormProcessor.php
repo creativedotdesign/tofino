@@ -82,7 +82,7 @@ class FormProcessor
       $recipient = ot_get_option('email_address');
     } else {
       $this->response['message'] = __('No recipient email address.', 'tofino');
-      return $this->sendResponse($this->response);
+      return wp_send_json($this->response);
     }
     return $recipient;
   }
@@ -165,18 +165,6 @@ class FormProcessor
   }
 
   /**
-   * Send JSON and only JSON, then exit.
-   * @param $response
-   */
-  private function sendResponse($response)
-  {
-    header('Content-type: application/json');
-    $response = json_encode($response);
-    echo $response;
-    exit;
-  }
-
-  /**
    * Add a callback
    * @param function $callback The callback
    */
@@ -193,14 +181,14 @@ class FormProcessor
   {
     // nonce check
     if (!$this->isValidNonce($this->data['nextNonce'])) {
-      return $this->sendResponse($this->response);
+      wp_send_json($this->response);
     }
 
     // captcha check
     if (array_key_exists('g-recaptcha-response', $this->data)) {
       if ($this->isCaptchaEnabled()) {
         if (!$this->isValidCaptcha($this->data['g-recaptcha-response'])) {
-          return $this->sendResponse($this->response);
+          wp_send_json($this->response);
         }
       }
     }
@@ -208,7 +196,7 @@ class FormProcessor
     // email address check
     if (array_key_exists('email', $this->form_data)) { // Found email field
       if (!$this->isValidEmail($this->form_data['email'])) {
-        return $this->sendResponse($this->response);
+        wp_send_json($this->response);
       }
     }
 
@@ -220,13 +208,11 @@ class FormProcessor
       }
     }
 
-    if (!$this->sendMail($settings)) {
-      return $this->sendResponse($this->response);
-    } else {
+    if ($this->sendMail($settings)) {
       $this->response['message'] = $settings['success_msg'];
       $this->response['success'] = true;
     }
 
-    return $this->sendResponse($this->response);
+    wp_send_json($this->response);
   }
 }
