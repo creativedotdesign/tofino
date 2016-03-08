@@ -33,17 +33,17 @@
   },
   "autoload": {
     "files": [
-      "lib/nav-walker.php",
-      "lib/init.php",
-      "lib/assets.php",
-      "lib/contact-form.php",
-      "lib/required-plugins.php",
-      "lib/shortcodes.php",
-      "lib/theme-options.php",
-      "lib/helpers.php",
-      "lib/relative-urls.php",
-      "lib/theme-tracker.php"
+      "src/lib/nav-walker.php",
+      "src/lib/init.php",
+      "src/lib/assets.php",
+      "src/lib/helpers.php",
+      "src/lib/relative-urls.php",
+      "src/lib/theme-tracker.php",
+      "src/forms/contact-form.php",
+      "src/required-plugins.php",
+      "src/shortcodes.php",
+      "src/theme-options.php"
     ],
-    "psr-4": { "Tofino\\": "lib/" }
+    "psr-4": { "Tofino\\": "src/lib/" }
   }
 }
