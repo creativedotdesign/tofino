@@ -16,7 +16,7 @@ get_header();
 
 $template = Tofino\Helpers\get_page_name();
 
-if (!empty(locate_template('templates/content-page-' . $template . '.php'))) {
+if (locate_template('templates/content-page-' . $template . '.php') != '') {
   get_template_part('templates/content-page', $template); // e.g. templates/content-page-members.php
 } else {
   if (function_exists('icl_object_id')) { //WPML installed

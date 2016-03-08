@@ -38,7 +38,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
  * @return void
  */
 function check_page_display() {
-  if ((!is_admin()) && (get_option('show_on_front') === 'posts') && (empty(locate_template('home.php')))) {
+  if ((!is_admin()) && (get_option('show_on_front') === 'posts') && (locate_template('home.php') === '')) {
     wp_die('Front page display setting is set to Latest Posts but no home.php file exists. Please update the settings selecting a Static page or create the home.php as per the documentation.', 'An error occured.');
   }
 }
