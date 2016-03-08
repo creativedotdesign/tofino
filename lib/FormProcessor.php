@@ -1,4 +1,10 @@
 <?php
+/**
+ * Form Processor
+ *
+ * @package Tofino
+ * @since 1.2.0
+ */
 
 namespace Tofino;
 
@@ -20,6 +26,15 @@ class FormProcessor
     $this->form_data['date_time'] = time(); // Create timestamp for submission
   }
 
+  /**
+   * Nonce validation
+   *
+   * @since 1.2.0
+   *
+   * @uses wp_verify_nonce()
+   * @param string $nonce Token from frontend form
+   * @return boolean If the token was valid or not.
+   */
   private function isValidNonce($nonce)
   {
     if (!wp_verify_nonce($nonce, 'next_nonce')) { // Compare Nonce from POST request to server generated nonce
@@ -30,6 +45,12 @@ class FormProcessor
     }
   }
 
+  /**
+   * Captcha enabled
+   *
+   * @since 1.2.0
+   * @return boolean If capcha is enabled and API complete in the Theme Options.
+   */
   private function isCaptchaEnabled()
   {
     if (ot_get_option('enable_captcha_checkbox')) {
@@ -44,9 +65,18 @@ class FormProcessor
     }
   }
 
+  /**
+   * Captcha validation
+   *
+   * @since 1.2.0
+   *
+   * @uses ReCaptcha to validate the aganist the Google ReCaptcha APU.
+   * @see https://github.com/google/recaptcha
+   * @param String $captcha_repsonse Capcha response string from front end form.
+   * @return boolean If the Capcha was valid or not
+   */
   private function isValidCaptcha($captcha_repsonse)
   {
-    // Captcha validation check
     $secret    = ot_get_option('captcha_secret');
     $recaptcha = new \ReCaptcha\ReCaptcha($secret);
     $resp      = $recaptcha->verify($captcha_repsonse, $_SERVER['REMOTE_ADDR']);
@@ -59,6 +89,19 @@ class FormProcessor
     }
   }
 
+  /**
+   * Email address validation
+   *
+   * Checks syntax, DNS MX record exists and hostname resloves to an IPV4 address.
+   *
+   * @since 1.2.0
+   *
+   * @see http://php.net/manual/en/filter.filters.validate.php
+   * @see http://php.net/manual/en/function.checkdnsrr.php
+   * @see http://php.net/manual/en/function.gethostbyname.php
+   * @param string $email_address The email address to validate.
+   * @return boolean If the email addresses is valid or not.
+   */
   private function isValidEmail($email_address)
   {
     $emailArray = explode('@', $email_address); // Split it on @
@@ -72,7 +115,15 @@ class FormProcessor
   }
 
   /**
-   * Get recipient from theme options
+   * Get recipient
+   *
+   * Get recipient email address from the form specific Theme Options.
+   * Fallback to general email address if not defined.
+   * Return error is JSON format if no email addresses found.
+   *
+   * @since 1.2.0
+   * @param string $theme_option_field The option field to check for the email address.
+   * @return string|json The email address if found, else JSON array output.
    */
   public function getRecipient($theme_option_field)
   {
@@ -88,7 +139,13 @@ class FormProcessor
   }
 
   /**
-   * Save form data as post meta
+   * Save data
+   *
+   * Save form data as post meta.
+   *
+   * @since 1.2.0
+   * @uses add_post_meta()
+   * @return integer|boolean The saved meta id or false if save failed.
    */
   public function saveData($post_id, $meta_key, $data = array())
   {
@@ -104,7 +161,13 @@ class FormProcessor
   }
 
   /**
-   * Genereate email body using html template
+   * Build email body
+   *
+   * Genereate email body using html template.
+   *
+   * @since 1.2.0
+   * @param string $template The filename of HTML the template to use.
+   * @return string HTML output ready to be sent via email.
    */
   private function buildEmailBody($template = 'default-form.html')
   {
@@ -138,7 +201,14 @@ class FormProcessor
   }
 
   /**
-   * Send mail. Uses PHPMailer.
+   * Send mail
+   *
+   * Sends an email using WordPress function wp_mail
+   *
+   * @since 1.2.0
+   * @uses wp_mail()
+   * @uses buildEmailBody()
+   * @return boolean If the email was successfully sent.
    */
   private function sendMail($settings)
   {
