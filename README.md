@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/lambdacreatives/tofino.svg)](https://travis-ci.org/lambdacreatives/tofino) [![devDependency Status](https://david-dm.org/lambdacreatives/tofino/dev-status.svg)](https://david-dm.org/lambdacreatives/tofino#info=devDependencies) [![Deployment status from DeployBot](https://lambdacreatives.deploybot.com/badge/77558060036000/47551.svg)](http://deploybot.com)
 
-![Tofino](https://raw.githubusercontent.com/mrchimp/tofino/master/screenshot.png)
+<img src="https://raw.githubusercontent.com/lambdacreatives/tofino/master/screenshot.png" alt="Tofino" width="300">
 
 # Tofino
 
