@@ -345,14 +345,12 @@ add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
  */
 function add_theme_options_body_class($classes) {
   //Menu Sticky
-  $menu_sticky_disabled = ot_get_option('menu_fixed_checkbox');
-  if (!$menu_sticky_disabled) {
+  if (get_theme_mod('menu_sticky') === 'enabled') {
     $classes[] = 'menu-fixed';
   }
 
   //Footer Sticky
-  $footer_sticky_enabled = ot_get_option('footer_sticky_checkbox');
-  if ($footer_sticky_enabled) {
+if (get_theme_mod('footer_sticky') === 'enabled') {
     $classes[] = 'footer-sticky';
   }
 
@@ -364,11 +362,8 @@ add_filter('body_class', __NAMESPACE__ . '\\add_theme_options_body_class');
  * Return menu position classes based on theme option.
  */
 function menu_position() {
-  $position = ot_get_option('menu_position_select');
+  $position = get_theme_mod('menu_position');
   switch ($position) {
-    case 'left':
-      $class = '';
-      break;
     case 'center':
       $class = 'menu-center';
       break;
@@ -382,24 +377,20 @@ function menu_position() {
 }
 
 /**
- * Return menu fixed class based on theme option.
+ * Return menu sticky class based on theme option.
  */
-function menu_fixed() {
-  $is_disabled = ot_get_option('menu_fixed_checkbox');
-  if (!$is_disabled) {
-    $class = 'navbar-sticky-top';
-  } else {
-    $class = null;
+function menu_sticky() {
+  if (get_theme_mod('menu_sticky') === 'enabled') {
+    return 'navbar-sticky-top';
   }
-  return $class;
 }
 
 /**
  * Display notification Top/Bottom based on theme option.
  */
 function notification($position) {
-  if ($position == ot_get_option('notification_position')) {
-    if (ot_get_option('notification_text') && !isset($_COOKIE['tofino-notification-closed'])) : ?>
+  if ($position == get_theme_mod('notification_position')) {
+    if (get_theme_mod('notification_text') && !isset($_COOKIE['tofino-notification-closed'])) : ?>
       <!-- Notifcation <?php echo $position; ?> -->
       <div class="alert alert-info notification <?php echo $position; ?>" id="tofino-notification">
         <div class="container">
@@ -409,7 +400,7 @@ function notification($position) {
                 <span aria-hidden="true"><?php echo svg('icon-close'); ?></span>
                 <span class="sr-only"><?php _e('Close', 'tofino'); ?></span>
               </button>
-              <p><?php echo nl2br(ot_get_option('notification_text')); ?></p>
+              <p><?php echo nl2br(get_theme_mod('notification_text')); ?></p>
             </div>
           </div>
         </div>
@@ -417,3 +408,188 @@ function notification($position) {
     endif;
   }
 }
+
+
+
+/**
+ * Adds the individual sections, settings, and controls to the theme customizer
+ */
+
+function remove_default_sections($wp_customize) {
+  $wp_customize->remove_section('title_tagline');
+  $wp_customize->remove_section('static_front_page');
+}
+add_action('customize_register', __NAMESPACE__ . '\\remove_default_sections');
+
+/*
+function remove_default_panels($wp_customize) {
+  $wp_customize->remove_panel('nav_menus');
+}
+add_action('customize_register', __NAMESPACE__ . '\\remove_default_panels', 20);
+*/
+
+function create_panel($wp_customize) {
+  $wp_customize->add_panel('tofino_options', [
+    'title'       => 'Theme Options',
+    'description' => '',
+  ]);
+}
+add_action('customize_register', __NAMESPACE__ . '\\create_panel');
+
+function menu_settings($wp_customize) {
+  $wp_customize->add_section('tofino_menu_settings', [
+    'title' => 'Menu',
+    'panel'  => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('menu_sticky', ['default' => 'disabled']);
+
+  $wp_customize->add_control(
+    'menu_sticky', [
+      'label'       => 'Sticky Menu',
+      'description' => '',
+      'section'     => 'tofino_menu_settings',
+      'type'        => 'select',
+      'choices'     => [
+        'enabled'  => 'Enabled',
+        'disabled' => 'Disabled'
+      ]
+    ]
+  );
+
+  $wp_customize->add_setting('menu_position', ['default' => 'center']);
+
+  $wp_customize->add_control(
+    'menu_position', [
+      'label'       => 'Menu items position',
+      'description' => '',
+      'section'     => 'tofino_menu_settings',
+      'type'        => 'select',
+      'choices'     => [
+        'left'   => 'Left',
+        'center' => 'Center',
+        'right'  => 'Right'
+      ]
+    ]
+  );
+}
+add_action('customize_register', __NAMESPACE__ . '\\menu_settings');
+
+
+
+
+function footer_settings($wp_customize) {
+  $wp_customize->add_section('tofino_footer_settings', [
+    'title' => 'Footer',
+    'panel' => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('footer_sticky', ['default' => 'disabled']);
+
+  $wp_customize->add_control(
+    'footer_sticky', [
+      'label'       => 'Sticky Footer',
+      'description' => '',
+      'section'     => 'tofino_footer_settings',
+      'type'        => 'select',
+      'choices'     => [
+        'enabled'  => 'Enabled',
+        'disabled' => 'Disabled'
+      ]
+    ]
+  );
+
+  $wp_customize->add_setting('footer_text', [
+    'default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino'),
+  ]);
+
+  $wp_customize->add_control(
+    'footer_text', [
+      'label'   => 'Footer text',
+      'section' => 'tofino_footer_settings',
+      'type'    => 'textarea'
+    ]
+  );
+}
+add_action('customize_register', __NAMESPACE__ . '\\footer_settings');
+
+
+
+
+function advanced_settings($wp_customize) {
+  $wp_customize->add_section('tofino_advanced_settings', [
+    'title' => 'Advanced',
+    'panel' => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('critical_css', ['default' => '']);
+
+  $wp_customize->add_control(
+    'critical_css', [
+      'label'       => 'Enable Critical CSS',
+      'description' => __('Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.', 'tofino'),
+      'section'     => 'tofino_advanced_settings',
+      'type'        => 'checkbox'
+    ]
+  );
+
+  $wp_customize->add_setting('jquery_footer', ['default' => '']);
+
+  $wp_customize->add_control(
+    'jquery_footer', [
+      'label'       => 'Move jQuery to footer',
+      'description' => __('Move jQuery to the footer. Uncheck if you have compatability issues with plugins.', 'tofino'),
+      'section'     => 'tofino_advanced_settings',
+      'type'        => 'checkbox'
+    ]
+  );
+}
+add_action('customize_register', __NAMESPACE__ . '\\advanced_settings');
+
+
+
+
+function notification_settings($wp_customize) {
+  $wp_customize->add_section('tofino_notification_settings', [
+    'title' => 'Notification',
+    'panel' => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('notification_text', ['default' => '']);
+
+  $wp_customize->add_control(
+    'notification_text', [
+      'label'       => 'Notification text',
+      'description' => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
+      'section'     => 'tofino_notification_settings',
+      'type'        => 'textarea'
+    ]
+  );
+
+  $wp_customize->add_setting('notification_expires', ['default' => '']);
+
+  $wp_customize->add_control(
+    'notification_expires', [
+      'label'       => 'Notification expires',
+      'description' => __('Number of days until the notification expires. Set via a cookie.', 'tofino'),
+      'section'     => 'tofino_notification_settings',
+      'type'        => 'text'
+    ]
+  );
+
+  $wp_customize->add_setting('notification_position', ['default' => 'center']);
+
+  $wp_customize->add_control(
+    'notification_position', [
+      'label'       => 'Notification position',
+      'description' => __('Notification position. Bottom = Fixed over footer. Top = Fixed above top menu.', 'tofino'),
+      'section'     => 'tofino_notification_settings',
+      'type'        => 'select',
+      'choices'     => [
+        'top'    => 'Top',
+        'bottom' => 'Bottom'
+      ]
+    ]
+  );
+}
+add_action('customize_register', __NAMESPACE__ . '\\notification_settings');
