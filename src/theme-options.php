@@ -350,7 +350,7 @@ function add_theme_options_body_class($classes) {
   }
 
   //Footer Sticky
-if (get_theme_mod('footer_sticky') === 'enabled') {
+  if (get_theme_mod('footer_sticky') === 'enabled') {
     $classes[] = 'footer-sticky';
   }
 
@@ -445,7 +445,8 @@ function menu_settings($wp_customize) {
   $wp_customize->add_setting('menu_sticky', ['default' => 'disabled']);
 
   $wp_customize->add_control(
-    'menu_sticky', [
+    'menu_sticky',
+    [
       'label'       => 'Sticky Menu',
       'description' => '',
       'section'     => 'tofino_menu_settings',
@@ -460,7 +461,8 @@ function menu_settings($wp_customize) {
   $wp_customize->add_setting('menu_position', ['default' => 'center']);
 
   $wp_customize->add_control(
-    'menu_position', [
+    'menu_position',
+    [
       'label'       => 'Menu items position',
       'description' => '',
       'section'     => 'tofino_menu_settings',
@@ -486,35 +488,26 @@ function footer_settings($wp_customize) {
 
   $wp_customize->add_setting('footer_sticky', ['default' => 'disabled']);
 
-  $wp_customize->add_control(
-    'footer_sticky', [
-      'label'       => 'Sticky Footer',
-      'description' => '',
-      'section'     => 'tofino_footer_settings',
-      'type'        => 'select',
-      'choices'     => [
-        'enabled'  => 'Enabled',
-        'disabled' => 'Disabled'
-      ]
+  $wp_customize->add_control('footer_sticky', [
+    'label'       => 'Sticky Footer',
+    'description' => '',
+    'section'     => 'tofino_footer_settings',
+    'type'        => 'select',
+    'choices'     => [
+      'enabled'  => 'Enabled',
+      'disabled' => 'Disabled'
     ]
-  );
-
-  $wp_customize->add_setting('footer_text', [
-    'default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino'),
   ]);
 
-  $wp_customize->add_control(
-    'footer_text', [
-      'label'   => 'Footer text',
-      'section' => 'tofino_footer_settings',
-      'type'    => 'textarea'
-    ]
-  );
+  $wp_customize->add_setting('footer_text', ['default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino')]);
+
+  $wp_customize->add_control('footer_text', [
+    'label'   => 'Footer text',
+    'section' => 'tofino_footer_settings',
+    'type'    => 'textarea'
+  ]);
 }
 add_action('customize_register', __NAMESPACE__ . '\\footer_settings');
-
-
-
 
 function advanced_settings($wp_customize) {
   $wp_customize->add_section('tofino_advanced_settings', [
@@ -525,7 +518,8 @@ function advanced_settings($wp_customize) {
   $wp_customize->add_setting('critical_css', ['default' => '']);
 
   $wp_customize->add_control(
-    'critical_css', [
+    'critical_css',
+    [
       'label'       => 'Enable Critical CSS',
       'description' => __('Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.', 'tofino'),
       'section'     => 'tofino_advanced_settings',
@@ -536,7 +530,8 @@ function advanced_settings($wp_customize) {
   $wp_customize->add_setting('jquery_footer', ['default' => '']);
 
   $wp_customize->add_control(
-    'jquery_footer', [
+    'jquery_footer',
+    [
       'label'       => 'Move jQuery to footer',
       'description' => __('Move jQuery to the footer. Uncheck if you have compatability issues with plugins.', 'tofino'),
       'section'     => 'tofino_advanced_settings',
@@ -550,6 +545,7 @@ add_action('customize_register', __NAMESPACE__ . '\\advanced_settings');
 
 
 function notification_settings($wp_customize) {
+
   $wp_customize->add_section('tofino_notification_settings', [
     'title' => 'Notification',
     'panel' => 'tofino_options'
@@ -557,39 +553,33 @@ function notification_settings($wp_customize) {
 
   $wp_customize->add_setting('notification_text', ['default' => '']);
 
-  $wp_customize->add_control(
-    'notification_text', [
-      'label'       => 'Notification text',
-      'description' => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
-      'section'     => 'tofino_notification_settings',
-      'type'        => 'textarea'
-    ]
-  );
+  $wp_customize->add_control('notification_text', [
+    'label'       => 'Notification text',
+    'description' => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
+    'section'     => 'tofino_notification_settings',
+    'type'        => 'textarea'
+  ]);
 
   $wp_customize->add_setting('notification_expires', ['default' => '']);
 
-  $wp_customize->add_control(
-    'notification_expires', [
-      'label'       => 'Notification expires',
-      'description' => __('Number of days until the notification expires. Set via a cookie.', 'tofino'),
-      'section'     => 'tofino_notification_settings',
-      'type'        => 'text'
-    ]
-  );
+  $wp_customize->add_control('notification_expires', [
+    'label'       => 'Notification expires',
+    'description' => __('Number of days until the notification expires. Set via a cookie.', 'tofino'),
+    'section'     => 'tofino_notification_settings',
+    'type'        => 'text'
+  ]);
 
   $wp_customize->add_setting('notification_position', ['default' => 'center']);
 
-  $wp_customize->add_control(
-    'notification_position', [
-      'label'       => 'Notification position',
-      'description' => __('Notification position. Bottom = Fixed over footer. Top = Fixed above top menu.', 'tofino'),
-      'section'     => 'tofino_notification_settings',
-      'type'        => 'select',
-      'choices'     => [
-        'top'    => 'Top',
-        'bottom' => 'Bottom'
-      ]
+  $wp_customize->add_control('notification_position', [
+    'label'       => 'Notification position',
+    'description' => __('Notification position. Bottom = Fixed over footer. Top = Fixed above top menu.', 'tofino'),
+    'section'     => 'tofino_notification_settings',
+    'type'        => 'select',
+    'choices'     => [
+      'top'    => 'Top',
+      'bottom' => 'Bottom'
     ]
-  );
+  ]);
 }
 add_action('customize_register', __NAMESPACE__ . '\\notification_settings');
