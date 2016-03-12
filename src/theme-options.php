@@ -277,14 +277,9 @@ function custom_theme_options() {
     )
   );
 
-  // Get theme tracker options array
-  $tracker_theme_options = \Tofino\ThemeTracker\theme_tracker_options();
-
   // Get contact form options array
   $contact_form_options = \Tofino\ContactForm\theme_options();
 
-  // Merge arrays
-  $custom_settings = array_merge_recursive($custom_settings, $tracker_theme_options);
   $custom_settings = array_merge_recursive($custom_settings, $contact_form_options);
 
   /* allow settings to be filtered before saving */
