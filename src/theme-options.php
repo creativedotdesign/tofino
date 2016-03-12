@@ -614,3 +614,82 @@ function admin_settings($wp_customize) {
   ]));
 }
 add_action('customize_register', __NAMESPACE__ . '\\admin_settings');
+
+
+
+function google_settings($wp_customize) {
+  $wp_customize->add_section('tofino_google_settings', [
+    'title' => __('Google Analytics / reCAPTCHA', 'tofino'),
+    'panel' => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('google_analytics', ['default' => '']);
+
+  $wp_customize->add_control('google_analytics', [
+    'label'       => __('Google Analytics UA Code', 'tofino'),
+    'description' => __('Only runs GA Script when WP_DEBUG is false.', 'tofino'),
+    'section'     => 'tofino_google_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('captcha_site_key', ['default' => '']);
+
+  $wp_customize->add_control('captcha_site_key', [
+    'label'       => __('reCAPTCHA Site Key', 'tofino'),
+    'section'     => 'tofino_google_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('captcha_secret', ['default' => '']);
+
+  $wp_customize->add_control('captcha_secret', [
+    'label'       => __('reCAPTCHA Secret Key', 'tofino'),
+    'section'     => 'tofino_google_settings',
+    'type'        => 'text'
+  ]);
+}
+add_action('customize_register', __NAMESPACE__ . '\\google_settings');
+
+
+
+
+
+function tofino_client_data_settings($wp_customize) {
+  $wp_customize->add_section('tofino_client_data_settings', [
+    'title' => __('Client Data', 'tofino'),
+    'panel' => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('telephone_number', ['default' => '']);
+
+  $wp_customize->add_control('telephone_number', [
+    'label'   => __('Telephone Number', 'tofino'),
+    'section' => 'tofino_client_data_settings',
+    'type'    => 'text'
+  ]);
+
+  $wp_customize->add_setting('email_address', ['default' => '']);
+
+  $wp_customize->add_control('email_address', [
+    'label'   => __('Email address', 'tofino'),
+    'section' => 'tofino_client_data_settings',
+    'type'    => 'text'
+  ]);
+
+  $wp_customize->add_setting('address', ['default' => '']);
+
+  $wp_customize->add_control('address', [
+    'label'   => __('Address', 'tofino'),
+    'section' => 'tofino_client_data_settings',
+    'type'    => 'textarea'
+  ]);
+
+  $wp_customize->add_setting('company_number', ['default' => '']);
+
+  $wp_customize->add_control('company_number', [
+    'label'   => __('Company number', 'tofino'),
+    'section' => 'tofino_client_data_settings',
+    'type'    => 'text'
+  ]);
+}
+add_action('customize_register', __NAMESPACE__ . '\\tofino_client_data_settings');
