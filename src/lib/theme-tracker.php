@@ -18,72 +18,57 @@ namespace Tofino\ThemeTracker;
  * @since 1.0.0
  * @return void
  */
-function theme_tracker_options() {
-  return array(
-    'contextual_help' => array(
-      'content'       => array(),
-    ),
-    'sections' => array(
-      array(
-        'id'    => 'tracker',
-        'title' => __('Theme Tracker', 'tofino')
-      ),
-    ),
-    'settings' => array(
-      array(
-        'id'      => 'theme_tracker_enabled',
-        'label'   => __('Enable Theme Tracker', 'tofino'),
-        'desc'    => __('Send theme name, theme version, site url, ip address and WP version to the tracker API every 7 days. This data is used to plan future updates.', 'tofino'),
-        'std'     => 'enabled',
-        'type'    => 'select',
-        'section' => 'tracker',
-        'choices' => array(
-          array(
-            'value' => 'enabled',
-            'label' => __('Enabled', 'tofino'),
-            'src'   => ''
-          ),
-          array(
-            'value'  => 'disabled',
-            'label'  => __('Disabled', 'tofino'),
-            'src'    => ''
-          ),
-        )
-      ),
-      array(
-        'id'        => 'theme_tracker_api_key',
-        'label'     => __('Theme Tracker API Key', 'tofino'),
-        'desc'      => __('API key required to connect to the tracker.', 'tofino'),
-        'std'       => '',
-        'type'      => 'text',
-        'section'   => 'tracker',
-      ),
-      array(
-        'id'        => 'theme_tracker_api_url',
-        'label'     => __('Theme Tracker API Url', 'tofino'),
-        'desc'      => __('The API endpoint to send the theme data.', 'tofino'),
-        'std'       => 'http://tracker.lambdacreatives.com/api/v1/theme',
-        'type'      => 'text',
-        'section'   => 'tracker',
-      ),
-      array(
-        'id'      => 'theme_tracker_debug',
-        'label'   => __('Theme Tracker Debug Mode', 'tofino'),
-        'desc'    => __('Send data continuously. Ignore transient time.', 'tofino'),
-        'std'     => '',
-        'type'    => 'checkbox',
-        'section' => 'tracker',
-        'choices' => array(
-          array(
-            'value' => true,
-            'label' => __('Enable debug mode', 'tofino'),
-            'src'   => ''
-          ),
-        )
-      ),
-    )
-  );
+
+
+
+function theme_tracker_settings($wp_customize) {
+  $wp_customize->add_section('tofino_theme_tracker_settings', [
+    'title' => __('Theme Tracker', 'tofino'),
+    'panel' => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('theme_tracker_enabled', ['default' => 'disabled']);
+
+  $wp_customize->add_control('theme_tracker_enabled', [
+    'label'       => __('Theme Tracker', 'tofino'),
+    'description' => __('Send theme name, theme version, site url, ip address and WP version to the tracker API every 7 days. This data is used to plan future updates.', 'tofino'),
+    'section'     => 'tofino_theme_tracker_settings',
+    'type'        => 'select',
+    'choices'     => [
+      'enabled'  => __('Enabled', 'tofino'),
+      'disabled' => __('Disabled', 'tofino')
+    ]
+  ]);
+
+  $wp_customize->add_setting('theme_tracker_api_key', ['default' => '']);
+
+  $wp_customize->add_control('theme_tracker_api_key', [
+    'label'       => __('Theme Tracker API Key', 'tofino'),
+    'description' => __('API key required to connect to the tracker.', 'tofino'),
+    'section'     => 'tofino_theme_tracker_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('theme_tracker_api_url', ['default' => 'http://tracker.lambdacreatives.com/api/v1/theme']);
+
+  $wp_customize->add_control('theme_tracker_api_url', [
+    'label'       => __('Theme Tracker API Url', 'tofino'),
+    'description' => __('The API endpoint to send the theme data.', 'tofino'),
+    'section'     => 'tofino_theme_tracker_settings',
+    'type'        => 'url'
+  ]);
+
+  $wp_customize->add_setting('theme_tracker_debug', ['default' => '']);
+
+  $wp_customize->add_control('theme_tracker_debug', [
+    'label'       => __('Theme Tracker Debug Mode', 'tofino'),
+    'description' => __('Send data continuously. Ignore transient time.', 'tofino'),
+    'section'     => 'tofino_theme_tracker_settings',
+    'type'        => 'checkbox'
+  ]);
 }
+add_action('customize_register', __NAMESPACE__ . '\\theme_tracker_settings');
+
 
 
 /**
@@ -96,7 +81,7 @@ function theme_tracker_options() {
  * @return void
  */
 function missing_apikey_notice() {
-  if (ot_get_option('theme_tracker_enabled') !== 'disabled' && !ot_get_option('theme_tracker_api_key')) { ?>
+  if (get_theme_mod('theme_tracker_enabled') !== 'disabled' && !get_theme_mod('theme_tracker_api_key')) { ?>
     <div class="error notice">
       <p><?php _e('Theme tracking is enabled but is missing the API Key.', 'tofino'); ?></p>
     </div><?php
@@ -116,9 +101,9 @@ add_action('admin_notices', __NAMESPACE__ . '\\missing_apikey_notice', 1);
  * @return void
  */
 function theme_tracker() {
-  if (ot_get_option('theme_tracker_enabled') !== 'disabled') { // Only if enabled
+  if (get_theme_mod('theme_tracker_enabled') !== 'disabled') { // Only if enabled
 
-    if (ot_get_option('theme_tracker_debug')) {
+    if (get_theme_mod('theme_tracker_debug')) {
       delete_transient('theme_tracking'); // Used to clear the transient for testing
     }
 
@@ -132,8 +117,8 @@ function theme_tracker() {
         add_option('theme_tracking_uid', $uid);
       }
 
-      $url           = ot_get_option('theme_tracker_api_url');
-      $api_key       = ot_get_option('theme_tracker_api_key');
+      $url           = get_theme_mod('theme_tracker_api_url');
+      $api_key       = get_theme_mod('theme_tracker_api_key');
       $theme_data    = wp_get_theme();
       $theme_name    = $theme_data->get('Name');
       $theme_version = $theme_data->get('Version');
