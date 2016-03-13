@@ -64,7 +64,7 @@ add_shortcode('copyright', 'copyright');
 
 
 /**
- * Optiontree option shortcode
+ * Theme option shortcode
  *
  * Get a theme option as a shortcode. Only for text based values.
  *
@@ -84,7 +84,7 @@ function ot_shortcode($atts) {
     'default' => ''
   ), $atts, 'option');
 
-  return ot_get_option($atts['id'], $atts['default']);
+  return get_theme_mod($atts['id'], $atts['default']);
 }
 add_shortcode('option', 'ot_shortcode');
 
