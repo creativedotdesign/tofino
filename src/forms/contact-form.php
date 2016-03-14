@@ -69,6 +69,7 @@ function contact_form_settings($wp_customize) {
     'type'        => 'checkbox'
   ]);
 }
+add_action('customize_register', __NAMESPACE__ . '\\contact_form_settings');
 
 
 /**
