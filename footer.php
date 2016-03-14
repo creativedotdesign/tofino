@@ -1,4 +1,4 @@
-<?php if (ot_get_option('footer_sticky_checkbox')) : ?>
+<?php if (get_theme_mod('footer_sticky') === 'enabled') : ?>
   </div>
 <?php endif; ?>
 

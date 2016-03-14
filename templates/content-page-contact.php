@@ -31,7 +31,7 @@
              <small class="text-muted"><?php _e("Tell us what you want us to know.", 'tofino'); ?></small>
            </fieldset>
 
-          <?php if (true == ot_get_option('enable_captcha_checkbox')) : ?>
+          <?php if (true == get_theme_mod('contact_form_captcha')) : ?>
             <!-- Not a Robot -->
             <fieldset class="form-group">
               <div class="g-recaptcha" data-size="normal" data-theme="light" data-sitekey="<?php echo get_theme_mod('captcha_site_key'); ?>"></div>
