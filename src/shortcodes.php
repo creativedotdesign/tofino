@@ -64,7 +64,7 @@ add_shortcode('copyright', 'copyright');
 
 
 /**
- * Optiontree option shortcode
+ * Theme option shortcode
  *
  * Get a theme option as a shortcode. Only for text based values.
  *
@@ -84,7 +84,7 @@ function ot_shortcode($atts) {
     'default' => ''
   ), $atts, 'option');
 
-  return ot_get_option($atts['id'], $atts['default']);
+  return get_theme_mod($atts['id'], $atts['default']);
 }
 add_shortcode('option', 'ot_shortcode');
 
@@ -97,8 +97,9 @@ add_shortcode('option', 'ot_shortcode');
  * @return string HTML output of unordered list with social icons as SVGS with links.
  */
 function social_icons($atts = array()) {
-  $social_links = ot_get_option('social_links', array());
-  $output = '';
+  $theme_mods   = get_theme_mods();
+  $social_links = $theme_mods['social'];
+  $output       = '';
 
   $atts = shortcode_atts(array(
     'class' => ''
@@ -107,8 +108,8 @@ function social_icons($atts = array()) {
   if (!empty($social_links)) {
     $output .= '<ul class="social-icons ' . $atts['class'] . '">';
 
-    foreach ($social_links as $social_link) {
-      $output .= '<li><a href="' . $social_link['href'] . '" title="' . $social_link['name'] . '">' . svg(sanitize_title($social_link['name'])) . '</a></li>';
+    foreach ($social_links as $key => $value) {
+      $output .= '<li><a href="' . $value . '" title="' . $key . '">' . svg(sanitize_title($key)) . '</a></li>';
     }
 
     $output .= '</ul>';

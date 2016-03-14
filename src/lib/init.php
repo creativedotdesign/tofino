@@ -56,13 +56,13 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\check_page_display');
  * @return void
  */
 function show_maintenance_message() {
-  if (ot_get_option('maintenance_mode_enabled')) { ?>
+  if (get_theme_mod('maintenance_mode') === 'enabled') {?>
     <div class="error notice">
-      <p><strong><?php echo __('Maintenance Mode', 'tofino') . '</strong> - ' . ot_get_option('maintenance_mode_text'); ?></p>
+      <p><strong><?php echo __('Maintenance Mode', 'tofino') . '</strong> - ' . get_theme_mod('maintenance_mode_text'); ?></p>
     </div><?php
 
     if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
-      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . ot_get_option('maintenance_mode_text') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
+      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_theme_mod('maintenance_mode_text') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
     }
   }
 }

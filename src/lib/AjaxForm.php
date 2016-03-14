@@ -54,16 +54,16 @@ class AjaxForm
    */
   private function isCaptchaEnabled()
   {
-    if (ot_get_option('enable_captcha_checkbox')) {
-      if (ot_get_option('captcha_secret') && ot_get_option('captcha_site_key')) {
-        return true;
-      } else {
-        $this->response['message'] = __('reCaptcha sitekey and/or secret not found. Set this up in the theme options.', 'tofino');
-        return false;
-      }
+    //if (ot_get_option('enable_captcha_checkbox')) {
+    if (get_theme_mod('captcha_secret') && get_theme_mod('captcha_site_key')) {
+      return true;
     } else {
+      $this->response['message'] = __('reCaptcha sitekey and/or secret not found. Set this up in the theme options.', 'tofino');
       return false;
     }
+    //} else {
+    //  return false;
+    //}
   }
 
 
@@ -78,7 +78,7 @@ class AjaxForm
    */
   private function isValidCaptcha($captcha_repsonse)
   {
-    $secret    = ot_get_option('captcha_secret');
+    $secret    = get_theme_mod('captcha_secret');
     $recaptcha = new \ReCaptcha\ReCaptcha($secret);
     $resp      = $recaptcha->verify($captcha_repsonse, $_SERVER['REMOTE_ADDR']);
     if (!$resp->isSuccess()) {
@@ -129,10 +129,10 @@ class AjaxForm
    */
   public function getRecipient($theme_option_field)
   {
-    if (ot_get_option($theme_option_field)) { // Email address from contact form options
-      $recipient = ot_get_option($theme_option_field);
-    } elseif (ot_get_option('email_address')) { // Email address from general options
-      $recipient = ot_get_option('email_address');
+    if (get_theme_mod($theme_option_field)) { // Email address from contact form options
+      $recipient = get_theme_mod($theme_option_field);
+    } elseif (get_theme_mod('email_address')) { // Email address from general options
+      $recipient = get_theme_mod('email_address');
     } else {
       $this->response['message'] = __('No recipient email address.', 'tofino');
       return wp_send_json($this->response);
@@ -206,9 +206,9 @@ class AjaxForm
 
     $message = file_get_contents(get_template_directory() . '/templates/email/' . $template); // Get the template.
 
-    if (ot_get_option('admin_login_logo_id')) {
-      $src     = wp_get_attachment_image_src(ot_get_option('admin_login_logo_id'), 'original');
-      $message = str_replace('%email_logo%', $src[0], $message);
+    if (get_theme_mod('admin_logo')) {
+      $src     = get_theme_mod('admin_logo');
+      $message = str_replace('%email_logo%', $src, $message);
     } else {
       $message = str_replace('%email_logo%', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', $message);
     }

@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/lambdacreatives/tofino.svg)](https://travis-ci.org/lambdacreatives/tofino) [![devDependency Status](https://david-dm.org/lambdacreatives/tofino/dev-status.svg)](https://david-dm.org/lambdacreatives/tofino#info=devDependencies) [![Deployment status from DeployBot](https://lambdacreatives.deploybot.com/badge/77558060036000/47551.svg)](http://deploybot.com)
 
-<img src="https://raw.githubusercontent.com/lambdacreatives/tofino/master/screenshot.png" alt="Tofino" width="300">
+<img src="https://raw.githubusercontent.com/lambdacreatives/tofino/master/screenshot.png" alt="Tofino" width="400">
 
 # Tofino
 
@@ -28,10 +28,10 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 
 ## Features
 
-* [Bootstrap 4](http://getbootstrap.com/) (Pre-release)
-* Multilingual ready
+* [Bootstrap 4](http://getbootstrap.com/) (Pre-release Alpha 2)
+* Multilingual ready (WPML)
 * Responsive
-* Theme Options Panel ([Option Tree](https://github.com/valendesigns/option-tree))
+* Theme Options via WP Customizer (Native)
 	* Admin login screen logo
 	* Google Analytics
 	* Social links
@@ -43,7 +43,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 	* Company number
 	* Footer text
 	* Notification text / EU Cookie notice with top/bottom positions
-	* Contact form with [Google reCaptcha](https://www.google.com/recaptcha) and custom email template
+	* Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email template
 	* Maintenance mode
 	* jQuery in footer
 	* Critical CSS (with loadCSS function)

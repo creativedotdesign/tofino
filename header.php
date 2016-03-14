@@ -16,7 +16,7 @@
   </div>
 <![endif]-->
 
-<nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_fixed(); ?> <?php echo \Tofino\ThemeOptions\menu_position(); ?>">
+<nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_sticky(); ?> <?php echo \Tofino\ThemeOptions\menu_position(); ?>">
   <button class="navbar-toggler hidden-sm-up collapsed" type="button" data-toggle="collapse" data-target="#main-menu">
     <div class="bar-wrapper">
       <span class="bar"></span>
@@ -40,11 +40,10 @@
         'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
         'walker'          => new Tofino\Nav\NavWalker()
       ));
-    endif;
-    ?>
+    endif; ?>
   </div>
 </nav>
 
-<?php if (ot_get_option('footer_sticky_checkbox')) : ?>
+<?php if (get_theme_mod('footer_sticky') === 'enabled') : ?>
   <div class="wrapper">
 <?php endif; ?>
