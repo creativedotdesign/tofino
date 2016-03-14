@@ -182,8 +182,9 @@ add_action('customize_register', __NAMESPACE__ . '\\create_panel');
  */
 function menu_settings($wp_customize) {
   $wp_customize->add_section('tofino_menu_settings', [
-    'title' => __('Menu', 'tofino'),
-    'panel' => 'tofino_options'
+    'title'    => __('Menu', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 1
   ]);
 
   $wp_customize->add_setting('menu_sticky', ['default' => 'disabled']);
@@ -217,79 +218,6 @@ add_action('customize_register', __NAMESPACE__ . '\\menu_settings');
 
 
 /**
- * Footer settings
- *
- * @since 1.2.0
- * @param object $wp_customize Instance of WP_Customize_Manager class.
- * @return void
- */
-function footer_settings($wp_customize) {
-  $wp_customize->add_section('tofino_footer_settings', [
-    'title' => __('Footer', 'tofino'),
-    'panel' => 'tofino_options'
-  ]);
-
-  $wp_customize->add_setting('footer_sticky', ['default' => 'disabled']);
-
-  $wp_customize->add_control('footer_sticky', [
-    'label'       => __('Sticky Footer', 'tofino'),
-    'description' => '',
-    'section'     => 'tofino_footer_settings',
-    'type'        => 'select',
-    'choices'     => [
-      'enabled'  => __('Enabled', 'tofino'),
-      'disabled' => __('Disabled', 'tofino')
-    ]
-  ]);
-
-  $wp_customize->add_setting('footer_text', ['default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino')]);
-
-  $wp_customize->add_control('footer_text', [
-    'label'   => __('Footer Text', 'tofino'),
-    'section' => 'tofino_footer_settings',
-    'type'    => 'textarea'
-  ]);
-}
-add_action('customize_register', __NAMESPACE__ . '\\footer_settings');
-
-
-/**
- * Advacned settings
- *
- * Inline critical css, move jQuery to footer etc.
- *
- * @since 1.2.0
- * @param object $wp_customize Instance of WP_Customize_Manager class.
- * @return void
- */
-function advanced_settings($wp_customize) {
-  $wp_customize->add_section('tofino_advanced_settings', [
-    'title' => __('Advanced', 'tofino'),
-    'panel' => 'tofino_options'
-  ]);
-
-  $wp_customize->add_setting('critical_css', ['default' => '']);
-
-  $wp_customize->add_control('critical_css', [
-    'label'       => __('Enable Critical CSS', 'tofino'),
-    'description' => __('Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.', 'tofino'),
-    'section'     => 'tofino_advanced_settings',
-    'type'        => 'checkbox'
-  ]);
-
-  $wp_customize->add_setting('jquery_footer', ['default' => '']);
-
-  $wp_customize->add_control('jquery_footer', [
-    'label'       => __('Move jQuery to Footer', 'tofino'),
-    'description' => __('Move jQuery to the footer. Uncheck if you have compatability issues with plugins.', 'tofino'),
-    'section'     => 'tofino_advanced_settings',
-    'type'        => 'checkbox'
-  ]);
-}
-add_action('customize_register', __NAMESPACE__ . '\\advanced_settings');
-
-
-/**
  * Notification settings
  *
  * @since 1.2.0
@@ -298,8 +226,9 @@ add_action('customize_register', __NAMESPACE__ . '\\advanced_settings');
  */
 function notification_settings($wp_customize) {
   $wp_customize->add_section('tofino_notification_settings', [
-    'title' => __('Notification', 'tofino'),
-    'panel' => 'tofino_options'
+    'title'    => __('Notification', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 2
   ]);
 
   $wp_customize->add_setting('notification_text', ['default' => '']);
@@ -337,107 +266,6 @@ add_action('customize_register', __NAMESPACE__ . '\\notification_settings');
 
 
 /**
- * Maintenance mode settings
- *
- * @since 1.2.0
- * @param object $wp_customize Instance of WP_Customize_Manager class.
- * @return void
- */
-function maintenance_settings($wp_customize) {
-  $wp_customize->add_section('tofino_maintenance_settings', [
-    'title' => __('Maintenance Mode', 'tofino'),
-    'panel' => 'tofino_options'
-  ]);
-
-  $wp_customize->add_setting('maintenance_mode', ['default' => '']);
-
-  $wp_customize->add_control('maintenance_mode', [
-    'label'       => __('Maintenance Mode', 'tofino'),
-    'description' => __('Enabling maintenance mode shows a message on each page in the admin area.', 'tofino'),
-    'section'     => 'tofino_maintenance_settings',
-    'type'        => 'checkbox'
-  ]);
-
-  $wp_customize->add_setting('maintenance_mode_text', ['default' => __('This site is currently in maintenance mode. Any changes you make may be overwritten or removed.', 'tofino')]);
-
-  $wp_customize->add_control('maintenance_mode_text', [
-    'label'       => __('Maintenance Mode Text', 'tofino'),
-    'description' => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
-    'section'     => 'tofino_maintenance_settings',
-    'type'        => 'textarea'
-  ]);
-}
-add_action('customize_register', __NAMESPACE__ . '\\maintenance_settings');
-
-
-/**
- * Admin settings
- *
- * @since 1.2.0
- * @param object $wp_customize Instance of WP_Customize_Manager class.
- * @return void
- */
-function admin_settings($wp_customize) {
-  $wp_customize->add_section('tofino_admin_settings', [
-    'title' => __('Admin', 'tofino'),
-    'panel' => 'tofino_options'
-  ]);
-
-  $wp_customize->add_setting('admin_logo', ['default' => '']);
-
-  $wp_customize->add_control(new \WP_Customize_Image_Control($wp_customize, 'admin_logo', [
-    'label'    => __('Admin Login Logo', 'tofino'),
-    'section'  => 'tofino_admin_settings',
-    'settings' => 'admin_logo'
-  ]));
-}
-add_action('customize_register', __NAMESPACE__ . '\\admin_settings');
-
-
-/**
- * Google settings
- *
- * Anaylics, reCAPTCHA etc.
- *
- * @since 1.2.0
- * @param object $wp_customize Instance of WP_Customize_Manager class.
- * @return void
- */
-function google_settings($wp_customize) {
-  $wp_customize->add_section('tofino_google_settings', [
-    'title' => __('Google Analytics / reCAPTCHA', 'tofino'),
-    'panel' => 'tofino_options'
-  ]);
-
-  $wp_customize->add_setting('google_analytics', ['default' => '']);
-
-  $wp_customize->add_control('google_analytics', [
-    'label'       => __('Google Analytics UA Code', 'tofino'),
-    'description' => __('Only runs GA Script when WP_DEBUG is false.', 'tofino'),
-    'section'     => 'tofino_google_settings',
-    'type'        => 'text'
-  ]);
-
-  $wp_customize->add_setting('captcha_site_key', ['default' => '']);
-
-  $wp_customize->add_control('captcha_site_key', [
-    'label'       => __('reCAPTCHA Site Key', 'tofino'),
-    'section'     => 'tofino_google_settings',
-    'type'        => 'text'
-  ]);
-
-  $wp_customize->add_setting('captcha_secret', ['default' => '']);
-
-  $wp_customize->add_control('captcha_secret', [
-    'label'       => __('reCAPTCHA Secret Key', 'tofino'),
-    'section'     => 'tofino_google_settings',
-    'type'        => 'text'
-  ]);
-}
-add_action('customize_register', __NAMESPACE__ . '\\google_settings');
-
-
-/**
  * Client data settings
  *
  * Commonly used data. Tel number, company number, address etc.
@@ -448,8 +276,9 @@ add_action('customize_register', __NAMESPACE__ . '\\google_settings');
  */
 function client_data_settings($wp_customize) {
   $wp_customize->add_section('tofino_client_data_settings', [
-    'title' => __('Client Data', 'tofino'),
-    'panel' => 'tofino_options'
+    'title'    => __('Client Data', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 3
   ]);
 
   $wp_customize->add_setting('telephone_number', ['default' => '']);
@@ -488,6 +317,50 @@ add_action('customize_register', __NAMESPACE__ . '\\client_data_settings');
 
 
 /**
+ * Google settings
+ *
+ * Anaylics, reCAPTCHA etc.
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
+function google_settings($wp_customize) {
+  $wp_customize->add_section('tofino_google_settings', [
+    'title'    => __('Google Analytics / reCAPTCHA', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 4
+  ]);
+
+  $wp_customize->add_setting('google_analytics', ['default' => '']);
+
+  $wp_customize->add_control('google_analytics', [
+    'label'       => __('Google Analytics UA Code', 'tofino'),
+    'description' => __('Only runs GA Script when WP_DEBUG is false.', 'tofino'),
+    'section'     => 'tofino_google_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('captcha_site_key', ['default' => '']);
+
+  $wp_customize->add_control('captcha_site_key', [
+    'label'       => __('reCAPTCHA Site Key', 'tofino'),
+    'section'     => 'tofino_google_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('captcha_secret', ['default' => '']);
+
+  $wp_customize->add_control('captcha_secret', [
+    'label'       => __('reCAPTCHA Secret Key', 'tofino'),
+    'section'     => 'tofino_google_settings',
+    'type'        => 'text'
+  ]);
+}
+add_action('customize_register', __NAMESPACE__ . '\\google_settings');
+
+
+/**
  * Social icons
  *
  * Facebook, twitters etc
@@ -500,7 +373,8 @@ function social_settings($wp_customize) {
   $wp_customize->add_section('tofino_social_settings', [
     'title'       => __('Social Networks', 'tofino'),
     'description' => 'Links to various social networks. Remember to create the SVG Sprite icon.',
-    'panel'       => 'tofino_options'
+    'panel'       => 'tofino_options',
+    'priority'    => 5
   ]);
 
   $wp_customize->add_setting('social[facebook]', ['default' => '']);
@@ -528,3 +402,138 @@ function social_settings($wp_customize) {
   ]);
 }
 add_action('customize_register', __NAMESPACE__ . '\\social_settings');
+
+
+/**
+ * Footer settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
+function footer_settings($wp_customize) {
+  $wp_customize->add_section('tofino_footer_settings', [
+    'title'    => __('Footer', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 6
+  ]);
+
+  $wp_customize->add_setting('footer_sticky', ['default' => 'disabled']);
+
+  $wp_customize->add_control('footer_sticky', [
+    'label'       => __('Sticky Footer', 'tofino'),
+    'description' => '',
+    'section'     => 'tofino_footer_settings',
+    'type'        => 'select',
+    'choices'     => [
+      'enabled'  => __('Enabled', 'tofino'),
+      'disabled' => __('Disabled', 'tofino')
+    ]
+  ]);
+
+  $wp_customize->add_setting('footer_text', ['default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino')]);
+
+  $wp_customize->add_control('footer_text', [
+    'label'   => __('Footer Text', 'tofino'),
+    'section' => 'tofino_footer_settings',
+    'type'    => 'textarea'
+  ]);
+}
+add_action('customize_register', __NAMESPACE__ . '\\footer_settings');
+
+
+/**
+ * Advacned settings
+ *
+ * Inline critical css, move jQuery to footer etc.
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
+function advanced_settings($wp_customize) {
+  $wp_customize->add_section('tofino_advanced_settings', [
+    'title'    => __('Advanced', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 7
+  ]);
+
+  $wp_customize->add_setting('critical_css', ['default' => '']);
+
+  $wp_customize->add_control('critical_css', [
+    'label'       => __('Enable Critical CSS', 'tofino'),
+    'description' => __('Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.', 'tofino'),
+    'section'     => 'tofino_advanced_settings',
+    'type'        => 'checkbox'
+  ]);
+
+  $wp_customize->add_setting('jquery_footer', ['default' => '']);
+
+  $wp_customize->add_control('jquery_footer', [
+    'label'       => __('Move jQuery to Footer', 'tofino'),
+    'description' => __('Move jQuery to the footer. Uncheck if you have compatability issues with plugins.', 'tofino'),
+    'section'     => 'tofino_advanced_settings',
+    'type'        => 'checkbox'
+  ]);
+}
+add_action('customize_register', __NAMESPACE__ . '\\advanced_settings');
+
+
+/**
+ * Maintenance mode settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
+function maintenance_settings($wp_customize) {
+  $wp_customize->add_section('tofino_maintenance_settings', [
+    'title'    => __('Maintenance Mode', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 8
+  ]);
+
+  $wp_customize->add_setting('maintenance_mode', ['default' => '']);
+
+  $wp_customize->add_control('maintenance_mode', [
+    'label'       => __('Maintenance Mode', 'tofino'),
+    'description' => __('Enabling maintenance mode shows a message on each page in the admin area.', 'tofino'),
+    'section'     => 'tofino_maintenance_settings',
+    'type'        => 'checkbox'
+  ]);
+
+  $wp_customize->add_setting('maintenance_mode_text', ['default' => __('This site is currently in maintenance mode. Any changes you make may be overwritten or removed.', 'tofino')]);
+
+  $wp_customize->add_control('maintenance_mode_text', [
+    'label'       => __('Maintenance Mode Text', 'tofino'),
+    'description' => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
+    'section'     => 'tofino_maintenance_settings',
+    'type'        => 'textarea'
+  ]);
+}
+add_action('customize_register', __NAMESPACE__ . '\\maintenance_settings');
+
+
+/**
+ * Admin settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
+function admin_settings($wp_customize) {
+  $wp_customize->add_section('tofino_admin_settings', [
+    'title'    => __('Admin', 'tofino'),
+    'panel'    => 'tofino_options',
+    'priority' => 9
+  ]);
+
+  $wp_customize->add_setting('admin_logo', ['default' => '']);
+
+  $wp_customize->add_control(new \WP_Customize_Image_Control($wp_customize, 'admin_logo', [
+    'label'    => __('Admin Login Logo', 'tofino'),
+    'section'  => 'tofino_admin_settings',
+    'settings' => 'admin_logo'
+  ]));
+}
+add_action('customize_register', __NAMESPACE__ . '\\admin_settings');
