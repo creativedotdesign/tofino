@@ -3,7 +3,13 @@
 namespace Tofino\ThemeOptions;
 
 /**
- * Load Google Analyrics
+ * Google Analytics
+ *
+ * Adds Google Analytics JS code in to the footer.
+ * Only if WP_DEBUG is false and UA code defined in theme options.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function google_analytics() {
   if (!WP_DEBUG && get_theme_mod('google_analytics')) { ?>
@@ -17,11 +23,16 @@ function google_analytics() {
     </script><?php
   }
 }
-
 add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
 
+
 /**
- * Change admin login screen logo
+ * Admin login logo
+ *
+ * Displays the logo uplaoded via theme options to the login screen.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function admin_login_logo() {
   $admin_logo = get_theme_mod('admin_logo');
@@ -37,8 +48,14 @@ function admin_login_logo() {
 }
 add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
 
+
 /**
- * Add menu-sticky and/or the footer sticky classes to the body.
+ * Add theme options to body class
+ *
+ * Adds the menu-sticky and/or the footer sticky classes to the body.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function add_theme_options_body_class($classes) {
   //Menu Sticky
@@ -55,8 +72,14 @@ function add_theme_options_body_class($classes) {
 }
 add_filter('body_class', __NAMESPACE__ . '\\add_theme_options_body_class');
 
+
 /**
- * Return menu position classes based on theme option.
+ * Menu position
+ *
+ * Returns menu position classes based on theme option setting.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function menu_position() {
   $position = get_theme_mod('menu_position');
@@ -73,8 +96,14 @@ function menu_position() {
   return $class;
 }
 
+
 /**
- * Return menu sticky class based on theme option.
+ * Menu
+ *
+ * Returns menu sticky class based on theme option setting.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function menu_sticky() {
   if (get_theme_mod('menu_sticky') === 'enabled') {
@@ -82,8 +111,14 @@ function menu_sticky() {
   }
 }
 
+
 /**
- * Display notification Top/Bottom based on theme option.
+ * Notification
+ *
+ * Display notification Top/Bottom based on theme option setting.
+ *
+ * @since 1.0.0
+ * @return void
  */
 function notification($position) {
   if ($position == get_theme_mod('notification_position')) {
@@ -108,10 +143,11 @@ function notification($position) {
 
 
 /**
- * Remove unsed sections.
+ * Add theme options link
+ *
+ * Add the Customize link to the admin menu.
  *
  * @since 1.2.0
- * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
 function remove_default_sections($wp_customize) {
