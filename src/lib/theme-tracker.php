@@ -11,16 +11,11 @@
 namespace Tofino\ThemeTracker;
 
 /**
- * Theme tracker options
+ * Theme tracker settings
  *
- * Custom settings array that is merged with the main theme options array.
- *
- * @since 1.0.0
+ * @since 1.2.0
  * @return void
  */
-
-
-
 function theme_tracker_settings($wp_customize) {
   $wp_customize->add_section('tofino_theme_tracker_settings', [
     'title' => __('Theme Tracker', 'tofino'),
@@ -68,7 +63,6 @@ function theme_tracker_settings($wp_customize) {
   ]);
 }
 add_action('customize_register', __NAMESPACE__ . '\\theme_tracker_settings');
-
 
 
 /**

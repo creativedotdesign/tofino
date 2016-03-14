@@ -4,6 +4,10 @@ namespace Tofino\ContactForm;
 
 /**
  * Contact form theme options
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
  */
 function contact_form_settings($wp_customize) {
   $wp_customize->add_section('tofino_contact_form_settings', [
@@ -78,13 +82,13 @@ function ajax_contact_form() {
     return true;
   });
 
-  $form->validate(); // Required. Call validate
+  $form->validate(); // Required  Call validate
 
   //$data = $form->getData(); // Optional  Do what you want with the sanitized form data
 
   $post_id = url_to_postid($_SERVER['HTTP_REFERER']); // Get the post_id from the referring page
 
-  $save_success = $form->saveData($post_id, 'contact_form'); // Optional Save the data as post_meta
+  $save_success = $form->saveData($post_id, 'contact_form'); // Optional  Save the data as post_meta
 
   if (!$save_success) {
     $form->respond(false, __('Unable to save data.', 'tofino'));

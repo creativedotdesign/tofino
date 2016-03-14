@@ -107,11 +107,13 @@ function notification($position) {
 }
 
 
-
 /**
- * Adds the individual sections, settings, and controls to the theme customizer
+ * Remove unsed sections.
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
  */
-
 function remove_default_sections($wp_customize) {
   $wp_customize->remove_section('title_tagline');
   $wp_customize->remove_section('static_front_page');
@@ -125,6 +127,16 @@ function remove_default_panels($wp_customize) {
 add_action('customize_register', __NAMESPACE__ . '\\remove_default_panels', 20);
 */
 
+
+/**
+ * Create WP Customizer panel
+ *
+ * Create new panel in WP Customizer for Theme options
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function create_panel($wp_customize) {
   $wp_customize->add_panel('tofino_options', [
     'title'       => __('Theme Options', 'tofino'),
@@ -133,6 +145,14 @@ function create_panel($wp_customize) {
 }
 add_action('customize_register', __NAMESPACE__ . '\\create_panel');
 
+
+/**
+ * Menu settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function menu_settings($wp_customize) {
   $wp_customize->add_section('tofino_menu_settings', [
     'title' => __('Menu', 'tofino'),
@@ -169,8 +189,13 @@ function menu_settings($wp_customize) {
 add_action('customize_register', __NAMESPACE__ . '\\menu_settings');
 
 
-
-
+/**
+ * Footer settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function footer_settings($wp_customize) {
   $wp_customize->add_section('tofino_footer_settings', [
     'title' => __('Footer', 'tofino'),
@@ -200,6 +225,16 @@ function footer_settings($wp_customize) {
 }
 add_action('customize_register', __NAMESPACE__ . '\\footer_settings');
 
+
+/**
+ * Advacned settings
+ *
+ * Inline critical css, move jQuery to footer etc.
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function advanced_settings($wp_customize) {
   $wp_customize->add_section('tofino_advanced_settings', [
     'title' => __('Advanced', 'tofino'),
@@ -227,8 +262,13 @@ function advanced_settings($wp_customize) {
 add_action('customize_register', __NAMESPACE__ . '\\advanced_settings');
 
 
-
-
+/**
+ * Notification settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function notification_settings($wp_customize) {
   $wp_customize->add_section('tofino_notification_settings', [
     'title' => __('Notification', 'tofino'),
@@ -269,7 +309,13 @@ function notification_settings($wp_customize) {
 add_action('customize_register', __NAMESPACE__ . '\\notification_settings');
 
 
-
+/**
+ * Maintenance mode settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function maintenance_settings($wp_customize) {
   $wp_customize->add_section('tofino_maintenance_settings', [
     'title' => __('Maintenance Mode', 'tofino'),
@@ -296,6 +342,14 @@ function maintenance_settings($wp_customize) {
 }
 add_action('customize_register', __NAMESPACE__ . '\\maintenance_settings');
 
+
+/**
+ * Admin settings
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function admin_settings($wp_customize) {
   $wp_customize->add_section('tofino_admin_settings', [
     'title' => __('Admin', 'tofino'),
@@ -313,7 +367,15 @@ function admin_settings($wp_customize) {
 add_action('customize_register', __NAMESPACE__ . '\\admin_settings');
 
 
-
+/**
+ * Google settings
+ *
+ * Anaylics, reCAPTCHA etc.
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
 function google_settings($wp_customize) {
   $wp_customize->add_section('tofino_google_settings', [
     'title' => __('Google Analytics / reCAPTCHA', 'tofino'),
@@ -348,10 +410,16 @@ function google_settings($wp_customize) {
 add_action('customize_register', __NAMESPACE__ . '\\google_settings');
 
 
-
-
-
-function tofino_client_data_settings($wp_customize) {
+/**
+ * Client data settings
+ *
+ * Commonly used data. Tel number, company number, address etc.
+ *
+ * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
+ * @return void
+ */
+function client_data_settings($wp_customize) {
   $wp_customize->add_section('tofino_client_data_settings', [
     'title' => __('Client Data', 'tofino'),
     'panel' => 'tofino_options'
@@ -389,4 +457,4 @@ function tofino_client_data_settings($wp_customize) {
     'type'    => 'text'
   ]);
 }
-add_action('customize_register', __NAMESPACE__ . '\\tofino_client_data_settings');
+add_action('customize_register', __NAMESPACE__ . '\\client_data_settings');
