@@ -24,7 +24,6 @@
   "require": {
     "php": ">=5.4.0",
     "composer/installers": "~1.0",
-    "tgmpa/tgm-plugin-activation": "2.5.2",
     "google/recaptcha": "~1.1"
   },
   "require-dev": {
@@ -39,7 +38,6 @@
       "src/lib/relative-urls.php",
       "src/lib/theme-tracker.php",
       "src/forms/contact-form.php",
-      "src/required-plugins.php",
       "src/shortcodes.php",
       "src/theme-options.php"
     ],

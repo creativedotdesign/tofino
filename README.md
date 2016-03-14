@@ -55,7 +55,6 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 	* Use `gulp help` for a full task list with descriptions
 * [Bower](http://bower.io/) for front-end package management
 * [Composer](https://getcomposer.org/) for PHP package management
-* [TGM Plugin Activation](https://github.com/TGMPA/TGM-Plugin-Activation)
 * [Asset Builder](https://github.com/austinpray/asset-builder) for easy asset pipeline management
 * Custom Nav-walker Bootstrap 4 ready
 * [Relative URLs](https://codex.wordpress.org/Function_Reference/wp_make_link_relative)
