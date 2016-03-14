@@ -150,18 +150,10 @@ function notification($position) {
  * @since 1.2.0
  * @return void
  */
-function remove_default_sections($wp_customize) {
-  $wp_customize->remove_section('title_tagline');
-  $wp_customize->remove_section('static_front_page');
+function add_theme_options_link() {
+  add_menu_page('Theme Options', 'Theme Options', 'edit_theme_options', 'customize.php');
 }
-add_action('customize_register', __NAMESPACE__ . '\\remove_default_sections');
-
-/*
-function remove_default_panels($wp_customize) {
-  $wp_customize->remove_panel('nav_menus');
-}
-add_action('customize_register', __NAMESPACE__ . '\\remove_default_panels', 20);
-*/
+add_action('admin_menu', __NAMESPACE__ . '\\add_theme_options_link');
 
 
 /**
