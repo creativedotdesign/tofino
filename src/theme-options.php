@@ -143,6 +143,32 @@ function notification($position) {
 
 
 /**
+ * Sanitize text
+ *
+ * @since 1.2.0
+ * @param string $input The input.
+ * @return string Sanitized string.
+ */
+function sanitize_text($input) {
+  return wp_kses_post(force_balance_tags($input));
+}
+
+
+/**
+ * Sanitize integer
+ *
+ * @since 1.2.0
+ * @param string|integer $input The input.
+ * @return integer validated integer.
+ */
+function sanitize_integer($input) {
+  if (is_numeric($input)) {
+    return intval($input);
+  }
+}
+
+
+/**
  * Add theme options link
  *
  * Add the Customize link to the admin menu.
@@ -231,7 +257,11 @@ function notification_settings($wp_customize) {
     'priority' => 2
   ]);
 
-  $wp_customize->add_setting('notification_text', ['default' => '']);
+  // Notification text
+  $wp_customize->add_setting('notification_text', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('notification_text', [
     'label'       => __('Notification Text', 'tofino'),
@@ -240,7 +270,11 @@ function notification_settings($wp_customize) {
     'type'        => 'textarea'
   ]);
 
-  $wp_customize->add_setting('notification_expires', ['default' => '']);
+  // Notification expires
+  $wp_customize->add_setting('notification_expires', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_integer',
+  ]);
 
   $wp_customize->add_control('notification_expires', [
     'label'       => __('Notification Expires', 'tofino'),
@@ -249,7 +283,8 @@ function notification_settings($wp_customize) {
     'type'        => 'text'
   ]);
 
-  $wp_customize->add_setting('notification_position', ['default' => 'center']);
+  // Notification position
+  $wp_customize->add_setting('notification_position', ['default' => 'top']);
 
   $wp_customize->add_control('notification_position', [
     'label'       => __('Notification Position', 'tofino'),
@@ -281,7 +316,11 @@ function client_data_settings($wp_customize) {
     'priority' => 3
   ]);
 
-  $wp_customize->add_setting('telephone_number', ['default' => '']);
+  // Telephone number
+  $wp_customize->add_setting('telephone_number', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('telephone_number', [
     'label'   => __('Telephone Number', 'tofino'),
@@ -289,7 +328,11 @@ function client_data_settings($wp_customize) {
     'type'    => 'text'
   ]);
 
-  $wp_customize->add_setting('email_address', ['default' => '']);
+  // Email address
+  $wp_customize->add_setting('email_address', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('email_address', [
     'label'   => __('Email address', 'tofino'),
@@ -297,7 +340,11 @@ function client_data_settings($wp_customize) {
     'type'    => 'text'
   ]);
 
-  $wp_customize->add_setting('address', ['default' => '']);
+  // Address
+  $wp_customize->add_setting('address', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('address', [
     'label'   => __('Address', 'tofino'),
@@ -305,7 +352,11 @@ function client_data_settings($wp_customize) {
     'type'    => 'textarea'
   ]);
 
-  $wp_customize->add_setting('company_number', ['default' => '']);
+  // Company number
+  $wp_customize->add_setting('company_number', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('company_number', [
     'label'   => __('Company number', 'tofino'),
@@ -332,7 +383,11 @@ function google_settings($wp_customize) {
     'priority' => 4
   ]);
 
-  $wp_customize->add_setting('google_analytics', ['default' => '']);
+  // Google analytics
+  $wp_customize->add_setting('google_analytics', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('google_analytics', [
     'label'       => __('Google Analytics UA Code', 'tofino'),
@@ -341,7 +396,11 @@ function google_settings($wp_customize) {
     'type'        => 'text'
   ]);
 
-  $wp_customize->add_setting('captcha_site_key', ['default' => '']);
+  // Captcha site key
+  $wp_customize->add_setting('captcha_site_key', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('captcha_site_key', [
     'label'       => __('reCAPTCHA Site Key', 'tofino'),
@@ -349,7 +408,11 @@ function google_settings($wp_customize) {
     'type'        => 'text'
   ]);
 
-  $wp_customize->add_setting('captcha_secret', ['default' => '']);
+  // Captcha secret
+  $wp_customize->add_setting('captcha_secret', [
+    'default'           => '',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('captcha_secret', [
     'label'       => __('reCAPTCHA Secret Key', 'tofino'),
@@ -431,7 +494,10 @@ function footer_settings($wp_customize) {
     ]
   ]);
 
-  $wp_customize->add_setting('footer_text', ['default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino')]);
+  $wp_customize->add_setting('footer_text', [
+    'default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino'),
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+  ]);
 
   $wp_customize->add_control('footer_text', [
     'label'   => __('Footer Text', 'tofino'),
