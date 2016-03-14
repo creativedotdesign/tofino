@@ -206,9 +206,9 @@ class AjaxForm
 
     $message = file_get_contents(get_template_directory() . '/templates/email/' . $template); // Get the template.
 
-    if (ot_get_option('admin_login_logo_id')) {
-      $src     = wp_get_attachment_image_src(ot_get_option('admin_login_logo_id'), 'original');
-      $message = str_replace('%email_logo%', $src[0], $message);
+    if (get_theme_mod('admin_logo')) {
+      $src     = get_theme_mod('admin_logo');
+      $message = str_replace('%email_logo%', $src, $message);
     } else {
       $message = str_replace('%email_logo%', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', $message);
     }
