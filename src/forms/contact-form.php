@@ -5,6 +5,65 @@ namespace Tofino\ContactForm;
 /**
  * Contact form theme options
  */
+function contact_form_settings($wp_customize) {
+  $wp_customize->add_section('tofino_contact_form_settings', [
+    'title' => __('Contact Form', 'tofino'),
+    'panel' => 'tofino_options'
+  ]);
+
+  $wp_customize->add_setting('contact_form_to_address', ['default' => '']);
+
+  $wp_customize->add_control('contact_form_to_address', [
+    'label'       => __('To', 'tofino'),
+    'description' => __('Email address used in the TO field. Leave blank to use the email address defined in Client Data settings.', 'tofino'),
+    'section'     => 'tofino_contact_form_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('contact_form_cc_address', ['default' => '']);
+
+  $wp_customize->add_control('contact_form_cc_address', [
+    'label'       => __('CC', 'tofino'),
+    'description' => __('Email address used in the CC field.', 'tofino'),
+    'section'     => 'tofino_contact_form_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('contact_form_from_address', ['default' => '']);
+
+  $wp_customize->add_control('contact_form_from_address', [
+    'label'       => __('From', 'tofino'),
+    'description' => __('Email address used in the FROM field. Leave blank for server default.', 'tofino'),
+    'section'     => 'tofino_contact_form_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('contact_form_subject', ['default' => '']);
+
+  $wp_customize->add_control('contact_form_subject', [
+    'label'       => __('Subject', 'tofino'),
+    'description' => __('The subject field. Leave blank for "Form submission from SERVER_NAME".', 'tofino'),
+    'section'     => 'tofino_contact_form_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('contact_form_success_message', ['default' => "Thanks, we'll be in touch soon."]);
+
+  $wp_customize->add_control('contact_form_success_message', [
+    'label'       => __('Success Message', 'tofino'),
+    'description' => __('Message displayed to use after form action is successful.', 'tofino'),
+    'section'     => 'tofino_contact_form_settings',
+    'type'        => 'text'
+  ]);
+
+  $wp_customize->add_setting('contact_form_captcha', ['default' => '']);
+
+  $wp_customize->add_control('contact_form_captcha', [
+    'label'       => __('Enable reCAPTCHA', 'tofino'),
+    'description' => __('Enable Google reCAPTCHA "I am not a robot".', 'tofino'),
+    'section'     => 'tofino_contact_form_settings',
+    'type'        => 'checkbox'
+  ]);
 }
 
 
