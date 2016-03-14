@@ -167,8 +167,7 @@ add_action('admin_menu', __NAMESPACE__ . '\\add_theme_options_link');
  */
 function create_panel($wp_customize) {
   $wp_customize->add_panel('tofino_options', [
-    'title'       => __('Theme Options', 'tofino'),
-    'description' => '',
+    'title' => __('Theme Options', 'tofino')
   ]);
 }
 add_action('customize_register', __NAMESPACE__ . '\\create_panel');
