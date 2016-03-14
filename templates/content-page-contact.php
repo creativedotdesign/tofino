@@ -34,7 +34,7 @@
           <?php if (true == ot_get_option('enable_captcha_checkbox')) : ?>
             <!-- Not a Robot -->
             <fieldset class="form-group">
-              <div class="g-recaptcha" data-size="normal" data-theme="light" data-sitekey="<?php echo ot_get_option('captcha_site_key'); ?>"></div>
+              <div class="g-recaptcha" data-size="normal" data-theme="light" data-sitekey="<?php echo get_theme_mod('captcha_site_key'); ?>"></div>
               <small class="text-muted"><?php _e('Human tester', 'tofino'); ?></small>
               <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
             </fieldset><?php

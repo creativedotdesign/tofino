@@ -33,16 +33,16 @@ function ajax_contact_form() {
 
   $email_success = $form->sendEmail([ // Optional
     'to'      => $form->getRecipient('contact_form_to_address'),
-    'subject' => ot_get_option('contact_form_email_subject'),
-    'cc'      => ot_get_option('contact_form_cc_address'),
-    'from'    => ot_get_option('contact_form_from_address')
+    'subject' => get_theme_mod('contact_form_email_subject'),
+    'cc'      => get_theme_mod('contact_form_cc_address'),
+    'from'    => get_theme_mod('contact_form_from_address')
   ]);
 
   if (!$email_success) {
     $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
   }
 
-  $form->respond(true, ot_get_option('contact_form_success_message')); // Required
+  $form->respond(true, get_theme_mod('contact_form_success_message')); // Required
 }
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
