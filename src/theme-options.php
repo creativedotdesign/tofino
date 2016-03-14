@@ -497,16 +497,11 @@ add_action('customize_register', __NAMESPACE__ . '\\client_data_settings');
  * @return void
  */
 function social_settings($wp_customize) {
-
-
-
   $wp_customize->add_section('tofino_social_settings', [
-    'title' => __('Social Networks', 'tofino'),
+    'title'       => __('Social Networks', 'tofino'),
     'description' => 'Links to various social networks. Remember to create the SVG Sprite icon.',
-    'panel' => 'tofino_options'
+    'panel'       => 'tofino_options'
   ]);
-
-
 
   $wp_customize->add_setting('social[facebook]', ['default' => '']);
 
