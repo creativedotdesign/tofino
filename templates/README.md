@@ -51,3 +51,7 @@ To create a custom home page:
 If you want to set both a static Frontpage and a Home page. For example you have a blog separate to the main website content and Frontpage.
 
 Create a page called home.php in the root including header.php and footer.php with a get_template_part pointing to a new template you'd create e.g. `templates/content-page-blog.php`
+
+## Email templates
+
+A default template has been provided (email/default-form.html) which is used in the AjaxForm class. Customize this html file or create a new file.

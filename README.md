@@ -62,7 +62,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * Auto post type / slug based template routing
 * SVG Sprite Shortcode `[svg sprite="my-sprite-icon"]`
 * SVG Sprite helper for templates `svg('sprite-name')` or `svg(['sprite'=>'sprite-name'])`
-* AjaxForm handler class
+* AjaxForm handler class. Easily handle form validation and processing with Wordpress Ajax. Send submitted data via email and/or save it as post meta. Add your own custom validator / processor via a simple function hook.
 
 ## Documentation
 
