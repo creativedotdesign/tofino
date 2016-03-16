@@ -24,8 +24,6 @@
   "require": {
     "php": ">=5.4.0",
     "composer/installers": "~1.0",
-    "tgmpa/tgm-plugin-activation": "2.5.2",
-    "valendesigns/option-tree": "2.6.0",
     "google/recaptcha": "~1.1"
   },
   "require-dev": {
@@ -33,16 +31,16 @@
   },
   "autoload": {
     "files": [
-      "lib/nav-walker.php",
-      "lib/init.php",
-      "lib/assets.php",
-      "lib/contact-form.php",
-      "lib/required-plugins.php",
-      "lib/shortcodes.php",
-      "lib/theme-options.php",
-      "lib/helpers.php",
-      "lib/relative-urls.php",
-      "lib/theme-tracker.php"
-    ]
+      "src/lib/nav-walker.php",
+      "src/lib/init.php",
+      "src/lib/assets.php",
+      "src/lib/helpers.php",
+      "src/lib/relative-urls.php",
+      "src/lib/theme-tracker.php",
+      "src/forms/contact-form.php",
+      "src/shortcodes.php",
+      "src/theme-options.php"
+    ],
+    "psr-4": { "Tofino\\": "src/lib/" }
   }
 }

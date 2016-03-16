@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f7531ebcb620a0e44ee72d358f968567",
-    "content-hash": "43d35ba84ba94464cd5e8a10c7275d5c",
+    "hash": "61120714752a3a5cbf78cfb762978f1e",
+    "content-hash": "f3ba65d1837dfece346be04e82d4cba0",
     "packages": [
         {
             "name": "composer/installers",
@@ -149,97 +149,6 @@
                 "spam"
             ],
             "time": "2015-09-02 17:23:59"
-        },
-        {
-            "name": "tgmpa/tgm-plugin-activation",
-            "version": "2.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TGMPA/TGM-Plugin-Activation.git",
-                "reference": "ba41c10e821a10d3d6c3b8e468a16716bb03f125"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TGMPA/TGM-Plugin-Activation/zipball/ba41c10e821a10d3d6c3b8e468a16716bb03f125",
-                "reference": "ba41c10e821a10d3d6c3b8e468a16716bb03f125",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "class-tgm-plugin-activation.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Thomas Griffin",
-                    "homepage": "http://thomasgriffinmedia.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Gary Jones",
-                    "homepage": "https://github.com/GaryJones",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Juliette Reinders Folmer",
-                    "homepage": "https://github.com/jrfnl",
-                    "role": "Developer"
-                }
-            ],
-            "description": "TGM Plugin Activation is a PHP library that allows you to easily require or recommend plugins for your WordPress themes (and plugins).",
-            "homepage": "http://tgmpluginactivation.com",
-            "keywords": [
-                "activation",
-                "library",
-                "plugins",
-                "theme",
-                "wordpress"
-            ],
-            "time": "2015-07-16 08:59:11"
-        },
-        {
-            "name": "valendesigns/option-tree",
-            "version": "v2.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/valendesigns/option-tree.git",
-                "reference": "1f65d8000e608a3e36cebb5a4071a88fde809907"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/valendesigns/option-tree/zipball/1f65d8000e608a3e36cebb5a4071a88fde809907",
-                "reference": "1f65d8000e608a3e36cebb5a4071a88fde809907",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "ot-loader.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Derek Herman",
-                    "email": "derek@valendesigns.com",
-                    "homepage": "http://valendesigns.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Theme Options UI Builder for WordPress.",
-            "homepage": "https://github.com/valendesigns/option-tree",
-            "time": "2016-02-10 06:25:31"
         }
     ],
     "packages-dev": [

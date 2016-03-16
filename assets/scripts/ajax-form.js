@@ -1,7 +1,8 @@
 (function($) {
   var request,
-      $form = $('.contact-form'),
-      $result = $('.js-form-result');
+      $form = $('.form-processor'),
+      $result = $('.js-form-result'),
+      $action = $form.attr('id'); // Set action as form id value
 
   $form.on('submit', function(e) {
     e.preventDefault(); // Don't really submit.
@@ -17,28 +18,28 @@
 
     request = $.post(
       tofinoJS.ajaxUrl, {
-        action: 'contact-form',
+        action: $action, //Passed to WP for the ajax action
         data: serializedData,
         nextNonce: tofinoJS.nextNonce
       });
 
-    request.done(function(response, textStatus, errorThrown) { // jshint ignore:line
+    request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
       //console.log(response);
       if (response.success === true) {
-        $result.addClass('success').html(response.message);
+        $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
         $form.find(':input').val(''); // Reset fields.
         $form.hide(); // Hide form
       } else {
-        $result.addClass('failed').html(response.message);
+        $result.addClass('alert alert-danger').html(response.message);
         $form.find(':input').prop('disabled', false); // Re-enable fields
         $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
         //console.error("The following error occured: " + textStatus, errorThrown);
       }
     });
 
-    request.fail(function(response, textStatus, errorThrown) { // jshint ignore:line
+    request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
       //console.log(response);
-      $result.addClass('failed').html('An error occured.');
+      $result.addClass('alert alert-danger').html('An error occured.');
       $form.find(':input').prop('disabled', false); // Re-enable fields
       $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
       //console.error("The following error occured: " + textStatus, errorThrown);

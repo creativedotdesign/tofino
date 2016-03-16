@@ -1,6 +1,24 @@
 <?php
+/**
+ *
+ * Return urls as relative
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
 
 namespace Tofino\RelativeUrls;
+
+/**
+ * Relative Urls
+ *
+ * Makes paths relative for links, attachments etc.
+ * Excludes sitemaps, login screen and admin area.
+ *
+ * @since 1.0.0
+ * @uses wp_make_link_relative()
+ * @return void
+ */
 
 function relative_urls() {
   if (is_admin() || preg_match('/sitemap(_index)?\.xml/', $_SERVER['REQUEST_URI']) || in_array($GLOBALS['pagenow'], ['wp-login.php', 'wp-register.php'])) {

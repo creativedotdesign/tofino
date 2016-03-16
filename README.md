@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/lambdacreatives/tofino.svg)](https://travis-ci.org/lambdacreatives/tofino) [![devDependency Status](https://david-dm.org/lambdacreatives/tofino/dev-status.svg)](https://david-dm.org/lambdacreatives/tofino#info=devDependencies) [![Deployment status from DeployBot](https://lambdacreatives.deploybot.com/badge/77558060036000/47551.svg)](http://deploybot.com)
 
-![Tofino](https://raw.githubusercontent.com/mrchimp/tofino/master/screenshot.png)
+<img src="https://raw.githubusercontent.com/lambdacreatives/tofino/master/screenshot.png" alt="Tofino" width="400">
 
 # Tofino
 
@@ -26,12 +26,14 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * Download the latest [tagged release](https://github.com/lambdacreatives/tofino/releases).
 * Clone the git repo and run `bin/setup.sh` (from your dev machine).
 
+Once you have activated the theme, access Theme Options (WP Customizer) update an option and select save to commit the default values to the database.
+
 ## Features
 
-* [Bootstrap 4](http://getbootstrap.com/) (Pre-release)
-* Multilingual ready (POT file included)
+* [Bootstrap 4](http://getbootstrap.com/) (Pre-release Alpha 2)
+* Multilingual ready (WPML)
 * Responsive
-* Theme Options Panel ([Option Tree](https://github.com/valendesigns/option-tree))
+* Theme Options via WP Customizer (Native)
 	* Admin login screen logo
 	* Google Analytics
 	* Social links
@@ -43,7 +45,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 	* Company number
 	* Footer text
 	* Notification text / EU Cookie notice with top/bottom positions
-	* Contact form with [Google reCaptcha](https://www.google.com/recaptcha) and custom email template
+	* Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email template
 	* Maintenance mode
 	* jQuery in footer
 	* Critical CSS (with loadCSS function)
@@ -51,11 +53,10 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * [DOM-based routing](http://goo.gl/EUTi53)
 * [SCSS](http://sass-lang.com/)
 * [Gulp](http://gulpjs.com/) build script
-	* Includes [JSHint](https://github.com/spalger/gulp-jshint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+	* Includes [eslint](https://github.com/eslint/eslint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 	* Use `gulp help` for a full task list with descriptions
 * [Bower](http://bower.io/) for front-end package management
 * [Composer](https://getcomposer.org/) for PHP package management
-* [TGM Plugin Activation](https://github.com/TGMPA/TGM-Plugin-Activation)
 * [Asset Builder](https://github.com/austinpray/asset-builder) for easy asset pipeline management
 * Custom Nav-walker Bootstrap 4 ready
 * [Relative URLs](https://codex.wordpress.org/Function_Reference/wp_make_link_relative)
@@ -63,6 +64,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * Auto post type / slug based template routing
 * SVG Sprite Shortcode `[svg sprite="my-sprite-icon"]`
 * SVG Sprite helper for templates `svg('sprite-name')` or `svg(['sprite'=>'sprite-name'])`
+* AjaxForm handler class. Easily handle form validation and processing with Wordpress Ajax. Send submitted data via email and/or save it as post meta. Add your own custom validator / processor via a simple function hook.
 
 ## Documentation
 
@@ -88,3 +90,36 @@ Nothing should be merged into the master branch until it has been tested on dev 
 The dev branch is automatically deployed to http://tofino.lambdacreatives.com so you can test there.
 
 No breaking changes except at major versions.
+
+## Deployment
+
+We use [Deploybot](https://deploybot.com). The deployment VM is issued the following commands:
+
+```
+composer install
+bower install
+npm install npm -g
+npm install --loglevel error
+gulp --production
+```
+
+The following files and directories are excluded from being uploaded:
+
+```
+assets
+bin
+bower_components
+gulp
+node_modules
+.eslintrc
+.gitattributes
+.sass-lint.yml
+.travis.yml
+bower.json
+composer.json
+composer.lock
+gulpfile.js
+package.json
+ruleset.xml
+**/*.md
+```

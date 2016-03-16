@@ -1,0 +1,18 @@
+root: true
+
+env:
+  browser: true
+  jquery: true
+  node: true
+  amd: true
+
+extends: 'eslint:recommended'
+
+globals:
+  wp: true,
+  Cookies: true,
+  tofinoJS: true,
+  svg4everybody: true
+
+rules:
+  no-console: 0

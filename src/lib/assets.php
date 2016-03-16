@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Load CSS and JS files
  *
  * @package Tofino
@@ -61,7 +60,7 @@ function load_css() {
  * @return void
  */
 function call_css() {
-  if (ot_get_option('critical_css_checkbox') && file_exists(get_template_directory() . '/dist/css/critical.css')) {
+  if (get_theme_mod('critical_css') && file_exists(get_template_directory() . '/dist/css/critical.css')) {
     add_action('wp_footer', __NAMESPACE__ . '\\load_css');
   } else {
     add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\styles');
@@ -80,7 +79,7 @@ add_action('init', __NAMESPACE__ . '\\call_css');
  * @return void
  */
 function inline_critical_css() {
-  if (ot_get_option('critical_css_checkbox') && file_exists(get_template_directory() . '/dist/css/critical.css')) {?>
+  if (get_theme_mod('critical_css') && file_exists(get_template_directory() . '/dist/css/critical.css')) {?>
     <style>
     <?php echo file_get_contents(get_template_directory_uri() . '/dist/css/critical.css'); ?>
     </style><?php
@@ -160,10 +159,11 @@ function localize_scripts() {
     wp_localize_script('tofino/js', 'tofinoJS', array(
       'ajaxUrl'       => admin_url('admin-ajax.php'),
       'nextNonce'     => wp_create_nonce('next_nonce'),
-      'cookieExpires' => (ot_get_option('cookie_expires') ? ot_get_option('cookie_expires') : "")
+      'cookieExpires' => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires') : "")
     ));
   }
 }
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
 
 
 /**
@@ -175,8 +175,8 @@ function localize_scripts() {
  * @since 1.1.0
  * @return void
  */
-function jquery_in_footer() {
-  if (ot_get_option('jquery_in_footer')) {
+function jquery_footer() {
+  if (get_theme_mod('jquery_footer')) {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
       wp_deregister_script('jquery');
       wp_register_script('jquery', includes_url('/js/jquery/jquery.js'), false, null, true);
@@ -184,7 +184,7 @@ function jquery_in_footer() {
     }
   }
 }
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\jquery_in_footer');
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\jquery_footer');
 
 
 /**

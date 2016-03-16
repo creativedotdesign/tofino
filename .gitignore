@@ -6,8 +6,7 @@
 !.gitkeep
 !.travis.yml
 !.gitattributes
-!.jshintrc
-!.jscsrc
+!.eslintrc.yml
 !.sass-lint.yml
 
 # ignore node/grunt dependency directories
