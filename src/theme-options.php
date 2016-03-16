@@ -435,7 +435,7 @@ add_action('customize_register', __NAMESPACE__ . '\\google_settings');
 function social_settings($wp_customize) {
   $wp_customize->add_section('tofino_social_settings', [
     'title'       => __('Social Networks', 'tofino'),
-    'description' => 'Links to various social networks. Remember to create the SVG Sprite icon.',
+    'description' => 'Links to various social networks. Remember to add the SVG icon for any new networks you add.',
     'panel'       => 'tofino_options',
     'priority'    => 5
   ]);
@@ -452,6 +452,38 @@ function social_settings($wp_customize) {
 
   $wp_customize->add_control('social[twitter]', [
     'label'   => __('Twitter', 'tofino'),
+    'section' => 'tofino_social_settings',
+    'type'    => 'url'
+  ]);
+
+  $wp_customize->add_setting('social[linkedin]', ['default' => '']);
+
+  $wp_customize->add_control('social[linkedin]', [
+    'label'   => __('LinkedIn', 'tofino'),
+    'section' => 'tofino_social_settings',
+    'type'    => 'url'
+  ]);
+
+  $wp_customize->add_setting('social[googleplus]', ['default' => '']);
+
+  $wp_customize->add_control('social[googleplus]', [
+    'label'   => __('GooglePlus', 'tofino'),
+    'section' => 'tofino_social_settings',
+    'type'    => 'url'
+  ]);
+
+  $wp_customize->add_setting('social[pinterest]', ['default' => '']);
+
+  $wp_customize->add_control('social[pinterest]', [
+    'label'   => __('Pinterest', 'tofino'),
+    'section' => 'tofino_social_settings',
+    'type'    => 'url'
+  ]);
+
+  $wp_customize->add_setting('social[youtube]', ['default' => '']);
+
+  $wp_customize->add_control('social[youtube]', [
+    'label'   => __('YouTube', 'tofino'),
     'section' => 'tofino_social_settings',
     'type'    => 'url'
   ]);

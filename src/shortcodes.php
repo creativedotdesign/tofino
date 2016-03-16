@@ -97,24 +97,32 @@ add_shortcode('option', 'ot_shortcode');
  * @return string HTML output of unordered list with social icons as SVGS with links.
  */
 function social_icons($atts = array()) {
-  $theme_mods   = get_theme_mods();
-  $social_links = $theme_mods['social'];
-  $output       = '';
+  $theme_mods = get_theme_mods();
+  $output     = '';
 
-  $atts = shortcode_atts(array(
-    'class' => ''
-  ), $atts, 'option');
+  if (!empty($theme_mods['social'])) {
+    $social_links = $theme_mods['social'];
 
-  if (!empty($social_links)) {
-    $output .= '<ul class="social-icons ' . $atts['class'] . '">';
+    $atts = shortcode_atts(array(
+      'class' => ''
+    ), $atts, 'option');
 
-    foreach ($social_links as $key => $value) {
-      $output .= '<li><a href="' . $value . '" title="' . $key . '">' . svg(sanitize_title($key)) . '</a></li>';
+    if (!empty($social_links) && (array_filter($social_links))) {
+      $output .= '<ul class="social-icons ' . $atts['class'] . '">';
+
+      foreach ($social_links as $key => $value) {
+        if (!empty($value)) {
+          $output .= '<li><a href="' . $value . '" title="' . $key . '">' . svg(sanitize_title($key)) . '</a></li>';
+        }
+      }
+
+      $output .= '</ul>';
     }
 
-    $output .= '</ul>';
+    return $output;
+  } else {
+    $output .= 'Social links not found.';
+    return $output;
   }
-
-  return $output;
 }
 add_shortcode('social_icons', 'social_icons');
