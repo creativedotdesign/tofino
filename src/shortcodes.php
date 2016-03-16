@@ -112,7 +112,7 @@ function social_icons($atts = array()) {
 
       foreach ($social_links as $key => $value) {
         if (!empty($value)) {
-          $output .= '<li><a href="' . $value . '" title="' . $key . '">' . svg(sanitize_title($key)) . '</a></li>';
+          $output .= '<li><a href="' . esc_url($value) . '" title="' . $key . '">' . svg(sanitize_title($key)) . '</a></li>';
         }
       }
 
