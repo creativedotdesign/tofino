@@ -26,6 +26,8 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 * Download the latest [tagged release](https://github.com/lambdacreatives/tofino/releases).
 * Clone the git repo and run `bin/setup.sh` (from your dev machine).
 
+Once you have activated the theme, access Theme Options (WP Customizer) update an option and select save to commit the default values to the database.
+
 ## Features
 
 * [Bootstrap 4](http://getbootstrap.com/) (Pre-release Alpha 2)
@@ -109,7 +111,6 @@ bin
 bower_components
 gulp
 node_modules
-tests
 .eslintrc
 .gitattributes
 .sass-lint.yml
@@ -119,7 +120,6 @@ composer.json
 composer.lock
 gulpfile.js
 package.json
-phpunit.xml
 ruleset.xml
 **/*.md
 ```
