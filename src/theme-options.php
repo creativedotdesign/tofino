@@ -169,6 +169,24 @@ function sanitize_integer($input) {
 
 
 /**
+ * Sanitizes choices (selects / radios)
+ *
+ * Checks that the input matches one of the available choices
+ *
+ * @since 1.2.0
+ */
+function sanitize_choices($input, $setting) {
+  global $wp_customize;
+  $control = $wp_customize->get_control($setting->id);
+  if (array_key_exists($input, $control->choices)) {
+    return $input;
+  } else {
+    return $setting->default;
+  }
+}
+
+
+/**
  * Add theme options link
  *
  * Add the Customize link to the admin menu.
@@ -213,7 +231,10 @@ function menu_settings($wp_customize) {
     'priority' => 1
   ]);
 
-  $wp_customize->add_setting('menu_sticky', ['default' => 'disabled']);
+  $wp_customize->add_setting('menu_sticky', [
+    'default'           => 'disabled',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_choices',
+  ]);
 
   $wp_customize->add_control('menu_sticky', [
     'label'       => __('Sticky Menu', 'tofino'),
@@ -226,7 +247,10 @@ function menu_settings($wp_customize) {
     ]
   ]);
 
-  $wp_customize->add_setting('menu_position', ['default' => 'center']);
+  $wp_customize->add_setting('menu_position', [
+    'default'           => 'center',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_choices',
+  ]);
 
   $wp_customize->add_control('menu_position', [
     'label'       => __('Menu Position', 'tofino'),
@@ -284,7 +308,10 @@ function notification_settings($wp_customize) {
   ]);
 
   // Notification position
-  $wp_customize->add_setting('notification_position', ['default' => 'top']);
+  $wp_customize->add_setting('notification_position', [
+    'default'           => 'top',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_choices',
+  ]);
 
   $wp_customize->add_control('notification_position', [
     'label'       => __('Notification Position', 'tofino'),
@@ -513,7 +540,10 @@ function footer_settings($wp_customize) {
     'priority' => 6
   ]);
 
-  $wp_customize->add_setting('footer_sticky', ['default' => 'disabled']);
+  $wp_customize->add_setting('footer_sticky', [
+    'default'           => 'disabled',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_choices',
+  ]);
 
   $wp_customize->add_control('footer_sticky', [
     'label'       => __('Sticky Footer', 'tofino'),
