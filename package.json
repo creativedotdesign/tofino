@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "bower install && gulp --production"
+    "build": "gulp --production"
   },
   "author": "Daniel Hewes <daniel@lambdacreatives.com>",
   "contributors": [
@@ -36,9 +36,13 @@
   ],
   "devDependencies": {
     "asset-builder": "~1.1.0",
+    "babelify": "^7.2.0",
+    "bootstrap": "^4.0.0-alpha.2",
+    "browserify": "^13.0.0",
     "browser-sync": "~2.11.0",
     "critical": "^0.7.0",
     "del": "~2.2.0",
+    "fg-loadcss": "^1.2.0",
     "gulp": "~3.9.0",
     "gulp-autoprefixer": "~3.1.0",
     "gulp-concat": "~2.6.0",
@@ -59,7 +63,13 @@
     "gulp-uglify": "~1.5.1",
     "gulp-util": "~3.0.7",
     "imagemin-pngquant": "~4.2.0",
+    "js-cookie": "^2.1.0",
     "merge-stream": "~1.0.0",
+    "stickyfill": "^1.1.1",
+    "svg4everybody": "^2.0.3",
+    "tether": "^1.2.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
     "yargs": "~4.3.0"
   }
 }

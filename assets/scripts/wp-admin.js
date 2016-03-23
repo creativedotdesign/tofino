@@ -1,3 +1,5 @@
+require('js-cookie');
+
 (function($) {
   $(document).ready(function() {
     $('.maintenance-mode-alert button').on('click', function() {

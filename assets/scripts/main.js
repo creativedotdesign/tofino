@@ -1,3 +1,10 @@
+require('stickyfill');
+require('svg4everybody');
+
+global.Tether = require('tether'); //Temp until new BS4 release.
+
+require('bootstrap');
+
 /* ========================================================================
  * DOM-based Routing
  * Based on http://goo.gl/EUTi53 by Paul Irish

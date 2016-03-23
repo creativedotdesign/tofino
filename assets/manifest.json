@@ -1,21 +1,19 @@
 {
   "dependencies": {
     "main.js": {
-      "files": ["scripts/ajax-form.js", "scripts/main.js"],
-      "main": true
+      "files": ["scripts/ajax-form.js", "scripts/main.js"]
     },
     "head.js": {
-      "files": ["../bower_components/loadcss/loadCSS.js", "../bower_components/svg4everybody/dist/svg4everybody.legacy.js"]
+      "files": "head.js",
+      "vendor": ["../node_modules/svg4everybody/dist/svg4everybody.legacy.js"]
     },
     "main.css": {
-      "files": ["styles/main.scss"],
-      "main": true
+      "files": ["styles/main.scss"]
     },
     "wp-admin.css": {
       "files": ["styles/base/wp-admin.scss"]
     },
     "wp-admin.js": {
-      "bower": ["js-cookie"],
       "files": ["scripts/wp-admin.js"]
     }
   },

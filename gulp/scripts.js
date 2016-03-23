@@ -1,12 +1,15 @@
 var manifest   = require('asset-builder')('./assets/manifest.json'),
     merge      = require('merge-stream'),
     fs         = require('fs'),
-    concat     = require('gulp-concat'),
     gulpif     = require('gulp-if'),
     notify     = require('gulp-notify'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify     = require('gulp-uglify'),
-    util       = require('gulp-util');
+    util       = require('gulp-util'),
+    browserify = require('browserify');,
+    babelify   = require('babelify'),
+    buffer     = require('vinyl-buffer'),
+    source     = require('vinyl-source-stream');
 
 // Compile JS
 module.exports = function (gulp, production, browserSync) {
@@ -28,14 +31,20 @@ module.exports = function (gulp, production, browserSync) {
           }
         });
 
-        merged.add(
-          gulp.src(dep.globs, {base: 'scripts', merge: true})
-            .pipe(sourcemaps.init({loadMaps: true}))
-            .pipe(concat(dep.name))
-            .pipe(gulpif(production, uglify()))
-            .pipe(sourcemaps.write('.', {sourceRoot: paths.scripts}))
-          )
-        .pipe(gulp.dest(paths.dist + '/js'));
+        var bundler = browserify({
+          entries: dep.globs,
+          debug: false
+        });
+
+        bundler.transform(babelify);
+        bundler.bundle()
+          .on('error', function (err) { console.error(err); })
+          .pipe(source(dep.name))
+          .pipe(buffer())
+          .pipe(sourcemaps.init({loadMaps: true}))
+          .pipe(gulpif(production, uglify()))
+          .pipe(sourcemaps.write('.', {sourceRoot: paths.scripts}))
+          .pipe(gulp.dest(paths.dist + 'js'));
       });
 
     return merged
@@ -45,6 +54,7 @@ module.exports = function (gulp, production, browserSync) {
         "onLast": true
       })))
       .on('finish', browserSync.reload);
+
     }, {
       options: {
         'production': 'Minified without sourcemaps.'
