@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/lambdacreatives/tofino.svg)](https://travis-ci.org/lambdacreatives/tofino) [![devDependency Status](https://david-dm.org/lambdacreatives/tofino/dev-status.svg)](https://david-dm.org/lambdacreatives/tofino#info=devDependencies) [![Deployment status from DeployBot](https://lambdacreatives.deploybot.com/badge/77558060036000/47551.svg)](http://deploybot.com)
 
-<img src="https://raw.githubusercontent.com/lambdacreatives/tofino/master/screenshot.png" alt="Tofino" width="400">
+<img src="https://raw.githubusercontent.com/lambdacreatives/tofino/master/screenshot.png" alt="Tofino" width="500">
 
 # Tofino
 
@@ -17,7 +17,6 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 | PHP >= 5.4.x              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
 | Node.js >= 5.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
-| Bower >= 1.5.x            | `bower -v`    | `npm install -g bower`                          |
 | Composer >= 1.0.0-alpha10 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
@@ -45,7 +44,7 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 	* Company number
 	* Footer text
 	* Notification text / EU Cookie notice with top/bottom positions
-	* Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email template
+	* Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
 	* Maintenance mode
 	* jQuery in footer
 	* Critical CSS (with loadCSS function)
@@ -55,16 +54,14 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 * [Gulp](http://gulpjs.com/) build script
 	* Includes [eslint](https://github.com/eslint/eslint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 	* Use `gulp help` for a full task list with descriptions
-* [Bower](http://bower.io/) for front-end package management
 * [Composer](https://getcomposer.org/) for PHP package management
-* [Asset Builder](https://github.com/austinpray/asset-builder) for easy asset pipeline management
 * Custom Nav-walker Bootstrap 4 ready
 * [Relative URLs](https://codex.wordpress.org/Function_Reference/wp_make_link_relative)
 * Namespaced functions
 * Auto post type / slug based template routing
 * SVG Sprite Shortcode `[svg sprite="my-sprite-icon"]`
 * SVG Sprite helper for templates `svg('sprite-name')` or `svg(['sprite'=>'sprite-name'])`
-* AjaxForm handler class. Easily handle form validation and processing with Wordpress Ajax. Send submitted data via email and/or save it as post meta. Add your own custom validator / processor via a simple function hook.
+* AjaxForm handler class. Easily handle form validation and processing with WordPress Ajax. Send submitted data via email and/or save it as post meta. Add your own custom validator / processor via a simple function hook.
 
 ## Documentation
 
@@ -97,7 +94,6 @@ We use [Deploybot](https://deploybot.com). The deployment VM is issued the follo
 
 ```
 composer install
-bower install
 npm install npm -g
 npm install --loglevel error
 gulp --production
@@ -108,14 +104,12 @@ The following files and directories are excluded from being uploaded:
 ```
 assets
 bin
-bower_components
 gulp
 node_modules
-.eslintrc
+.eslintrc.yml
 .gitattributes
 .sass-lint.yml
 .travis.yml
-bower.json
 composer.json
 composer.lock
 gulpfile.js
