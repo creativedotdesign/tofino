@@ -19,22 +19,31 @@ module.exports = function (gulp, production, browserSync) {
     'Compile and concat SCSS to CSS with sourcemaps and autoprefixer. Also runs styles:lint.',
     ['styles:lint'],
     function() {
-      var merged = merge();
+      var merged = merge(),
+          css = Object.keys(manifest.styles);
 
-      manifest.forEachDependency('css', function(dep) {
-        dep.globs.forEach(function (path) {
+      css.forEach(function(dep) {
+        // Define files and add scripts path
+        var files = manifest['styles'][dep]['files'].map(
+          function(file) {
+            return paths.styles + file
+          }
+        );
+
+        // Check files exist
+        files.forEach(function (file) {
           try {
-            fs.accessSync(path);
+            fs.accessSync(file);
           } catch (e) {
-            util.log(util.colors.red('Warning! ' + path + ' does not exist.'));
+            util.log(util.colors.red('Warning! ' + file + ' does not exist.'));
           }
         });
 
         merged.add(
-          gulp.src(dep.globs)
+          gulp.src(files)
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(sass({outputStyle: 'nested'}))
-            .pipe(concat(dep.name))
+            .pipe(concat(dep))
             .pipe(gulpif(production, cssnano({safe: true})))
         );
       });

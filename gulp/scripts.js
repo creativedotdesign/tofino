@@ -6,7 +6,7 @@ var manifest   = require('../assets/manifest.json'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify     = require('gulp-uglify'),
     util       = require('gulp-util'),
-    browserify = require('browserify');,
+    browserify = require('browserify'),
     babelify   = require('babelify'),
     buffer     = require('vinyl-buffer'),
     source     = require('vinyl-source-stream');
@@ -20,26 +20,37 @@ module.exports = function (gulp, production, browserSync) {
     'Concat js files with sourcemaps. Also runs scripts:lint.',
     ['scripts:lint'],
     function() {
-      var merged = merge();
+      var merged = merge(),
+          js     = Object.keys(manifest.scripts);
 
-      manifest.forEachDependency('js', function(dep) {
-        dep.globs.forEach(function (path) {
+      js.forEach(function(dep) {
+        // Define files and add scripts path
+        var files = manifest['scripts'][dep]['files'].map(
+          function(file) {
+            return paths.scripts + file
+          }
+        );
+
+        //console.log(files);
+
+        // Check files exist
+        files.forEach(function (file) {
           try {
-            fs.accessSync(path);
+            fs.accessSync(file);
           } catch (e) {
-            util.log(util.colors.red('Warning! ' + path + ' does not exist.'));
+            util.log(util.colors.red('Warning! ' + file + ' does not exist.'));
           }
         });
 
         var bundler = browserify({
-          entries: dep.globs,
+          entries: files,
           debug: false
         });
 
         bundler.transform(babelify);
         bundler.bundle()
           .on('error', function (err) { console.error(err); })
-          .pipe(source(dep.name))
+          .pipe(source(dep))
           .pipe(buffer())
           .pipe(sourcemaps.init({loadMaps: true}))
           .pipe(gulpif(production, uglify()))
@@ -47,13 +58,13 @@ module.exports = function (gulp, production, browserSync) {
           .pipe(gulp.dest(paths.dist + 'js'));
       });
 
-    return merged
-      .pipe(gulpif(!production, notify({
-        "subtitle": "Task Complete",
-        "message": "Scripts task complete",
-        "onLast": true
-      })))
-      .on('finish', browserSync.reload);
+    // return merged
+    //   .pipe(gulpif(!production, notify({
+    //     "subtitle": "Task Complete",
+    //     "message": "Scripts task complete",
+    //     "onLast": true
+    //   })))
+    //   .on('finish', browserSync.reload);
 
     }, {
       options: {
