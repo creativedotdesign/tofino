@@ -1,9 +1,20 @@
-require('stickyfill');
-require('svg4everybody');
+import 'stickyfill';
+import 'svg4everybody';
 
-global.Tether = require('tether'); //Temp until new BS4 release.
+import { Tether } from 'tether';
+//global.Tether = require('tether'); //Temp until new BS4 release.
+window.Tether = Tether; //Temp until new BS4 release.
 
-require('bootstrap');
+// Bootstrap JS files
+// import { Util } from 'bootstrap';
+// import { Alert } from 'bootstrap';
+// import { Button } from 'bootstrap';
+// import { Carousel } from 'bootstrap';
+// import { Dropdown } from 'bootstrap';
+// import { Modal } from 'bootstrap';
+// import { Scrollspy } from 'bootstrap';
+// import { Tooltip } from 'bootstrap';
+// import { Popover } from 'bootstrap';
 
 /* ========================================================================
  * DOM-based Routing

@@ -1,1 +1,1 @@
-require('fg-loadcss');
+import 'fg-loadcss';
