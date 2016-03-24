@@ -10,7 +10,6 @@
     "tofino"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp --production"
   },
   "author": "Daniel Hewes <daniel@lambdacreatives.com>",
