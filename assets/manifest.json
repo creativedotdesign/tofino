@@ -23,7 +23,8 @@
     "images": "assets/images/",
     "svgs": "assets/svgs/",
     "scripts": "assets/scripts/",
-    "fonts": "assets/fonts/"
+    "fonts": "assets/fonts/",
+    "styles": "assets/styles/"
   },
   "config": {
     "devUrl": "http://tofino.dev",
