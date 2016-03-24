@@ -47,7 +47,7 @@ module.exports = function (gulp, production, browserSync) {
           debug: false
         });
 
-        bundler.transform(babelify);
+        bundler.transform(babelify, {presets: ["es2015"]});
         bundler.bundle()
           .on('error', function (err) { console.error(err); })
           .pipe(source(dep))
