@@ -1,4 +1,4 @@
-var manifest     = require('asset-builder')('./assets/manifest.json'),
+var manifest     = require('../assets/manifest.json'),
     merge        = require('merge-stream'),
     fs           = require('fs'),
     autoprefixer = require('gulp-autoprefixer'),
