@@ -35,7 +35,6 @@
     }
   ],
   "devDependencies": {
-    "asset-builder": "~1.1.0",
     "babelify": "^7.2.0",
     "bootstrap": "^4.0.0-alpha.2",
     "browserify": "^13.0.0",
