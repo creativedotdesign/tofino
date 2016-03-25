@@ -1,20 +1,26 @@
-import 'stickyfill';
-import 'svg4everybody';
 
-import { Tether } from 'tether';
-//global.Tether = require('tether'); //Temp until new BS4 release.
-window.Tether = Tether; //Temp until new BS4 release.
+var $ = window.jQuery;
+
+import svg4everybody from 'svg4everybody';
+
+//var Tether = require('tether'); // Works!
+//import Tether from 'tether';  // Works!
+//window.Tether = Tether; // Make it global
 
 // Bootstrap JS files
-// import { Util } from 'bootstrap';
-// import { Alert } from 'bootstrap';
-// import { Button } from 'bootstrap';
-// import { Carousel } from 'bootstrap';
-// import { Dropdown } from 'bootstrap';
-// import { Modal } from 'bootstrap';
-// import { Scrollspy } from 'bootstrap';
-// import { Tooltip } from 'bootstrap';
-// import { Popover } from 'bootstrap';
+//require('bootstrap'); // Requires tether
+//import 'bootstrap'; // Requires tether
+import "bootstrap/dist/js/umd/util.js";
+import "bootstrap/dist/js/umd/alert.js";
+import "bootstrap/dist/js/umd/button.js";
+import "bootstrap/dist/js/umd/carousel.js";
+import "bootstrap/dist/js/umd/collapse.js";
+import "bootstrap/dist/js/umd/dropdown.js";
+import "bootstrap/dist/js/umd/modal.js";
+import "bootstrap/dist/js/umd/scrollspy.js";
+import "bootstrap/dist/js/umd/tab.js";
+//import "bootstrap/dist/js/umd/tooltip.js"; // Requires tether
+//import "bootstrap/dist/js/umd/popover.js"; // Requires tether
 
 /* ========================================================================
  * DOM-based Routing
