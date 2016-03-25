@@ -1,14 +1,15 @@
 {
   "scripts": {
-    "main.js": {
-      "files": ["ajax-form.js", "main.js"]
-    },
-    "head.js": {
-      "files": ["head.js", "../../node_modules/svg4everybody/dist/svg4everybody.legacy.js"]
-    },
-    "wp-admin.js": {
-      "files": ["wp-admin.js"]
-    }
+    "main.js": [
+      "ajax-form.js",
+      "../../node_modules/Stickyfill/dist/stickyfill.js",
+      "main.js"
+    ],
+    "head.js": [
+      "head.js",
+      "../../node_modules/svg4everybody/dist/svg4everybody.legacy.js"
+    ],
+    "wp-admin.js": ["wp-admin.js"]
   },
   "styles": {
     "main.css": {
