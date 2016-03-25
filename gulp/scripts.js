@@ -20,12 +20,12 @@ module.exports = function (gulp, production, browserSync) {
     'Concat js files with sourcemaps. Also runs scripts:lint.',
     ['scripts:lint'],
     function() {
-      var merged = merge(),
-          js     = Object.keys(manifest.scripts);
+      var merged  = merge(),
+          outputs = Object.keys(manifest.scripts);
 
-      js.forEach(function(dep) {
+      outputs.forEach(function(output) {
         // Define files and add scripts path
-        var files = manifest['scripts'][dep]['files'].map(
+        var inputs = manifest['scripts'][output].map(
           function(file) {
             return paths.scripts + file
           }
@@ -34,7 +34,7 @@ module.exports = function (gulp, production, browserSync) {
         //console.log(files);
 
         // Check files exist
-        files.forEach(function (file) {
+        inputs.forEach(function (file) {
           try {
             fs.accessSync(file);
           } catch (e) {
@@ -43,14 +43,15 @@ module.exports = function (gulp, production, browserSync) {
         });
 
         var bundler = browserify({
-          entries: files,
-          debug: false
+          entries: inputs,
+          debug: true
         });
 
-        bundler.transform(babelify, {presets: ["es2015"]});
-        bundler.bundle()
+        bundler
+          .transform(babelify, {presets: ["es2015"]})
+          .bundle()
           .on('error', function (err) { console.error(err); })
-          .pipe(source(dep))
+          .pipe(source(output))
           .pipe(buffer())
           .pipe(sourcemaps.init({loadMaps: true}))
           .pipe(gulpif(production, uglify()))
