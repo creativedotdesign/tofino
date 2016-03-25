@@ -3,24 +3,25 @@ var $ = window.jQuery;
 
 import svg4everybody from 'svg4everybody';
 
-//var Tether = require('tether'); // Works!
-//import Tether from 'tether';  // Works!
-//window.Tether = Tether; // Make it global
+// var Tether = require('tether'); // Works!
+// import Tether from 'tether';  // Works!
+// window.Tether = Tether; // Make it global
 
 // Bootstrap JS files
-//require('bootstrap'); // Requires tether
-//import 'bootstrap'; // Requires tether
-import "bootstrap/dist/js/umd/util.js";
-import "bootstrap/dist/js/umd/alert.js";
-import "bootstrap/dist/js/umd/button.js";
-import "bootstrap/dist/js/umd/carousel.js";
-import "bootstrap/dist/js/umd/collapse.js";
-import "bootstrap/dist/js/umd/dropdown.js";
-import "bootstrap/dist/js/umd/modal.js";
-import "bootstrap/dist/js/umd/scrollspy.js";
-import "bootstrap/dist/js/umd/tab.js";
-//import "bootstrap/dist/js/umd/tooltip.js"; // Requires tether
-//import "bootstrap/dist/js/umd/popover.js"; // Requires tether
+// require('bootstrap'); // Requires tether
+// import 'bootstrap'; // Requires tether
+
+// import "bootstrap/dist/js/umd/util.js";
+// import "bootstrap/dist/js/umd/alert.js";
+// import "bootstrap/dist/js/umd/button.js";
+// import "bootstrap/dist/js/umd/carousel.js";
+// import "bootstrap/dist/js/umd/collapse.js";
+import "bootstrap/dist/js/umd/dropdown.js"; // Menu dropdown
+// import "bootstrap/dist/js/umd/modal.js";
+// import "bootstrap/dist/js/umd/scrollspy.js";
+// import "bootstrap/dist/js/umd/tab.js";
+// import "bootstrap/dist/js/umd/tooltip.js"; // Requires tether
+// import "bootstrap/dist/js/umd/popover.js"; // Requires tether
 
 /* ========================================================================
  * DOM-based Routing
