@@ -8,8 +8,9 @@ import svg4everybody from 'svg4everybody';
 import 'Stickyfill/dist/stickyfill.js';
 
 // var Tether = require('tether'); // Works!
-// import Tether from 'tether';  // Works!
-// window.Tether = Tether; // Make it global
+// console.log(Tether);
+// global.Tether = Tether; // Make it global
+// import Tether from 'tether'; // Does not work!
 
 // Bootstrap JS files
 // If you need to use tooltip or popover then you must use require('bootstrap')
