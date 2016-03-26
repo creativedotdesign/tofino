@@ -2,12 +2,10 @@
   "scripts": {
     "main.js": [
       "ajax-form.js",
-      "../../node_modules/Stickyfill/dist/stickyfill.js",
       "main.js"
     ],
     "head.js": [
-      "head.js",
-      "../../node_modules/svg4everybody/dist/svg4everybody.legacy.js"
+      "head.js"
     ],
     "wp-admin.js": ["wp-admin.js"]
   },
