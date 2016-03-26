@@ -5,6 +5,8 @@ var $ = window.jQuery;
 // Import svg4everybody
 import svg4everybody from 'svg4everybody';
 
+import 'Stickyfill/dist/stickyfill.js';
+
 // var Tether = require('tether'); // Works!
 // import Tether from 'tether';  // Works!
 // window.Tether = Tether; // Make it global
