@@ -27,6 +27,7 @@ import "bootstrap/dist/js/umd/dropdown.js"; // Menu dropdown
 // import "bootstrap/dist/js/umd/modal.js";
 // import "bootstrap/dist/js/umd/scrollspy.js";
 // import "bootstrap/dist/js/umd/tab.js";
+// var Tooltip = require('bootstrap/dist/js/umd/tooltip.js'); // Requires tether
 // import "bootstrap/dist/js/umd/tooltip.js"; // Requires tether
 // import "bootstrap/dist/js/umd/popover.js"; // Requires tether
 
