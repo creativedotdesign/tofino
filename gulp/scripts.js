@@ -31,8 +31,6 @@ module.exports = function (gulp, production, browserSync) {
           }
         );
 
-        //console.log(files);
-
         // Check files exist
         inputs.forEach(function (file) {
           try {
@@ -47,7 +45,7 @@ module.exports = function (gulp, production, browserSync) {
           debug: true
         });
 
-        bundler
+        return bundler
           .transform(babelify, {presets: ["es2015"]})
           .bundle()
           .on('error', function (err) { console.error(err); })
