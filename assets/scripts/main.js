@@ -22,7 +22,7 @@ import 'Stickyfill/dist/stickyfill.js';
 // import "bootstrap/dist/js/umd/alert.js";
 // import "bootstrap/dist/js/umd/button.js";
 // import "bootstrap/dist/js/umd/carousel.js";
-// import "bootstrap/dist/js/umd/collapse.js";
+import "bootstrap/dist/js/umd/collapse.js"; // Mobile menu
 import "bootstrap/dist/js/umd/dropdown.js"; // Menu dropdown
 // import "bootstrap/dist/js/umd/modal.js";
 // import "bootstrap/dist/js/umd/scrollspy.js";
