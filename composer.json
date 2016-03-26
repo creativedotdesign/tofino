@@ -30,17 +30,6 @@
     "squizlabs/php_codesniffer": "2.5.0"
   },
   "autoload": {
-    "files": [
-      "src/lib/nav-walker.php",
-      "src/lib/init.php",
-      "src/lib/assets.php",
-      "src/lib/helpers.php",
-      "src/lib/relative-urls.php",
-      "src/lib/theme-tracker.php",
-      "src/forms/contact-form.php",
-      "src/shortcodes.php",
-      "src/theme-options.php"
-    ],
     "psr-4": { "Tofino\\": "src/lib/" }
   }
 }

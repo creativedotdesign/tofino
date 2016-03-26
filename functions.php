@@ -9,10 +9,40 @@ $theme_config = [
   ]
 ];
 
+
 /**
  * Tofino includes
  *
- * Library includes are now defined in the composer.json and autloaded.
+ * The $tofino_includes array determines the code library included in your theme.
+ * Add or remove files to the array as needed.
+ *
+ * Missing files will produce a fatal error.
+ *
+ */
+$tofino_includes = [
+  "src/lib/nav-walker.php",
+  "src/lib/init.php",
+  "src/lib/assets.php",
+  "src/lib/helpers.php",
+  "src/lib/relative-urls.php",
+  "src/lib/theme-tracker.php",
+  "src/forms/contact-form.php",
+  "src/shortcodes.php",
+  "src/theme-options.php"
+];
+foreach ($tofino_includes as $file) {
+  if (!$filepath = locate_template($file)) {
+    trigger_error(sprintf(__('Error locating %s for inclusion', 'tofino'), $file), E_USER_ERROR);
+  }
+  require_once $filepath;
+}
+unset($file, $filepath);
+
+
+/**
+ * Composer dependencies
+ *
+ * External dependencies are defined in the composer.json and autoloaded.
  * Use 'composer dump-autoload -o' after adding new files.
  *
  */
