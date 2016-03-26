@@ -1,6 +1,8 @@
 
+// Assign jQuery to $
 var $ = window.jQuery;
 
+// Import svg4everybody
 import svg4everybody from 'svg4everybody';
 
 // var Tether = require('tether'); // Works!
@@ -8,6 +10,9 @@ import svg4everybody from 'svg4everybody';
 // window.Tether = Tether; // Make it global
 
 // Bootstrap JS files
+// If you need to use tooltip or popover then you must use require('bootstrap')
+// in order for tether to work. This should be fixed in a future Bootstrap release.
+
 // require('bootstrap'); // Requires tether
 // import 'bootstrap'; // Requires tether
 
