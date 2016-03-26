@@ -1,4 +1,4 @@
-var manifest = ('./assets/manifest.json'),
+var manifest = require('../assets/manifest.json'),
     critical = require('critical'),
     gulpif   = require('gulp-if');
 
