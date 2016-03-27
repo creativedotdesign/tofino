@@ -1,4 +1,12 @@
 <?php
+/**
+ * Contact form
+ *
+ * Theme options and form processing for the contact form.
+ *
+ * @package Tofino
+ * @since 1.2.0
+ */
 
 namespace Tofino\ContactForm;
 
@@ -73,7 +81,13 @@ add_action('customize_register', __NAMESPACE__ . '\\contact_form_settings');
 
 
 /**
- * AJAX Contact Form
+ * Ajax Contact Form
+ *
+ * Process the ajax request.
+ * Called via JavaScript.
+ *
+ * @since 1.2.0
+ * @return void
  */
 function ajax_contact_form() {
   $form = new \Tofino\AjaxForm(); // Required

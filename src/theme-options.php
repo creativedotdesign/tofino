@@ -1,4 +1,10 @@
 <?php
+/**
+ * Theme Options
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
 
 namespace Tofino\ThemeOptions;
 
@@ -55,6 +61,7 @@ add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
  * Adds the menu-sticky and/or the footer sticky classes to the body.
  *
  * @since 1.0.0
+ * @param array $classes Array of classes passed to the body tag by WP.
  * @return void
  */
 function add_theme_options_body_class($classes) {
@@ -118,6 +125,7 @@ function menu_sticky() {
  * Display notification Top/Bottom based on theme option setting.
  *
  * @since 1.0.0
+ * @param string $position The position of the notification e.g. Top, Bottom
  * @return void
  */
 function notification($position) {
@@ -172,7 +180,9 @@ function sanitize_integer($input) {
  * Sanitizes choices (selects / radios)
  *
  * Checks that the input matches one of the available choices
- *
+
+ * @param string $input The input.
+ * @param object $setting The setting to validate.
  * @since 1.2.0
  */
 function sanitize_choices($input, $setting) {
