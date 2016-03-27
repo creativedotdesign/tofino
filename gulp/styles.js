@@ -20,18 +20,18 @@ module.exports = function (gulp, production, browserSync) {
     ['styles:lint'],
     function() {
       var merged = merge(),
-          css = Object.keys(manifest.styles);
+          outputs = Object.keys(manifest.styles);
 
-      css.forEach(function(dep) {
+      outputs.forEach(function(output) {
         // Define files and add scripts path
-        var files = manifest['styles'][dep]['files'].map(
+        var inputs = manifest['styles'][output].map(
           function(file) {
             return paths.styles + file
           }
         );
 
         // Check files exist
-        files.forEach(function (file) {
+        inputs.forEach(function (file) {
           try {
             fs.accessSync(file);
           } catch (e) {
@@ -40,10 +40,10 @@ module.exports = function (gulp, production, browserSync) {
         });
 
         merged.add(
-          gulp.src(files)
+          gulp.src(inputs)
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(sass({outputStyle: 'nested'}))
-            .pipe(concat(dep))
+            .pipe(concat(output))
             .pipe(gulpif(production, cssnano({safe: true})))
         );
       });

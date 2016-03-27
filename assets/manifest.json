@@ -7,15 +7,17 @@
     "head.js": [
       "head.js"
     ],
-    "wp-admin.js": ["wp-admin.js"]
+    "wp-admin.js": [
+      "wp-admin.js"
+    ]
   },
   "styles": {
-    "main.css": {
-      "files": ["main.scss"]
-    },
-    "wp-admin.css": {
-      "files": ["base/wp-admin.scss"]
-    }
+    "main.css": [
+      "main.scss"
+    ],
+    "wp-admin.css": [
+      "base/wp-admin.scss"
+    ]
   },
   "paths": {
     "source": "assets/",
