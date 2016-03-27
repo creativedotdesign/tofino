@@ -14,6 +14,7 @@ namespace Tofino\ThemeTracker;
  * Theme tracker settings
  *
  * @since 1.2.0
+ * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
 function theme_tracker_settings($wp_customize) {
