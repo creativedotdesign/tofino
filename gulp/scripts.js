@@ -40,30 +40,33 @@ module.exports = function (gulp, production, browserSync) {
           }
         });
 
+
         var bundler = browserify({
           entries: inputs,
           debug: true
         });
 
-        return bundler
-          .transform(babelify, {presets: ["es2015"]})
-          .bundle()
-          .on('error', function (err) { console.error(err); })
-          .pipe(source(output))
-          .pipe(buffer())
-          .pipe(sourcemaps.init({loadMaps: true}))
-          .pipe(gulpif(production, uglify()))
-          .pipe(sourcemaps.write('.', {sourceRoot: paths.scripts}))
-          .pipe(gulp.dest(paths.dist + 'js'));
+        merged.add(
+          bundler
+            .transform(babelify, {presets: ["es2015"]})
+            .bundle()
+            .on('error', function (err) { console.error(err); })
+            .pipe(source(output))
+            .pipe(buffer())
+            .pipe(sourcemaps.init({loadMaps: true}))
+            .pipe(gulpif(production, uglify()))
+            .pipe(sourcemaps.write('.', {sourceRoot: paths.scripts}))
+            .pipe(gulp.dest(paths.dist + 'js'))
+          );
       });
 
-    // return merged
-    //   .pipe(gulpif(!production, notify({
-    //     "subtitle": "Task Complete",
-    //     "message": "Scripts task complete",
-    //     "onLast": true
-    //   })))
-    //   .on('finish', browserSync.reload);
+    return merged
+      .pipe(gulpif(!production, notify({
+        "subtitle": "Task Complete",
+        "message": "Scripts task complete",
+        "onLast": true
+      })))
+      .on('finish', browserSync.reload);
 
     }, {
       options: {
