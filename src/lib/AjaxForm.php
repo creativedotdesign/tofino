@@ -264,9 +264,13 @@ class AjaxForm
       $headers[] = 'Cc: ' . $settings['cc'];
     }
 
-    $template   = (array_key_exists('template', $settings) ? $settings['template'] : null); // @todo: Fix!
-    $email_body = $this->buildEmailBody();
-    $mail       = wp_mail($settings['to'], $settings['subject'], $email_body, $headers);
+    if (array_key_exists('template', $settings)) {
+      $email_body = $this->buildEmailBody($settings['template']);
+    } else {
+      $email_body = $this->buildEmailBody();
+    }
+
+    $mail = wp_mail($settings['to'], $settings['subject'], $email_body, $headers);
 
     if ($mail) {
       return true;
