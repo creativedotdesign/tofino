@@ -1,24 +1,34 @@
-
 // Assign jQuery to $
 var $ = window.jQuery;
 
 // Import svg4everybody
 import svg4everybody from 'svg4everybody';
 
-import 'Stickyfill/dist/stickyfill.js';
+// Import stickyfill
+import 'Stickyfill/src/stickyfill.js';
 
-// var Tether = require('tether'); // Works!
-// console.log(Tether);
+/**
+ * Tether (http://github.hubspot.com/tether/)
+ *
+ * Tether is a Bootstrap 4 dependency when including Tooltip or Popover
+ * You must include Tether if including the full Bootstrap JS code or tooltip.js or popover.js
+ */
+
+// var Tether = require('tether');
 // global.Tether = Tether; // Make it global
-// import Tether from 'tether'; // Does not work!
 
-// Bootstrap JS files
-// If you need to use tooltip or popover then you must use require('bootstrap')
-// in order for tether to work. This should be fixed in a future Bootstrap release.
+/**
+ * Bootstrap Components
+ *
+ * If your build requires Tooltip or Popover then you must require('bootstrap')
+ * in order for Tether to work. This should be fixed in a future Bootstrap release.
+ */
 
+// Include the full Bootstrap JS lib.
 // require('bootstrap'); // Requires tether
 // import 'bootstrap'; // Requires tether
 
+// Selectively include the Boostrap comonents you need for your build.
 // import "bootstrap/dist/js/umd/util.js";
 // import "bootstrap/dist/js/umd/alert.js";
 // import "bootstrap/dist/js/umd/button.js";
@@ -28,7 +38,6 @@ import "bootstrap/dist/js/umd/dropdown.js"; // Menu dropdown
 // import "bootstrap/dist/js/umd/modal.js";
 // import "bootstrap/dist/js/umd/scrollspy.js";
 // import "bootstrap/dist/js/umd/tab.js";
-// var Tooltip = require('bootstrap/dist/js/umd/tooltip.js'); // Requires tether
 // import "bootstrap/dist/js/umd/tooltip.js"; // Requires tether
 // import "bootstrap/dist/js/umd/popover.js"; // Requires tether
 
