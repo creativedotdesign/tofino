@@ -25,7 +25,6 @@ namespace Tofino\Helpers;
 function get_page_name($page_id = null) {
   global $pagename;
   if (!$pagename || $page_id) { // Not found in the query_var. Permalinks probably not enabled.
-    global $wp_query;
     $page_id  = ($page_id ? $page_id : get_the_ID());
     $post     = get_post($page_id);
     $pagename = $post->post_name;

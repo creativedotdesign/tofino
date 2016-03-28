@@ -102,7 +102,7 @@ class AjaxForm
     $recaptcha = new \ReCaptcha\ReCaptcha($secret);
     $resp      = $recaptcha->verify($captcha_repsonse, $_SERVER['REMOTE_ADDR']);
     if (!$resp->isSuccess()) {
-      $errors = $resp->getErrorCodes(); // Should we send some real error codes back to the user?
+      // $errors = $resp->getErrorCodes(); // Should we send some real error codes back to the user?
       $this->response['message'] = __('Captcha failed.', 'tofino');
       return false;
     } else {
