@@ -51,6 +51,9 @@ require('./gulp/fonts')(gulp);
 // Lint PHP files using ruleset.xml
 require('./gulp/php-lint')(gulp, allowlint, production);
 
+// Validate files using PHP Mess Dectector
+require('./gulp/php-md')(gulp);
+
 // Deletes the build folder entirely.
 require('./gulp/clean')(gulp);
 
