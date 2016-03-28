@@ -1,23 +1,23 @@
 {
-  "dependencies": {
-    "main.js": {
-      "files": ["scripts/ajax-form.js", "scripts/main.js"],
-      "main": true
-    },
-    "head.js": {
-      "files": ["../bower_components/loadcss/loadCSS.js", "../bower_components/svg4everybody/dist/svg4everybody.legacy.js"]
-    },
-    "main.css": {
-      "files": ["styles/main.scss"],
-      "main": true
-    },
-    "wp-admin.css": {
-      "files": ["styles/base/wp-admin.scss"]
-    },
-    "wp-admin.js": {
-      "bower": ["js-cookie"],
-      "files": ["scripts/wp-admin.js"]
-    }
+  "scripts": {
+    "main.js": [
+      "ajax-form.js",
+      "main.js"
+    ],
+    "head.js": [
+      "head.js"
+    ],
+    "wp-admin.js": [
+      "wp-admin.js"
+    ]
+  },
+  "styles": {
+    "main.css": [
+      "main.scss"
+    ],
+    "wp-admin.css": [
+      "base/wp-admin.scss"
+    ]
   },
   "paths": {
     "source": "assets/",
@@ -25,7 +25,8 @@
     "images": "assets/images/",
     "svgs": "assets/svgs/",
     "scripts": "assets/scripts/",
-    "fonts": "assets/fonts/"
+    "fonts": "assets/fonts/",
+    "styles": "assets/styles/"
   },
   "config": {
     "devUrl": "http://tofino.dev",

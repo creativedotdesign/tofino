@@ -1,4 +1,4 @@
-var manifest = require('asset-builder')('./assets/manifest.json'),
+var manifest = require('../assets/manifest.json'),
     gulpif   = require('gulp-if'),
     sassLint = require('gulp-sass-lint');
 
@@ -9,7 +9,7 @@ module.exports = function (gulp, production, allowlint) {
   gulp.task('styles:lint',
     'Lints all SCSS files.',
     function() {
-      gulp.src(paths.source + 'styles/**/*.scss')
+      gulp.src(paths.styles + '**/*.scss')
         .pipe(sassLint())
         .pipe(sassLint.format())
         .pipe(gulpif(production, gulpif(allowlint, sassLint.failOnError())));

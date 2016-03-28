@@ -1,48 +1,48 @@
-(function($) {
-  var request,
-      $form = $('.form-processor'),
-      $result = $('.js-form-result'),
-      $action = $form.attr('id'); // Set action as form id value
+var $ = window.jQuery;
 
-  $form.on('submit', function(e) {
-    e.preventDefault(); // Don't really submit.
+var request,
+    $form = $('.form-processor'),
+    $result = $('.js-form-result'),
+    $action = $form.attr('id'); // Set action as form id value
 
-    if (request) { // If request exists, bail.
-      request.abort();
-    }
+$form.on('submit', function(e) {
+  e.preventDefault(); // Don't really submit.
 
-    var serializedData = $(this).serialize();
+  if (request) { // If request exists, bail.
+    request.abort();
+  }
 
-    $(this).find(':input').prop('disabled', true);
-    $(this).find(':submit').text('Sending').prop('disabled', true);
+  var serializedData = $(this).serialize();
 
-    request = $.post(
-      tofinoJS.ajaxUrl, {
-        action: $action, //Passed to WP for the ajax action
-        data: serializedData,
-        nextNonce: tofinoJS.nextNonce
-      });
+  $(this).find(':input').prop('disabled', true);
+  $(this).find(':submit').text('Sending').prop('disabled', true);
 
-    request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
-      //console.log(response);
-      if (response.success === true) {
-        $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
-        $form.find(':input').val(''); // Reset fields.
-        $form.hide(); // Hide form
-      } else {
-        $result.addClass('alert alert-danger').html(response.message);
-        $form.find(':input').prop('disabled', false); // Re-enable fields
-        $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
-        //console.error("The following error occured: " + textStatus, errorThrown);
-      }
+  request = $.post(
+    tofinoJS.ajaxUrl, {
+      action: $action, //Passed to WP for the ajax action
+      data: serializedData,
+      nextNonce: tofinoJS.nextNonce
     });
 
-    request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
-      //console.log(response);
-      $result.addClass('alert alert-danger').html('An error occured.');
+  request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
+    //console.log(response);
+    if (response.success === true) {
+      $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
+      $form.find(':input').val(''); // Reset fields.
+      $form.hide(); // Hide form
+    } else {
+      $result.addClass('alert alert-danger').html(response.message);
       $form.find(':input').prop('disabled', false); // Re-enable fields
       $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
       //console.error("The following error occured: " + textStatus, errorThrown);
-    });
+    }
   });
-}(jQuery));
+
+  request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
+    //console.log(response);
+    $result.addClass('alert alert-danger').html('An error occured.');
+    $form.find(':input').prop('disabled', false); // Re-enable fields
+    $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
+    //console.error("The following error occured: " + textStatus, errorThrown);
+  });
+});

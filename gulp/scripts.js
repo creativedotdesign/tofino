@@ -1,12 +1,15 @@
-var manifest   = require('asset-builder')('./assets/manifest.json'),
+var manifest   = require('../assets/manifest.json'),
     merge      = require('merge-stream'),
     fs         = require('fs'),
-    concat     = require('gulp-concat'),
     gulpif     = require('gulp-if'),
     notify     = require('gulp-notify'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify     = require('gulp-uglify'),
-    util       = require('gulp-util');
+    util       = require('gulp-util'),
+    browserify = require('browserify'),
+    babelify   = require('babelify'),
+    buffer     = require('vinyl-buffer'),
+    source     = require('vinyl-source-stream');
 
 // Compile JS
 module.exports = function (gulp, production, browserSync) {
@@ -17,25 +20,44 @@ module.exports = function (gulp, production, browserSync) {
     'Concat js files with sourcemaps. Also runs scripts:lint.',
     ['scripts:lint'],
     function() {
-      var merged = merge();
+      var merged  = merge(),
+          outputs = Object.keys(manifest.scripts);
 
-      manifest.forEachDependency('js', function(dep) {
-        dep.globs.forEach(function (path) {
+      outputs.forEach(function(output) {
+        // Define files and add scripts path
+        var inputs = manifest['scripts'][output].map(
+          function(file) {
+            return paths.scripts + file
+          }
+        );
+
+        // Check files exist
+        inputs.forEach(function (file) {
           try {
-            fs.accessSync(path);
+            fs.accessSync(file);
           } catch (e) {
-            util.log(util.colors.red('Warning! ' + path + ' does not exist.'));
+            util.log(util.colors.red('Warning! ' + file + ' does not exist.'));
           }
         });
 
+
+        var bundler = browserify({
+          entries: inputs,
+          debug: true
+        });
+
         merged.add(
-          gulp.src(dep.globs, {base: 'scripts', merge: true})
+          bundler
+            .transform(babelify, {presets: ["es2015"]})
+            .bundle()
+            .on('error', function (err) { console.error(err); })
+            .pipe(source(output))
+            .pipe(buffer())
             .pipe(sourcemaps.init({loadMaps: true}))
-            .pipe(concat(dep.name))
             .pipe(gulpif(production, uglify()))
             .pipe(sourcemaps.write('.', {sourceRoot: paths.scripts}))
-          )
-        .pipe(gulp.dest(paths.dist + '/js'));
+            .pipe(gulp.dest(paths.dist + 'js'))
+          );
       });
 
     return merged
@@ -45,6 +67,7 @@ module.exports = function (gulp, production, browserSync) {
         "onLast": true
       })))
       .on('finish', browserSync.reload);
+
     }, {
       options: {
         'production': 'Minified without sourcemaps.'

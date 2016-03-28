@@ -1,4 +1,4 @@
-var manifest = require('asset-builder')('./assets/manifest.json'),
+var manifest = require('../assets/manifest.json'),
     del      = require('del');
 
 module.exports = function (gulp) {
