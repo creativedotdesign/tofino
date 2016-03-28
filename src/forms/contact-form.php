@@ -59,7 +59,9 @@ function contact_form_settings($wp_customize) {
     'type'        => 'text'
   ]);
 
-  $wp_customize->add_setting('contact_form_success_message', ['default' => "Thanks, we'll be in touch soon."]);
+  $wp_customize->add_setting('contact_form_success_message', [
+    'default' => __("Thanks, we'll be in touch soon.", 'tofino')
+  ]);
 
   $wp_customize->add_control('contact_form_success_message', [
     'label'       => __('Success Message', 'tofino'),
