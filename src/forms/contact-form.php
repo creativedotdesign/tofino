@@ -122,7 +122,7 @@ function ajax_contact_form() {
     $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
   }
 
-  $form->respond(true, get_theme_mod('contact_form_success_message')); // Required
+  $form->respond(true, get_theme_mod('contact_form_success_message', __("Thanks, we'll be in touch soon.", 'tofino'))); // Required
 }
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
