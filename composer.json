@@ -22,7 +22,7 @@
     "tofino"
   ],
   "require": {
-    "php": ">=5.4.0",
+    "php": ">=5.5.9",
     "composer/installers": "~1.0",
     "google/recaptcha": "~1.1"
   },

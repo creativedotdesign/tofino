@@ -14,7 +14,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 
 | Prerequisite              | How to check  | How to install                                  |
 | ------------------------- | ------------- | ----------------------------------------------- |
-| PHP >= 5.4.x              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| PHP >= 5.5.9              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
 | Node.js >= 5.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
 | Composer >= 1.0.0-alpha10 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
