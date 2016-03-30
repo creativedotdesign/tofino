@@ -1,5 +1,6 @@
 options:
   formatter: stylish
+  
 rules:
   # Extends
   placeholder-in-extend: 0
