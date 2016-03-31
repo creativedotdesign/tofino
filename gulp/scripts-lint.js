@@ -1,4 +1,4 @@
-var manifest = require('asset-builder')('./assets/manifest.json'),
+var manifest = require('../assets/manifest.json'),
     eslint   = require('gulp-eslint'),
     gulpif   = require('gulp-if');
 

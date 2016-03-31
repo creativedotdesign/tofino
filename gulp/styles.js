@@ -1,4 +1,4 @@
-var manifest     = require('asset-builder')('./assets/manifest.json'),
+var manifest     = require('../assets/manifest.json'),
     merge        = require('merge-stream'),
     fs           = require('fs'),
     autoprefixer = require('gulp-autoprefixer'),
@@ -19,22 +19,31 @@ module.exports = function (gulp, production, browserSync) {
     'Compile and concat SCSS to CSS with sourcemaps and autoprefixer. Also runs styles:lint.',
     ['styles:lint'],
     function() {
-      var merged = merge();
+      var merged = merge(),
+          outputs = Object.keys(manifest.styles);
 
-      manifest.forEachDependency('css', function(dep) {
-        dep.globs.forEach(function (path) {
+      outputs.forEach(function(output) {
+        // Define files and add scripts path
+        var inputs = manifest['styles'][output].map(
+          function(file) {
+            return paths.styles + file
+          }
+        );
+
+        // Check files exist
+        inputs.forEach(function (file) {
           try {
-            fs.accessSync(path);
+            fs.accessSync(file);
           } catch (e) {
-            util.log(util.colors.red('Warning! ' + path + ' does not exist.'));
+            util.log(util.colors.red('Warning! ' + file + ' does not exist.'));
           }
         });
 
         merged.add(
-          gulp.src(dep.globs)
+          gulp.src(inputs)
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(sass({outputStyle: 'nested'}))
-            .pipe(concat(dep.name))
+            .pipe(concat(output))
             .pipe(gulpif(production, cssnano({safe: true})))
         );
       });

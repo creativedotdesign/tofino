@@ -1,9 +1,18 @@
 <?php
+/**
+ * AjaxForm
+ *
+ * @package Tofino
+ * @since 1.2.0
+ */
+
 
 namespace Tofino;
 
 /**
- * Form Processor
+ * Ajax Form
+ *
+ * Class of functions for easier processing WP Ajax requests.
  *
  * @package Tofino
  * @since 1.2.0
@@ -19,6 +28,17 @@ class AjaxForm
     'message' => ''
   ];
 
+
+  /**
+   * Construct
+   *
+   * Filter POST input.
+   * Parse form data field to PHP array.
+   * Add data_time key value.
+   *
+   * @since 1.2.0
+   * @return void
+   */
   public function __construct()
   {
     $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS;
@@ -82,7 +102,7 @@ class AjaxForm
     $recaptcha = new \ReCaptcha\ReCaptcha($secret);
     $resp      = $recaptcha->verify($captcha_repsonse, $_SERVER['REMOTE_ADDR']);
     if (!$resp->isSuccess()) {
-      $errors = $resp->getErrorCodes(); // Should we send some real error codes back to the user?
+      // $errors = $resp->getErrorCodes(); // Should we send some real error codes back to the user?
       $this->response['message'] = __('Captcha failed.', 'tofino');
       return false;
     } else {
@@ -244,9 +264,13 @@ class AjaxForm
       $headers[] = 'Cc: ' . $settings['cc'];
     }
 
-    $template   = (array_key_exists('template', $settings) ? $settings['template'] : null); // @todo: Fix!
-    $email_body = $this->buildEmailBody();
-    $mail       = wp_mail($settings['to'], $settings['subject'], $email_body, $headers);
+    if (array_key_exists('template', $settings)) {
+      $email_body = $this->buildEmailBody($settings['template']);
+    } else {
+      $email_body = $this->buildEmailBody();
+    }
+
+    $mail = wp_mail($settings['to'], $settings['subject'], $email_body, $headers);
 
     if ($mail) {
       return true;
@@ -261,6 +285,7 @@ class AjaxForm
    *
    * @since 1.2.0
    * @param function $validator The validator function
+   * @return void
    */
   public function addValidator($validator)
   {
@@ -305,6 +330,17 @@ class AjaxForm
     }
   }
 
+
+  /**
+   * Respond
+   *
+   * Sends the JSON response back to the JavaScript request.
+   *
+   * @uses wp_send_json
+   * @param boolean $success True / false
+   * @param string $message The message returned to the user
+   * @return void
+   */
   public function respond($success, $message)
   {
     $this->response['success'] = $success;

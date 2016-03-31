@@ -6,13 +6,14 @@ env:
   node: true
   amd: true
 
-extends: 'eslint:recommended'
+parser: babel-eslint
+
+extends: eslint:recommended
 
 globals:
   wp: true,
   Cookies: true,
   tofinoJS: true,
-  svg4everybody: true
 
 rules:
   no-console: 0

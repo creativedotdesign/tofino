@@ -1,4 +1,4 @@
-var manifest = require('asset-builder')('./assets/manifest.json'),
+var manifest = require('../assets/manifest.json'),
     svgmin   = require('gulp-svgmin');
 
 // Minify SVGS + run sprite task

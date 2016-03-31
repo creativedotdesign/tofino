@@ -1,4 +1,4 @@
-var manifest = require('asset-builder')('./assets/manifest.json'),
+var manifest = require('../assets/manifest.json'),
     pngquant = require('imagemin-pngquant'),
     gulpif   = require('gulp-if'),
     imagemin = require('gulp-imagemin'),
@@ -8,13 +8,12 @@ var manifest = require('asset-builder')('./assets/manifest.json'),
 // Min / Crush images
 module.exports = function (gulp, production) {
   'use strict';
-  var paths = manifest.paths,
-      globs = manifest.globs;
+  var paths = manifest.paths;
   gulp.task(
     'images',
     'Compress JPG and PNG files.',
     function() {
-      gulp.src(globs.images)
+      gulp.src(paths.images + '/**/*')
         .pipe(newer(paths.dist + 'img'))
         .pipe(imagemin({
           progressive: true,

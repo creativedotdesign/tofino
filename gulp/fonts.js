@@ -1,4 +1,4 @@
-var manifest = require('asset-builder')('./assets/manifest.json');
+var manifest = require('../assets/manifest.json');
 
 // Copy font files from assets to dist
 module.exports = function (gulp) {

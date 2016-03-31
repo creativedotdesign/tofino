@@ -1,4 +1,12 @@
 <?php
+/**
+ * Contact form
+ *
+ * Theme options and form processing for the contact form.
+ *
+ * @package Tofino
+ * @since 1.2.0
+ */
 
 namespace Tofino\ContactForm;
 
@@ -51,7 +59,9 @@ function contact_form_settings($wp_customize) {
     'type'        => 'text'
   ]);
 
-  $wp_customize->add_setting('contact_form_success_message', ['default' => "Thanks, we'll be in touch soon."]);
+  $wp_customize->add_setting('contact_form_success_message', [
+    'default' => __("Thanks, we'll be in touch soon.", 'tofino')
+  ]);
 
   $wp_customize->add_control('contact_form_success_message', [
     'label'       => __('Success Message', 'tofino'),
@@ -73,7 +83,13 @@ add_action('customize_register', __NAMESPACE__ . '\\contact_form_settings');
 
 
 /**
- * AJAX Contact Form
+ * Ajax Contact Form
+ *
+ * Process the ajax request.
+ * Called via JavaScript.
+ *
+ * @since 1.2.0
+ * @return void
  */
 function ajax_contact_form() {
   $form = new \Tofino\AjaxForm(); // Required
@@ -106,7 +122,7 @@ function ajax_contact_form() {
     $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
   }
 
-  $form->respond(true, get_theme_mod('contact_form_success_message')); // Required
+  $form->respond(true, get_theme_mod('contact_form_success_message', __("Thanks, we'll be in touch soon.", 'tofino'))); // Required
 }
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');

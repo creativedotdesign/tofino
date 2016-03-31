@@ -1,4 +1,4 @@
-var manifest  = require('asset-builder')('./assets/manifest.json'),
+var manifest  = require('../assets/manifest.json'),
     util      = require('gulp-util');
 
 module.exports = function (gulp, browserSync) {

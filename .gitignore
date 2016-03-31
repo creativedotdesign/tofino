@@ -12,9 +12,6 @@
 # ignore node/grunt dependency directories
 node_modules/
 
-# ignore bower dependency directories
-bower_components/
-
 # ignore composer dependency directories
 vendor/
 
