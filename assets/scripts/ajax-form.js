@@ -30,6 +30,7 @@ $form.on('submit', function(e) {
       $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
       $form.find(':input').val(''); // Reset fields.
       $form.hide(); // Hide form
+      $form.find(':submit').text('Send'); // Set send button text back to default
     } else {
       $result.addClass('alert alert-danger').html(response.message);
       $form.find(':input').prop('disabled', false); // Re-enable fields
