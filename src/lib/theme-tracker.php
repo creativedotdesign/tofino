@@ -112,7 +112,7 @@ function theme_tracker() {
         add_option('theme_tracking_uid', $uid);
       }
 
-      $url           = get_theme_mod('theme_tracker_api_url');
+      $url           = get_theme_mod('theme_tracker_api_url', 'http://tracker.lambdacreatives.com/api/v1/theme');
       $api_key       = get_theme_mod('theme_tracker_api_key');
       $theme_data    = wp_get_theme();
       $theme_name    = $theme_data->get('Name');
