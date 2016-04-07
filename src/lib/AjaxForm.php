@@ -270,6 +270,10 @@ class AjaxForm
       $email_body = $this->buildEmailBody();
     }
 
+    if (empty($settings['subject'])) {
+      $settings['subject'] = __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME'];
+    }
+
     $mail = wp_mail($settings['to'], $settings['subject'], $email_body, $headers);
 
     if ($mail) {
