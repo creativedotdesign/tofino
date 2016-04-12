@@ -64,8 +64,7 @@
     "imagemin-pngquant": "~4.2.0",
     "merge-stream": "~1.0.0",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "yargs": "~4.3.0"
+    "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.2",
