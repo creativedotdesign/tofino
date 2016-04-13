@@ -84,12 +84,11 @@ Example usage:
 
 or
 
-``
-social_icons(['class' => "social-icons-footer"]);
-``
+``social_icons(['class' => "social-icons-footer"]);``
 
 HTML output:
 ```
 <ul class="social-icons social-icons-footer">
   <li><a href="http://facebook.com"><svg><use xlink:href="http://example.com/wp-content/themes/tofino/dist/svg/stripe.symbol.svg#facebook"></svg></a></li>
-</ul>```
+</ul>
+```
