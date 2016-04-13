@@ -21,7 +21,7 @@ Handle validation and processing of HTML forms via Ajax.
 - `templates/content-page-contact.php` - Example HTML contact form
 - `templates/email/default-template.html` Default HTML email template
 - `src/lib/AjaxForm.php` - The PHP class used to process the form submission
-- 'assets/scripts/ajax-form.js' - The JS code used for the Ajax request
+- `assets/scripts/ajax-form.js` - The JS code used for the Ajax request
 
 ## Quick start
 
@@ -39,9 +39,9 @@ If the To email address field has not been defined the email address defined in 
 
 If the From email address field has not been defined the default server email address will be used.
 
-The form is processed via Ajax when the class ``form-processor`` is added to the form element, e.g. ``<form class="form-processor">``.
+The HTML form is processed via Ajax if the class ``form-processor`` has been added to the form element, e.g. ``<form class="form-processor">``.
 
-The Ajax response message is added to the HTML element ``js-form-result``. If successful an additional classes ``alert alert-success`` are added. If failed classes ``alert alert-danger`` are added.
+The Ajax response message is added to the HTML element ``<div class="js-form-result"></div>``. If successful an additional classes ``alert alert-success`` are added. If failed classes ``alert alert-danger`` are added.
 
 The form is hidden on success.
 
