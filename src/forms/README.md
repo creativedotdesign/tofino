@@ -27,9 +27,11 @@ Handle validation and processing of HTML forms via Ajax.
 
 To use the including contact form you need to:-
 
+- Create a WordPress page with the permalink / slug `contact`
+- Review / update the HTML form fields in ``templates/content-page-contact.php``
 - Update the fields in the Contact Form theme options
 - Review / update the ``ajax_contact_form()`` function in ``src/forms/contact-form.php``
-- Test your form
+- Test your form by browsing the contact page.
 
 ## Additional info
 
