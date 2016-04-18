@@ -25,13 +25,21 @@ Handle validation and processing of HTML forms via Ajax.
 
 ## Quick start
 
-To use the including contact form you need to:-
+To use the included contact form you need to:-
 
 - Create a WordPress page with the permalink / slug `contact`
 - Review / update the HTML form fields in ``templates/content-page-contact.php``
 - Update the fields in the Contact Form theme options
 - Review / update the ``ajax_contact_form()`` function in ``src/forms/contact-form.php``
 - Test your form by browsing the contact page.
+
+## Email templates
+
+A default HTML email template can be found in `templates/email/default-template.html`.
+
+The email template includes the following variables: ``%email_logo%, %form_content%, %ip_address%, %referrer%``. Each of these variables is replaced with the content inside the function ``$AjaxForm->buildEmailBody()``. If you need to create new variables you will need to update the function ``$AjaxForm->buildEmailBody()``.
+
+You can create additional templates and pass in the filename of the template when calling the function ``$AjaxForm->sendEmail()``. See example usage in `src/forms/contact-form.php`.
 
 ## Additional info
 
