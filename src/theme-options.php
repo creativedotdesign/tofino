@@ -52,7 +52,7 @@ function admin_login_logo() {
     <?php
   }
 }
-add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
+add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
 
 
 /**
