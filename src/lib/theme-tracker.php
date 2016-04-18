@@ -121,7 +121,7 @@ function theme_tracker() {
       $server_ip     = (!empty($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown');
       $environment   = (getenv('WP_ENV') ? getenv('WP_ENV') : 'Unknown'); // For Bedrock installs
 
-      $data = array(
+      $data = [
         'uid'               => $uid,
         'theme_name'        => $theme_name,
         'theme_version'     => $theme_version,
@@ -131,20 +131,20 @@ function theme_tracker() {
         'ip_address'        => $server_ip,
         'environment'       => $environment,
         'wordpress_version' => get_bloginfo('version')
-      );
+      ];
 
       // Send the API key as a http header
-      $headers = array(
+      $headers = [
         'Content-Type'  => 'application/json',
         'Authorization' => $api_key
-      );
+      ];
 
       // Use wp_remote_post to make the http request
-      $response = wp_remote_post(esc_url_raw($url), array(
+      $response = wp_remote_post(esc_url_raw($url), [
         'headers' => $headers,
         'timeout' => 10,
         'body'    => json_encode($data)
-      ));
+      ]);
 
       if (is_wp_error($response)) { // Request error occured.
         $error_message = $response->get_error_message();
