@@ -13,7 +13,7 @@
             <!-- Name / Text input -->
             <fieldset class="form-group">
               <label for="name"><?php _e('Name', 'tofino'); ?></label>
-              <input type="text" name="name" class="form-control" id="name" placeholder="<?php _e('Your name', 'tofino'); ?>" required="required">
+              <input type="text" name="name" class="form-control" id="name" placeholder="<?php _e('Your name', 'tofino'); ?>">
               <small class="text-muted"><?php _e("So we know who you are.", 'tofino'); ?></small>
             </fieldset>
 

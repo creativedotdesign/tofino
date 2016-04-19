@@ -25,7 +25,7 @@ $form.on('submit', function(e) {
     });
 
   request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
-    //console.log(response);
+    console.log(response);
     if (response.success === true) {
       $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
       $form.find(':input').val(''); // Reset fields.
@@ -40,7 +40,7 @@ $form.on('submit', function(e) {
   });
 
   request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
-    //console.log(response);
+    console.log(response);
     $result.addClass('alert alert-danger').html('An error occured.');
     $form.find(':input').prop('disabled', false); // Re-enable fields
     $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
