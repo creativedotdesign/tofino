@@ -58,6 +58,8 @@
 .navbar {
   background-color: $gray-lightest;
   padding: 0;
+  min-height: 2.5rem;
+  width: 100%;
 }
 
 .navbar-brand {
@@ -96,8 +98,8 @@
   float: right;
   padding: .5rem;
   display: block;
-  position: absolute;
-  top: 5px;
+  position: relative;;
+  top: 3px;
   right: .25rem;
   width: $bar-width * 2;
 

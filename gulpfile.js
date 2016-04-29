@@ -1,13 +1,13 @@
 var gulp        = require('gulp-help')(require('gulp'), {hideDepsMessage: true}),
-    argv        = require('yargs').argv,
+    util        = require('gulp-util'),
     gulpif      = require('gulp-if'),
     plumber     = require('gulp-plumber'),
     notify      = require('gulp-notify'),
     browserSync = require('browser-sync').create();
 
-var production = argv.production || false,
-    allowlint  = argv.allowlint  || false,
-    stagingUrl = argv.stagingUrl || false;
+var production = util.env.production || false,
+    allowlint  = util.env.allowlint  || false,
+    stagingUrl = util.env.stagingUrl || false;
 
 // Override standard gulp.src task to use plumber
 var _gulpsrc = gulp.src;

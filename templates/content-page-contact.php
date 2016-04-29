@@ -26,8 +26,8 @@
 
             <!-- Message / Textarea -->
             <fieldset class="form-group">
-             <label for="message">Message</label>
-             <textarea class="form-control" name="message" id="message" rows="3" placeholder="Message" required="required"></textarea>
+             <label for="message"><?php _e('Message', 'tofino'); ?></label>
+             <textarea class="form-control" name="message" id="message" rows="3" placeholder="<?php _e('Message', 'tofino'); ?>" required="required"></textarea>
              <small class="text-muted"><?php _e("Tell us what you want us to know.", 'tofino'); ?></small>
            </fieldset>
 

@@ -218,6 +218,10 @@ class AjaxForm
 
       $form_content = null;
       foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
+        if ($key == 'date_time') { // Convert unix timestamp to human readable date
+          $value = date('d-M-Y H:i:s', $value);
+        }
+
         $key_name      = str_replace('_', ' ', $key);
         $key_name      = ucfirst($key_name);
         $form_content .= $key_name . ': ' . ($value ? $value : 'Empty') . '<br>';
@@ -268,6 +272,10 @@ class AjaxForm
       $email_body = $this->buildEmailBody($settings['template']);
     } else {
       $email_body = $this->buildEmailBody();
+    }
+
+    if (empty($settings['subject'])) {
+      $settings['subject'] = __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME'];
     }
 
     $mail = wp_mail($settings['to'], $settings['subject'], $email_body, $headers);
