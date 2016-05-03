@@ -151,25 +151,24 @@ function theme_tracker() {
         error_log('[' . __('Theme Tracker API Error', 'tofino') . '] ' . $error_message); // Log error in webservers errorlog
         $result = false;
         set_transient('theme_tracking', $result, 60*60*2); // Set the transient to try again in 2 hours
-        exit;
-      }
+      } else {
+        if (json_decode($response['body'])) { // Response body is valid JSON
+          $json_response = json_decode(wp_remote_retrieve_body($response));
 
-      if (json_decode($response['body'])) { // Response body is valid JSON
-        $json_response = json_decode(wp_remote_retrieve_body($response));
-
-        if ($json_response->error == false) {
-          $result = true;
-        } else { // Valid JSON, with error.
-          error_log('[' . __('Theme Tracker API Error', 'tofino') . '] ' . $json_response->message); // Log error in webservers errorlog
+          if ($json_response->error == false) {
+            $result = true;
+          } else { // Valid JSON, with error.
+            error_log('[' . __('Theme Tracker API Error', 'tofino') . '] ' . $json_response->message); // Log error in webservers errorlog
+            $result = false;
+          }
+        } else { // Invlid response received
+          error_log('[' . __('Theme Tracker API Error', 'tofino') . '] ' . __('Invalid resposne (not JSON) received from the API endpoint.', 'tofino')); // Log error in webservers errorlog
           $result = false;
         }
-      } else { // Invlid response received
-        error_log('[' . __('Theme Tracker API Error', 'tofino') . '] ' . __('Invalid resposne (not JSON) received from the API endpoint.', 'tofino')); // Log error in webservers errorlog
-        $result = false;
-      }
 
-      // Set the transient to send data again in 7 days
-      set_transient('theme_tracking', $result, 60*60*168); //sec*min*hours
+        // Set the transient to send data again in 7 days
+        set_transient('theme_tracking', $result, 60*60*168); //sec*min*hours
+      }
 
     }
 
