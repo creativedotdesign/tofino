@@ -1,6 +1,6 @@
 var manifest = require('../assets/manifest.json'),
     gulpif   = require('gulp-if'),
-    sassLint = require('gulp-sass-lint');
+    stylelint = require('gulp-stylelint');
 
 // Lints scss files
 module.exports = function (gulp, production, allowlint) {
@@ -10,9 +10,14 @@ module.exports = function (gulp, production, allowlint) {
     'Lints all SCSS files.',
     function() {
       gulp.src(paths.styles + '**/*.scss')
-        .pipe(sassLint())
-        .pipe(sassLint.format())
-        .pipe(gulpif(production, gulpif(allowlint, sassLint.failOnError())));
+        .pipe(stylelint({
+          reporters: [
+            {formatter: 'verbose', console: true}
+          ]
+        }))
+        .pipe(gulpif(production, gulpif(allowlint, stylelint({
+          failAfterError: false
+        }))));
     }, {
       options: {
         'production': 'Fail on error.',
