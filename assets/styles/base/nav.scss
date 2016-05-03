@@ -89,7 +89,19 @@
     }
 
     .dropdown-menu {
-      @extend .dropdown-menu-right;
+      @include media-breakpoint-up(sm) {
+        .menu-right {
+          .navbar-nav {
+            float: right;
+            padding-right: 5px;
+          }
+
+          .dropdown-menu {
+            right: 0;
+            left: auto;
+          }
+        }
+      }
     }
   }
 }
