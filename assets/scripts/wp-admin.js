@@ -1,4 +1,4 @@
-require('js-cookie');
+import Cookies from 'js-cookie';
 
 (function($) {
   $(document).ready(function() {
