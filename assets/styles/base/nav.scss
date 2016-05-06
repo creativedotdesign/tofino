@@ -1,11 +1,11 @@
-// It's probably best to leave this section alone and add your own overrides afterwards.
+// Probably best to leave this section alone and add your own overrides afterwards.
 
 .navbar-sticky-top {
   top: 0;
 
-  &:before,
-  &:after {
-    content: '';
+  &::before,
+  &::after {
+    content: "";
     display: table;
   }
 }
@@ -68,7 +68,7 @@
 
 .dropdown-header {
   h6 {
-    padding-top:    .425rem;
+    padding-top: .425rem;
     padding-bottom: .425rem;
     margin-bottom: 0;
   }
@@ -110,7 +110,7 @@
   float: right;
   padding: .5rem;
   display: block;
-  position: relative;;
+  position: relative;
   top: 3px;
   right: .25rem;
   width: $bar-width * 2;

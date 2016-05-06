@@ -55,7 +55,6 @@
     "gulp-phpmd": "^2.0.1",
     "gulp-plumber": "~1.1.0",
     "gulp-sass": "~2.2.0",
-    "gulp-sass-lint": "~1.1.0",
     "gulp-sourcemaps": "~1.6.0",
     "gulp-svg-sprite": "~1.2.16",
     "gulp-svgmin": "~1.2.0",
@@ -64,13 +63,15 @@
     "imagemin-pngquant": "~4.2.0",
     "merge-stream": "~1.0.0",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "stylelint-config-standard": "^6.0.0",
+    "gulp-stylelint": "^2.0.2"
   },
   "dependencies": {
+    "Stickyfill": "github:wilddeer/stickyfill",
     "bootstrap": "^4.0.0-alpha.2",
     "fg-loadcss": "^1.2.0",
     "js-cookie": "^2.1.0",
-    "Stickyfill": "github:wilddeer/stickyfill",
     "svg4everybody": "^2.0.3",
     "tether": "^1.2.0"
   }
