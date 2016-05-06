@@ -11,6 +11,7 @@ module.exports = function (gulp, production, allowlint) {
     function() {
       gulp.src(paths.styles + '**/*.scss')
         .pipe(stylelint({
+          syntax: 'scss',
           reporters: [
             {formatter: 'verbose', console: true}
           ]
