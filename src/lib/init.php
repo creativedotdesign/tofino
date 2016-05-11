@@ -98,6 +98,10 @@ function add_post_name_body_class($classes) {
   if (isset($post)) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
+
+  if (get_theme_mod('no_fout')) {
+    $classes[] = 'no-fout';
+  }
   return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
