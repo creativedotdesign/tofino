@@ -160,7 +160,7 @@ function localize_scripts() {
       'ajaxUrl'       => admin_url('admin-ajax.php'),
       'nextNonce'     => wp_create_nonce('next_nonce'),
       'cookieExpires' => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires') : ""),
-      'themeDir' => get_template_directory_uri()
+      'theme_url' => get_template_directory_uri()
     ));
   }
 }
