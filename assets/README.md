@@ -36,6 +36,6 @@ SVGs added to `assets/svgs/sprite` will be processed by the gulp svg-sprite task
 
 ### Font Loader
 
-All fonts should be loaded using the [Web Font Loader](https://github.com/typekit/webfontloader). Example code can be found in `js/head.js`.
+All fonts should be loaded using the [Web Font Loader](https://github.com/typekit/webfontloader). Example code can be found in `js/head.js`. For custom or other non-Google fonts checkout the docs in Web Font Loader.
 
 A theme option has been added (In Advanced) to disable FOUT (Flash of un-styled text).
