@@ -11,6 +11,17 @@ body {
       width: 100%;
     }
   }
+
+  &.no-fout {
+    visibility: hidden;
+
+    .wf-inactive &,
+    .wf-active & {
+      visibility: visible;
+    }
+  }
+
+  font-family: 'Droid Sans';
 }
 
 header {

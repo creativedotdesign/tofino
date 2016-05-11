@@ -73,6 +73,7 @@
     "fg-loadcss": "^1.2.0",
     "js-cookie": "^2.1.0",
     "svg4everybody": "^2.0.3",
-    "tether": "^1.2.0"
+    "tether": "^1.2.0",
+    "webfontloader": "^1.6.24"
   }
 }
