@@ -36,7 +36,7 @@ function contact_form_settings($wp_customize) {
 
   $wp_customize->add_control('contact_form_cc_address', [
     'label'       => __('CC', 'tofino'),
-    'description' => __('Email address used in the CC field.', 'tofino'),
+    'description' => __('Add CC email address, seperate with a comma and a space (", ") to use multiple addresses.', 'tofino'),
     'section'     => 'tofino_contact_form_settings',
     'type'        => 'text'
   ]);

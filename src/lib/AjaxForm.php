@@ -265,7 +265,11 @@ class AjaxForm
     }
 
     if (array_key_exists('cc', $settings)) {
-      $headers[] = 'Cc: ' . $settings['cc'];
+      $settings['cc'] = explode(',', $settings['cc']); // Split string on comma
+
+      foreach ($settings['cc'] as $cc_email_address) {
+        $headers[] = 'Cc: ' . trim($cc_email_address);
+      }
     }
 
     if (array_key_exists('template', $settings)) {
