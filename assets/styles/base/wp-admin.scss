@@ -18,3 +18,27 @@ $white: #fff;
     font-size: 18px;
   }
 }
+
+.form-data_page_contact-form-data {
+  .wp-list-table {
+    .column-id {
+      width: 5%;
+    }
+
+    .column-date-time {
+      width: 10%;
+    }
+
+    .column-name {
+      width: 15%;
+    }
+
+    .column-email {
+      width: 25%;
+    }
+
+    .column-message {
+      width: 45%;
+    }
+  }
+}

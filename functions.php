@@ -29,7 +29,8 @@ $tofino_includes = [
   "src/lib/pagination.php",
   "src/forms/contact-form.php",
   "src/shortcodes.php",
-  "src/theme-options.php"
+  "src/theme-options.php",
+  'src/data-tables/contact-form-data.php'
 ];
 
 foreach ($tofino_includes as $file) {
