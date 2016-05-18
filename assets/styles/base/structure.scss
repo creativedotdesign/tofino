@@ -37,6 +37,14 @@ footer {
   background-color: $gray-lightest;
 }
 
+.form-group.required {
+  .form-control-label::after {
+    content: "*";
+    padding-left: 2px;
+    color: $brand-danger;
+  }
+}
+
 // IE 11 flexbox fix.
 // TODO: Remove when fixed in bootstrap.
 // https://github.com/twbs/bootstrap/issues/17310
