@@ -98,7 +98,7 @@ function ajax_contact_form() {
   $fields = [
     'name'    => ['required' => true],
     'email'   => ['required' => true],
-    'message' => ['required' => false]
+    'message' => ['required' => true]
   ];
 
   // Optional
