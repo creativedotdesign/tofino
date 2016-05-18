@@ -18,6 +18,9 @@
     <!-- Disable PSR-2 indentation rules that are buggy with 2 spaces -->
     <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakIndent"/>
     <exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>
+
+    <!-- Exclude camel caps class method name checking -->
+    <exclude name="PSR1.Methods.CamelCapsMethodName"/>
   </rule>
 
   <!-- Don't require a blank line after the last `use` in templates/ directory -->
@@ -42,4 +45,5 @@
       <property name="tabIndent" value="false"/>
     </properties>
   </rule>
+
 </ruleset>
