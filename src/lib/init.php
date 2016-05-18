@@ -17,7 +17,7 @@ namespace Tofino\Init;
  */
 function setup() {
   add_theme_support('title-tag'); // Enable plugins to manage the document title
-  add_theme_support('post-thumbnails', array('post')); // Enable featured images for Posts
+  add_theme_support('post-thumbnails'); // Enable featured images for Posts
 
   // Register wp_nav_menu() menus
   register_nav_menus([
@@ -55,13 +55,13 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\check_page_display');
  * @return void
  */
 function show_maintenance_message() {
-  if (get_theme_mod('maintenance_mode') === 'enabled') {?>
+  if (get_theme_mod('maintenance_mode') === true) {?>
     <div class="error notice">
-      <p><strong><?php echo __('Maintenance Mode', 'tofino') . '</strong> - ' . get_theme_mod('maintenance_mode_text'); ?></p>
+      <p><strong><?php echo __('Maintenance Mode', 'tofino') . '</strong> - ' . get_theme_mod('maintenance_mode_text', __('This site is currently in maintenance mode. Any changes you make may be overwritten or removed.', 'tofino')); ?></p>
     </div><?php
 
     if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
-      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_theme_mod('maintenance_mode_text') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
+      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_theme_mod('maintenance_mode_text', __('This site is currently in maintenance mode. Any changes you make may be overwritten or removed.', 'tofino')) . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
     }
   }
 }
@@ -97,6 +97,10 @@ function add_post_name_body_class($classes) {
   global $post;
   if (isset($post)) {
     $classes[] = $post->post_type . '-' . $post->post_name;
+  }
+
+  if (get_theme_mod('no_fout')) {
+    $classes[] = 'no-fout';
   }
   return $classes;
 }

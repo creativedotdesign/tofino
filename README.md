@@ -61,6 +61,7 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 * Auto post type / slug based template routing
 * Shortcodes
 * AjaxForm handler class. Easily handle form validation and processing with Wordpress Ajax. Send submitted data via email and/or save it as post meta. Add your own custom validator / processor via a simple function hook.
+* [Web Font Loader](https://github.com/typekit/webfontloader)  easily and quickly load Google, Typekit and custom fonts.
 
 ## Documentation
 
