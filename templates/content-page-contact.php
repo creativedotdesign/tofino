@@ -11,22 +11,22 @@
           <form name="contact" class="contact-form form-processor" id="contact-form">
 
             <!-- Name / Text input -->
-            <fieldset class="form-group">
-              <label for="name"><?php _e('Name', 'tofino'); ?></label>
-              <input type="text" name="name" class="form-control" id="name" placeholder="<?php _e('Your name', 'tofino'); ?>">
+            <fieldset class="form-group required">
+              <label class="form-control-label" for="name"><?php _e('Name', 'tofino'); ?></label>
+              <input type="text" name="name" class="form-control" id="name" placeholder="<?php _e('Your name', 'tofino'); ?>" required="required">
               <small class="text-muted"><?php _e("So we know who you are.", 'tofino'); ?></small>
             </fieldset>
 
             <!-- Email address -->
-            <fieldset class="form-group">
-              <label for="email"><?php _e('Email address', 'tofino'); ?></label>
+            <fieldset class="form-group required">
+              <label class="form-control-label" for="email"><?php _e('Email address', 'tofino'); ?></label>
               <input type="email" name="email" class="form-control" id="email" placeholder="<?php _e('Your email', 'tofino'); ?>" required="required">
               <small class="text-muted"><?php _e("We'll never share your email with anyone else.", 'tofino'); ?></small>
             </fieldset>
 
             <!-- Message / Textarea -->
-            <fieldset class="form-group">
-             <label for="message"><?php _e('Message', 'tofino'); ?></label>
+            <fieldset class="form-group required">
+             <label class="form-control-label" for="message"><?php _e('Message', 'tofino'); ?></label>
              <textarea class="form-control" name="message" id="message" rows="3" placeholder="<?php _e('Message', 'tofino'); ?>" required="required"></textarea>
              <small class="text-muted"><?php _e("Tell us what you want us to know.", 'tofino'); ?></small>
            </fieldset>
