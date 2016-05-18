@@ -337,7 +337,7 @@ class AjaxForm
     }
 
     if ($errors) {
-      $this->response['message'] = __('Complete all required fields.', 'tofino');
+      $this->response['message'] = __('Please complete all required fields.', 'tofino');
       $this->response['type']    = 'validation';
       $this->response['extra']   = json_encode($errors);
       wp_send_json($this->response);
