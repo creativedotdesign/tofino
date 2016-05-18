@@ -94,12 +94,19 @@ add_action('customize_register', __NAMESPACE__ . '\\contact_form_settings');
 function ajax_contact_form() {
   $form = new \Tofino\AjaxForm(); // Required
 
+  // Defined expected fields. Keys should match the input field names
+  $fields = [
+    'name'    => ['required' => true],
+    'email'   => ['required' => true],
+    'message' => ['required' => true]
+  ];
+
   // Optional
   $form->addValidator(function () {
     return true;
   });
 
-  $form->validate(); // Required  Call validate
+  $form->validate($fields); // Required  Call validate
 
   //$data = $form->getData(); // Optional  Do what you want with the sanitized form data
 
@@ -115,7 +122,7 @@ function ajax_contact_form() {
     'to'      => $form->getRecipient('contact_form_to_address'),
     'subject' => get_theme_mod('contact_form_email_subject'),
     'cc'      => get_theme_mod('contact_form_cc_address'),
-    'from'    => get_theme_mod('contact_form_from_address')
+    'from'    => get_theme_mod('contact_form_from_address') // If not defined or blank the server default email address will be used
   ]);
 
   if (!$email_success) {

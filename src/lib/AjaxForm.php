@@ -25,7 +25,9 @@ class AjaxForm
   private $form_data = [];
   private $response  = [
     'success' => false,
-    'message' => ''
+    'message' => '',
+    'type'    => '',
+    'extra'   => []
   ];
 
 
@@ -43,7 +45,6 @@ class AjaxForm
   {
     $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS;
     parse_str($this->post['data'], $this->form_data);
-    $this->form_data['date_time'] = time(); // Create timestamp for submission
   }
 
 
@@ -128,7 +129,6 @@ class AjaxForm
     $emailArray = explode('@', $email_address); // Split it on @
     $hostname   = $emailArray[1];
     if (filter_var($email_address, FILTER_VALIDATE_EMAIL) === false || checkdnsrr($hostname, 'MX') === false || gethostbyname($hostname) === $hostname) { //DNS lookup of MX or A/CNAME record
-      $this->response['message'] = __('Invalid email address.', 'tofino');
       return false;
     } else {
       return true;
@@ -307,10 +307,38 @@ class AjaxForm
    * @since 1.2.0
    * @return void
    */
-  public function validate()
+  public function validate($fields)
   {
     // nonce check
     if (!$this->isValidNonce($this->post['nextNonce'])) {
+      wp_send_json($this->response);
+    }
+
+    // Filter fields. Check submitted fields against expected fields.
+    foreach ($this->form_data as $key => $value) {
+      if (!array_key_exists($key, $fields)) {
+        unset($this->form_data[$key]);
+      }
+    }
+
+    // Create timestamp for submission
+    $this->form_data['date_time'] = time();
+
+    // Required fields check
+    $errors = [];
+    foreach ($fields as $key => $value) {
+      if ($value['required']) {
+        $field_value = trim($this->form_data[$key]);
+        if (empty($field_value)) {
+          $errors[$key] = __('Required field.', 'tofino');
+        }
+      }
+    }
+
+    if ($errors) {
+      $this->response['message'] = __('Please complete all required fields.', 'tofino');
+      $this->response['type']    = 'validation';
+      $this->response['extra']   = json_encode($errors);
       wp_send_json($this->response);
     }
 
@@ -326,6 +354,10 @@ class AjaxForm
     // email address check
     if (array_key_exists('email', $this->form_data)) { // Found email field
       if (!$this->isValidEmail($this->form_data['email'])) {
+        $errors['email']           = __('Invalid field.', 'tofino');
+        $this->response['message'] = __('Invalid email address.', 'tofino');
+        $this->response['type']    = 'validation';
+        $this->response['extra']   = json_encode($errors);
         wp_send_json($this->response);
       }
     }
