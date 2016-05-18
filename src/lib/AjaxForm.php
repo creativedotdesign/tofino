@@ -129,7 +129,6 @@ class AjaxForm
     $emailArray = explode('@', $email_address); // Split it on @
     $hostname   = $emailArray[1];
     if (filter_var($email_address, FILTER_VALIDATE_EMAIL) === false || checkdnsrr($hostname, 'MX') === false || gethostbyname($hostname) === $hostname) { //DNS lookup of MX or A/CNAME record
-      $this->response['message'] = __('Invalid email address.', 'tofino');
       return false;
     } else {
       return true;
@@ -355,6 +354,10 @@ class AjaxForm
     // email address check
     if (array_key_exists('email', $this->form_data)) { // Found email field
       if (!$this->isValidEmail($this->form_data['email'])) {
+        $errors['email']           = __('Invalid field.', 'tofino');
+        $this->response['message'] = __('Invalid email address.', 'tofino');
+        $this->response['type']    = 'validation';
+        $this->response['extra']   = json_encode($errors);
         wp_send_json($this->response);
       }
     }
