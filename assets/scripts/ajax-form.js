@@ -36,6 +36,19 @@ $form.on('submit', function(e) {
       $form.find(':input').prop('disabled', false); // Re-enable fields
       $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
       //console.error("The following error occured: " + textStatus, errorThrown);
+
+      // Remove any existing failed validation classes
+      $form.find('.form-control-danger').removeClass('form-control-danger');
+      $form.find('.has-danger').removeClass('has-danger');
+
+      if (response.type === 'validation') {
+        console.log(response.extra);
+        var invalidFields = $.parseJSON(response.extra);
+        $.each(invalidFields, function(key) {
+          $form.find('[name=' + key + ']').addClass('form-control-danger');
+          $form.find('[name=' + key + ']').closest('.form-group').addClass('has-danger');
+        });
+      }
     }
   });
 
