@@ -13,7 +13,7 @@ module.exports = function (gulp) {
           format: 'text',
           ruleset: 'codesize,unusedcode,naming'
         }))
-        //.on('error', console.error)
+        .on('error', console.error)
     }, {
       options: {
         'production': 'Fail on error.',
