@@ -108,7 +108,7 @@ function ajax_contact_form() {
 
   $form->validate($fields); // Required  Call validate
 
-  //$data = $form->getData(); // Optional  Do what you want with the sanitized form data
+  $data = $form->getData(); // Optional  Do what you want with the sanitized form data
 
   $post_id = url_to_postid($_SERVER['HTTP_REFERER']); // Get the post_id from the referring page
 
@@ -118,15 +118,29 @@ function ajax_contact_form() {
     $form->respond(false, __('Unable to save data.', 'tofino'));
   }
 
-  $email_success = $form->sendEmail([ // Optional
-    'to'      => $form->getRecipient('contact_form_to_address'),
-    'subject' => get_theme_mod('contact_form_email_subject'),
-    'cc'      => get_theme_mod('contact_form_cc_address'),
-    'from'    => get_theme_mod('contact_form_from_address') // If not defined or blank the server default email address will be used
+  $admin_email_success = $form->sendEmail([ // Optional
+    'to'                 => $form->getRecipient('contact_form_to_address'),
+    'subject'            => get_theme_mod('contact_form_email_subject'),
+    'cc'                 => get_theme_mod('contact_form_cc_address'),
+    'from'               => get_theme_mod('contact_form_from_address'), // If not defined or blank the server default email address will be used
+    'remove_submit_data' => false,
+    'user_email'         => false,
+    'template'           => 'default-form.html'
   ]);
 
-  if (!$email_success) {
-    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
+  $user_email_address = $data['email'];
+
+  $user_email_success = $form->sendEmail([ // Optional
+    'to'                 => $user_email_address,
+    'subject'            => __('Thanks for contacting us!', 'tofino'),
+    'message'            => __('We will be in touch with you in the next 48hrs.', 'tofino'),
+    'remove_submit_data' => true,
+    'user_email'         => true,
+    'template'           => 'default-form.html'
+  ]);
+
+  if (!$admin_email_success || !$user_email_success) {
+    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'rocketpowerskating'));
   }
 
   $form->respond(true, get_theme_mod('contact_form_success_message', __("Thanks, we'll be in touch soon.", 'tofino'))); // Required
