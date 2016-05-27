@@ -212,10 +212,6 @@ class AjaxForm
   private function buildEmailBody(array $settings)
   {
     if (is_array($this->form_data)) {
-      if (array_key_exists('g-recaptcha-response', $this->form_data)) { // Remove reCaptcha from message content
-        unset($this->form_data['g-recaptcha-response']);
-      }
-
       $form_content = null;
       if ($settings['remove_submit_data'] == false) {
         foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
@@ -354,6 +350,8 @@ class AjaxForm
       if ($this->isCaptchaEnabled()) {
         if (!$this->isValidCaptcha($this->post['g-recaptcha-response'])) {
           wp_send_json($this->response);
+        } else { // Valid Captcha
+          unset($this->form_data['g-recaptcha-response']); // Remove from form data array. No longer needed.
         }
       }
     }
