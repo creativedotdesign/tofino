@@ -13,7 +13,8 @@ extends: eslint:recommended
 globals:
   wp: true,
   Cookies: true,
-  tofinoJS: true
+  tofinoJS: true,
+  ajaxForm: true
 
 rules:
   no-console: 0
