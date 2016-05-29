@@ -26,10 +26,12 @@ $tofino_includes = [
   "src/lib/helpers.php",
   "src/lib/relative-urls.php",
   "src/lib/theme-tracker.php",
+  "src/lib/pagination.php",
   "src/forms/contact-form.php",
   "src/shortcodes.php",
   "src/theme-options.php"
 ];
+
 foreach ($tofino_includes as $file) {
   if (!$filepath = locate_template($file)) {
     trigger_error(sprintf(__('Error locating %s for inclusion', 'tofino'), $file), E_USER_ERROR);

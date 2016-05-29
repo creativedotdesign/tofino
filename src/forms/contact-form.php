@@ -36,7 +36,7 @@ function contact_form_settings($wp_customize) {
 
   $wp_customize->add_control('contact_form_cc_address', [
     'label'       => __('CC', 'tofino'),
-    'description' => __('Email address used in the CC field.', 'tofino'),
+    'description' => __('Add CC email address, seperate with a comma and a space (", ") to use multiple addresses.', 'tofino'),
     'section'     => 'tofino_contact_form_settings',
     'type'        => 'text'
   ]);
@@ -94,14 +94,21 @@ add_action('customize_register', __NAMESPACE__ . '\\contact_form_settings');
 function ajax_contact_form() {
   $form = new \Tofino\AjaxForm(); // Required
 
+  // Defined expected fields. Keys should match the input field names
+  $fields = [
+    'name'    => ['required' => true],
+    'email'   => ['required' => true],
+    'message' => ['required' => true]
+  ];
+
   // Optional
   $form->addValidator(function () {
     return true;
   });
 
-  $form->validate(); // Required  Call validate
+  $form->validate($fields); // Required  Call validate
 
-  //$data = $form->getData(); // Optional  Do what you want with the sanitized form data
+  $data = $form->getData(); // Optional  Do what you want with the sanitized form data
 
   $post_id = url_to_postid($_SERVER['HTTP_REFERER']); // Get the post_id from the referring page
 
@@ -111,15 +118,29 @@ function ajax_contact_form() {
     $form->respond(false, __('Unable to save data.', 'tofino'));
   }
 
-  $email_success = $form->sendEmail([ // Optional
-    'to'      => $form->getRecipient('contact_form_to_address'),
-    'subject' => get_theme_mod('contact_form_email_subject'),
-    'cc'      => get_theme_mod('contact_form_cc_address'),
-    'from'    => get_theme_mod('contact_form_from_address')
+  $admin_email_success = $form->sendEmail([ // Optional
+    'to'                 => $form->getRecipient('contact_form_to_address'),
+    'subject'            => get_theme_mod('contact_form_email_subject'),
+    'cc'                 => get_theme_mod('contact_form_cc_address'),
+    'from'               => get_theme_mod('contact_form_from_address'), // If not defined or blank the server default email address will be used
+    'remove_submit_data' => false,
+    'user_email'         => false,
+    'template'           => 'default-form.html'
   ]);
 
-  if (!$email_success) {
-    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
+  $user_email_address = $data['email'];
+
+  $user_email_success = $form->sendEmail([ // Optional
+    'to'                 => $user_email_address,
+    'subject'            => __('Thanks for contacting us!', 'tofino'),
+    'message'            => __('We will be in touch with you in the next 48hrs.', 'tofino'),
+    'remove_submit_data' => true,
+    'user_email'         => true,
+    'template'           => 'default-form.html'
+  ]);
+
+  if (!$admin_email_success || !$user_email_success) {
+    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'rocketpowerskating'));
   }
 
   $form->respond(true, get_theme_mod('contact_form_success_message', __("Thanks, we'll be in touch soon.", 'tofino'))); // Required

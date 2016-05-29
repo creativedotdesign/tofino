@@ -52,7 +52,7 @@ function admin_login_logo() {
     <?php
   }
 }
-add_action('login_enqueue_scripts', __NAMESPACE__ . '\\admin_login_logo');
+add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
 
 
 /**
@@ -493,10 +493,10 @@ function social_settings($wp_customize) {
     'type'    => 'url'
   ]);
 
-  $wp_customize->add_setting('social[linkedin]', ['default' => '']);
+  $wp_customize->add_setting('social[instagram]', ['default' => '']);
 
-  $wp_customize->add_control('social[linkedin]', [
-    'label'   => __('LinkedIn', 'tofino'),
+  $wp_customize->add_control('social[instagram]', [
+    'label'   => __('Instagram', 'tofino'),
     'section' => 'tofino_social_settings',
     'type'    => 'url'
   ]);
@@ -505,6 +505,14 @@ function social_settings($wp_customize) {
 
   $wp_customize->add_control('social[googleplus]', [
     'label'   => __('GooglePlus', 'tofino'),
+    'section' => 'tofino_social_settings',
+    'type'    => 'url'
+  ]);
+
+  $wp_customize->add_setting('social[linkedin]', ['default' => '']);
+
+  $wp_customize->add_control('social[linkedin]', [
+    'label'   => __('LinkedIn', 'tofino'),
     'section' => 'tofino_social_settings',
     'type'    => 'url'
   ]);
@@ -525,10 +533,10 @@ function social_settings($wp_customize) {
     'type'    => 'url'
   ]);
 
-  $wp_customize->add_setting('social[linkedin]', ['default' => '']);
+  $wp_customize->add_setting('social[soundcloud]', ['default' => '']);
 
-  $wp_customize->add_control('social[linkedin]', [
-    'label'   => __('LinkedIn', 'tofino'),
+  $wp_customize->add_control('social[soundcloud]', [
+    'label'   => __('Soundcloud', 'tofino'),
     'section' => 'tofino_social_settings',
     'type'    => 'url'
   ]);
@@ -594,6 +602,15 @@ function advanced_settings($wp_customize) {
     'title'    => __('Advanced', 'tofino'),
     'panel'    => 'tofino_options',
     'priority' => 7
+  ]);
+
+  $wp_customize->add_setting('no_fout', ['default' => '']);
+
+  $wp_customize->add_control('no_fout', [
+    'label'       => __('No FOUT', 'tofino'),
+    'description' => __('Enable the body class to remove the FOUT (Flash of unstyled text).', 'tofino'),
+    'section'     => 'tofino_advanced_settings',
+    'type'        => 'checkbox'
   ]);
 
   $wp_customize->add_setting('critical_css', ['default' => '']);

@@ -1,0 +1,11 @@
+  extends: "stylelint-config-standard"
+  rules:
+    number-leading-zero: null
+    no-invalid-double-slash-comments: null
+    selector-type-case: null
+    block-opening-brace-newline-after: null
+    property-case: null
+    declaration-colon-newline-after: null
+    at-rule-empty-line-before: null
+    comment-empty-line-before: null
+    max-nesting-depth: 5

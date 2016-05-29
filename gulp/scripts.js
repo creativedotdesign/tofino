@@ -43,7 +43,7 @@ module.exports = function (gulp, production, browserSync) {
 
         var bundler = browserify({
           entries: inputs,
-          debug: true
+          debug: false
         });
 
         merged.add(

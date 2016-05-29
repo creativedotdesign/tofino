@@ -25,7 +25,9 @@ class AjaxForm
   private $form_data = [];
   private $response  = [
     'success' => false,
-    'message' => ''
+    'message' => '',
+    'type'    => '',
+    'extra'   => []
   ];
 
 
@@ -43,7 +45,6 @@ class AjaxForm
   {
     $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS;
     parse_str($this->post['data'], $this->form_data);
-    $this->form_data['date_time'] = time(); // Create timestamp for submission
   }
 
 
@@ -128,7 +129,6 @@ class AjaxForm
     $emailArray = explode('@', $email_address); // Split it on @
     $hostname   = $emailArray[1];
     if (filter_var($email_address, FILTER_VALIDATE_EMAIL) === false || checkdnsrr($hostname, 'MX') === false || gethostbyname($hostname) === $hostname) { //DNS lookup of MX or A/CNAME record
-      $this->response['message'] = __('Invalid email address.', 'tofino');
       return false;
     } else {
       return true;
@@ -209,7 +209,7 @@ class AjaxForm
    * @param string $template The filename of HTML the template to use.
    * @return string HTML output ready to be sent via email.
    */
-  private function buildEmailBody($template = 'default-form.html')
+  private function buildEmailBody(array $settings)
   {
     if (is_array($this->form_data)) {
       if (array_key_exists('g-recaptcha-response', $this->form_data)) { // Remove reCaptcha from message content
@@ -217,14 +217,24 @@ class AjaxForm
       }
 
       $form_content = null;
-      foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
-        $key_name      = str_replace('_', ' ', $key);
-        $key_name      = ucfirst($key_name);
-        $form_content .= $key_name . ': ' . ($value ? $value : 'Empty') . '<br>';
+      if ($settings['remove_submit_data'] == false) {
+        foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
+          if ($key == 'date_time') { // Convert unix timestamp to human readable date
+            $value = date('d-M-Y H:i:s', $value);
+          }
+
+          if (is_array($value)) {
+            $value = implode("-", $value);
+          }
+
+          $key_name      = str_replace('_', ' ', $key);
+          $key_name      = ucfirst($key_name);
+          $form_content .= $key_name . ': ' . ($value ? $value : 'Empty') . '<br>';
+        }
       }
     }
 
-    $message = file_get_contents(get_template_directory() . '/templates/email/' . $template); // Get the template.
+    $message = file_get_contents(get_template_directory() . '/templates/email/' . $settings['template']); // Get the template.
 
     if (get_theme_mod('admin_logo')) {
       $src     = get_theme_mod('admin_logo');
@@ -234,8 +244,9 @@ class AjaxForm
     }
 
     $message = str_replace('%form_content%', $form_content, $message);
-    $message = str_replace('%ip_address%', __('Client IP Address: ', 'tofino') . $_SERVER['REMOTE_ADDR'], $message);
-    $message = str_replace('%referrer%', __('Referrer: ', 'tofino') . $_SERVER['HTTP_REFERER'], $message);
+    $message = str_replace('%message%', $settings['message'], $message);
+    $message = str_replace('%ip_address%', (!$settings['user_email'] ? __('Client IP Address: ', 'tofino') . $_SERVER['REMOTE_ADDR'] : ''), $message);
+    $message = str_replace('%referrer%', (!$settings['user_email'] ? __('Referrer: ', 'tofino') . $_SERVER['HTTP_REFERER'] : ''), $message);
 
     return $message;
   }
@@ -261,13 +272,17 @@ class AjaxForm
     }
 
     if (array_key_exists('cc', $settings)) {
-      $headers[] = 'Cc: ' . $settings['cc'];
+      $settings['cc'] = explode(',', $settings['cc']); // Split string on comma
+
+      foreach ($settings['cc'] as $cc_email_address) {
+        $headers[] = 'Cc: ' . trim($cc_email_address);
+      }
     }
 
-    if (array_key_exists('template', $settings)) {
-      $email_body = $this->buildEmailBody($settings['template']);
-    } else {
-      $email_body = $this->buildEmailBody();
+    $email_body = $this->buildEmailBody($settings);
+
+    if (empty($settings['subject'])) {
+      $settings['subject'] = __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME'];
     }
 
     $mail = wp_mail($settings['to'], $settings['subject'], $email_body, $headers);
@@ -299,10 +314,38 @@ class AjaxForm
    * @since 1.2.0
    * @return void
    */
-  public function validate()
+  public function validate($fields)
   {
     // nonce check
     if (!$this->isValidNonce($this->post['nextNonce'])) {
+      wp_send_json($this->response);
+    }
+
+    // Filter fields. Check submitted fields against expected fields.
+    foreach ($this->form_data as $key => $value) {
+      if (!array_key_exists($key, $fields)) {
+        unset($this->form_data[$key]);
+      }
+    }
+
+    // Create timestamp for submission
+    $this->form_data['date_time'] = time();
+
+    // Required fields check
+    $errors = [];
+    foreach ($fields as $key => $value) {
+      if ($value['required']) {
+        $field_value = trim($this->form_data[$key]);
+        if (empty($field_value)) {
+          $errors[$key] = __('Required field.', 'tofino');
+        }
+      }
+    }
+
+    if ($errors) {
+      $this->response['message'] = __('Please complete all required fields.', 'tofino');
+      $this->response['type']    = 'validation';
+      $this->response['extra']   = json_encode($errors);
       wp_send_json($this->response);
     }
 
@@ -318,6 +361,10 @@ class AjaxForm
     // email address check
     if (array_key_exists('email', $this->form_data)) { // Found email field
       if (!$this->isValidEmail($this->form_data['email'])) {
+        $errors['email']           = __('Invalid field.', 'tofino');
+        $this->response['message'] = __('Invalid email address.', 'tofino');
+        $this->response['type']    = 'validation';
+        $this->response['extra']   = json_encode($errors);
         wp_send_json($this->response);
       }
     }
