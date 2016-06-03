@@ -31,6 +31,8 @@
         action: $(this).attr('id'),
         method: '',
         btnProgressText: 'Wait..',
+        beforeSerializeData: function() {},
+        afterSucess: function() {}
       };
 
       var opts = $.extend({}, defaults, options);
@@ -69,6 +71,9 @@
           $form.find(':input').val(''); // Reset fields.
           $form.hide(); // Hide form
           $form.find(':submit').text(btnOrgText); // Set send button text back to default
+
+          opts.afterSucess(); // Callback function
+
         } else {
           $result.addClass('alert alert-danger').html(response.message);
           $form.find(':input').prop('disabled', false); // Re-enable fields
