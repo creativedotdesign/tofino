@@ -30,7 +30,7 @@
         resposneDiv: '.js-form-result',
         action: $(this).attr('id'),
         method: '',
-        beforeSerializeData: function() {}
+        btnProgressText: 'Wait..',
       };
 
       var opts = $.extend({}, defaults, options);
@@ -46,10 +46,13 @@
 
       opts.beforeSerializeData();
 
-      var serializedData = $(this).serialize();
+      var serializedData  = $(this).serialize(),
+          $btnSubmit      = $(this).find(':submit'),
+          btnOrgText      = $btnSubmit.text(), // Get original text value
+          btnProgressText = opts.btnProgressText;
 
       $(this).find(':input').prop('disabled', true);
-      $(this).find(':submit').text('Sending').prop('disabled', true);
+      $btnSubmit.text(btnProgressText).prop('disabled', true); // Set in progress text
 
       request = $.post(
         tofinoJS.ajaxUrl, {
@@ -65,11 +68,11 @@
           $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
           $form.find(':input').val(''); // Reset fields.
           $form.hide(); // Hide form
-          $form.find(':submit').text('Send'); // Set send button text back to default
+          $form.find(':submit').text(btnOrgText); // Set send button text back to default
         } else {
           $result.addClass('alert alert-danger').html(response.message);
           $form.find(':input').prop('disabled', false); // Re-enable fields
-          $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
+          $form.find(':submit').text(btnOrgText).prop('disabled', false); // Reset submit btn
           //console.error("The following error occured: " + textStatus, errorThrown);
 
           // Remove any existing failed validation classes
@@ -91,7 +94,7 @@
         console.log(response);
         $result.addClass('alert alert-danger').html('An error occured.');
         $form.find(':input').prop('disabled', false); // Re-enable fields
-        $form.find(':submit').text('Send').prop('disabled', false); // Reset submit btn
+        $form.find(':submit').text(btnOrgText).prop('disabled', false); // Reset submit btn
         //console.error("The following error occured: " + textStatus, errorThrown);
       });
 
