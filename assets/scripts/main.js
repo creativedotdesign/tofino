@@ -67,6 +67,9 @@ var tofino = {
         $(this).ajaxForm({
           beforeSerializeData: function() {
             console.log('Run this before data serialize!');
+          },
+          afterSucess: function() {
+            console.log('Sucess!');
           }
         });
       });
