@@ -36,7 +36,7 @@
       var opts = $.extend({}, defaults, options);
 
       var request,
-          $form = $(this),
+          $form   = $(this),
           $result = $(opts.resposneDiv),
           $action = opts.action; // Set action as form id value
 
@@ -44,7 +44,7 @@
         request.abort();
       }
 
-      opts.beforeSerializeData();
+      opts.beforeSerializeData(); // Callback function
 
       var serializedData  = $(this).serialize(),
           $btnSubmit      = $(this).find(':submit'),
@@ -56,7 +56,7 @@
 
       request = $.post(
         tofinoJS.ajaxUrl, {
-          action: $action, //Passed to WP for the ajax action
+          action: $action, // Passed to WP for the ajax action
           data: serializedData,
           nextNonce: tofinoJS.nextNonce
         }
