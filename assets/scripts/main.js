@@ -62,7 +62,14 @@ var tofino = {
       //Iniitalize svg4everybody
       svg4everybody();
 
-      console.log($('html').ajaxForm());
+      $('.form-processor').on('submit', function(e) {
+        e.preventDefault(); // Don't really submit.
+        $(this).ajaxForm({
+          beforeSerializeData: function() {
+            console.log('Run this before data serialize!');
+          }
+        });
+      });
 
       //List for notication close
       $('#tofino-notification .close').on('click', function() {
