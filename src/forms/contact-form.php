@@ -140,7 +140,7 @@ function ajax_contact_form() {
   ]);
 
   if (!$admin_email_success || !$user_email_success) {
-    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'rocketpowerskating'));
+    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
   }
 
   $form->respond(true, get_theme_mod('contact_form_success_message', __("Thanks, we'll be in touch soon.", 'tofino'))); // Required
