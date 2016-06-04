@@ -7,6 +7,7 @@ import svg4everybody from 'svg4everybody';
 // Import stickyfill
 import 'Stickyfill/src/stickyfill.js';
 
+// Import ajaxForm
 import './ajax-form.js';
 
 /**
