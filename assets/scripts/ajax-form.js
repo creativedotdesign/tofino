@@ -24,86 +24,90 @@
 }(function ($) {
   $.fn.ajaxForm = function (options) {
 
-    $(this).each(function() {
+    $(this).each(function () {
+      var request;
 
-      var defaults = { //Defaults
-        resposneDiv: '.js-form-result',
-        action: $(this).attr('id'),
-        method: '',
-        btnProgressText: 'Wait..',
-        beforeSerializeData: function() {},
-        afterSucess: function() {}
-      };
+      $(this).on('submit', function(e) {
 
-      var opts = $.extend({}, defaults, options);
+        e.preventDefault(); // Don't really submit.
 
-      var request,
-          $form   = $(this),
-          $result = $(opts.resposneDiv),
-          $action = opts.action; // Set action as form id value
+        var defaults = { //Defaults
+          responseDiv: '.js-form-result',
+          action: $(this).data('wp-action'), //The PHP function name to call via AJAX
+          btnProgressText: 'Wait..',
+          beforeSerializeData: function() {},
+          beforeRedirect: function() {},
+          afterSuccess: function() {}
+        };
 
-      if (request) { // If request exists, bail.
-        request.abort();
-      }
+        var opts = $.extend({}, defaults, options);
 
-      opts.beforeSerializeData(); // Callback function
+        opts.responseDiv = $(opts.responseDiv);
 
-      var serializedData  = $(this).serialize(),
-          $btnSubmit      = $(this).find(':submit'),
-          btnOrgText      = $btnSubmit.text(), // Get original text value
-          btnProgressText = opts.btnProgressText;
+        // var request,
+        var $form = $(this);
 
-      $(this).find(':input').prop('disabled', true);
-      $btnSubmit.text(btnProgressText).prop('disabled', true); // Set in progress text
-
-      request = $.post(
-        tofinoJS.ajaxUrl, {
-          action: $action, // Passed to WP for the ajax action
-          data: serializedData,
-          nextNonce: tofinoJS.nextNonce
+        if (request) { // If request exists, bail.
+          request.abort();
         }
-      );
 
-      request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
-        console.log(response);
-        if (response.success === true) {
-          $result.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
-          $form.find(':input').val(''); // Reset fields.
-          $form.hide(); // Hide form
-          $form.find(':submit').text(btnOrgText); // Set send button text back to default
+        opts.beforeSerializeData(); // Callback function
 
-          opts.afterSucess(); // Callback function
+        var serializedData  = $(this).serialize(),
+            $btnSubmit      = $(this).find(':submit'),
+            btnOrgText      = $btnSubmit.text(), // Get original text value
+            btnProgressText = opts.btnProgressText;
 
-        } else {
-          $result.addClass('alert alert-danger').html(response.message);
-          $form.find(':input').prop('disabled', false); // Re-enable fields
-          $form.find(':submit').text(btnOrgText).prop('disabled', false); // Reset submit btn
-          //console.error("The following error occured: " + textStatus, errorThrown);
+        $(this).find(':input').prop('disabled', true); // Set the disabled state
+        $btnSubmit.text(btnProgressText); // Set in progress text
 
-          // Remove any existing failed validation classes
-          $form.find('.form-control-danger').removeClass('form-control-danger');
-          $form.find('.has-danger').removeClass('has-danger');
-
-          if (response.type === 'validation') {
-            console.log(response.extra);
-            var invalidFields = $.parseJSON(response.extra);
-            $.each(invalidFields, function(key) {
-              $form.find('[name=' + key + ']').addClass('form-control-danger');
-              $form.find('[name=' + key + ']').closest('.form-group').addClass('has-danger');
-            });
+        request = $.post(
+          tofinoJS.ajaxUrl, {
+            action: opts.action, // Passed to WP for the ajax action
+            data: serializedData,
+            nextNonce: tofinoJS.nextNonce
           }
-        }
-      });
+        );
 
-      request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
-        console.log(response);
-        $result.addClass('alert alert-danger').html('An error occured.');
-        $form.find(':input').prop('disabled', false); // Re-enable fields
-        $form.find(':submit').text(btnOrgText).prop('disabled', false); // Reset submit btn
-        //console.error("The following error occured: " + textStatus, errorThrown);
-      });
+        request.done(function(response, textStatus, errorThrown) { // eslint-disable-line
+          if (response.success === true) {
+            if (response.redirect) {
+              opts.beforeRedirect(); // Callback function
+              window.location = response.redirect;
+              return false;
+            }
 
+            opts.responseDiv.removeClass('alert-danger').addClass('alert alert-success').html(response.message);
+            $form.find(':input').val(''); // Reset fields.
+            $form.find(':submit').text(btnOrgText); // Set send button text back to default
+            $form.hide(); // Hide form
+
+            opts.afterSuccess(); // Callback function
+          } else {
+            opts.responseDiv.addClass('alert alert-danger').html(response.message);
+            $form.find(':input').prop('disabled', false); // Re-enable fields
+            $form.find(':submit').text(btnOrgText); // Reset submit btn to org text
+
+            // Remove any existing failed validation classes
+            $form.find('.form-control-danger').removeClass('form-control-danger');
+            $form.find('.has-danger').removeClass('has-danger');
+
+            if (response.type === 'validation') {
+              var invalidFields = $.parseJSON(response.extra);
+              $.each(invalidFields, function(key) {
+                $form.find('[name=' + key + ']').addClass('form-control-danger')
+                  .closest('.form-group').addClass('has-danger');
+              });
+            }
+          }
+        });
+
+        request.fail(function(response, textStatus, errorThrown) { // eslint-disable-line
+          opts.responseDiv.addClass('alert alert-danger').html('An error occured.');
+          $form.find(':input').prop('disabled', false); // Re-enable fields
+          $form.find(':submit').text(btnOrgText); // Reset submit btn
+        });
+      });
     });
-
   };
 }));
