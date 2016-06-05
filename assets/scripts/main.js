@@ -63,16 +63,13 @@ var tofino = {
       //Iniitalize svg4everybody
       svg4everybody();
 
-      $('.form-processor').on('submit', function(e) {
-        e.preventDefault(); // Don't really submit.
-        $(this).ajaxForm({
-          beforeSerializeData: function() {
-            console.log('Run this before data serialize!');
-          },
-          afterSucess: function() {
-            console.log('Sucess!');
-          }
-        });
+      $('.form-processor').ajaxForm({
+        beforeSerializeData: function() {
+          console.log('Run this before data serialize!');
+        },
+        afterSucess: function() {
+          console.log('Sucess!');
+        }
       });
 
       //List for notication close
