@@ -1,7 +1,6 @@
 {
   "scripts": {
     "main.js": [
-      "ajax-form.js",
       "main.js"
     ],
     "head.js": [

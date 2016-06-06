@@ -386,10 +386,11 @@ class AjaxForm
    * @param string $message The message returned to the user
    * @return void
    */
-  public function respond($success, $message)
+  public function respond($success, $message, $redirect = null)
   {
-    $this->response['success'] = $success;
-    $this->response['message'] = $message;
+    $this->response['success']  = $success;
+    $this->response['message']  = $message;
+    $this->response['redirect'] = $redirect;
     wp_send_json($this->response);
   }
 }
