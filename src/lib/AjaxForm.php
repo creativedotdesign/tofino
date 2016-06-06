@@ -331,8 +331,7 @@ class AjaxForm
     $errors = [];
     foreach ($fields as $key => $value) {
       if ($value['required']) {
-        $field_value = trim($this->form_data[$key]);
-        if (empty($field_value)) {
+        if (!isset($this->form_data[$key]) || empty(trim($this->form_data[$key]))) {
           $errors[$key] = __('Required field.', 'tofino');
         }
       }
