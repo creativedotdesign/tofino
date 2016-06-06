@@ -35,7 +35,8 @@ footer {
   background-color: $gray-lightest;
 }
 
-.form-group.required {
+.form-group.required,
+.checkbox.required {
   .form-control-label {
     &::after {
       content: "*";

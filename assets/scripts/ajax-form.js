@@ -97,21 +97,31 @@
           $form.find('.has-danger').removeClass('has-danger');
 
           $form.find(':input')
-            .not(':input[type=button], :input[type=submit], :input[type=reset]') // Select all inputs not buttons
+            .not(':input[type=button], :input[type=submit], :input[type=reset], :checkbox') // Select all inputs not buttons not checkbox
             .addClass('form-control-success') // All valid / green. Server only returns invalid fields
             .each(function() {
               $(this).closest('.form-group').addClass('has-success');
             });
+
+          $form.find(':checkbox').closest('.checkbox').addClass('has-success');
 
           if (response.type === 'validation') {
             var invalidFields = $.parseJSON(response.extra);
             $.each(invalidFields, function(key) {
               $form.find('[name=' + key + ']')
                 .removeClass('form-control-success')
+                .removeClass('has-success') // For checkboxes
                 .addClass('form-control-danger');
-              $form.closest('.form-group')
+              $form.find('[name=' + key + ']').closest('.form-group')
                 .removeClass('has-success')
                 .addClass('has-danger');
+
+              if ($('[name=' + key + ']').is(':checkbox')) {
+                $('[name=' + key + ']')
+                  .closest('.checkbox')
+                  .removeClass('has-success')
+                  .addClass('has-danger');
+              }
             });
           }
         }

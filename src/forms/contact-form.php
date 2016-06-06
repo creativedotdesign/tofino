@@ -96,9 +96,10 @@ function ajax_contact_form() {
 
   // Defined expected fields. Keys should match the input field names
   $fields = [
-    'name'    => ['required' => true],
-    'email'   => ['required' => true],
-    'message' => ['required' => true]
+    'name'              => ['required' => true],
+    'email'             => ['required' => true],
+    'message'           => ['required' => true],
+    'required_checkbox' => ['required' => true]
   ];
 
   // Optional
