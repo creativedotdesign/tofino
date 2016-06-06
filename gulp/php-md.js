@@ -1,4 +1,4 @@
-var phpmd  = require('gulp-phpmd');
+var phpmd = require('gulp-phpmd-plugin');
 
 // Validate files using PHP Mess Dectector
 module.exports = function (gulp) {
@@ -13,7 +13,7 @@ module.exports = function (gulp) {
           format: 'text',
           ruleset: 'codesize,unusedcode,naming'
         }))
-        .on('error', console.error)
+        .pipe(phpmd.reporter('log'));
     }, {
       options: {
         'production': 'Fail on error.',
