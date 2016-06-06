@@ -7,6 +7,9 @@ import svg4everybody from 'svg4everybody';
 // Import stickyfill
 import 'Stickyfill/src/stickyfill.js';
 
+// Import ajaxForm
+import './ajax-form.js';
+
 /**
  * Tether (http://github.hubspot.com/tether/)
  *
@@ -59,6 +62,15 @@ var tofino = {
 
       //Iniitalize svg4everybody
       svg4everybody();
+
+      $('.form-processor').ajaxForm({
+        beforeSerializeData: function() {
+          console.log('Run this before data serialize!');
+        },
+        afterSucess: function() {
+          console.log('Sucess!');
+        }
+      });
 
       //List for notication close
       $('#tofino-notification .close').on('click', function() {

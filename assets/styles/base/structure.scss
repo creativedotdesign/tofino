@@ -38,10 +38,20 @@ footer {
 }
 
 .form-group.required {
-  .form-control-label::after {
-    content: "*";
-    padding-left: 2px;
-    color: $brand-danger;
+  .form-control-label {
+    &::after {
+      content: "*";
+      padding-left: 2px;
+      color: $brand-danger;
+    }
+  }
+
+  &.has-success {
+    .form-control-label {
+      &::after {
+        color: $brand-success;
+      }
+    }
   }
 }
 
