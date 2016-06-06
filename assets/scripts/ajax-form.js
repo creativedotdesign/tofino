@@ -92,11 +92,21 @@
             $form.find('.form-control-danger').removeClass('form-control-danger');
             $form.find('.has-danger').removeClass('has-danger');
 
+            // Make all fields valid / green until next code decides otherwise
+            var inputs = $form.find(':input')
+              .not(':input[type=button], :input[type=submit], :input[type=reset]');
+
+            inputs.addClass('form-control-success');
+
+            $(inputs).each(function() {
+              $(this).closest('.form-group').addClass('has-success');
+            });
+
             if (response.type === 'validation') {
               var invalidFields = $.parseJSON(response.extra);
               $.each(invalidFields, function(key) {
-                $form.find('[name=' + key + ']').addClass('form-control-danger')
-                  .closest('.form-group').addClass('has-danger');
+                $form.find('[name=' + key + ']').removeClass('form-control-success').addClass('form-control-danger')
+                  .closest('.form-group').removeClass('has-success').addClass('has-danger');
               });
             }
           }
