@@ -92,11 +92,10 @@
             $form.find('.form-control-danger').removeClass('form-control-danger');
             $form.find('.has-danger').removeClass('has-danger');
 
-            // Make all fields valid / green until next code decides otherwise
             var inputs = $form.find(':input')
-              .not(':input[type=button], :input[type=submit], :input[type=reset]');
+              .not(':input[type=button], :input[type=submit], :input[type=reset]'); // Select all inputs not buttons
 
-            inputs.addClass('form-control-success');
+            inputs.addClass('form-control-success'); // All valid / green. Server only returns invalid fields
 
             $(inputs).each(function() {
               $(this).closest('.form-group').addClass('has-success');
