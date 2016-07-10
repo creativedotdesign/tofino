@@ -99,8 +99,10 @@ gulp
 node_modules
 .eslintrc.yml
 .gitattributes
-.sass-lint.yml
+.gitignore
+.stylelintrc.yml
 .travis.yml
+.npmrc
 composer.json
 composer.lock
 gulpfile.js
