@@ -105,7 +105,7 @@ function menu_position() {
 
 
 /**
- * Menu
+ * Menu Sticky
  *
  * Returns menu sticky class based on theme option setting.
  *
