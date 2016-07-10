@@ -306,7 +306,7 @@ function notification_settings($wp_customize) {
 
   // Notification expires
   $wp_customize->add_setting('notification_expires', [
-    'default'           => '',
+    'default'           => 999,
     'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_integer',
   ]);
 
