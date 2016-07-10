@@ -8,6 +8,7 @@
 !.gitattributes
 !.eslintrc.yml
 !.stylelintrc.yml
+!.npmrc
 
 # ignore node/grunt dependency directories
 node_modules/
