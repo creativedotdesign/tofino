@@ -95,7 +95,7 @@ add_filter('show_admin_bar', '__return_false');
  */
 function add_post_name_body_class($classes) {
   global $post;
-  if (isset($post)) {
+  if (isset($post) && is_single()) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
 
