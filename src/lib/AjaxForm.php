@@ -239,6 +239,13 @@ class AjaxForm
       $message = str_replace('%email_logo%', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', $message);
     }
 
+    // Replace custom named variables inside of the email template
+    if (array_key_exists('replace_variables', $settings) && is_array($settings['replace_variables'])) {
+      foreach ($settings['replace_variables'] as $key => $value) {
+        $message = str_replace('%' . $key . '%', $value, $message);
+      }
+    }
+
     $message = str_replace('%form_content%', $form_content, $message);
     $message = str_replace('%message%', $settings['message'], $message);
     $message = str_replace('%ip_address%', (!$settings['user_email'] ? __('Client IP Address: ', 'tofino') . $_SERVER['REMOTE_ADDR'] : ''), $message);
