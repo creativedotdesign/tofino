@@ -1,3 +1,5 @@
+var $ = window.jQuery;
+
 // Import svg4everybody
 import svg4everybody from 'svg4everybody';
 
