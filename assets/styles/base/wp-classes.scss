@@ -21,13 +21,13 @@
 
 @include media-breakpoint-up(sm) { // Only float if not on a small device
   .alignleft {
-    @include pull-left;
     margin-right: ($line-height-base / 2) + rem;
+    @include pull-left;
   }
 
   .alignright {
-    @include pull-right;
     margin-left: ($line-height-base / 2) + rem;
+    @include pull-right;
   }
 }
 

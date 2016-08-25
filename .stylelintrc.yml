@@ -9,3 +9,4 @@
     at-rule-empty-line-before: null
     comment-empty-line-before: null
     max-nesting-depth: 5
+    no-empty-source: null
