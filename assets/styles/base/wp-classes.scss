@@ -9,23 +9,25 @@
 }
 
 .aligncenter {
-  @include center-block;
+  display: block;
+  margin: 0 auto;
+  height: auto;
 }
 
 .alignleft,
 .alignright {
-  margin-bottom: ($line-height / 2) + rem;
+  margin-bottom: ($line-height-base / 2) + rem;
 }
 
 @include media-breakpoint-up(sm) { // Only float if not on a small device
   .alignleft {
     @include pull-left;
-    margin-right: ($line-height / 2) + rem;
+    margin-right: ($line-height-base / 2) + rem;
   }
 
   .alignright {
     @include pull-right;
-    margin-left: ($line-height / 2) + rem;
+    margin-left: ($line-height-base / 2) + rem;
   }
 }
 
