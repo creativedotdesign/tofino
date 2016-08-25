@@ -127,7 +127,7 @@
   .bar {
     transition: top 250ms ease, transform 250ms ease 250ms, opacity 100ms ease 250ms;
     display: block;
-    background: $color;
+    background: $hamburger-bar-color;
     width: $bar-width;
     height: $bar-height;
     position: relative;
