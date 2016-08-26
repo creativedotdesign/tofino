@@ -54,7 +54,7 @@ if (file_exists(get_template_directory() . '/vendor/autoload.php')) { //Check co
   if (is_admin()) {
     add_action('admin_notices', 'composer_error_notice');
   } else {
-    wp_die(composer_error_notice(), 'An error occured.');
+    wp_die(composer_error_notice(), __('An error occured.', 'tofino'));
   }
 }
 
@@ -63,7 +63,7 @@ if (!is_dir(get_template_directory() . '/dist')) {
   if (is_admin()) {
     add_action('admin_notices', 'missing_dist_error_notice');
   } else {
-    wp_die(missing_dist_error_notice(), 'An error occured.');
+    wp_die(missing_dist_error_notice(), __('An error occured.', 'tofino'));
   }
 }
 
