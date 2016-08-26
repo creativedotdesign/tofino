@@ -1,10 +1,12 @@
 /*
- * Bootstrap v4.0.0-alpha.2 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v4.0.0-alpha.3 (http://getbootstrap.com)
+ * Copyright 2011-2016 The Bootstrap Authors
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
 // Core variables and mixins
+@import '../../node_modules/bootstrap/scss/custom';
 @import '../../node_modules/bootstrap/scss/variables';
 @import '../../node_modules/bootstrap/scss/mixins';
 
@@ -33,8 +35,7 @@
 //@import '../../node_modules/bootstrap/scss/card';
 //@import '../../node_modules/bootstrap/scss/breadcrumb';
 //@import '../../node_modules/bootstrap/scss/pagination';
-//@import '../../node_modules/bootstrap/scss/pager';
-//@import '../../node_modules/bootstrap/scss/labels';
+//@import '../../node_modules/bootstrap/scss/tags';
 //@import '../../node_modules/bootstrap/scss/jumbotron';
 @import '../../node_modules/bootstrap/scss/alert';
 //@import '../../node_modules/bootstrap/scss/progress';
@@ -51,6 +52,3 @@
 
 // Utility classes
 @import '../../node_modules/bootstrap/scss/utilities';
-@import '../../node_modules/bootstrap/scss/utilities-background';
-@import '../../node_modules/bootstrap/scss/utilities-spacing';
-@import '../../node_modules/bootstrap/scss/utilities-responsive';

@@ -105,7 +105,7 @@ function menu_position() {
 
 
 /**
- * Menu
+ * Menu Sticky
  *
  * Returns menu sticky class based on theme option setting.
  *
@@ -146,32 +146,6 @@ function notification($position) {
         </div>
       </div><?php
     endif;
-  }
-}
-
-
-/**
- * Sanitize text
- *
- * @since 1.2.0
- * @param string $input The input.
- * @return string Sanitized string.
- */
-function sanitize_text($input) {
-  return wp_kses_post(force_balance_tags($input));
-}
-
-
-/**
- * Sanitize integer
- *
- * @since 1.2.0
- * @param string|integer $input The input.
- * @return integer validated integer.
- */
-function sanitize_integer($input) {
-  if (is_numeric($input)) {
-    return intval($input);
   }
 }
 
@@ -294,7 +268,7 @@ function notification_settings($wp_customize) {
   // Notification text
   $wp_customize->add_setting('notification_text', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('notification_text', [
@@ -306,8 +280,8 @@ function notification_settings($wp_customize) {
 
   // Notification expires
   $wp_customize->add_setting('notification_expires', [
-    'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_integer',
+    'default'           => 999,
+    'sanitize_callback' => 'absint',
   ]);
 
   $wp_customize->add_control('notification_expires', [
@@ -356,7 +330,7 @@ function client_data_settings($wp_customize) {
   // Telephone number
   $wp_customize->add_setting('telephone_number', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('telephone_number', [
@@ -368,7 +342,7 @@ function client_data_settings($wp_customize) {
   // Email address
   $wp_customize->add_setting('email_address', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_email',
   ]);
 
   $wp_customize->add_control('email_address', [
@@ -380,7 +354,7 @@ function client_data_settings($wp_customize) {
   // Address
   $wp_customize->add_setting('address', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('address', [
@@ -392,7 +366,7 @@ function client_data_settings($wp_customize) {
   // Company number
   $wp_customize->add_setting('company_number', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('company_number', [
@@ -423,7 +397,7 @@ function google_settings($wp_customize) {
   // Google analytics
   $wp_customize->add_setting('google_analytics', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('google_analytics', [
@@ -436,7 +410,7 @@ function google_settings($wp_customize) {
   // Captcha site key
   $wp_customize->add_setting('captcha_site_key', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('captcha_site_key', [
@@ -448,7 +422,7 @@ function google_settings($wp_customize) {
   // Captcha secret
   $wp_customize->add_setting('captcha_secret', [
     'default'           => '',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('captcha_secret', [
@@ -576,7 +550,7 @@ function footer_settings($wp_customize) {
 
   $wp_customize->add_setting('footer_text', [
     'default' => __('<a href="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href="https://github.com/mrchimp">MrChimp</a> and <a href="https://github.com/danimalweb">Danimalweb</a>.', 'tofino'),
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_text',
+    'sanitize_callback' => 'sanitize_text_field',
   ]);
 
   $wp_customize->add_control('footer_text', [

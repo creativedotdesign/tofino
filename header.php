@@ -29,7 +29,7 @@
   <div id="main-menu" class="collapse navbar-toggleable-xs navbar-wrapper">
     <?php
     if (has_nav_menu('primary_navigation')) :
-      wp_nav_menu(array(
+      wp_nav_menu([
         'menu'            => 'nav_menu',
         'theme_location'  => 'primary_navigation',
         'depth'           => 2,
@@ -39,7 +39,7 @@
         'menu_class'      => 'nav navbar-nav',
         'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
         'walker'          => new Tofino\Nav\NavWalker()
-      ));
+      ]);
     endif; ?>
   </div>
 </nav>

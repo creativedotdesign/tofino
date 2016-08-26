@@ -209,26 +209,28 @@ class AjaxForm
    * @param string $template The filename of HTML the template to use.
    * @return string HTML output ready to be sent via email.
    */
-  private function buildEmailBody($template = 'default-form.html')
+  private function buildEmailBody(array $settings)
   {
     if (is_array($this->form_data)) {
-      if (array_key_exists('g-recaptcha-response', $this->form_data)) { // Remove reCaptcha from message content
-        unset($this->form_data['g-recaptcha-response']);
-      }
-
       $form_content = null;
-      foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
-        if ($key == 'date_time') { // Convert unix timestamp to human readable date
-          $value = date('d-M-Y H:i:s', $value);
-        }
+      if ($settings['remove_submit_data'] == false) {
+        foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
+          if ($key == 'date_time') { // Convert unix timestamp to human readable date
+            $value = date('d-M-Y H:i:s', $value);
+          }
 
-        $key_name      = str_replace('_', ' ', $key);
-        $key_name      = ucfirst($key_name);
-        $form_content .= $key_name . ': ' . ($value ? $value : 'Empty') . '<br>';
+          if (is_array($value)) {
+            $value = implode("-", $value);
+          }
+
+          $key_name      = str_replace('_', ' ', $key);
+          $key_name      = ucfirst($key_name);
+          $form_content .= $key_name . ': ' . ($value ? $value : 'Empty') . '<br>';
+        }
       }
     }
 
-    $message = file_get_contents(get_template_directory() . '/templates/email/' . $template); // Get the template.
+    $message = file_get_contents(get_template_directory() . '/templates/email/' . $settings['template']); // Get the template.
 
     if (get_theme_mod('admin_logo')) {
       $src     = get_theme_mod('admin_logo');
@@ -237,9 +239,17 @@ class AjaxForm
       $message = str_replace('%email_logo%', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', $message);
     }
 
+    // Replace custom named variables inside of the email template
+    if (array_key_exists('replace_variables', $settings) && is_array($settings['replace_variables'])) {
+      foreach ($settings['replace_variables'] as $key => $value) {
+        $message = str_replace('%' . $key . '%', $value, $message);
+      }
+    }
+
     $message = str_replace('%form_content%', $form_content, $message);
-    $message = str_replace('%ip_address%', __('Client IP Address: ', 'tofino') . $_SERVER['REMOTE_ADDR'], $message);
-    $message = str_replace('%referrer%', __('Referrer: ', 'tofino') . $_SERVER['HTTP_REFERER'], $message);
+    $message = str_replace('%message%', $settings['message'], $message);
+    $message = str_replace('%ip_address%', (!$settings['user_email'] ? __('Client IP Address: ', 'tofino') . $_SERVER['REMOTE_ADDR'] : ''), $message);
+    $message = str_replace('%referrer%', (!$settings['user_email'] ? __('Referrer: ', 'tofino') . $_SERVER['HTTP_REFERER'] : ''), $message);
 
     return $message;
   }
@@ -272,11 +282,7 @@ class AjaxForm
       }
     }
 
-    if (array_key_exists('template', $settings)) {
-      $email_body = $this->buildEmailBody($settings['template']);
-    } else {
-      $email_body = $this->buildEmailBody();
-    }
+    $email_body = $this->buildEmailBody($settings);
 
     if (empty($settings['subject'])) {
       $settings['subject'] = __('Form submission from ', 'tofino') . $_SERVER['SERVER_NAME'];
@@ -332,8 +338,7 @@ class AjaxForm
     $errors = [];
     foreach ($fields as $key => $value) {
       if ($value['required']) {
-        $field_value = trim($this->form_data[$key]);
-        if (empty($field_value)) {
+        if (!isset($this->form_data[$key]) || empty(trim($this->form_data[$key]))) {
           $errors[$key] = __('Required field.', 'tofino');
         }
       }
@@ -351,6 +356,8 @@ class AjaxForm
       if ($this->isCaptchaEnabled()) {
         if (!$this->isValidCaptcha($this->post['g-recaptcha-response'])) {
           wp_send_json($this->response);
+        } else { // Valid Captcha
+          unset($this->form_data['g-recaptcha-response']); // Remove from form data array. No longer needed.
         }
       }
     }
@@ -385,10 +392,11 @@ class AjaxForm
    * @param string $message The message returned to the user
    * @return void
    */
-  public function respond($success, $message)
+  public function respond($success, $message, $redirect = null)
   {
-    $this->response['success'] = $success;
-    $this->response['message'] = $message;
+    $this->response['success']  = $success;
+    $this->response['message']  = $message;
+    $this->response['redirect'] = $redirect;
     wp_send_json($this->response);
   }
 }

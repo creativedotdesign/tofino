@@ -8,7 +8,7 @@
           <!-- Empty div for form response -->
           <div class="js-form-result"></div>
 
-          <form name="contact" class="contact-form form-processor" id="contact-form">
+          <form name="contact" class="contact-form form-processor" data-wp-action="contact-form">
 
             <!-- Name / Text input -->
             <fieldset class="form-group required">
@@ -30,6 +30,13 @@
              <textarea class="form-control" name="message" id="message" rows="3" placeholder="<?php _e('Message', 'tofino'); ?>" required="required"></textarea>
              <small class="text-muted"><?php _e("Tell us what you want us to know.", 'tofino'); ?></small>
            </fieldset>
+
+           <!-- Checkbox -->
+           <div class="checkbox required">
+              <label class="form-control-label">
+                <input type="checkbox" name="required_checkbox" value="1" required="required"> <?php _e('I agree'); ?>
+              </label>
+            </div>
 
           <?php if (true == get_theme_mod('contact_form_captcha')) : ?>
             <!-- Not a Robot -->
