@@ -5,9 +5,10 @@ namespace Tofino;
  * Menu item will allow us to load the page to display the table
  */
 function add_menu_contact_form_data_table_page() {
-  add_menu_page('Form Data', 'Form Data', 'manage_options', 'form-data', false, 'dashicons-list-view');
-  add_submenu_page('form-data', 'Contact Forms', 'Contact Forms', 'manage_options', 'contact-form-data', __NAMESPACE__ . '\\list_table_page', 'dashicons-email');
+  add_menu_page('Form Data', 'Form Data', 'manage_options', 'contact-form-data', false, 'dashicons-list-view');
+  add_submenu_page('form-data', 'Contact Form', 'Contact Form', 'manage_options', 'contact-form-data', __NAMESPACE__ . '\\list_table_page', 'dashicons-email');
 }
+
 if (is_admin()) {
   add_action('admin_menu', __NAMESPACE__ . '\\add_menu_contact_form_data_table_page');
 }
@@ -47,7 +48,7 @@ class ContactFormDataTable extends \WP_List_Table {
     $sortable = $this->get_sortable_columns();
     $post_id  = \Tofino\Helpers\get_id_by_slug('contact');
 
-    $this->_column_headers = array($columns, $hidden, $sortable);
+    $this->_column_headers = [$columns, $hidden, $sortable];
     $this->items           = $this->table_data($post_id);
   }
 
@@ -74,7 +75,7 @@ class ContactFormDataTable extends \WP_List_Table {
    * @return Array
    */
   public function get_hidden_columns() {
-    return array();
+    return [];
   }
 
   /**
@@ -83,7 +84,12 @@ class ContactFormDataTable extends \WP_List_Table {
    * @return Array
    */
   public function get_sortable_columns() {
-    return array('name' => array('name', false));
+    return [
+      'name'      => ['name', true],
+      'email'     => ['email', true],
+      'id'        => ['id', true],
+      'date_time' => ['date_time', true]
+    ];
   }
 
   /**
@@ -92,7 +98,7 @@ class ContactFormDataTable extends \WP_List_Table {
    * @return Array
    */
   private function table_data($post_id) {
-    //$data = get_post_meta($post_id, 'contact_form'); // Keeping is clean
+    //$data = get_post_meta($post_id, 'contact_form'); // Keeping it clean
 
     // More complex but we get an ID and more control
     $dirty_data = \Tofino\Helpers\get_complete_meta($post_id, 'contact_form');
