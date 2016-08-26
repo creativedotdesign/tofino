@@ -107,6 +107,7 @@ composer.json
 composer.lock
 gulpfile.js
 package.json
+npm-shrinkwrap.json
 ruleset.xml
 **/*.md
 ```
