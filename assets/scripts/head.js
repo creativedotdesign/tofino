@@ -11,7 +11,7 @@ global.loadCSS = fgLoadcss.loadCSS; // Make it global
 // import Tether from "tether";  // eslint-disable-line no-unused-vars
 // window.Tether = Tether;
 
-//import WebFont from 'webfontloader'; // Web Font Loader (https://github.com/typekit/webfontloader)
+// import WebFont from 'webfontloader'; // Web Font Loader (https://github.com/typekit/webfontloader)
 
 // Google font example.
 // WebFont.load({

@@ -32,9 +32,9 @@
 
       $(this).addClass('submitting');
 
-      var defaults = { //Defaults
+      var defaults = { // Defaults
         responseDiv: '.js-form-result',
-        action: $(this).data('wp-action'), //The PHP function name to call via AJAX
+        action: $(this).data('wp-action'), // The PHP function name to call via AJAX
         btnProgressText: 'Wait..',
         beforeSerializeData: function() {},
         beforeRedirect: function() {},
