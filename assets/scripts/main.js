@@ -11,31 +11,22 @@ import common from './routes/common';
 import './ajax-form';
 
 /**
- * Tether (http://github.hubspot.com/tether/)
- *
- * Tether is a Bootstrap 4 dependency when including Tooltip or Popover
- * You must include Tether if including the full Bootstrap JS code or tooltip.js or popover.js
- */
-//import Tether from 'tether';  // eslint-disable-line no-unused-vars
-
-/**
  * Bootstrap Components
  *
- * If your build requires Tooltip or Popover then you must include Tether.
+ * If your build requires Tooltip or Popover then you must include Tether. See
+ * head.js for Tether include code.
  */
-/* eslint-disable no-unused-vars */
-// import Alert from 'bootstrap';
-// import Button from 'bootstrap';
-// import Carousel from 'bootstrap';
-import Collapse from 'bootstrap';
-import Dropdown from 'bootstrap';
-// import Modal from 'bootstrap';
-// import Popover from 'bootstrap';
-// import Scrollspy from 'bootstrap';
-// import Tab from 'bootstrap';
-// import Tooltip from 'bootstrap';
-// import Util from 'bootstrap';
-/* eslint-enable no-unused-vars */
+ // import "bootstrap/js/dist/util.js";
+ // import "bootstrap/js/dist/alert.js";
+ // import "bootstrap/js/dist/button.js";
+ // import "bootstrap/js/dist/carousel.js";
+ import "bootstrap/js/dist/collapse.js"; // Mobile menu
+ import "bootstrap/js/dist/dropdown.js"; // Menu dropdown
+ // import "bootstrap/js/dist/modal.js";
+ // import "bootstrap/js/dist/scrollspy.js";
+ // import "bootstrap/js/dist/tab.js";
+ // import "bootstrap/js/dist/tooltip.js"; // Requires tether
+ // import "bootstrap/js/dist/popover.js"; // Requires tether
 
 // Use this variable to set up the common and page specific functions. If you
 // rename this variable, you will also need to rename the namespace below.
