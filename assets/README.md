@@ -18,7 +18,9 @@ Images will be compressed, optimised and converted to progressive loading using 
 
 ## /scripts
 
-Javascript files belong here. They will *not* automatically be brought into `/dist`. To do this you should add them to `manifest.json`. Scripts will be minified when gulp is run with the `--production` flag.
+Javascript files belong here. They will *not* automatically be brought into `/dist`. To do this you should add them to `manifest.json` or use require / import within an existing JS file.
+
+Scripts will be minified when gulp is run with the `--production` flag.
 
 ## /styles
 

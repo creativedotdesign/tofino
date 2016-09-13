@@ -25,7 +25,7 @@ export default {
       }
     });
 
-    //List for notication close
+    // List for notication close
     $('#tofino-notification .close').on('click', function() {
       if (tofinoJS.cookieExpires) {
         Cookies.set('tofino-notification-closed', 'yes', {expires: parseInt(tofinoJS.cookieExpires)});
@@ -34,14 +34,14 @@ export default {
       }
     });
 
-    //Assign sticky
+    // Assign sticky
     var $sticky = $('.navbar-sticky-top');
 
     if ($sticky.length) {
-      //Sticky polyfill for css position: sticky
+      // Sticky polyfill for css position: sticky
       $sticky.Stickyfill();
 
-      //Assign stick offset
+      // Assign stick offset
       var stickyTop = $sticky.offset().top;
 
       $(window).scroll(function() {
