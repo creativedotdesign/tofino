@@ -1,6 +1,3 @@
-// Assign jQuery to $
-var $ = window.jQuery;
-
 // Import router
 import Router from './router';
 
@@ -21,4 +18,4 @@ const routes = {
 };
 
 // Load Events
-$(document).ready(() => new Router(routes).loadEvents());
+document.addEventListener('DOMContentLoaded', () => new Router(routes).loadEvents());
