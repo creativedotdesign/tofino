@@ -3,6 +3,7 @@ import Router from './router';
 
 // Import local deps
 import common from './routes/common';
+import contact from './routes/contact';
 
 // Import ajaxForm
 import './ajax-form';
@@ -14,7 +15,9 @@ import 'bootstrap/dist/js/bootstrap';
 // rename this variable, you will also need to rename the namespace below.
 const routes = {
   // All pages
-  common
+  common,
+  // Contact page
+  contact,
 };
 
 // Load Events
