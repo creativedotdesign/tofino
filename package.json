@@ -1,7 +1,7 @@
 {
   "name": "Tofino",
   "private": true,
-  "version": "1.4.0",
+  "version": "1.5.0",
   "main": "gulpfile.js",
   "description": "A WordPress starter theme for jumpstarting custom theme development.",
   "keywords": [
