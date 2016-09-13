@@ -15,10 +15,13 @@ export default {
 
     $('.form-processor').ajaxForm({
       beforeSerializeData: function() {
-        console.log('Run this before data serialize!');
+        console.log('Before data serialize callback function.');
       },
       afterSucess: function() {
-        console.log('Sucess!');
+        console.log('Success callback function.');
+      },
+      afterError: function() {
+        console.log('Error callback function.');
       }
     });
 
