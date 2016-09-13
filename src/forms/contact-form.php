@@ -96,9 +96,10 @@ function ajax_contact_form() {
 
   // Defined expected fields. Keys should match the input field names
   $fields = [
-    'name'    => ['required' => true],
-    'email'   => ['required' => true],
-    'message' => ['required' => true]
+    'name'              => ['required' => true],
+    'email'             => ['required' => true],
+    'message'           => ['required' => true],
+    'required_checkbox' => ['required' => true]
   ];
 
   // Optional
@@ -125,7 +126,11 @@ function ajax_contact_form() {
     'from'               => get_theme_mod('contact_form_from_address'), // If not defined or blank the server default email address will be used
     'remove_submit_data' => false,
     'user_email'         => false,
-    'template'           => 'default-form.html'
+    'template'           => 'default-form.html',
+    'replace_variables'  => [
+      'website_name' => null,
+      'department'   => null
+    ]
   ]);
 
   $user_email_address = $data['email'];
@@ -136,11 +141,15 @@ function ajax_contact_form() {
     'message'            => __('We will be in touch with you in the next 48hrs.', 'tofino'),
     'remove_submit_data' => true,
     'user_email'         => true,
-    'template'           => 'default-form.html'
+    'template'           => 'default-form.html',
+    'replace_variables'  => [
+      'website_name' => __('Test company name', 'tofino'),
+      'department'   => __('Department A', 'tofino')
+    ]
   ]);
 
   if (!$admin_email_success || !$user_email_success) {
-    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'rocketpowerskating'));
+    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
   }
 
   $form->respond(true, get_theme_mod('contact_form_success_message', __("Thanks, we'll be in touch soon.", 'tofino'))); // Required

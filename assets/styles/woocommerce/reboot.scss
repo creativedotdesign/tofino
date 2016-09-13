@@ -59,7 +59,6 @@
   .woocommerce-info,
   .checkout_coupon {
     margin: 0 0 20px;
-
   }
 
   @include media-breakpoint-up(sm) {
@@ -238,7 +237,6 @@
     .place-order {
       text-align: right;
     }
-
   } // big screen
 }
 /* stylelint-enable */

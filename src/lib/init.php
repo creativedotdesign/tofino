@@ -10,6 +10,21 @@
 namespace Tofino\Init;
 
 /**
+ * PHP version check
+ *
+ * @since 1.5.0
+ * @return void
+ */
+function php_version_check() {
+  $php_version = phpversion();
+  if (version_compare($php_version, '5.5.9', '<')) {
+    wp_die('<div class="error notice"><p>' . __('PHP version >= 5.5.9 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
+  }
+}
+add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
+
+
+/**
  * Theme setup
  *
  * @since 1.0.0
@@ -95,7 +110,7 @@ add_filter('show_admin_bar', '__return_false');
  */
 function add_post_name_body_class($classes) {
   global $post;
-  if (isset($post)) {
+  if (isset($post) && is_single()) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
 

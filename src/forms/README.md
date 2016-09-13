@@ -41,6 +41,8 @@ The email template includes the following variables: ``%email_logo%, %form_conte
 
 You can create additional templates and pass in the filename of the template when calling the function ``$AjaxForm->sendEmail()``. See example usage in `src/forms/contact-form.php`.
 
+You can add custom variables inside of the email template and pass in an array of keys and values directly via the sendEmail function called from your PHP function. See the contact-form.php example code.
+
 ## Additional info
 
 If the To email address field has not been defined the email address defined in the Client Data theme options screen will be used.

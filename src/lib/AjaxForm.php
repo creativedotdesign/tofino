@@ -212,10 +212,6 @@ class AjaxForm
   private function buildEmailBody(array $settings)
   {
     if (is_array($this->form_data)) {
-      if (array_key_exists('g-recaptcha-response', $this->form_data)) { // Remove reCaptcha from message content
-        unset($this->form_data['g-recaptcha-response']);
-      }
-
       $form_content = null;
       if ($settings['remove_submit_data'] == false) {
         foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
@@ -241,6 +237,13 @@ class AjaxForm
       $message = str_replace('%email_logo%', $src, $message);
     } else {
       $message = str_replace('%email_logo%', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', $message);
+    }
+
+    // Replace custom named variables inside of the email template
+    if (array_key_exists('replace_variables', $settings) && is_array($settings['replace_variables'])) {
+      foreach ($settings['replace_variables'] as $key => $value) {
+        $message = str_replace('%' . $key . '%', $value, $message);
+      }
     }
 
     $message = str_replace('%form_content%', $form_content, $message);
@@ -335,8 +338,7 @@ class AjaxForm
     $errors = [];
     foreach ($fields as $key => $value) {
       if ($value['required']) {
-        $field_value = trim($this->form_data[$key]);
-        if (empty($field_value)) {
+        if (!isset($this->form_data[$key]) || empty(trim($this->form_data[$key]))) {
           $errors[$key] = __('Required field.', 'tofino');
         }
       }
@@ -354,6 +356,8 @@ class AjaxForm
       if ($this->isCaptchaEnabled()) {
         if (!$this->isValidCaptcha($this->post['g-recaptcha-response'])) {
           wp_send_json($this->response);
+        } else { // Valid Captcha
+          unset($this->form_data['g-recaptcha-response']); // Remove from form data array. No longer needed.
         }
       }
     }
@@ -388,10 +392,11 @@ class AjaxForm
    * @param string $message The message returned to the user
    * @return void
    */
-  public function respond($success, $message)
+  public function respond($success, $message, $redirect = null)
   {
-    $this->response['success'] = $success;
-    $this->response['message'] = $message;
+    $this->response['success']  = $success;
+    $this->response['message']  = $message;
+    $this->response['redirect'] = $redirect;
     wp_send_json($this->response);
   }
 }

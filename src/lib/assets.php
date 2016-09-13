@@ -159,8 +159,8 @@ function localize_scripts() {
     wp_localize_script('tofino/js', 'tofinoJS', array(
       'ajaxUrl'       => admin_url('admin-ajax.php'),
       'nextNonce'     => wp_create_nonce('next_nonce'),
-      'cookieExpires' => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires') : ""),
-      'themeUrl' => get_template_directory_uri()
+      'cookieExpires' => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires') : 999),
+      'themeUrl'      => get_template_directory_uri()
     ));
   }
 }
