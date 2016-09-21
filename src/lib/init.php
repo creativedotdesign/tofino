@@ -117,6 +117,14 @@ function add_post_name_body_class($classes) {
   if (get_theme_mod('no_fout')) {
     $classes[] = 'no-fout';
   }
+
+  // Add page slug if it doesn't exist
+  if (is_single() || is_page() && !is_front_page()) {
+    if (!in_array($post->post_name, $classes)) {
+      $classes[] = $post->post_name;
+    }
+  }
+
   return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
