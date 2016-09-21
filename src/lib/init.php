@@ -114,6 +114,7 @@ function add_post_name_body_class(array $classes) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
 
+  // Add no-fount class if theme option set to true
   if (get_theme_mod('no_fout')) {
     $classes[] = 'no-fout';
   }
