@@ -55,5 +55,9 @@ export default {
   },
   finalize() {
     // JavaScript to be fired on all pages, after page specific JS is fired
+  },
+  loaded() {
+    // Javascript to be fired on page once fully loaded
+    console.log('Windows loaded!')
   }
 };
