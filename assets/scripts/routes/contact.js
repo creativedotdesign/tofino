@@ -1,3 +1,6 @@
+// We need jQuery
+var $ = window.jQuery;
+
 export default {
   init() {
     console.log('Run COntact code');

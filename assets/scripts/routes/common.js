@@ -1,3 +1,4 @@
+// We need jQuery
 var $ = window.jQuery;
 
 // Import svg4everybody
