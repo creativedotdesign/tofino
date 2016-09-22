@@ -9,11 +9,12 @@ module.exports = function (gulp, production, allowlint) {
   gulp.task('styles:lint',
     'Lints all SCSS files.',
     function() {
-      gulp.src(paths.styles + '**/*.scss')
+      return gulp
+        .src(paths.styles + '**/*.scss')
         .pipe(stylelint({
           syntax: 'scss',
           reporters: [
-            {formatter: 'verbose', console: true}
+            {formatter: 'string', console: true}
           ]
         }))
         .pipe(gulpif(production, gulpif(allowlint, stylelint({
