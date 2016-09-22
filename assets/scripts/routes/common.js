@@ -4,6 +4,9 @@ var $ = window.jQuery;
 // Import svg4everybody
 import svg4everybody from 'svg4everybody';
 
+// Import Cookies
+import Cookies from 'js-cookie';
+
 // Import stickyfill
 import 'Stickyfill/src/stickyfill.js';
 
