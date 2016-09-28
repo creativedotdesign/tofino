@@ -171,6 +171,21 @@ function sanitize_choices($input, $setting) {
 
 
 /**
+ * Sanitize textarea
+ *
+ * Keeps line breaks
+ * Replace once this patch merged: https://core.trac.wordpress.org/ticket/32257
+ *
+ * @since 1.6.0
+ * @param string $input The input.
+ * @return string Sanitized string.
+ */
+function sanitize_textarea($input) {
+  return implode("\n", array_map('sanitize_text_field', explode("\n", $input)));;
+}
+
+
+/**
  * Add theme options link
  *
  * Add the Customize link to the admin menu.
@@ -354,7 +369,7 @@ function client_data_settings($wp_customize) {
   // Address
   $wp_customize->add_setting('address', [
     'default'           => '',
-    'sanitize_callback' => 'sanitize_text_field',
+    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_textarea',
   ]);
 
   $wp_customize->add_control('address', [
