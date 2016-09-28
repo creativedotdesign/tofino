@@ -181,7 +181,7 @@ function sanitize_choices($input, $setting) {
  * @return string Sanitized string.
  */
 function sanitize_textarea($input) {
-  return implode("\n", array_map('sanitize_text_field', explode("\n", $input)));;
+  return implode("\n", array_map('sanitize_text_field', explode("\n", $input)));
 }
 
 
