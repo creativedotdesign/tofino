@@ -31,3 +31,23 @@ function get_page_name($page_id = null) {
   }
   return $pagename;
 }
+
+function get_id_by_slug($slug, $post_type = 'page') {
+  $page = get_page_by_path($slug, 'OBJECT', $post_type);
+  if (!$page) {
+    if (function_exists('icl_object_id')) { //WPML installed
+      $page = get_page(icl_object_id($page->ID, 'page', true, ICL_LANGUAGE_CODE));
+    }
+  }
+  return $page->ID;
+}
+
+function get_complete_meta($post_id, $meta_key) {
+  global $wpdb;
+  $mid = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $post_id, $meta_key));
+  if ($mid != '') {
+    return $mid;
+  } else {
+    return false;
+  }
+}
