@@ -21,8 +21,9 @@ export default class Router {
   }
 
   loadEvents(type) {
-    // Fire common init JS
-    this.fire('common');
+    if (type == null) {
+      this.fire('common'); // Fire common init JS
+    }
 
     // Fire page-specific init JS, and then finalize JS
     document.body.className
@@ -30,19 +31,18 @@ export default class Router {
       .replace(/-/g, '_')
       .split(/\s+/)
       .forEach((className) => {
-        if (type !== '') {
-          this.fire(className, type);
-        } else {
+        if (type == null ) {
           this.fire(className);
           this.fire(className, 'finalize');
+        } else {
+          this.fire(className, type);
         }
       });
 
-    if (type !== '') {
-      this.fire('common', type);
+    if (type == null) {
+      this.fire('common', 'finalize'); // Fire common finalize JS
     } else {
-      // Fire common finalize JS
-      this.fire('common', 'finalize');
+      this.fire('common', type);
     }
   }
 }
