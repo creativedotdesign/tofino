@@ -18,11 +18,11 @@
 
 <nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_sticky(); ?> <?php echo \Tofino\ThemeOptions\menu_position(); ?>">
   <button class="navbar-toggler hidden-sm-up collapsed" type="button" data-toggle="collapse" data-target="#main-menu">
-    <div class="bar-wrapper">
+    <span class="bar-wrapper">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
-    </div>
+    </span>
     <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
   </button>
   <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>

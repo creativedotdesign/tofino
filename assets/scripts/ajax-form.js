@@ -23,8 +23,18 @@
   }
 }(function ($) {
   $.fn.ajaxForm = function (options) {
+    var $submitActor = null;
+    var $submitActors = $(this).find(':submit'); // All submit buttons in form
+
     $(this).on('submit', function(e) {
       e.preventDefault(); // Don't really submit.
+
+      if (null === $submitActor) {
+        // If no actor is explicitly clicked, the browser will
+        // automatically choose the first in source-order
+        // so we do the same here
+        $submitActor = $submitActors[0];
+      }
 
       if ($(this).hasClass('submitting')) {
         return false;
@@ -52,7 +62,7 @@
       opts.beforeSerializeData(); // Callback function
 
       var serializedData  = $(this).serialize(),
-          $btnSubmit      = $(this).find(':submit'),
+          $btnSubmit      = $submitActor,
           btnOrgText      = $btnSubmit.text(), // Get original text value
           btnProgressText = opts.btnProgressText;
 
@@ -82,14 +92,14 @@
             .html(response.message);
 
           $form.find(':input').val(''); // Reset fields.
-          $form.find(':submit').text(btnOrgText); // Set send button text back to default
+          $submitActor.text(btnOrgText); // Set send button text back to default
 
           if (opts.hideFormAfterSucess === true) {
             $form.hide(); // Hide form
           } else {
             $form.find(':input').prop('disabled', false); // Re-enable fields
           }
-          
+
           opts.afterSuccess(); // Callback function
         } else {
           opts.responseDiv
@@ -97,7 +107,7 @@
             .html(response.message);
 
           $form.find(':input').prop('disabled', false); // Re-enable fields
-          $form.find(':submit').text(btnOrgText); // Reset submit btn to org text
+          $submitActor.text(btnOrgText); // Reset submit btn to org text
 
           // Remove any existing failed validation classes
           $form.find('.form-control-danger').removeClass('form-control-danger');
@@ -141,9 +151,13 @@
           .addClass('alert alert-danger')
           .html('An error occured.');
         $form.find(':input').prop('disabled', false); // Re-enable fields
-        $form.find(':submit').text(btnOrgText); // Reset submit btn
+        $submitActor.text(btnOrgText); // Reset submit btn
         $form.removeClass('submitting');
       });
+    });
+
+    $submitActors.click(function() { // Assign button on click
+      $submitActor = $(this);
     });
   };
 }));

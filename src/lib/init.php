@@ -108,15 +108,24 @@ add_filter('show_admin_bar', '__return_false');
  * @param array $classes array of current classes on the body tag
  * @return array updated to include the post_type and post_name
  */
-function add_post_name_body_class($classes) {
+function add_post_name_body_class(array $classes) {
   global $post;
   if (isset($post) && is_single()) {
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
 
+  // Add no-fount class if theme option set to true
   if (get_theme_mod('no_fout')) {
     $classes[] = 'no-fout';
   }
+
+  // Add page slug if it doesn't exist
+  if (is_single() || is_page() && !is_front_page()) {
+    if (!in_array($post->post_name, $classes)) {
+      $classes[] = $post->post_name;
+    }
+  }
+
   return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');

@@ -29,7 +29,7 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 
 ## Features
 
-* [Bootstrap 4](http://getbootstrap.com/) (Pre-release Alpha 2)
+* [Bootstrap 4](http://getbootstrap.com/) (Pre-release Alpha 4)
 * Multilingual ready (WPML)
 * Responsive
 * Theme Options via WP Customizer (Native)

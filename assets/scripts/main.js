@@ -25,3 +25,6 @@ const routes = {
 
 // Load Events
 document.addEventListener('DOMContentLoaded', () => new Router(routes).loadEvents());
+
+// Window Loaded
+window.onload = () => new Router(routes).loadEvents('loaded');

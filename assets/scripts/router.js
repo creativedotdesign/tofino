@@ -20,17 +20,29 @@ export default class Router {
     }
   }
 
-  loadEvents() {
-    // Fire common init JS
-    this.fire('common');
+  loadEvents(type) {
+    if (type == null) {
+      this.fire('common'); // Fire common init JS
+    }
 
     // Fire page-specific init JS, and then finalize JS
-    document.body.className.replace(/-/g, '_').split(/\s+/).forEach((className) => {
-      this.fire(className);
-      this.fire(className, 'finalize');
-    });
+    document.body.className
+      .toLowerCase()
+      .replace(/-/g, '_')
+      .split(/\s+/)
+      .forEach((className) => {
+        if (type == null ) {
+          this.fire(className);
+          this.fire(className, 'finalize');
+        } else {
+          this.fire(className, type);
+        }
+      });
 
-    // Fire common finalize JS
-    this.fire('common', 'finalize');
+    if (type == null) {
+      this.fire('common', 'finalize'); // Fire common finalize JS
+    } else {
+      this.fire('common', type);
+    }
   }
 }
