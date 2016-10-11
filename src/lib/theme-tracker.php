@@ -76,7 +76,7 @@ add_action('customize_register', __NAMESPACE__ . '\\theme_tracker_settings');
  * @return void
  */
 function missing_apikey_notice() {
-  if (get_theme_mod('theme_tracker_enabled') !== 'disabled' && !get_theme_mod('theme_tracker_api_key')) { ?>
+  if (get_theme_mod('theme_tracker_enabled') == 'enabled' && !get_theme_mod('theme_tracker_api_key')) { ?>
     <div class="error notice">
       <p><?php _e('Theme tracking is enabled but is missing the API Key.', 'tofino'); ?></p>
     </div><?php
@@ -96,7 +96,7 @@ add_action('admin_notices', __NAMESPACE__ . '\\missing_apikey_notice', 1);
  * @return void
  */
 function theme_tracker() {
-  if (get_theme_mod('theme_tracker_enabled') !== 'disabled') { // Only if enabled
+  if (get_theme_mod('theme_tracker_enabled') == 'enabled') { // Only if enabled
 
     if (get_theme_mod('theme_tracker_debug')) {
       delete_transient('theme_tracking'); // Used to clear the transient for testing

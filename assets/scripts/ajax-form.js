@@ -32,13 +32,15 @@
 
       $(this).addClass('submitting');
 
-      var defaults = { //Defaults
+      var defaults = { // Defaults
         responseDiv: '.js-form-result',
-        action: $(this).data('wp-action'), //The PHP function name to call via AJAX
+        action: $(this).data('wp-action'), // The PHP function name to call via AJAX
         btnProgressText: 'Wait..',
+        hideFormAfterSucess: true,
         beforeSerializeData: function() {},
         beforeRedirect: function() {},
-        afterSuccess: function() {}
+        afterSuccess: function() {},
+        afterError: function() {}
       };
 
       var opts = $.extend({}, defaults, options);
@@ -81,8 +83,13 @@
 
           $form.find(':input').val(''); // Reset fields.
           $form.find(':submit').text(btnOrgText); // Set send button text back to default
-          $form.hide(); // Hide form
 
+          if (opts.hideFormAfterSucess === true) {
+            $form.hide(); // Hide form
+          } else {
+            $form.find(':input').prop('disabled', false); // Re-enable fields
+          }
+          
           opts.afterSuccess(); // Callback function
         } else {
           opts.responseDiv
@@ -124,6 +131,8 @@
               }
             });
           }
+
+          opts.afterError(); // Callback function
         }
       });
 
