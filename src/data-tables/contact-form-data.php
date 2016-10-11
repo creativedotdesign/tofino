@@ -120,7 +120,7 @@ class ContactFormDataTable extends \WP_List_Table {
     }
 
     if (isset($_REQUEST['orderby']) && isset($_REQUEST['order'])) {
-      usort($data, function($a, $b) {
+      usort($data, function ($a, $b) {
         $order_by = $_REQUEST['orderby'];
         $order    = $_REQUEST['order'];
         if ($order === 'asc') {
