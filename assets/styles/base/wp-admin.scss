@@ -18,26 +18,24 @@ $white: #fff;
   }
 }
 
-.form-data_page_contact-form-data {
-  .wp-list-table {
-    .column-id {
-      width: 5%;
-    }
+.wp-list-table.contactforms {
+  .column-id {
+    width: 5%;
+  }
 
-    .column-date-time {
-      width: 10%;
-    }
+  .column-date-time {
+    width: 10%;
+  }
 
-    .column-name {
-      width: 15%;
-    }
+  .column-name {
+    width: 15%;
+  }
 
-    .column-email {
-      width: 25%;
-    }
+  .column-email {
+    width: 25%;
+  }
 
-    .column-message {
-      width: 45%;
-    }
+  .column-message {
+    width: 45%;
   }
 }
