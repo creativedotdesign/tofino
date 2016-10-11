@@ -40,7 +40,6 @@ module.exports = function (gulp, production, browserSync) {
           }
         });
 
-
         var bundler = browserify({
           entries: inputs,
           debug: false
