@@ -33,7 +33,7 @@ module.exports = function (gulp, browserSync) {
         util.log('Image file changed: ' + file.path + '');
       });
 
-      gulp.watch(paths.scripts + '*.js', ['scripts']).on('change', function(file) {
+      gulp.watch(paths.scripts + '**/*.js', ['scripts']).on('change', function(file) {
         util.log('JS file changed: ' + file.path + '');
       });
 
