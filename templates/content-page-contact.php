@@ -10,7 +10,7 @@
           <!-- Empty div for form response -->
           <div class="js-form-result"></div>
 
-          <form name="contact" class="contact-form form-processor" data-wp-action="contact-form">
+          <form name="contact" class="contact-form" data-wp-action="contact-form">
 
             <!-- Name / Text input -->
             <fieldset class="form-group required">
