@@ -1,6 +1,8 @@
 <?php
 namespace Tofino;
 
+use \Tofino\Helpers as h;
+
 /**
  * Menu item will allow us to load the page to display the table
  */
@@ -46,7 +48,7 @@ class ContactFormDataTable extends \WP_List_Table {
     $columns  = $this->get_columns();
     $hidden   = $this->get_hidden_columns();
     $sortable = $this->get_sortable_columns();
-    $post_id  = \Tofino\Helpers\get_id_by_slug('contact');
+    $post_id  = h\get_id_by_slug('contact');
 
     $this->_column_headers = [$columns, $hidden, $sortable];
     $this->items           = $this->table_data($post_id);
@@ -60,10 +62,10 @@ class ContactFormDataTable extends \WP_List_Table {
   public function get_columns() {
     $columns = [
       'id'        => 'ID',
-      'date_time' => 'Date / Time',
-      'name'      => 'Name',
-      'email'     => 'Email',
-      'message'   => 'Message'
+      'date_time' => __('Date / Time', 'tofino'),
+      'name'      => __('Name', 'tofino'),
+      'email'     => __('Email', 'tofino'),
+      'message'   => __('Message', 'tofino')
     ];
 
     return $columns;
@@ -101,7 +103,7 @@ class ContactFormDataTable extends \WP_List_Table {
     //$data = get_post_meta($post_id, 'contact_form'); // Keeping it clean
 
     // More complex but we get an ID and more control
-    $dirty_data = \Tofino\Helpers\get_complete_meta($post_id, 'contact_form');
+    $dirty_data = h\get_complete_meta($post_id, 'contact_form');
 
     $data = [];
     foreach ($dirty_data as $entry) {
@@ -115,6 +117,18 @@ class ContactFormDataTable extends \WP_List_Table {
         'email'     => $response['email'],
         'message'   => $response['message']
       ];
+    }
+
+    if (isset($_REQUEST['orderby']) && isset($_REQUEST['order'])) {
+      usort($data, function($a, $b) {
+        $order_by = $_REQUEST['orderby'];
+        $order    = $_REQUEST['order'];
+        if ($order === 'asc') {
+          return $a[$order_by] > $b[$order_by];
+        } elseif ($order === 'desc') {
+          return $a[$order_by] < $b[$order_by];
+        }
+      });
     }
 
     return $data;
