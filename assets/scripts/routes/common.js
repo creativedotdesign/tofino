@@ -17,18 +17,6 @@ export default {
     //Iniitalize svg4everybody
     svg4everybody();
 
-    $('.form-processor').ajaxForm({
-      beforeSerializeData: function() {
-        console.log('Before data serialize callback function.');
-      },
-      afterSucess: function() {
-        console.log('Success callback function.');
-      },
-      afterError: function() {
-        console.log('Error callback function.');
-      }
-    });
-
     // List for notication close
     $('#tofino-notification .close').on('click', function() {
       if (tofinoJS.cookieExpires) {
@@ -62,6 +50,5 @@ export default {
   },
   loaded() {
     // Javascript to be fired on page once fully loaded
-    console.log('Windows loaded!')
   }
 };
