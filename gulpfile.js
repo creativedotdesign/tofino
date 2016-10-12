@@ -9,7 +9,7 @@ var production = util.env.production || false,
     allowlint  = util.env.allowlint || false,
     stagingUrl = util.env.stagingUrl || false,
     mobile     = util.env.desktop || false,
-    slug       = util.env.slug || null;
+    slug       = util.env.slug || '';
 
 // Override standard gulp.src task to use plumber
 var _gulpsrc = gulp.src;
