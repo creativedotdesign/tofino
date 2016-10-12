@@ -6,8 +6,9 @@ var gulp        = require('gulp-help')(require('gulp'), {hideDepsMessage: true})
     browserSync = require('browser-sync').create();
 
 var production = util.env.production || false,
-    allowlint  = util.env.allowlint  || false,
-    stagingUrl = util.env.stagingUrl || false;
+    allowlint  = util.env.allowlint || false,
+    stagingUrl = util.env.stagingUrl || false,
+    mobile     = util.env.desktop || false;
 
 // Override standard gulp.src task to use plumber
 var _gulpsrc = gulp.src;
@@ -56,6 +57,14 @@ require('./gulp/php-md')(gulp);
 
 // Deletes the build folder entirely.
 require('./gulp/clean')(gulp);
+
+require('./gulp/ngrok')(gulp);
+
+require('./gulp/psi')(gulp, mobile);
+
+require('./gulp/w3c')(gulp);
+
+require('./gulp/wave')(gulp);
 
 // Watch Files For Changes
 require('./gulp/watch')(gulp, browserSync);

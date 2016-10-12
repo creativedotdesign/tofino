@@ -34,6 +34,7 @@
     }
   ],
   "devDependencies": {
+    "access-sniff": "^2.4.4",
     "babel-eslint": "^7.0.0",
     "babel-preset-es2015": "^6.14.0",
     "babelify": "^7.3.0",
@@ -64,9 +65,12 @@
     "gulp-util": "~3.0.7",
     "imagemin-pngquant": "~5.0.0",
     "merge-stream": "~1.0.0",
+    "ngrok": "^2.2.3",
+    "psi": "^2.0.4",
     "stylelint-config-standard": "^13.0.2",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "w3cjs": "^0.3.0"
   },
   "dependencies": {
     "Stickyfill": "github:wilddeer/stickyfill#1.1.4",
@@ -78,10 +82,14 @@
     "webfontloader": "^1.6.26"
   },
   "browserify": {
-    "transform": [ "browserify-shim" ]
+    "transform": [
+      "browserify-shim"
+    ]
   },
   "browserify-shim": {
     "jquery": "$",
-    "./assets/scripts/ajax-form.js": { "exports": "ajaxForm" }
+    "./assets/scripts/ajax-form.js": {
+      "exports": "ajaxForm"
+    }
   }
 }
