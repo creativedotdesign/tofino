@@ -58,12 +58,19 @@ require('./gulp/php-md')(gulp);
 // Deletes the build folder entirely.
 require('./gulp/clean')(gulp);
 
-require('./gulp/ngrok')(gulp);
+// Browser sync for the Ngrok tunnel
+require('./gulp/browser-sync')(gulp, browserSync);
 
+// Ngrok for tunnels
+require('./gulp/ngrok')(gulp, browserSync);
+
+// Google Page Speed Insights
 require('./gulp/psi')(gulp, mobile);
 
-require('./gulp/w3c')(gulp);
+// W3C HTML validation
+require('./gulp/w3c-validate')(gulp);
 
+// WAVE Accessibility validation
 require('./gulp/wave')(gulp);
 
 // Watch Files For Changes
