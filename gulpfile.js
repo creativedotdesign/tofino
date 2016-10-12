@@ -63,16 +63,16 @@ require('./gulp/clean')(gulp);
 require('./gulp/browser-sync')(gulp, browserSync);
 
 // Ngrok for tunnels
-require('./gulp/ngrok')(gulp, browserSync);
+require('./gulp/ngrok')(gulp, util, browserSync);
 
 // Google Page Speed Insights
-require('./gulp/psi')(gulp, slug, mobile);
+require('./gulp/psi')(gulp, util, slug, mobile);
 
 // W3C HTML validation
-require('./gulp/w3c-validate')(gulp, slug);
+require('./gulp/w3c-validate')(gulp, util, slug);
 
 // WAVE Accessibility validation
-require('./gulp/wave')(gulp, slug);
+require('./gulp/wave')(gulp, util, slug);
 
 // Watch Files For Changes
 require('./gulp/watch')(gulp, browserSync);

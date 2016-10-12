@@ -1,6 +1,6 @@
 var psi  = require('psi');
 
-module.exports = function (gulp, slug, mobile) {
+module.exports = function (gulp, util, slug, mobile) {
   'use strict';
   gulp.task(
     'psi',
@@ -8,13 +8,13 @@ module.exports = function (gulp, slug, mobile) {
     ['browser-sync', 'ngrok'],
     function(cb) {
       var site = process.env.URL  + '/' + slug;
-      console.log('Running Google PSI against URL: ' + site);
+      util.log('Running Google PSI against URL: ' + util.colors.magenta(site));
       return psi.output(site, {
         nokey: 'true',
         strategy: (mobile ? 'mobile' : 'desktop'),
-        // Set to low value as default 70 throws un-catchable error for
-        // threshold not met due to local speed issues.
-        threshold: 50
+        threshold: 70 // Default threshold
+      }).catch(function (err) {
+        util.log(util.colors.red(err));
       }).then(function () {
         cb();
         process.exit(1);

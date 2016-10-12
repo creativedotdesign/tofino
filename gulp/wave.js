@@ -1,6 +1,6 @@
 var AccessSniff = require('access-sniff');
 
-module.exports = function (gulp, slug) {
+module.exports = function (gulp, util, slug) {
   'use strict';
   gulp.task(
     'wave',
@@ -8,7 +8,7 @@ module.exports = function (gulp, slug) {
     ['browser-sync', 'ngrok'],
     function() {
       var site = process.env.URL  + '/' + slug;
-      console.log('Running WAVE accessibility against: ' + site);
+      util.log('Running WAVE accessibility against: ' + util.colors.magenta(site));
       AccessSniff
         .default(site, {
           accessibilityLevel: 'WCAG2A',
