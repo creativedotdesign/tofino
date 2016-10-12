@@ -66,6 +66,7 @@
     "imagemin-pngquant": "~5.0.0",
     "merge-stream": "~1.0.0",
     "ngrok": "^2.2.3",
+    "prettyjson": "^1.1.3",
     "psi": "^2.0.4",
     "stylelint-config-standard": "^13.0.2",
     "vinyl-buffer": "^1.0.0",

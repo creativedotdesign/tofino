@@ -8,7 +8,8 @@ var gulp        = require('gulp-help')(require('gulp'), {hideDepsMessage: true})
 var production = util.env.production || false,
     allowlint  = util.env.allowlint || false,
     stagingUrl = util.env.stagingUrl || false,
-    mobile     = util.env.desktop || false;
+    mobile     = util.env.desktop || false,
+    slug       = util.env.slug || null;
 
 // Override standard gulp.src task to use plumber
 var _gulpsrc = gulp.src;
@@ -65,13 +66,13 @@ require('./gulp/browser-sync')(gulp, browserSync);
 require('./gulp/ngrok')(gulp, browserSync);
 
 // Google Page Speed Insights
-require('./gulp/psi')(gulp, mobile);
+require('./gulp/psi')(gulp, slug, mobile);
 
 // W3C HTML validation
-require('./gulp/w3c-validate')(gulp);
+require('./gulp/w3c-validate')(gulp, slug);
 
 // WAVE Accessibility validation
-require('./gulp/wave')(gulp);
+require('./gulp/wave')(gulp, slug);
 
 // Watch Files For Changes
 require('./gulp/watch')(gulp, browserSync);
