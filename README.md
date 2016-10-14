@@ -45,14 +45,17 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 	* Footer text
 	* Notification text / EU Cookie notice with top/bottom positions
 	* Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
+	* Data Tables for viewing data submitted via the contact form
 	* Maintenance mode
 	* jQuery in footer
 	* Critical CSS (with loadCSS function)
 	* [Theme Tracker](https://github.com/lambdacreatives/tracker)
-* [DOM-based routing](http://goo.gl/EUTi53)
+* JS ES6 compatible via Babel and Browserify.
+* [DOM-based routing](http://goo.gl/EUTi53) for DOM Ready and Window Ready via advanced router
 * [SCSS](http://sass-lang.com/)
 * [Gulp](http://gulpjs.com/) build script
-	* Includes [eslint](https://github.com/eslint/eslint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+	* Includes [eslint](https://github.com/eslint/eslint), [stylelint](https://github.com/stylelint/stylelint), and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) for keeping source code up to standard. Custom rulesets to tweaking additional rules.
+	* Includes [Google Page Speed Insights](https://github.com/addyosmani/psi), [W3C Validation](https://github.com/addyosmani/psi) and [AccessSniff](https://github.com/yargalot/AccessSniff) via [Ngrok](https://github.com/bubenshchykov/ngrok)
 	* Use `gulp help` for a full task list with descriptions
 * [Composer](https://getcomposer.org/) for PHP package management
 * Custom Nav-walker Bootstrap 4 ready
@@ -103,6 +106,8 @@ node_modules
 .stylelintrc.yml
 .travis.yml
 .npmrc
+.bitbucket-pipelines.yml
+.hound.yml
 composer.json
 composer.lock
 gulpfile.js
