@@ -99,20 +99,37 @@ add_shortcode('option', 'ot_shortcode');
  * @param array $atts class value to include on the UL element.
  * @return string HTML output of unordered list with social icons as SVGS with links.
  */
-function social_icons($atts = array()) {
+function social_icons($atts = []) {
   $theme_mods = get_theme_mods();
   $output     = '';
 
   if (!empty($theme_mods['social'])) {
     $social_links = $theme_mods['social'];
 
-    $atts = shortcode_atts(array(
-      'class' => ''
-    ), $atts, 'option');
+    $atts = shortcode_atts([
+      'class'     => '',
+      'platforms' => ''
+    ], $atts, 'option');
 
     if (!empty($social_links) && (array_filter($social_links))) {
       $output .= '<ul class="social-icons ' . $atts['class'] . '">';
 
+      // Filter the social networks based on platform param
+      if (!empty($atts['platforms'])) {
+        $platforms    = array_map('trim', explode(',', $atts['platforms']));
+        $social_links = array_intersect_key($social_links, array_flip($platforms));
+
+        // More readable but only PHP >= 5.6. The above array_intersect_key
+        // works fine down to PHP 5.3.
+        //
+        // $social_links = array_filter($social_links, function($value, $key) use ($platforms) {
+        //   if (in_array($key, $platforms)) {
+        //     return true;
+        //   }
+        // }, ARRAY_FILTER_USE_BOTH);
+      }
+
+      // Build the links and icons
       foreach ($social_links as $key => $value) {
         if (!empty($value)) {
           $output .= '<li><a href="' . esc_url($value) . '" title="' . $key . '">' . svg(sanitize_title($key)) . '</a></li>';
