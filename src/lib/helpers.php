@@ -34,12 +34,20 @@ function get_page_name($page_id = null) {
 
 function get_id_by_slug($slug, $post_type = 'page') {
   $page = get_page_by_path($slug, 'OBJECT', $post_type);
-  if (!$page) {
+  if ($page) {
+    return $page->ID;
+  } else {
     if (function_exists('icl_object_id')) { //WPML installed
       $page = get_page(icl_object_id($page->ID, 'page', true, ICL_LANGUAGE_CODE));
+      if ($page) {
+        return $page->ID;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
     }
   }
-  return $page->ID;
 }
 
 function get_complete_meta($post_id, $meta_key) {
