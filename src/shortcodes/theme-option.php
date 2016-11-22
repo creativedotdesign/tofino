@@ -10,15 +10,15 @@
  */
 function ot_shortcode($atts) {
   if (gettype($atts) === 'string') {
-    $atts = array(
+    $atts = [
       'id' => $atts
-    );
+    ];
   }
 
-  $atts = shortcode_atts(array(
+  $atts = shortcode_atts([
     'id'      => '',
     'default' => ''
-  ), $atts, 'option');
+  ], $atts, 'option');
 
   return get_theme_mod($atts['id'], $atts['default']);
 }

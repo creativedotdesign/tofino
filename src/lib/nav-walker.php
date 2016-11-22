@@ -6,12 +6,12 @@ class NavWalker extends \Walker_Nav_Menu {
   private $archive; // Stores the archive page for current URL
 
   public function __construct() {
-    add_filter('nav_menu_css_class', array($this, 'cssClasses'), 10, 2);
-    add_filter('nav_menu_link_attributes', array($this, 'filter_menu_link_atts'), 10, 3);
-    add_filter('walker_nav_menu_start_el', array($this, 'filter_menu_item_output'), 10, 4);
+    add_filter('nav_menu_css_class', [$this, 'cssClasses'], 10, 2);
+    add_filter('nav_menu_link_attributes', [$this, 'filter_menu_link_atts'], 10, 3);
+    add_filter('walker_nav_menu_start_el', [$this, 'filter_menu_item_output'], 10, 4);
     add_filter('nav_menu_item_id', '__return_null');
     $cpt           = get_post_type();
-    $this->cpt     = in_array($cpt, get_post_types(array('_builtin' => false)));
+    $this->cpt     = in_array($cpt, get_post_types(['_builtin' => false]));
     $this->archive = get_post_type_archive_link($cpt);
   }
 
@@ -23,7 +23,7 @@ class NavWalker extends \Walker_Nav_Menu {
   * @param int $depth Depth of page. Used for padding.
   */
   // @codingStandardsIgnoreStart
-  public function start_lvl(&$output, $depth = 0, $args = array()) {
+  public function start_lvl(&$output, $depth = 0, $args = [] {
     parent::start_lvl($output, $depth, $args);
     $pos    = strrpos($output, '">', -1);
     $output = substr_replace($output, ' dropdown-menu" role="menu">', $pos);
@@ -108,7 +108,7 @@ class NavWalker extends \Walker_Nav_Menu {
   public function filter_menu_link_atts($atts, $item, $args) {
 
     if (is_object($args->walker)) { // Filter if custom walker
-      $classes   = array();
+      $classes   = [];
       $classes[] = 'nav-link';
 
       if ($args->walker->has_children) {
