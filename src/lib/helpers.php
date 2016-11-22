@@ -84,3 +84,38 @@ function get_complete_meta($post_id, $meta_key) {
     return false;
   }
 }
+
+
+/**
+ * Sanitizes choices (selects / radios)
+ *
+ * Checks that the input matches one of the available choices
+
+ * @param string $input The input.
+ * @param object $setting The setting to validate.
+ * @since 1.2.0
+ */
+function sanitize_choices($input, $setting) {
+  global $wp_customize;
+  $control = $wp_customize->get_control($setting->id);
+  if (array_key_exists($input, $control->choices)) {
+    return $input;
+  } else {
+    return $setting->default;
+  }
+}
+
+
+/**
+ * Sanitize textarea
+ *
+ * Keeps line breaks
+ * Replace once this patch merged: https://core.trac.wordpress.org/ticket/32257
+ *
+ * @since 1.6.0
+ * @param string $input The input.
+ * @return string Sanitized string.
+ */
+function sanitize_textarea($input) {
+  return implode("\n", array_map('sanitize_text_field', explode("\n", $input)));
+}

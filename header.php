@@ -1,3 +1,7 @@
+<?php
+use \Tofino\ThemeOptions\Menu as m;
+use \Tofino\ThemeOptions\Notifications as n; ?>
+
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -8,7 +12,7 @@
 </head>
 <body <?php body_class(); ?>>
 
-<?php \Tofino\ThemeOptions\notification('top'); ?>
+<?php n\notification('top'); ?>
 
 <!--[if lte IE 9]>
   <div class="alert alert-danger browser-warning">
@@ -16,7 +20,7 @@
   </div>
 <![endif]-->
 
-<nav class="navbar navbar-light <?php echo \Tofino\ThemeOptions\menu_sticky(); ?> <?php echo \Tofino\ThemeOptions\menu_position(); ?>">
+<nav class="navbar navbar-light <?php echo m\menu_sticky(); ?> <?php echo m\menu_position(); ?>">
   <button class="navbar-toggler hidden-sm-up collapsed" type="button" data-toggle="collapse" data-target="#main-menu">
     <span class="bar-wrapper">
       <span class="bar"></span>

@@ -8,8 +8,6 @@
 
 namespace Tofino\Assets;
 
-use Tofino\ThemeOptions;
-
 /**
  * Load styles
  *

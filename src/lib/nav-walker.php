@@ -1,5 +1,4 @@
 <?php
-
 namespace Tofino\Nav;
 
 class NavWalker extends \Walker_Nav_Menu {

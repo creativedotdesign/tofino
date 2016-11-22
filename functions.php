@@ -20,17 +20,29 @@ $theme_config = [
  *
  */
 $tofino_includes = [
+  'src/data-tables/contact-form-data.php',
+  "src/forms/contact-form.php",
   "src/lib/nav-walker.php",
   "src/lib/init.php",
   "src/lib/assets.php",
   "src/lib/helpers.php",
-  "src/lib/relative-urls.php",
-  "src/lib/theme-tracker.php",
   "src/lib/pagination.php",
-  "src/forms/contact-form.php",
-  "src/shortcodes.php",
-  "src/theme-options.php",
-  'src/data-tables/contact-form-data.php'
+  "src/shortcodes/copyright.php",
+  "src/shortcodes/social-icons.php",
+  "src/shortcodes/svg.php",
+  "src/shortcodes/theme-option.php",
+  "src/theme-options/admin.php",
+  "src/theme-options/advanced.php",
+  "src/theme-options/client-data.php",
+  "src/theme-options/footer.php",
+  "src/theme-options/google-analytics.php",
+  "src/theme-options/google-recaptcha.php",
+  "src/theme-options/init.php",
+  "src/theme-options/maintenance-mode.php",
+  "src/theme-options/menu.php",
+  "src/theme-options/notifications.php",
+  "src/theme-options/social-networks.php",
+  "src/theme-options/theme-tracker.php",
 ];
 
 foreach ($tofino_includes as $file) {
@@ -49,7 +61,7 @@ unset($file, $filepath);
  * Use 'composer dump-autoload -o' after adding new files.
  *
  */
-if (file_exists(get_template_directory() . '/vendor/autoload.php')) { //Check composer autoload file exists. Result is cached by PHP.
+if (file_exists(get_template_directory() . '/vendor/autoload.php')) { // Check composer autoload file exists. Result is cached by PHP.
   require_once 'vendor/autoload.php';
 } else {
   if (is_admin()) {
