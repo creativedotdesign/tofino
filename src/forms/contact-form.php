@@ -126,6 +126,7 @@ function ajax_contact_form() {
     'from'               => get_theme_mod('contact_form_from_address'), // If not defined or blank the server default email address will be used
     'remove_submit_data' => false,
     'user_email'         => false,
+    'message'            => $data['message'],
     'template'           => 'default-form.html',
     'replace_variables'  => [
       'website_name' => null,

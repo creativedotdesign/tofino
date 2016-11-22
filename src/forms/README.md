@@ -5,7 +5,7 @@ Handle validation and processing of HTML forms via Ajax.
 ## Features
 - Uses Ajax
 - Save submitted form data as post meta
-- Email form data to website administrator and to the user submitting the form
+- Email form data to website administrator and/or to the user submitting the form
 - Google reCaptcha to prevent Spam
 - Custom HTML email templates
 - Custom email subjects
@@ -15,6 +15,7 @@ Handle validation and processing of HTML forms via Ajax.
 - Server side validation
 - Add custom validation or additional form processing (e.g. Stripe checkout or send form data to an external API) via ``addValidator`` callback function.
 - Multilingual ready
+- Custom variables
 
 ## Files
 - `src/forms/contact-form.php` - Example form processing usage. Define expected fields, WP Customizer options, PHP function called on submit (via Ajax request).
@@ -61,7 +62,7 @@ The PHP function called by the Ajax request is defined by the WordPress ``add_ac
 
 Example:
 
-``<form class="form-processor" id="contact-form">``
+``<form class="form-processor" wp-data-action="contact-form">``
 
 ```
 function ajax_contact_form() {

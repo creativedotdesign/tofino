@@ -70,7 +70,7 @@ if (!is_dir(get_template_directory() . '/dist')) {
 
 // Admin notice for missing composer autoload.
 function composer_error_notice() {
-  ?><div class="error notice">
+?><div class="error notice">
     <p><?php _e('Composer autoload file not found. Run composer install on the command line.', 'tofino'); ?></p>
   </div><?php
 }

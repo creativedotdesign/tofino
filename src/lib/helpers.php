@@ -32,16 +32,49 @@ function get_page_name($page_id = null) {
   return $pagename;
 }
 
+
+/**
+ * Gets the page / post ID from slug.
+ *
+ * If WPML is active and the function fails to find a valid page ID it will look
+ * for the translated version.
+ *
+ * @since 1.0.0
+ *
+ * @param  string $slug The slug to search against
+ * @param  string $post_type page, post etc
+ * @return integer|null
+ */
 function get_id_by_slug($slug, $post_type = 'page') {
   $page = get_page_by_path($slug, 'OBJECT', $post_type);
-  if (!$page) {
+  if ($page) {
+    return $page->ID;
+  } else {
     if (function_exists('icl_object_id')) { //WPML installed
       $page = get_page(icl_object_id($page->ID, 'page', true, ICL_LANGUAGE_CODE));
+      if ($page) {
+        return $page->ID;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
     }
   }
-  return $page->ID;
 }
 
+
+/**
+ * Get Complete Meta
+ *
+ * Gets the complete meta data attached to a post for a meta key.
+ *
+ * @since 1.6.0
+ *
+ * @param  integer $post_id  The post id
+ * @param  string  $meta_key The meta key to search
+ * @return object  A PHP Object containing the meta data with key value pairs
+ */
 function get_complete_meta($post_id, $meta_key) {
   global $wpdb;
   $mid = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $post_id, $meta_key));
