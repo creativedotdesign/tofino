@@ -9,6 +9,10 @@
 
 namespace Tofino;
 
+// Alias Respect Validation classes
+use \Respect\Validation\Validator as v;
+use \Respect\Validation\Exceptions\NestedValidationExceptionInterface;
+
 /**
  * Ajax Form
  *
@@ -105,30 +109,6 @@ class AjaxForm
     if (!$resp->isSuccess()) {
       // $errors = $resp->getErrorCodes(); // Should we send some real error codes back to the user?
       $this->response['message'] = __('Captcha failed.', 'tofino');
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-
-  /**
-   * Email address validation
-   *
-   * Checks syntax, DNS MX record exists and hostname resloves to an IPV4 address.
-   *
-   * @since 1.2.0
-   * @see http://php.net/manual/en/filter.filters.validate.php
-   * @see http://php.net/manual/en/function.checkdnsrr.php
-   * @see http://php.net/manual/en/function.gethostbyname.php
-   * @param string $email_address The email address to validate.
-   * @return boolean If the email addresses is valid or not.
-   */
-  private function isValidEmail($email_address)
-  {
-    $emailArray = explode('@', $email_address); // Split it on @
-    $hostname   = $emailArray[1];
-    if (filter_var($email_address, FILTER_VALIDATE_EMAIL) === false || checkdnsrr($hostname, 'MX') === false || gethostbyname($hostname) === $hostname) { //DNS lookup of MX or A/CNAME record
       return false;
     } else {
       return true;
@@ -325,6 +305,7 @@ class AjaxForm
     }
 
     // Filter fields. Check submitted fields against expected fields.
+    // Remove any fields not defined in the array.
     foreach ($this->form_data as $key => $value) {
       if (!array_key_exists($key, $fields)) {
         unset($this->form_data[$key]);
@@ -334,18 +315,20 @@ class AjaxForm
     // Create timestamp for submission
     $this->form_data['date_time'] = time();
 
-    // Required fields check
-    $errors = [];
+    $errors = []; // To store any errors.
+
+    // Loop through each field checking it value against the assigned validation
+    // rules. Add error message to array if validation fails.
     foreach ($fields as $key => $value) {
-      if ($value['required']) {
-        if (!isset($this->form_data[$key]) || trim($this->form_data[$key]) == null) {
-          $errors[$key] = __('Required field.', 'tofino');
-        }
+      try {
+        $value->check($this->form_data[$key]);
+      } catch (\InvalidArgumentException $ex) {
+        $errors[$key] = $ex->getMainMessage();
       }
     }
 
     if ($errors) {
-      $this->response['message'] = __('Please complete all required fields.', 'tofino');
+      $this->response['message'] = __('Validation failed.', 'tofino');
       $this->response['type']    = 'validation';
       $this->response['extra']   = json_encode($errors);
       wp_send_json($this->response);
@@ -359,17 +342,6 @@ class AjaxForm
         } else { // Valid Captcha
           unset($this->form_data['g-recaptcha-response']); // Remove from form data array. No longer needed.
         }
-      }
-    }
-
-    // email address check
-    if (array_key_exists('email', $this->form_data)) { // Found email field
-      if (!$this->isValidEmail($this->form_data['email'])) {
-        $errors['email']           = __('Invalid field.', 'tofino');
-        $this->response['message'] = __('Invalid email address.', 'tofino');
-        $this->response['type']    = 'validation';
-        $this->response['extra']   = json_encode($errors);
-        wp_send_json($this->response);
       }
     }
 
