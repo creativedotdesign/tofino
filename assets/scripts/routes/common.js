@@ -8,7 +8,7 @@ import svg4everybody from 'svg4everybody';
 import Cookies from 'js-cookie';
 
 // Import stickyfill
-import 'Stickyfill/src/stickyfill.js';
+require('Stickyfill');
 
 export default {
   init() {
