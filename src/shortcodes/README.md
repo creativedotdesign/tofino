@@ -62,6 +62,8 @@ Generate a `<ul>` from the theme option social media links.
 
 A default class will be applied to the UL element named social-icons. You can add additional classes by passing in the class attribute.
 
+The href for each of the social icon links is pulled from the Theme Options.
+
 Example usage:
 
 ```
