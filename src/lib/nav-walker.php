@@ -23,7 +23,7 @@ class NavWalker extends \Walker_Nav_Menu {
   * @param int $depth Depth of page. Used for padding.
   */
   // @codingStandardsIgnoreStart
-  public function start_lvl(&$output, $depth = 0, $args = [] {
+  public function start_lvl(&$output, $depth = 0, $args = []) {
     parent::start_lvl($output, $depth, $args);
     $pos    = strrpos($output, '">', -1);
     $output = substr_replace($output, ' dropdown-menu" role="menu">', $pos);
