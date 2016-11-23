@@ -6,7 +6,6 @@
  * @since 1.2.0
  */
 
-
 namespace Tofino;
 
 // Alias Respect Validation classes
