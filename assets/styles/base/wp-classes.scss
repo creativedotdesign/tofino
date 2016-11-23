@@ -22,12 +22,12 @@
 @include media-breakpoint-up(sm) { // Only float if not on a small device
   .alignleft {
     margin-right: ($line-height-base / 2) + rem;
-    @include float-left;
+    @include float-sm-left;
   }
 
   .alignright {
     margin-left: ($line-height-base / 2) + rem;
-    @include float-right;
+    @include float-sm-right;
   }
 }
 
