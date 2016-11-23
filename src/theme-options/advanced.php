@@ -46,7 +46,7 @@ function advanced_settings($wp_customize) {
 
   $wp_customize->add_control('jquery_footer', [
     'label'       => __('Move jQuery to Footer', 'tofino'),
-    'description' => __('Move jQuery to the footer. Uncheck if you have compatability issues with plugins.', 'tofino'),
+    'description' => __('Move jQuery to the footer. Uncheck if you have compatibility issues with plugins.', 'tofino'),
     'section'     => 'tofino_advanced_settings',
     'type'        => 'checkbox'
   ]);
