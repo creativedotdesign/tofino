@@ -54,12 +54,11 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 * [DOM-based routing](http://goo.gl/EUTi53) for DOM Ready and Window Ready via advanced router
 * [SCSS](http://sass-lang.com/)
 * [Gulp](http://gulpjs.com/) build script
-	* Includes [eslint](https://github.com/eslint/eslint), [stylelint](https://github.com/stylelint/stylelint), and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) for keeping source code up to standard. Custom rulesets to tweaking additional rules.
+	* Includes [eslint](https://github.com/eslint/eslint), [stylelint](https://github.com/stylelint/stylelint), and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) for keeping source code up to standard. Custom rulesets for adding additional / tweaking rules.
 	* Includes [Google Page Speed Insights](https://github.com/addyosmani/psi), [W3C Validation](https://github.com/addyosmani/psi) and [AccessSniff](https://github.com/yargalot/AccessSniff) via [Ngrok](https://github.com/bubenshchykov/ngrok)
 	* Use `gulp help` for a full task list with descriptions
 * [Composer](https://getcomposer.org/) for PHP package management
 * Custom Nav-walker Bootstrap 4 ready
-* [Relative URLs](https://codex.wordpress.org/Function_Reference/wp_make_link_relative)
 * Namespaced functions
 * Auto post type / slug based template routing
 * Shortcodes
@@ -115,4 +114,5 @@ package.json
 npm-shrinkwrap.json
 ruleset.xml
 **/*.md
+yarn.lock
 ```

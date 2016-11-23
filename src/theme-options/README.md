@@ -1,5 +1,7 @@
 # Theme Options
 
+The Theme Options use the [WordPress Theme Customization API](https://codex.wordpress.org/Theme_Customization_API) and [Customizer API](https://developer.wordpress.org/themes/advanced-topics/customizer-api/).
+
 ## Admin Logo
 
 Upload a custom admin logo to be displayed on the login screen.
