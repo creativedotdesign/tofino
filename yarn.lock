@@ -3975,7 +3975,7 @@ hosted-git-info@^2.1.4:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.1.5.tgz#0ba81d90da2e25ab34a332e6ec77936e1598118b"
 
-"HTML_CodeSniffer@github:squizlabs/HTML_CodeSniffer#2.0.7":
+HTML_CodeSniffer@squizlabs/HTML_CodeSniffer#2.0.7:
   version "2.0.7"
   resolved "https://codeload.github.com/squizlabs/HTML_CodeSniffer/tar.gz/d209ce54876657858a8a01528ad812cd234f37f0"
 
