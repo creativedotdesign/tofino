@@ -7,9 +7,27 @@ Custom php code (that doesn't come from composer) goes here. The following files
 * `helpers.php`
 * `init.php`
 * `nav-walker.php`
-* 'pagination.php'
+* `pagination.php`
 
-# Pagination
+## Assets
+
+The enqueuing of JS and CSS files happens in this file.
+
+If you need to add a new local JS variable, find the function named ``localize_scripts`` in this file.
+
+## Helpers
+
+Helper functions / wrappers to assist with development. Current functions include: ``get_id_by_slug``, ``get_page_name``, ``get_complete_meta`` and sanitize functions used in the Theme Options.
+
+## Init
+
+Theme setup functions. Includes a PHP Version Check, registration of navigation menus, ``add_theme_support``, global content width and hide admin bar on the front end.
+
+## Nav Walker
+
+Bootstrap 4 compatible Nav Walker. See [Codex](https://developer.wordpress.org/reference/classes/walker_nav_menu/) for more information on nav walkers.
+
+## Pagination
 
 A Bootstrap 4 compatible pagination function.
 
