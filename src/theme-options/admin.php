@@ -25,9 +25,10 @@ function admin_settings($wp_customize) {
   $wp_customize->add_setting('admin_logo', ['default' => '']);
 
   $wp_customize->add_control(new \WP_Customize_Image_Control($wp_customize, 'admin_logo', [
-    'label'    => __('Admin Login Logo', 'tofino'),
-    'section'  => 'tofino_admin_settings',
-    'settings' => 'admin_logo'
+    'label'       => __('Admin Login Logo', 'tofino'),
+    'description' => __('You might need to add some additional css to tweak the logo size / position. Add your CSS in to the file assets/styles/base/wp-admin.scss.'),
+    'section'     => 'tofino_admin_settings',
+    'settings'    => 'admin_logo'
   ]));
 }
 add_action('customize_register', __NAMESPACE__ . '\\admin_settings');

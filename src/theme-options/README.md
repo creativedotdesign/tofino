@@ -6,6 +6,8 @@ Upload a custom admin logo to be displayed on the login screen.
 
 This logo is also used in the email templates for branding.
 
+You might need to add some additional css to tweak the logo size / position. Add your CSS in to the file ``assets/styles/base/wp-admin.scss``.
+
 ## Advanced
 
 ### No FOUT
