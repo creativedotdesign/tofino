@@ -75,7 +75,7 @@
     "w3cjs": "^0.3.0"
   },
   "dependencies": {
-    "Stickyfill": "lambdacreatives/stickyfill#1.1.4",
+    "stickyfill-web-module": "^1.1.11",
     "bootstrap": "4.0.0-alpha.5",
     "fg-loadcss": "^1.2.0",
     "js-cookie": "^2.1.3",
