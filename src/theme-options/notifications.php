@@ -77,7 +77,7 @@ add_action('customize_register', __NAMESPACE__ . '\\notification_settings');
  * @return void
  */
 function notification($position) {
-  if ($position == get_theme_mod('notification_position')) {
+  if ($position == get_theme_mod('notification_position', 'top')) {
     if (get_theme_mod('notification_text') && !isset($_COOKIE['tofino-notification-closed'])) : ?>
       <!-- Notifcation <?php echo $position; ?> -->
       <div class="alert alert-info notification <?php echo $position; ?>" id="tofino-notification">
