@@ -21,8 +21,7 @@ function social_settings($wp_customize) {
   $wp_customize->add_section('tofino_social_settings', [
     'title'       => __('Social Networks', 'tofino'),
     'description' => 'Links to various social networks. Remember to add the SVG icon for any new networks you add.',
-    'panel'       => 'tofino_options',
-    'priority'    => 5
+    'priority'    => 140
   ]);
 
   $wp_customize->add_setting('social[facebook]', ['default' => '']);

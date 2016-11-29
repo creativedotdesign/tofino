@@ -20,8 +20,7 @@ namespace Tofino\ThemeOptions\GoogleRecaptcha;
 function google_recaptcha_settings($wp_customize) {
   $wp_customize->add_section('tofino_google_recaptcha', [
     'title'    => __('Google reCAPTCHA', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 4
+    'priority' => 135
   ]);
 
   // Captcha site key

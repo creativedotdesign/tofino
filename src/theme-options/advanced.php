@@ -20,8 +20,7 @@ namespace Tofino\ThemeOptions\Advanced;
 function advanced_settings($wp_customize) {
   $wp_customize->add_section('tofino_advanced_settings', [
     'title'    => __('Advanced', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 7
+    'priority' => 150
   ]);
 
   $wp_customize->add_setting('no_fout', ['default' => '']);

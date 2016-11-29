@@ -44,8 +44,7 @@ add_action('wp_footer', __NAMESPACE__ . '\\google_analytics');
 function google_analytics_settings($wp_customize) {
   $wp_customize->add_section('tofino_google_analytics_settings', [
     'title'    => __('Google Analytics', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 4
+    'priority' => 130
   ]);
 
   // Google analytics

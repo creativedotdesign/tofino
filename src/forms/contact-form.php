@@ -23,7 +23,8 @@ use \Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 function contact_form_settings($wp_customize) {
   $wp_customize->add_section('tofino_contact_form_settings', [
     'title' => __('Contact Form', 'tofino'),
-    'panel' => 'tofino_options'
+    'priority' => 200
+
   ]);
 
   $wp_customize->add_setting('contact_form_to_address', ['default' => '']);

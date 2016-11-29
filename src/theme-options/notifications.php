@@ -18,8 +18,7 @@ namespace Tofino\ThemeOptions\Notifications;
 function notification_settings($wp_customize) {
   $wp_customize->add_section('tofino_notification_settings', [
     'title'    => __('Notification', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 2
+    'priority' => 120
   ]);
 
   // Notification text

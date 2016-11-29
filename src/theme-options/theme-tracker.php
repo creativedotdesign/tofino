@@ -20,7 +20,7 @@ namespace Tofino\ThemeOptions\ThemeTracker;
 function theme_tracker_settings($wp_customize) {
   $wp_customize->add_section('tofino_theme_tracker_settings', [
     'title' => __('Theme Tracker', 'tofino'),
-    'panel' => 'tofino_options'
+    'priority' => 165
   ]);
 
   $wp_customize->add_setting('theme_tracker_enabled', ['default' => 'disabled']);

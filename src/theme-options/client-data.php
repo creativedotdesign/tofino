@@ -20,8 +20,7 @@ namespace Tofino\ThemeOptions\ClientData;
 function client_data_settings($wp_customize) {
   $wp_customize->add_section('tofino_client_data_settings', [
     'title'    => __('Client Data', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 3
+    'priority' => 125
   ]);
 
   // Telephone number

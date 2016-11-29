@@ -18,8 +18,7 @@ namespace Tofino\ThemeOptions\Admin;
 function admin_settings($wp_customize) {
   $wp_customize->add_section('tofino_admin_settings', [
     'title'    => __('Admin', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 9
+    'priority' => 160
   ]);
 
   $wp_customize->add_setting('admin_logo', ['default' => '']);

@@ -18,8 +18,7 @@ namespace Tofino\ThemeOptions\Footer;
 function footer_settings($wp_customize) {
   $wp_customize->add_section('tofino_footer_settings', [
     'title'    => __('Footer', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 6
+    'priority' => 145
   ]);
 
   $wp_customize->add_setting('footer_sticky', [

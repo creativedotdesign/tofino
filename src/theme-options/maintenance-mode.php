@@ -18,8 +18,7 @@ namespace Tofino\ThemeOptions\Maintenance;
 function maintenance_settings($wp_customize) {
   $wp_customize->add_section('tofino_maintenance_settings', [
     'title'    => __('Maintenance Mode', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 8
+    'priority' => 155
   ]);
 
   $wp_customize->add_setting('maintenance_mode', ['default' => '']);

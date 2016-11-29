@@ -17,9 +17,8 @@ namespace Tofino\ThemeOptions\Menu;
  */
 function menu_settings($wp_customize) {
   $wp_customize->add_section('tofino_menu_settings', [
-    'title'    => __('Menu', 'tofino'),
-    'panel'    => 'tofino_options',
-    'priority' => 1
+    'title'    => __('Menu Options', 'tofino'),
+    'priority' => 100
   ]);
 
   $wp_customize->add_setting('menu_sticky', [
