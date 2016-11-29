@@ -8,6 +8,8 @@ A WordPress starter theme for jumpstarting custom theme development.
 
 Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https://github.com/mrchimp).
 
+Heavily inspired the by awesome WordPress starter theme [Sage](https://github.com/roots/sage) by [Roots](https://github.com/roots) from [Ben Word](https://github.com/retlehs) and [Scott Walkinshaw](https://github.com/swalkinshaw).
+
 [Demo](http://tofino.lambdacreatives.com)
 
 ## Requirements
