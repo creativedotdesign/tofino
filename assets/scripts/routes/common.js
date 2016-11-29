@@ -8,7 +8,7 @@ import svg4everybody from 'svg4everybody';
 import Cookies from 'js-cookie';
 
 // Import stickyfill
-require('Stickyfill');
+var Stickyfill = require('stickyfill-web-module')();
 
 export default {
   init() {
@@ -27,23 +27,8 @@ export default {
     });
 
     // Assign sticky
-    var $sticky = $('.navbar-sticky-top');
-
-    if ($sticky.length) {
-      // Sticky polyfill for css position: sticky
-      $sticky.Stickyfill();
-
-      // Assign stick offset
-      var stickyTop = $sticky.offset().top;
-
-      $(window).scroll(function() {
-        if ($(this).scrollTop() > stickyTop) {
-          $sticky.addClass('stuck');
-        } else {
-          $sticky.removeClass('stuck');
-        }
-      });
-    }
+    var $sticky = document.getElementsByClassName('navbar-sticky-top');
+    Stickyfill.add($sticky[0]);
   },
   finalize() {
     // JavaScript to be fired on all pages, after page specific JS is fired
