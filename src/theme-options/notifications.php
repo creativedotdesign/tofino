@@ -50,7 +50,7 @@ function notification_settings($wp_customize) {
   // Notification position
   $wp_customize->add_setting('notification_position', [
     'default'           => 'top',
-    'sanitize_callback' => '\Tofino\ThemeOptions\sanitize_choices',
+    'sanitize_callback' => '\Tofino\Helpers\sanitize_choices',
   ]);
 
   $wp_customize->add_control('notification_position', [
