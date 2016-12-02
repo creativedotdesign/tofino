@@ -39,6 +39,40 @@ function title() {
 
 
 /**
+ * Like get_template_part() put lets you pass args to the template file
+ * Args are available in the tempalte as $template_args array
+ * From https://github.com/humanmade/hm-core/blob/master/hm-core.functions.php
+ *
+ * @since 1.7.0
+ *
+ * @param string filepart
+ * @param mixed wp_args style argument list
+ */
+function hm_get_template_part($file, $template_args = []) {
+  $template_args = wp_parse_args($template_args);
+
+  if (file_exists(get_template_directory() . '/' . $file . '.php')) {
+    $file = get_template_directory() . '/' . $file . '.php';
+  }
+
+  ob_start();
+
+  $return = require($file);
+  $data   = ob_get_clean();
+
+  if (!empty($template_args['return'])) {
+    if ($return === false) {
+      return false;
+    } else {
+      return $data;
+    }
+  }
+
+  echo $data;
+}
+
+
+/**
  * Gets the page name
  *
  * Looks up the pagename (slug). If not found in the query_var it uses the $page_id
