@@ -28,7 +28,7 @@
     "respect/validation": "^1.1"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "2.7.0",
+    "squizlabs/php_codesniffer": "2.6.2",
     "phpmd/phpmd" : "2.4.4"
   },
   "autoload": {
