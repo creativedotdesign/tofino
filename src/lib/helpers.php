@@ -10,6 +10,35 @@
 namespace Tofino\Helpers;
 
 /**
+ * Page titles
+ *
+ * @since 1.7.0
+ * @return string
+ */
+function title() {
+  if (is_home()) {
+    if ($home = get_option('page_for_posts', true)) {
+      return get_the_title($home);
+    }
+    return __('Latest Posts', 'tofino');
+  }
+
+  if (is_archive()) {
+    return get_the_archive_title();
+  }
+
+  if (is_search()) {
+    return sprintf(__('Search Results for %s', 'tofino'), get_search_query());
+  }
+
+  if (is_404()) {
+    return __('Not Found', 'tofino');
+  }
+  return get_the_title();
+}
+
+
+/**
  * Gets the page name
  *
  * Looks up the pagename (slug). If not found in the query_var it uses the $page_id
