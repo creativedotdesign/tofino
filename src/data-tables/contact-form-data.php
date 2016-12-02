@@ -30,6 +30,8 @@ if (!class_exists('WP_List_Table')) {
 
 class ContactFormDataTable extends \WP_List_Table {
 
+  private $post_slug = 'contact';
+
   /** Class constructor */
   public function __construct() {
     parent::__construct([
@@ -48,7 +50,7 @@ class ContactFormDataTable extends \WP_List_Table {
     $columns  = $this->get_columns();
     $hidden   = $this->get_hidden_columns();
     $sortable = $this->get_sortable_columns();
-    $post_id  = h\get_id_by_slug('contact');
+    $post_id  = h\get_id_by_slug($this->post_slug);
 
     $this->_column_headers = [$columns, $hidden, $sortable];
     $this->items           = $this->table_data($post_id);

@@ -8,7 +8,7 @@
  * @since 1.0.0
  */
 
-namespace Tofino\ThemeTracker;
+namespace Tofino\ThemeOptions\ThemeTracker;
 
 /**
  * Theme tracker settings
@@ -20,7 +20,7 @@ namespace Tofino\ThemeTracker;
 function theme_tracker_settings($wp_customize) {
   $wp_customize->add_section('tofino_theme_tracker_settings', [
     'title' => __('Theme Tracker', 'tofino'),
-    'panel' => 'tofino_options'
+    'priority' => 165
   ]);
 
   $wp_customize->add_setting('theme_tracker_enabled', ['default' => 'disabled']);
@@ -97,13 +97,11 @@ add_action('admin_notices', __NAMESPACE__ . '\\missing_apikey_notice', 1);
  */
 function theme_tracker() {
   if (get_theme_mod('theme_tracker_enabled') == 'enabled') { // Only if enabled
-
     if (get_theme_mod('theme_tracker_debug')) {
       delete_transient('theme_tracking'); // Used to clear the transient for testing
     }
 
     if (false === ($result = get_transient('theme_tracking'))) {
-
       // Check for uid, else generate one. Uid is per site and generated once.
       if (get_option('theme_tracking_uid')) {
         $uid = get_option('theme_tracking_uid');
@@ -169,9 +167,7 @@ function theme_tracker() {
         // Set the transient to send data again in 7 days
         set_transient('theme_tracking', $result, 60*60*168); //sec*min*hours
       }
-
     }
-
   }
 }
 add_action('wp_footer', __NAMESPACE__ . '\\theme_tracker');

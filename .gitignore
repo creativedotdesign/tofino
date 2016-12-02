@@ -10,6 +10,7 @@
 !.stylelintrc.yml
 !.npmrc
 !.hound.yml
+!.bitbucket-pipelines.yml
 
 # ignore node/grunt dependency directories
 node_modules/

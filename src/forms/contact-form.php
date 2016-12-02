@@ -10,6 +10,9 @@
 
 namespace Tofino\ContactForm;
 
+use \Respect\Validation\Validator as v;
+use \Respect\Validation\Exceptions\NestedValidationExceptionInterface;
+
 /**
  * Contact form theme options
  *
@@ -20,7 +23,8 @@ namespace Tofino\ContactForm;
 function contact_form_settings($wp_customize) {
   $wp_customize->add_section('tofino_contact_form_settings', [
     'title' => __('Contact Form', 'tofino'),
-    'panel' => 'tofino_options'
+    'priority' => 200
+
   ]);
 
   $wp_customize->add_setting('contact_form_to_address', ['default' => '']);
@@ -94,12 +98,15 @@ add_action('customize_register', __NAMESPACE__ . '\\contact_form_settings');
 function ajax_contact_form() {
   $form = new \Tofino\AjaxForm(); // Required
 
-  // Defined expected fields. Keys should match the input field names
+  // Defined expected fields. Keys should match the input field names.
+  // Add validation rules. See: http://respect.github.io/Validation/docs/validators.html
+  // setName is used for the return error messages
   $fields = [
-    'name'              => ['required' => true],
-    'email'             => ['required' => true],
-    'message'           => ['required' => true],
-    'required_checkbox' => ['required' => true]
+    'name'              => v::notEmpty()->setName('Name'),
+    'email'             => v::email()->setName('Email Address'),
+    'phone'             => v::optional(v::phone())->setName('Phone number'), // Optional field
+    'message'           => v::notEmpty()->setName('Message'),
+    'required_checkbox' => v::notEmpty()->boolVal()->setName('Required checkbox'),
   ];
 
   // Optional
@@ -126,6 +133,7 @@ function ajax_contact_form() {
     'from'               => get_theme_mod('contact_form_from_address'), // If not defined or blank the server default email address will be used
     'remove_submit_data' => false,
     'user_email'         => false,
+    'message'            => $data['message'],
     'template'           => 'default-form.html',
     'replace_variables'  => [
       'website_name' => null,
@@ -149,10 +157,19 @@ function ajax_contact_form() {
   ]);
 
   if (!$admin_email_success || !$user_email_success) {
-    $form->respond(false, __('Unable to complete request due to a system error. Send mail failed.', 'tofino'));
+    $form->respond(
+      false,
+      __('Unable to complete request due to a system error. Send mail failed.', 'tofino')
+    );
   }
 
-  $form->respond(true, get_theme_mod('contact_form_success_message', __("Thanks, we'll be in touch soon.", 'tofino'))); // Required
+  $form->respond(
+    true,
+    get_theme_mod(
+      'contact_form_success_message', // From theme options
+      __("Thanks, we'll be in touch soon.", 'tofino') // Default
+    )
+  ); // Required
 }
 add_action('wp_ajax_contact-form', __NAMESPACE__ . '\\ajax_contact_form');
 add_action('wp_ajax_nopriv_contact-form', __NAMESPACE__ . '\\ajax_contact_form');

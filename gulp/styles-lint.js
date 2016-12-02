@@ -1,5 +1,5 @@
-var manifest = require('../assets/manifest.json'),
-    gulpif   = require('gulp-if'),
+var manifest  = require('../assets/manifest.json'),
+    gulpif    = require('gulp-if'),
     stylelint = require('gulp-stylelint');
 
 // Lints scss files

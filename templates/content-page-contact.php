@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6">
         <?php while (have_posts()) : the_post(); ?>
-          <h1><?php the_title(); ?></h1>
+          <h1><?php echo \Tofino\Helpers\title(); ?></h1>
 
           <?php the_content(); ?>
 
@@ -19,6 +19,12 @@
               <small class="text-muted"><?php _e("So we know who you are.", 'tofino'); ?></small>
             </fieldset>
 
+            <!-- Phone / Text input -->
+            <fieldset class="form-group">
+              <label class="form-control-label" for="phone"><?php _e('Phone Number', 'tofino'); ?></label>
+              <input type="text" name="phone" class="form-control" id="name" placeholder="<?php _e('Your phone number', 'tofino'); ?>">
+            </fieldset>
+
             <!-- Email address -->
             <fieldset class="form-group required">
               <label class="form-control-label" for="email"><?php _e('Email address', 'tofino'); ?></label>
@@ -28,13 +34,13 @@
 
             <!-- Message / Textarea -->
             <fieldset class="form-group required">
-             <label class="form-control-label" for="message"><?php _e('Message', 'tofino'); ?></label>
-             <textarea class="form-control" name="message" id="message" rows="3" placeholder="<?php _e('Message', 'tofino'); ?>" required="required"></textarea>
-             <small class="text-muted"><?php _e("Tell us what you want us to know.", 'tofino'); ?></small>
-           </fieldset>
+              <label class="form-control-label" for="message"><?php _e('Message', 'tofino'); ?></label>
+              <textarea class="form-control" name="message" id="message" rows="3" placeholder="<?php _e('Message', 'tofino'); ?>" required="required"></textarea>
+              <small class="text-muted"><?php _e("Tell us what you want us to know.", 'tofino'); ?></small>
+            </fieldset>
 
-           <!-- Checkbox -->
-           <div class="checkbox required">
+            <!-- Checkbox -->
+            <div class="checkbox required">
               <label class="form-control-label">
                 <input type="checkbox" name="required_checkbox" value="1" required="required"> <?php _e('I agree'); ?>
               </label>

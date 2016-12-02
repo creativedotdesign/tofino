@@ -8,6 +8,8 @@ A WordPress starter theme for jumpstarting custom theme development.
 
 Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https://github.com/mrchimp).
 
+Heavily inspired the by awesome WordPress starter theme [Sage](https://github.com/roots/sage) by [Roots](https://github.com/roots) from [Ben Word](https://github.com/retlehs) and [Scott Walkinshaw](https://github.com/swalkinshaw).
+
 [Demo](http://tofino.lambdacreatives.com)
 
 ## Requirements
@@ -17,7 +19,7 @@ Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https:/
 | PHP >= 5.5.9              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
 | Node.js >= 5.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
-| Composer >= 1.0.0-alpha10 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
+| Composer >= 1.0.0	        | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
@@ -45,39 +47,30 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 	* Footer text
 	* Notification text / EU Cookie notice with top/bottom positions
 	* Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
+	* Data Tables for viewing data submitted via the contact form
 	* Maintenance mode
 	* jQuery in footer
 	* Critical CSS (with loadCSS function)
 	* [Theme Tracker](https://github.com/lambdacreatives/tracker)
-* [DOM-based routing](http://goo.gl/EUTi53)
+* JS ES6 compatible via Babel and Browserify.
+* [DOM-based routing](http://goo.gl/EUTi53) for DOM Ready and Window Ready via advanced router
 * [SCSS](http://sass-lang.com/)
 * [Gulp](http://gulpjs.com/) build script
-	* Includes [eslint](https://github.com/eslint/eslint) and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+	* Includes [eslint](https://github.com/eslint/eslint), [stylelint](https://github.com/stylelint/stylelint), and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) for keeping source code up to standard. Custom rulesets for adding additional / tweaking rules.
+	* Includes [Google Page Speed Insights](https://github.com/addyosmani/psi), [W3C Validation](https://github.com/addyosmani/psi) and [AccessSniff](https://github.com/yargalot/AccessSniff) via [Ngrok](https://github.com/bubenshchykov/ngrok)
 	* Use `gulp help` for a full task list with descriptions
 * [Composer](https://getcomposer.org/) for PHP package management
 * Custom Nav-walker Bootstrap 4 ready
-* [Relative URLs](https://codex.wordpress.org/Function_Reference/wp_make_link_relative)
 * Namespaced functions
 * Auto post type / slug based template routing
 * Shortcodes
 * AjaxForm handler class. Easily handle form validation and processing with Wordpress Ajax. Send submitted data via email and/or save it as post meta. Add your own custom validator / processor via a simple function hook.
-* [Web Font Loader](https://github.com/typekit/webfontloader)  easily and quickly load Google, Typekit and custom fonts.
+* [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts.
+* Fragment Cache class
 
 ## Documentation
 
 Docs are provided by README.md files in each directory.
-
-## Contributing
-
-Updates and pull requests should be done on the dev branch.
-
-New features should be done in a separate branch and sent as a pull request.
-
-Nothing should be merged into the master branch until it has been tested on dev and (preferably) approved by all devs.
-
-The dev branch is automatically deployed to http://tofino.lambdacreatives.com so you can test there.
-
-No breaking changes except at major versions.
 
 ## Deployment
 
@@ -103,11 +96,13 @@ node_modules
 .stylelintrc.yml
 .travis.yml
 .npmrc
+.bitbucket-pipelines.yml
+.hound.yml
 composer.json
 composer.lock
 gulpfile.js
 package.json
-npm-shrinkwrap.json
 ruleset.xml
 **/*.md
+yarn.lock
 ```

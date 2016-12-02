@@ -111,9 +111,13 @@
   padding: .5rem;
   display: block;
   position: relative;
-  top: 3px;
   right: .25rem;
   width: $bar-width * 2;
+
+  .navbar-light & {
+    background-image: none;
+    border: 0;
+  }
 
   &:focus {
     outline: 0;
@@ -122,6 +126,8 @@
   .bar-wrapper {
     width: $bar-width;
     height: ($bar-height * 3 + $bar-spacing * 2);
+    display: block;
+    margin: 0 auto;
   }
 
   .bar {

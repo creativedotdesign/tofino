@@ -5,14 +5,14 @@
 namespace Tofino\Pagination;
 
 function wp_bootstrap_pagination($args = []) {
-  $defaults = array(
+  $defaults = [
     'range'           => 4,
     'custom_query'    => false,
     'previous_string' => '<span aria-hidden="true">&laquo;</span> ' . __('Previous Page', 'tofino'),
     'next_string'     => __('Next Page', 'tofino') . ' <span aria-hidden="true">&raquo;</span>',
     'before_output'   => '<ul class="pagination">',
     'after_output'    => '</ul>'
-  );
+  ];
 
   $args = wp_parse_args(
     $args,

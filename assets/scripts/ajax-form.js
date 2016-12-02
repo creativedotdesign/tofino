@@ -124,7 +124,11 @@
 
           if (response.type === 'validation') {
             var invalidFields = $.parseJSON(response.extra);
-            $.each(invalidFields, function(key) {
+            var msgHTML = '';
+
+            $.each(invalidFields, function(key, value) {
+              msgHTML += '<li>' + value + '</li>';
+
               $form.find('[name=' + key + ']')
                 .removeClass('form-control-success')
                 .removeClass('has-success') // For checkboxes
@@ -140,6 +144,8 @@
                   .addClass('has-danger');
               }
             });
+
+            opts.responseDiv.append('<ul>' + msgHTML + '</ul>');
           }
 
           opts.afterError(); // Callback function

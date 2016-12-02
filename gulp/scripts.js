@@ -53,7 +53,11 @@ module.exports = function (gulp, production, browserSync) {
             .pipe(source(output))
             .pipe(buffer())
             .pipe(sourcemaps.init({loadMaps: true}))
-            .pipe(gulpif(production, uglify()))
+            .pipe(gulpif(production, uglify({
+              compress: {
+                drop_console: true
+              }
+            })))
             .pipe(sourcemaps.write('.', {sourceRoot: paths.scripts}))
             .pipe(gulp.dest(paths.dist + 'js'))
           );

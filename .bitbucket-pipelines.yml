@@ -1,0 +1,19 @@
+image: debian:8.4
+
+pipelines:
+  default:
+    - step:
+        script:
+          - apt-get update
+          - apt-get -y install bzip2 curl git-core php5-cli libpng-dev
+          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          - composer install
+          - rm -rf ~/.nvm && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
+          - source ~/.nvm/nvm.sh
+          - nvm install 5.0.0
+          - nvm use 5
+          - npm set progress=false
+          - npm cache clean
+          - npm install -g gulp
+          - npm install --loglevel error
+          - npm run build
