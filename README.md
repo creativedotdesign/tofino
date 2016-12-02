@@ -19,7 +19,7 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 | PHP >= 5.5.9              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
 | Node.js >= 5.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
-| Composer >= 1.0.0-alpha10 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
+| Composer >= 1.0.0	        | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
@@ -65,23 +65,12 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 * Auto post type / slug based template routing
 * Shortcodes
 * AjaxForm handler class. Easily handle form validation and processing with Wordpress Ajax. Send submitted data via email and/or save it as post meta. Add your own custom validator / processor via a simple function hook.
-* [Web Font Loader](https://github.com/typekit/webfontloader)  easily and quickly load Google, Typekit and custom fonts.
+* [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts.
+* Fragment Cache class
 
 ## Documentation
 
 Docs are provided by README.md files in each directory.
-
-## Contributing
-
-Updates and pull requests should be done on the dev branch.
-
-New features should be done in a separate branch and sent as a pull request.
-
-Nothing should be merged into the master branch until it has been tested on dev and (preferably) approved by all devs.
-
-The dev branch is automatically deployed to http://tofino.lambdacreatives.com so you can test there.
-
-No breaking changes except at major versions.
 
 ## Deployment
 
@@ -113,7 +102,6 @@ composer.json
 composer.lock
 gulpfile.js
 package.json
-npm-shrinkwrap.json
 ruleset.xml
 **/*.md
 yarn.lock

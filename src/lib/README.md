@@ -4,6 +4,7 @@ Custom php code (that doesn't come from composer) goes here. The following files
 
 * `AjaxForm.php`
 * `assets.php`
+* `FragmentCache.php`
 * `helpers.php`
 * `init.php`
 * `nav-walker.php`
@@ -49,3 +50,24 @@ add_filter('wp_bootstrap_pagination_defaults', 'customize_wp_bootstrap_paginatio
 You can also update the default range, set a custom query and control the before / after output. See the parameters in the function for full details.
 
 Don't forget to uncomment the reference to the SCSS file.
+
+## Fragment Cache
+
+Cache a template fragment.
+Uses Transients. If persistent caching is configured, then the transients functions will use the wp_cache.
+
+Example usage:
+
+```
+$frag = new \Tofino\FragmentCache('unique-key', 3600); // Second param is TTL in seconds
+
+if (!$frag->output()) { // Testing for a return of false
+  functions_that_do_stuff_live();
+  these_should_echo();
+
+  // IMPORTANT YOU CANNOT FORGET THIS. If you do, the site will break.
+  $frag->store();
+} else {
+  echo frag->output();
+}
+```
