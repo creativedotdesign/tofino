@@ -46,8 +46,13 @@ class AjaxForm
    */
   public function __construct()
   {
-    $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING); // XSS;
+    $this->post = filter_input_array(INPUT_POST);
+
     parse_str($this->post['data'], $this->form_data);
+
+    foreach ($this->form_data as $index => $value) {
+      $this->form_data[$index] = filter_var($value, FILTER_SANITIZE_STRING);
+    }
   }
 
 
