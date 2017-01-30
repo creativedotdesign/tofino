@@ -5,7 +5,7 @@ if (get_theme_mod('footer_sticky') === 'enabled') : ?>
   </div>
 <?php endif; ?>
 
-<footer style="height: 30px; background-color: purple;">
+<footer>
   <div class="container">
     <div class="row">
       <div class="col-xs-12"><?php
