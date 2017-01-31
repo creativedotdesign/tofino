@@ -16,7 +16,7 @@ function social_icons($atts = []) {
     $atts = shortcode_atts([
       'class'     => '',
       'platforms' => ''
-    ], $atts, 'option');
+    ], $atts, 'social_icons');
 
     if (!empty($social_links) && (array_filter($social_links))) {
       $output .= '<ul class="social-icons ' . $atts['class'] . '">';
