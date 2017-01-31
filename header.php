@@ -1,7 +1,6 @@
 <?php
 use \Tofino\ThemeOptions\Menu as m;
 use \Tofino\ThemeOptions\Notifications as n; ?>
-
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
