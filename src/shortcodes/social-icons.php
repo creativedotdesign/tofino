@@ -30,7 +30,7 @@ function social_icons($atts = []) {
       // Build the links and icons
       foreach ($social_links as $key => $value) {
         if (!empty($value)) {
-          $output .= '<li><a href="' . esc_url($value) . '" title="' . $key . '">' . svg(sanitize_title($key)) . '</a></li>';
+          $output .= '<li><a href="' . esc_url($value) . '" target="_blank" rel="nofollow noreferrer"><span class="sr-only">' . $key . '</span>' . svg(sanitize_title($key)) . '</a></li>';
         }
       }
 
