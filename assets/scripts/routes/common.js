@@ -28,7 +28,9 @@ export default {
 
     // Assign sticky
     var $sticky = document.getElementsByClassName('navbar-sticky-top');
-    Stickyfill.add($sticky[0]);
+    if($sticky.length) {
+      Stickyfill.add($sticky[0]);
+    }
   },
   finalize() {
     // JavaScript to be fired on all pages, after page specific JS is fired
