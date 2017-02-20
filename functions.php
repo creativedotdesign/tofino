@@ -43,6 +43,7 @@ $tofino_includes = [
   "src/theme-options/notifications.php",
   "src/theme-options/social-networks.php",
   "src/theme-options/theme-tracker.php",
+  "src/theme-options/dashboard-widget.php",
 ];
 
 foreach ($tofino_includes as $file) {
