@@ -9,7 +9,7 @@ module.exports = function (gulp, allowlint, production) {
     'Lint theme PHP files based on PSR-2.',
     function() {
       return gulp
-        .src(['**/*.php', '!vendor/**/*.*'])
+        .src(['**/*.php', '!vendor/**/*.*', '!node_modules/**/*.*'])
         .pipe(phpcs({ // Validate files using PHP Code Sniffer
           bin: 'vendor/bin/phpcs',
             standard: 'ruleset.xml',
