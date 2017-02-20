@@ -29,3 +29,20 @@
   white-space: nowrap;
   text-overflow: $overflow; // values are: clip, ellipsis, or a string
 }
+
+// Social media colors
+@function get-social-media-colour($colour) {
+  @if map-has-key($socialColours, $colour) {
+    $colour: map-get($socialColours, $colour);
+  } @else {
+    @if type-of($colour) != colour {
+      @error "Invalid colour name: `#{$colour}`.";
+    }
+  }
+  @return $colour;
+}
+
+// Demo...
+// .twitter {
+//   color: get-social-media-colour(twitter);
+// }
