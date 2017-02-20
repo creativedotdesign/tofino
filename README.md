@@ -36,6 +36,7 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 * Responsive
 * Theme Options via WP Customizer (Native)
 	* Admin login screen logo
+	* Custom Dashboard Widget
 	* Google Analytics
 	* Social links
 	* Sticky menu
@@ -96,8 +97,8 @@ node_modules
 .stylelintrc.yml
 .travis.yml
 .npmrc
-.bitbucket-pipelines.yml
 .hound.yml
+bitbucket-pipelines.yml
 composer.json
 composer.lock
 gulpfile.js

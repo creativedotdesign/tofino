@@ -19,8 +19,8 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
   </div>
 <![endif]-->
 
-<nav class="navbar navbar-light <?php echo m\menu_sticky(); ?> <?php echo m\menu_position(); ?>">
-  <button class="navbar-toggler hidden-sm-up collapsed" type="button" data-toggle="collapse" data-target="#main-menu">
+<nav class="navbar navbar-light navbar-toggleable-md <?php echo m\menu_sticky(); ?> <?php echo m\menu_position(); ?>">
+  <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#main-menu">
     <span class="bar-wrapper">
       <span class="bar"></span>
       <span class="bar"></span>
@@ -29,7 +29,7 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
     <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
   </button>
   <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
-  <div id="main-menu" class="collapse navbar-toggleable-xs navbar-wrapper">
+  <div class="collapse navbar-collapse" id="main-menu">
     <?php
     if (has_nav_menu('primary_navigation')) :
       wp_nav_menu([
@@ -39,7 +39,7 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
         'container'       => '',
         'container_class' => '',
         'container_id'    => '',
-        'menu_class'      => 'nav navbar-nav',
+        'menu_class'      => 'navbar-nav',
         'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
         'walker'          => new Tofino\Nav\NavWalker()
       ]);

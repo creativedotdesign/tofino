@@ -34,7 +34,7 @@
 @function get-social-media-colour($colour) {
   @if map-has-key($socialColours, $colour) {
     $colour: map-get($socialColours, $colour);
-  } @else {
+  } @else { /* stylelint-disable-line block-closing-brace-newline-after */
     @if type-of($colour) != colour {
       @error "Invalid colour name: `#{$colour}`.";
     }

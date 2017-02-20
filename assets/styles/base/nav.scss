@@ -1,6 +1,6 @@
 // Probably best to leave this section alone and add your own overrides afterwards.
 
-.navbar-sticky-top {
+.sticky-top {
   top: 0;
 
   &::before,
@@ -11,7 +11,10 @@
 }
 
 // Override classes for responsive menu
-.navbar-wrapper {
+.navbar {
+  background-color: $gray-lightest;
+  width: 100%;
+
   @include media-breakpoint-up(sm) {
     .menu-center & { // Flexbox based centered menu.
       display: flex !important;
@@ -55,15 +58,8 @@
   }
 }
 
-.navbar {
-  background-color: $gray-lightest;
-  padding: 0;
-  min-height: 2.5rem;
-  width: 100%;
-}
-
 .navbar-brand {
-  margin-left: 1rem;
+  z-index: 1;
 }
 
 .dropdown-header {
@@ -76,42 +72,42 @@
 
 // Helper class to center unknown width ul nav bar
 .menu-center {
-  .navbar-brand {
-    position: absolute;
+  .navbar-collapse {
+    position: relative;
+
+    .nav-link {
+      text-align: center;
+    }
+
+    @include media-breakpoint-up(lg) {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .navbar-nav {
+    margin: 0 auto;
   }
 }
 
-@include media-breakpoint-up(sm) {
-  .menu-right {
-    .navbar-nav {
-      float: right;
-      padding-right: 5px;
-    }
+.menu-right {
+  .navbar-nav {
+    margin-left: auto;
+  }
 
-    .dropdown-menu {
-      @include media-breakpoint-up(sm) {
-        .menu-right {
-          .navbar-nav {
-            float: right;
-            padding-right: 5px;
-          }
-
-          .dropdown-menu {
-            right: 0;
-            left: auto;
-          }
-        }
-      }
-    }
+  .dropdown-menu {
+    right: 0;
+    left: auto;
   }
 }
 
 .navbar-toggler {
   float: right;
-  padding: .5rem;
+  padding: .75rem;
   display: block;
-  position: relative;
-  right: .25rem;
+  right: .5rem;
   width: $bar-width * 2;
 
   .navbar-light & {
