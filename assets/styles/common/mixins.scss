@@ -22,3 +22,10 @@
   $rem-value: ($value / $root-value) + rem;
   @return $rem-value;
 }
+
+// Truncate text with CSS
+@mixin truncate($overflow: ellipsis) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: $overflow; // values are: clip, ellipsis, or a string
+}
