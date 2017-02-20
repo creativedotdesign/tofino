@@ -258,6 +258,10 @@ class AjaxForm
       $headers[] = 'From: ' . $settings['from'];
     }
 
+    if (array_key_exists('reply-to', $settings)) {
+      $headers[] = 'Reply-To: ' . $settings['reply-to'];
+    }
+
     if (array_key_exists('cc', $settings)) {
       $settings['cc'] = explode(',', $settings['cc']); // Split string on comma
 
