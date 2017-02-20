@@ -4,16 +4,11 @@ body {
   &.footer-sticky { // Flexbox supported browsers only.
     display: flex;
     min-height: 100vh;
-
-    .body-inner-wrapper {
-      flex: 1 0 auto;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+    flex-direction: column;
 
     .wrapper {
-      flex-grow: 1;
+      flex: 1 0 auto;
+      width: 100%;
     }
   }
 
