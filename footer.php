@@ -21,5 +21,14 @@ if (get_theme_mod('footer_sticky') === 'enabled') : ?>
 
 <?php n\notification('bottom'); ?>
 
+<?php
+// Wrapper for whole of body content. This is required because IE flexed items
+// with flex-direction: column don't respect min-height values, unless they
+// are themselves flex children
+if (get_theme_mod('footer_sticky') === 'enabled') :
+?>
+  </div>
+<?php endif; ?>
+
 </body>
 </html>
