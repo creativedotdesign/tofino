@@ -38,6 +38,7 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 	* Admin login screen logo
 	* Custom Dashboard Widget
 	* Google Analytics
+	* Hotjar Tracking
 	* Social links
 	* Sticky menu
 	* Sticky footer
