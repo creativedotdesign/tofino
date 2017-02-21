@@ -1,7 +1,7 @@
 <main>
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 col-sm-6">
+      <div class="col-12 col-sm-6">
         <?php while (have_posts()) : the_post(); ?>
           <h1><?php echo \Tofino\Helpers\title(); ?></h1>
 
@@ -60,7 +60,7 @@
           </form>
         <?php endwhile; ?>
       </div>
-      <div class="col-xs-12 col-sm-4 col-sm-offset-2">
+      <div class="col-12 col-sm-4 offset-sm-1">
         <address>
         <?php echo nl2br(ot_shortcode('address')); ?>
         </address>

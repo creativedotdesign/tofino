@@ -43,13 +43,13 @@ module.exports = function (gulp, production, browserSync) {
           gulp.src(inputs)
             .pipe(sourcemaps.init({loadMaps: true}))
             .pipe(sass({outputStyle: 'nested'}))
+            .pipe(autoprefixer({browsers: ['last 2 versions']}))
             .pipe(concat(output))
             .pipe(gulpif(production, cssnano({safe: true})))
         );
       });
 
       return merged
-        .pipe(autoprefixer({browsers: ['last 2 versions']}))
         .pipe(sourcemaps.write('.', {sourceRoot: paths.styles}))
         .pipe(gulp.dest(paths.dist + '/css'))
         .pipe(gulpif(!production, notify({

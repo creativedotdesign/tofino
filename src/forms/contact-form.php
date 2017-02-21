@@ -128,6 +128,7 @@ function ajax_contact_form() {
 
   $admin_email_success = $form->sendEmail([ // Optional
     'to'                 => $form->getRecipient('contact_form_to_address'),
+    'reply-to'           => $data['name'] . ' <' . $user_email_address . '>', // Name <email@domain.com>
     'subject'            => get_theme_mod('contact_form_email_subject'),
     'cc'                 => get_theme_mod('contact_form_cc_address'),
     'from'               => get_theme_mod('contact_form_from_address'), // If not defined or blank the server default email address will be used

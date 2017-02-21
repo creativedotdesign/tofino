@@ -27,7 +27,7 @@ export default {
     });
 
     // Assign sticky
-    var $sticky = document.getElementsByClassName('navbar-sticky-top');
+    var $sticky = document.getElementsByClassName('sticky-top');
     if($sticky.length) {
       Stickyfill.add($sticky[0]);
     }

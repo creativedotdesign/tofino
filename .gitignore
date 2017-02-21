@@ -16,7 +16,7 @@
 node_modules/
 
 # ignore composer dependency directories
-vendor/
+/vendor/
 
 # ignore dist directories
 dist/

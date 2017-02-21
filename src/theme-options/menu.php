@@ -91,7 +91,7 @@ function menu_position() {
  */
 function menu_sticky() {
   if (get_theme_mod('menu_sticky') === 'enabled') {
-    return 'navbar-sticky-top';
+    return 'sticky-top';
   }
 }
 
