@@ -1,5 +1,19 @@
 ## Changelog
 
+### 1.8.0: Feb 21 2017
+
+- Rename .bitbucket-pipelines.yml #221
+- Fix single quote converted to html attribute in AjaxForm #226
+- Update to Bootstrap Alpha 6 #219
+- Add more tracker support #222
+- Contact form reply to address #223
+- Add custom dashboard widget #224
+- Update .gitignore to exclude nested vendor directories #232
+- Update dependancies & gulp tasks
+- Add social media network colors to SCSS file
+- Add truncate SCSS mixin
+- Update README files
+
 ### 1.7.0: Dec 2 2016
 
 - New gulp tasks for performance / accessibility (PSI, WAVE, W3C)
