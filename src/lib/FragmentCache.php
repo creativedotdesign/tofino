@@ -25,7 +25,8 @@ class FragmentCache {
   public function output() {
     $output = get_transient($this->key);
     if (!empty($output)) { // It was in the cache
-      return $output;
+      echo $output;
+      return true;
     } else {
       ob_start();
       return false;
