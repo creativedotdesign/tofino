@@ -46,13 +46,18 @@ class AjaxForm
    */
   public function __construct()
   {
-    $this->post = filter_input_array(INPUT_POST);
+    $this->post = $_POST;
+
+    $args = [
+      'data' => [
+        'filter' => FILTER_SANITIZE_STRING,
+        'flags'  => FILTER_FLAG_NO_ENCODE_QUOTES
+      ]
+    ];
+
+    $this->form_data = filter_var_array($this->post, $args);
 
     parse_str($this->post['data'], $this->form_data);
-
-    foreach ($this->form_data as $index => $value) {
-      $this->form_data[$index] = filter_var($value, FILTER_SANITIZE_STRING);
-    }
   }
 
 
