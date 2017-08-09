@@ -10,6 +10,8 @@ if (locate_template('templates/archive-' . $slug . '.php') != '') { // archive-{
   get_template_part('templates/archive', $taxonomy . '-' . $slug);
 } elseif (locate_template('templates/archive-' . get_post_type() . '-' . $taxonomy . '-' . $slug . '.php') != '') { // archive-{posttype}-{taxonomy}-{term}
   get_template_part('templates/archive', get_post_type() . '-' . $taxonomy . '-' . $slug);
+} elseif (locate_template('templates/archive-' . $taxonomy . '.php') != '') { // archive-{taxonomy}
+  get_template_part('templates/archive', $taxonomy);
 } else { // archive-{posttype}
   get_template_part('templates/archive', get_post_type());
 } ?>
