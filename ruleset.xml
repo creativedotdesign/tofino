@@ -28,6 +28,11 @@
     <exclude-pattern>templates/*</exclude-pattern>
   </rule>
 
+  <!-- Exclude Indent Rule in Templates -->
+  <rule ref="Generic.WhiteSpace.ScopeIndent">
+    <exclude-pattern>templates/*</exclude-pattern>
+  </rule>
+
   <!-- Allow PHP closing tags on templates -->
   <rule ref="PSR2.Files.ClosingTag.NotAllowed">
     <exclude-pattern>templates/*</exclude-pattern>
