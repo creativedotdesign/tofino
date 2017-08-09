@@ -16,7 +16,8 @@
   width: 100%;
 
   @include media-breakpoint-up(sm) {
-    .menu-center & { // Flexbox based centered menu.
+    // Flexbox based centered menu.
+    .menu-center & {
       display: flex !important;
       justify-content: center;
 
