@@ -17,7 +17,7 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 | Prerequisite              | How to check  | How to install                                  |
 | ------------------------- | ------------- | ----------------------------------------------- |
 | PHP >= 5.5.9              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 5.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| Node.js >= 6.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
 | Composer >= 1.0.0	        | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
