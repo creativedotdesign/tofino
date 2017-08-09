@@ -126,6 +126,8 @@ function ajax_contact_form() {
     $form->respond(false, __('Unable to save data.', 'tofino'));
   }
 
+  $user_email_address = $data['email'];
+
   $admin_email_success = $form->sendEmail([ // Optional
     'to'                 => $form->getRecipient('contact_form_to_address'),
     'reply-to'           => $data['name'] . ' <' . $user_email_address . '>', // Name <email@domain.com>
@@ -141,8 +143,6 @@ function ajax_contact_form() {
       'department'   => null
     ]
   ]);
-
-  $user_email_address = $data['email'];
 
   $user_email_success = $form->sendEmail([ // Optional
     'to'                 => $user_email_address,
