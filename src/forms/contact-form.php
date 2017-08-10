@@ -118,7 +118,10 @@ function ajax_contact_form() {
 
   $data = $form->getData(); // Optional  Do what you want with the sanitized form data
 
-  $post_id = url_to_postid($_SERVER['HTTP_REFERER']); // Get the post_id from the referring page
+  $referrer_path = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+  $real_referrer = get_site_url() . $referrer_path;
+
+  $post_id = url_to_postid($real_referrer); // Get the post_id from the referring page
 
   $save_success = $form->saveData($post_id, 'contact_form'); // Optional  Save the data as post_meta
 
