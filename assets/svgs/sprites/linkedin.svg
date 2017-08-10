@@ -1,3 +1,8 @@
-<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-  <path d="M268 629h-97V319h97zm157 0h-97V319h93v42h1q31-50 93-50 114 0 114 133v185h-96V466q0-70-49-70-59 0-59 69z"/><circle cx="219" cy="220" r="56"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 466 465" style="enable-background:new 0 0 466 465;" xml:space="preserve">
+<path fill="currentColor" d="M105,465H8V155h97V465z M262,465h-97V155h93v42h1c20.7-33.3,51.7-50,93-50c76,0,114,44.3,114,133v185h-96V302
+	c0-46.7-16.3-70-49-70c-39.3,0-59,23-59,69V465z"/>
+<circle fill="currentColor" cx="56" cy="56" r="56"/>
 </svg>
