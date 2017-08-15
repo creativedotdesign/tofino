@@ -19,8 +19,10 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
   </div>
 <![endif]-->
 
-<nav class="navbar navbar-light navbar-toggleable-md <?php echo m\menu_sticky(); ?> <?php echo m\menu_position(); ?>">
-  <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#main-menu">
+<nav class="navbar navbar-expand-lg navbar-light bg-light <?php echo m\menu_sticky(); ?> <?php echo m\menu_position(); ?>">
+  <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
+
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="bar-wrapper">
       <span class="bar"></span>
       <span class="bar"></span>
@@ -28,7 +30,7 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
     </span>
     <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
   </button>
-  <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
+
   <div class="collapse navbar-collapse" id="main-menu">
     <?php
     if (has_nav_menu('primary_navigation')) :
