@@ -13,7 +13,8 @@ extends: eslint:recommended
 globals:
   wp: true,
   tofinoJS: true,
-  ajaxForm: true
+  ajaxForm: true,
+  Popper: true
 
 rules:
   no-console: 0
