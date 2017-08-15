@@ -12,7 +12,7 @@
   "scripts": {
     "build": "gulp --production"
   },
-  "author": "Daniel Hewes <daniel@lambdacreatives.com>",
+  "author": "Daniel Hewes <daniel@creativedotdesign.com>",
   "contributors": [
     {
       "name": "Jake Gully",
@@ -21,12 +21,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/lambdacreatives/tofino.git"
+    "url": "git://github.com/creativedotdesign/tofino.git"
   },
   "bugs": {
-    "url": "https://github.com/lambdacreatives/tofino/issues"
+    "url": "https://github.com/creativedotdesign/tofino/issues"
   },
-  "homepage": "http://tofino.lambdacreatives.com",
+  "homepage": "http://tofino.creativedotdesign.com",
   "licenses": [
     {
       "type": "MIT",
