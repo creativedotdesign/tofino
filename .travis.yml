@@ -27,8 +27,8 @@ install:
   - export PATH=./node_modules/.bin/:$PATH
   - rm -rf ~/.nvm && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
-  - nvm install 5.0.0
-  - nvm use 5
+  - nvm install 6.0.0
+  - nvm use 6
   - npm cache clean
   - npm install -g gulp
   - npm install --loglevel error
