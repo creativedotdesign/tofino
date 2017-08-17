@@ -24,7 +24,7 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 ## Installation
 
 * Download a pre-complied version of the dev branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip).
-* Download the latest [tagged release](https://github.com/lambdacreatives/tofino/releases).
+* Download the latest [tagged release](https://github.com/creativedotdesign/tofino/releases).
 * Clone the git repo and run `bin/setup.sh` (from your dev machine).
 
 Once you have activated the theme, access Theme Options (WP Customizer) update an option and select save to commit the default values to the database.
