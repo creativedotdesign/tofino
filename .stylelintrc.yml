@@ -10,3 +10,4 @@
     comment-empty-line-before: null
     max-nesting-depth: 5
     no-empty-source: null
+    at-rule-no-unknown: null

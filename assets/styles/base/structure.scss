@@ -1,7 +1,7 @@
 html { height: 100%; }
 
-body {
-  &.footer-sticky { // Flexbox supported browsers only.
+body { // Flexbox supported browsers only.
+  &.footer-sticky {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -23,7 +23,7 @@ body {
 }
 
 footer {
-  background-color: $gray-lightest;
+  background-color: $gray-100;
 }
 
 .form-group.required,
@@ -32,14 +32,14 @@ footer {
     &::after {
       content: "*";
       padding-left: 2px;
-      color: $brand-danger;
+      color: $form-feedback-invalid-color;
     }
   }
 
   &.has-success {
     .form-control-label {
       &::after {
-        color: $brand-success;
+        color: $form-feedback-valid-color;
       }
     }
   }

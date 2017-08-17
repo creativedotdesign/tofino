@@ -118,13 +118,18 @@ function ajax_contact_form() {
 
   $data = $form->getData(); // Optional  Do what you want with the sanitized form data
 
-  $post_id = url_to_postid($_SERVER['HTTP_REFERER']); // Get the post_id from the referring page
+  $referrer_path = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH);
+  $real_referrer = get_site_url() . $referrer_path;
+
+  $post_id = url_to_postid($real_referrer); // Get the post_id from the referring page
 
   $save_success = $form->saveData($post_id, 'contact_form'); // Optional  Save the data as post_meta
 
   if (!$save_success) {
     $form->respond(false, __('Unable to save data.', 'tofino'));
   }
+
+  $user_email_address = $data['email'];
 
   $admin_email_success = $form->sendEmail([ // Optional
     'to'                 => $form->getRecipient('contact_form_to_address'),
@@ -141,8 +146,6 @@ function ajax_contact_form() {
       'department'   => null
     ]
   ]);
-
-  $user_email_address = $data['email'];
 
   $user_email_success = $form->sendEmail([ // Optional
     'to'                 => $user_email_address,

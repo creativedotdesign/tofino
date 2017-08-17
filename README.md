@@ -17,14 +17,14 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 | Prerequisite              | How to check  | How to install                                  |
 | ------------------------- | ------------- | ----------------------------------------------- |
 | PHP >= 5.5.9              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 5.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| Node.js >= 6.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
 | Composer >= 1.0.0	        | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
 * Download a pre-complied version of the dev branch: [Download Zip](http://tofino.lambdacreatives.com/tofino.zip).
-* Download the latest [tagged release](https://github.com/lambdacreatives/tofino/releases).
+* Download the latest [tagged release](https://github.com/creativedotdesign/tofino/releases).
 * Clone the git repo and run `bin/setup.sh` (from your dev machine).
 
 Once you have activated the theme, access Theme Options (WP Customizer) update an option and select save to commit the default values to the database.

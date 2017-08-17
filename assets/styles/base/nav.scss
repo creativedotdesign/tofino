@@ -1,22 +1,13 @@
 // Probably best to leave this section alone and add your own overrides afterwards.
 
-.sticky-top {
-  top: 0;
-
-  &::before,
-  &::after {
-    content: "";
-    display: table;
-  }
-}
-
 // Override classes for responsive menu
 .navbar {
-  background-color: $gray-lightest;
+  background-color: $gray-100;
   width: 100%;
 
   @include media-breakpoint-up(sm) {
-    .menu-center & { // Flexbox based centered menu.
+    // Flexbox based centered menu.
+    .menu-center & {
       display: flex !important;
       justify-content: center;
 
@@ -104,10 +95,10 @@
 }
 
 .navbar-toggler {
-  float: right;
-  padding: .75rem;
-  display: block;
-  right: .5rem;
+  // float: right;
+  // padding: .75rem;
+  // display: block;
+  // right: .5rem;
   width: $bar-width * 2;
 
   .navbar-light & {

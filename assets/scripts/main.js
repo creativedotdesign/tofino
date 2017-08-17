@@ -9,7 +9,7 @@ import contact from './routes/contact';
 import './ajax-form';
 
 // Boostrap
-import 'bootstrap/dist/js/bootstrap.js';
+import 'bootstrap/dist/js/bootstrap.js'; // All of Bootstrap JS
 
 // Use this variable to set up the common and page specific functions. If you
 // rename this variable, you will also need to rename the namespace below.
