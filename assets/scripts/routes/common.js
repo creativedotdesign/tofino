@@ -36,9 +36,14 @@ export default {
       }
     });
 
+    // Show the notfication using JS based on the cookie (fixes html caching issue)
+    if (tofinoJS.notificationJS === 'true' && !Cookies.get('tofino-notification-closed')) {
+      $('#tofino-notification').show();
+    }
+
     // Assign sticky
     var $sticky = document.getElementsByClassName('sticky-top');
-    if($sticky.length) {
+    if ($sticky.length) {
       Stickyfill.add($sticky[0]);
     }
   },
