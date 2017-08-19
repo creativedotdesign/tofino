@@ -155,10 +155,11 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\head_script');
 function localize_scripts() {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
     wp_localize_script('tofino/js', 'tofinoJS', [
-      'ajaxUrl'       => admin_url('admin-ajax.php'),
-      'nextNonce'     => wp_create_nonce('next_nonce'),
-      'cookieExpires' => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires') : 999),
-      'themeUrl'      => get_template_directory_uri()
+      'ajaxUrl'        => admin_url('admin-ajax.php'),
+      'nextNonce'      => wp_create_nonce('next_nonce'),
+      'cookieExpires'  => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires'): 999),
+      'themeUrl'       => get_template_directory_uri(),
+      'notificationJS' => (get_theme_mod('notification_use_js') ? 'true' : 'false')
     ]);
   }
 }

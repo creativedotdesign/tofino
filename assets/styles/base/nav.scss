@@ -163,3 +163,21 @@
     }
   }
 }
+
+.headroom {
+  position: sticky;
+  z-index: 10;
+  right: 0;
+  left: 0;
+  top: 0;
+  transition: transform .25s ease-in-out;
+  will-change: transform;
+
+  &.headroom--pinned {
+    transform: translateY(0);
+  }
+
+  &.headroom--unpinned {
+    transform: translateY(-100%);
+  }
+}

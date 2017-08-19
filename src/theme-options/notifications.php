@@ -63,6 +63,15 @@ function notification_settings($wp_customize) {
       'bottom' => 'Bottom'
     ]
   ]);
+
+  $wp_customize->add_setting('notification_use_js', ['default' => '']);
+
+  $wp_customize->add_control('notification_use_js', [
+    'label'       => __('Display Notifications using Javascript', 'tofino'),
+    'description' => __('Work around for when the website has a static cache.', 'tofino'),
+    'section'     => 'tofino_notification_settings',
+    'type'        => 'checkbox'
+  ]);
 }
 add_action('customize_register', __NAMESPACE__ . '\\notification_settings');
 
@@ -96,3 +105,18 @@ function notification($position) {
     endif;
   }
 }
+
+/**
+ * Adds the menu-sticky classes to the body.
+ *
+ * @since 1.9.0
+ * @param array $classes Array of classes passed to the body tag by WP.
+ * @return void
+ */
+function add_notification_class($classes) {
+  if (get_theme_mod('notification_use_js') === true) {
+    $classes[] = 'notification-use-js';
+  }
+  return $classes;
+}
+add_filter('body_class', __NAMESPACE__ . '\\add_notification_class');

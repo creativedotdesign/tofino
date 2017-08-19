@@ -10,9 +10,19 @@ import Cookies from 'js-cookie';
 // Import stickyfill
 var Stickyfill = require('stickyfill-web-module')();
 
+// Headroom
+import Headroom from 'headroom.js/dist/headroom.js';
+window.Headroom = Headroom;
+
+// Headroom jQuery
+import 'headroom.js/dist/jQuery.headroom.js';
+
 export default {
   init() {
     // JavaScript to be fired on all pages
+
+    // Headroom JS
+    $("nav.headroom").headroom();
 
     //Iniitalize svg4everybody
     svg4everybody();
@@ -26,9 +36,14 @@ export default {
       }
     });
 
+    // Show the notfication using JS based on the cookie (fixes html caching issue)
+    if (tofinoJS.notificationJS === 'true' && !Cookies.get('tofino-notification-closed')) {
+      $('#tofino-notification').show();
+    }
+
     // Assign sticky
     var $sticky = document.getElementsByClassName('sticky-top');
-    if($sticky.length) {
+    if ($sticky.length) {
       Stickyfill.add($sticky[0]);
     }
   },

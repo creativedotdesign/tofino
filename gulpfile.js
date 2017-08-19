@@ -30,7 +30,7 @@ require('./gulp/styles')(gulp, production, browserSync);
 require('./gulp/styles-lint')(gulp, production, allowlint);
 
 // Critical path css
-require('./gulp/styles-critical')(gulp, stagingUrl);
+require('./gulp/styles-critical')(gulp, util);
 
 // Concatenate & Minify JS
 require('./gulp/scripts')(gulp, production, browserSync);

@@ -37,6 +37,22 @@ function menu_settings($wp_customize) {
     ]
   ]);
 
+  $wp_customize->add_setting('menu_headroom', [
+    'default'           => 'disabled',
+    'sanitize_callback' => '\Tofino\Helpers\sanitize_choices',
+  ]);
+
+  $wp_customize->add_control('menu_headroom', [
+    'label'       => __('Headroom Menu', 'tofino'),
+    'description' => 'Hide Menu on Scroll Down. Show menu on scroll up.',
+    'section'     => 'tofino_menu_settings',
+    'type'        => 'select',
+    'choices'     => [
+      'enabled'  => __('Enabled', 'tofino'),
+      'disabled' => __('Disabled', 'tofino')
+    ]
+  ]);
+
   $wp_customize->add_setting('menu_position', [
     'default'           => 'center',
     'sanitize_callback' => '\Tofino\Helpers\sanitize_choices',
@@ -112,3 +128,18 @@ function add_menu_sticky_class($classes) {
   return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\add_menu_sticky_class');
+
+
+/**
+ * Menu Headroom
+ *
+ * Returns menu headroom class based on theme option setting.
+ *
+ * @since 1.10.0
+ * @return void
+ */
+function menu_headroom() {
+  if (get_theme_mod('menu_headroom') === 'enabled') {
+    return 'headroom';
+  }
+}
