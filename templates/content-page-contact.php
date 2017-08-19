@@ -15,7 +15,7 @@
             <!-- Name / Text input -->
             <fieldset class="form-group required">
               <label class="form-control-label" for="name"><?php _e('Name', 'tofino'); ?></label>
-              <input type="text" name="name" class="form-control" id="name" placeholder="<?php _e('Your name', 'tofino'); ?>" required="required">
+              <input type="text" name="name" class="form-control" id="name" placeholder="<?php _e('Your name', 'tofino'); ?>">
               <small class="text-muted"><?php _e("So we know who you are.", 'tofino'); ?></small>
             </fieldset>
 
@@ -42,7 +42,7 @@
             <!-- Checkbox -->
             <div class="checkbox required">
               <label class="form-control-label">
-                <input type="checkbox" name="required_checkbox" value="1" required="required"> <?php _e('I agree'); ?>
+                <input type="checkbox" name="required_checkbox" value="1"> <?php _e('I agree'); ?>
               </label>
             </div>
 
