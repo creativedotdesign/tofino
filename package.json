@@ -1,5 +1,5 @@
 {
-  "name": "Tofino",
+  "name": "tofino",
   "private": true,
   "version": "1.9.0",
   "main": "gulpfile.js",
@@ -10,7 +10,8 @@
     "tofino"
   ],
   "scripts": {
-    "build": "gulp --production"
+    "build": "gulp --production",
+    "precommit": "gulp lint --production"
   },
   "author": "Daniel Hewes <daniel@creativedotdesign.com>",
   "contributors": [
@@ -63,6 +64,7 @@
     "gulp-svgmin": "~1.2.3",
     "gulp-uglify": "~3.0.0",
     "gulp-util": "~3.0.8",
+    "husky": "^0.14.3",
     "imagemin-pngquant": "~5.0.0",
     "merge-stream": "~1.0.1",
     "ngrok": "^2.2.6",
