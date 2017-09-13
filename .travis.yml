@@ -25,11 +25,10 @@ install:
   - export PATH=./node_modules/.bin/:$PATH
   - rm -rf ~/.nvm && git clone --depth 1 https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
-  - nvm install 6.0.0
-  - nvm use 6
-  - npm cache clean
-  - npm install -g gulp
-  - npm install --loglevel error
+  - nvm install 6.7
+  - nvm use 6.7
+  - npm install -g yarn
+  - yarn install
   - /home/travis/.phpenv/versions/5.6/bin/composer self-update
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - composer install

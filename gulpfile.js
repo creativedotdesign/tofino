@@ -7,7 +7,6 @@ var gulp        = require('gulp-help')(require('gulp'), {hideDepsMessage: true})
 
 var production = util.env.production || false,
     allowlint  = util.env.allowlint || false,
-    stagingUrl = util.env.stagingUrl || false,
     mobile     = util.env.desktop || false,
     slug       = util.env.slug || '';
 
@@ -86,6 +85,28 @@ gulp.task('build',
     'scripts',
     'fonts',
     'php:lint'
+  ]
+);
+
+
+// Lint task, used for pre-commit hook. Use with '--production' for production builds
+gulp.task('lint',
+  'Lints all PHP, SCSS and JS files.', [
+    'styles:lint',
+    'scripts:lint',
+    'php:lint'
+  ]
+);
+
+
+// Build for deployment
+gulp.task('build-deploy',
+  'Build assets for deployment task. Runs styles, scripts, images, svgs, fonts.', [
+    'images',
+    'svgs',
+    'styles',
+    'scripts',
+    'fonts'
   ]
 );
 
