@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "21ec3995da5867a901774be21c8d243b",
-    "content-hash": "de20c280a76939e8e211fa210f57febb",
+    "content-hash": "8e30464019149877d9693f8c380eb742",
     "packages": [
         {
             "name": "composer/installers",
@@ -112,7 +111,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-08-13 20:53:52"
+            "time": "2016-08-13T20:53:52+00:00"
         },
         {
             "name": "google/recaptcha",
@@ -157,7 +156,44 @@
                 "recaptcha",
                 "spam"
             ],
-            "time": "2015-09-02 17:23:59"
+            "time": "2015-09-02T17:23:59+00:00"
+        },
+        {
+            "name": "mindkomm/theme-lib-mix",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mindkomm/theme-lib-mix.git",
+                "reference": "75a235b260a87cc2c028044a350f07134c8cbb92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mindkomm/theme-lib-mix/zipball/75a235b260a87cc2c028044a350f07134c8cbb92",
+                "reference": "75a235b260a87cc2c028044a350f07134c8cbb92",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "mix.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lukas Gaechter",
+                    "email": "lukas.gaechter@mind.ch",
+                    "homepage": "https://www.mind.ch"
+                }
+            ],
+            "description": "Laravel Mix functions for WordPress projects",
+            "time": "2019-02-08T18:43:17+00:00"
         },
         {
             "name": "respect/validation",
@@ -222,7 +258,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2016-10-29 13:29:17"
+            "time": "2016-10-29T13:29:17+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -281,7 +317,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         }
     ],
     "packages-dev": [
@@ -323,7 +359,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2016-11-23 20:25:02"
+            "time": "2016-11-23T20:25:02+00:00"
         },
         {
             "name": "phpmd/phpmd",
@@ -388,7 +424,7 @@
                 "phpmd",
                 "pmd"
             ],
-            "time": "2016-11-22 14:35:17"
+            "time": "2016-11-22T14:35:17+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -466,7 +502,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2016-07-13 23:29:13"
+            "time": "2016-07-13T23:29:13+00:00"
         },
         {
             "name": "symfony/config",
@@ -519,7 +555,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-03 08:04:31"
+            "time": "2016-11-03T08:04:31+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -579,7 +615,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-18 21:15:08"
+            "time": "2016-11-18T21:15:08+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -628,7 +664,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-10-18 04:30:12"
+            "time": "2016-10-18T04:30:12+00:00"
         }
     ],
     "aliases": [],

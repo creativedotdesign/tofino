@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 composer install
-npm install
-gulp
+yarn install
+npm run dev

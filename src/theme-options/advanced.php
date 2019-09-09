@@ -31,23 +31,5 @@ function advanced_settings($wp_customize) {
     'section'     => 'tofino_advanced_settings',
     'type'        => 'checkbox'
   ]);
-
-  $wp_customize->add_setting('critical_css', ['default' => '']);
-
-  $wp_customize->add_control('critical_css', [
-    'label'       => __('Enable Critical CSS', 'tofino'),
-    'description' => __('Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.', 'tofino'),
-    'section'     => 'tofino_advanced_settings',
-    'type'        => 'checkbox'
-  ]);
-
-  $wp_customize->add_setting('jquery_footer', ['default' => '']);
-
-  $wp_customize->add_control('jquery_footer', [
-    'label'       => __('Move jQuery to Footer', 'tofino'),
-    'description' => __('Move jQuery to the footer. Uncheck if you have compatibility issues with plugins.', 'tofino'),
-    'section'     => 'tofino_advanced_settings',
-    'type'        => 'checkbox'
-  ]);
 }
 add_action('customize_register', __NAMESPACE__ . '\\advanced_settings');
