@@ -34,7 +34,7 @@ function widget_settings($wp_customize) {
 
   $wp_customize->add_setting('dash_widget_text', [
     'default'           => '',
-    'sanitize_callback' => 'sanitize_text_field',
+    'sanitize_callback' => 'wp_kses_data',
   ]);
 
   $wp_customize->add_control('dash_widget_text', [
