@@ -19,6 +19,9 @@
     <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakIndent"/>
     <exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>
 
+    <!-- Allow Cross OS line endings -->
+    <exclude name="Generic.Files.LineEndings"/>
+
     <!-- Exclude camel caps class method name checking -->
     <exclude name="PSR1.Methods.CamelCapsMethodName"/>
   </rule>
