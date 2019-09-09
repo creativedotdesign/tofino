@@ -92,6 +92,6 @@ function composer_error_notice() {
 // Admin notice for missing dist directory.
 function missing_dist_error_notice() {
 ?><div class="error notice">
-    <p><?php _e('/dist directory not found. You probably want to run npm install and gulp on the command line.', 'tofino'); ?></p>
+    <p><?php _e('/dist directory not found. You probably want to run yarn install and npm run dev on the command line.', 'tofino'); ?></p>
   </div><?php
 }

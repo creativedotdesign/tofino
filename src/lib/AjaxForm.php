@@ -205,7 +205,7 @@ class AjaxForm
       if ($settings['remove_submit_data'] == false) {
         foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
           if ($key == 'date_time') { // Convert unix timestamp to human readable date
-            $value = date('d-M-Y H:i:s', $value);
+            $value = current_time('d-M-Y H:i:s');
           }
 
           if (is_array($value)) {
@@ -268,10 +268,12 @@ class AjaxForm
     }
 
     if (array_key_exists('cc', $settings)) {
-      $settings['cc'] = explode(',', $settings['cc']); // Split string on comma
+      if (!empty($settings['cc'])) {
+        $settings['cc'] = explode(',', $settings['cc']); // Split string on comma
 
-      foreach ($settings['cc'] as $cc_email_address) {
-        $headers[] = 'Cc: ' . trim($cc_email_address);
+        foreach ($settings['cc'] as $cc_email_address) {
+          $headers[] = 'Cc: ' . trim($cc_email_address);
+        }
       }
     }
 

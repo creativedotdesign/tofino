@@ -4,13 +4,10 @@
 # track this file .gitignore (i.e. do NOT ignore it)
 !.gitignore
 !.gitkeep
-!.travis.yml
 !.gitattributes
 !.eslintrc.yml
 !.stylelintrc.yml
-!.npmrc
 !.hound.yml
-!.bitbucket-pipelines.yml
 
 # ignore node/grunt dependency directories
 node_modules/
@@ -20,3 +17,6 @@ node_modules/
 
 # ignore dist directories
 dist/
+
+# ignore npm debug log file
+npm-debug.log

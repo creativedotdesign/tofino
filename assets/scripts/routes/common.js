@@ -1,9 +1,6 @@
 // We need jQuery
 var $ = window.jQuery;
 
-// Import svg4everybody
-import svg4everybody from 'svg4everybody';
-
 // Import Cookies
 import Cookies from 'js-cookie';
 
@@ -24,13 +21,10 @@ export default {
     // Headroom JS
     $("nav.headroom").headroom();
 
-    //Iniitalize svg4everybody
-    svg4everybody();
-
     // List for notication close
-    $('#tofino-notification .close').on('click', function() {
+    $('#tofino-notification .close').on('click', function () {
       if (tofinoJS.cookieExpires) {
-        Cookies.set('tofino-notification-closed', 'yes', {expires: parseInt(tofinoJS.cookieExpires)});
+        Cookies.set('tofino-notification-closed', 'yes', { expires: parseInt(tofinoJS.cookieExpires) });
       } else {
         Cookies.set('tofino-notification-closed', 'yes');
       }

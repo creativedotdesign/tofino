@@ -16,14 +16,6 @@ You might need to add some additional css to tweak the logo size / position. Add
 
 Disable the flash of un-styled text if using the Web Font Loader. This adds a class to the body tag which hides the content until the font has been loaded. The class is then removed.
 
-### Critical CSS
-
-Inject the critical.css file as inline styles in the head tag. Defer the main CSS file in to loadCSS in the footer. Remember to run the styles:critical gulp task.
-
-### Move jQuery to the footer
-
-Move jQuery to the footer. Uncheck if you have compatibility issues with plugins.
-
 ## Client Data
 
 Client data such as email address, office address, telephone number and company number that can be accessed using a shortcode or PHP function for use in contact pages, footers etc.

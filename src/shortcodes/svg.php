@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SVG Shortcode
  *
@@ -6,7 +7,8 @@
  * @param mixed $atts options attributes array or string with sprite reference
  * @return string HTML SVG sprite code populated with parameters.
  */
-function svg($atts) {
+function svg($atts)
+{
   global $theme_config;
 
   if (gettype($atts) === 'string') {
@@ -20,8 +22,21 @@ function svg($atts) {
     'title'               => '',
     'id'                  => '',
     'sprite'              => '',
-    'preserveAspectRatio' => ''
+    'preserveAspectRatio' => '',
+    'file'                => ''
   ], $atts, 'svg');
+
+  if ($atts['file']) {
+    if (is_int($atts['file'])) {
+      $file = get_attached_file($atts['file']);
+    } else {
+      $file = get_template_directory() . '/dist/svg/' . $atts['file'] . '.svg';
+    }
+
+    if (file_exists($file)) {
+      return file_get_contents($file);
+    }
+  }
 
   if (!$atts['sprite']) {
     return false;
