@@ -205,7 +205,7 @@ class AjaxForm
       if ($settings['remove_submit_data'] == false) {
         foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
           if ($key == 'date_time') { // Convert unix timestamp to human readable date
-            $value = date('d-M-Y H:i:s', $value);
+            $value = current_time('d-M-Y H:i:s');
           }
 
           if (is_array($value)) {
