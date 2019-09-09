@@ -1,6 +1,10 @@
 html { height: 100%; }
 
 body { // Flexbox supported browsers only.
+  -moz-font-feature-settings: 'kern';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   &.footer-sticky {
     display: flex;
     min-height: 100vh;
