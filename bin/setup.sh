@@ -6,8 +6,8 @@ echo 'Composer install deps...'
 composer install
 
 echo 'Install and use Node v6.7...'
-nvm install 6.7.0
-nvm use 6.7
+nvm install 10.16.3
+nvm use 10.16.3
 
 echo 'Install Yarn from npm...'
 npm install -g yarn
@@ -17,4 +17,4 @@ yarn -v
 yarn install
 
 echo 'Run first build...'
-npm build
+npm run dev

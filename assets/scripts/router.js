@@ -31,7 +31,7 @@ export default class Router {
       .replace(/-/g, '_')
       .split(/\s+/)
       .forEach((className) => {
-        if (type == null ) {
+        if (type == null) {
           this.fire(className);
           this.fire(className, 'finalize');
         } else {

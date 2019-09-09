@@ -5,7 +5,7 @@
     define(['jquery'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // Node/CommonJS
-    module.exports = function(root, jQuery) {
+    module.exports = function (root, jQuery) {
       if (jQuery === undefined) {
         if (typeof window !== 'undefined') {
           jQuery = require('jquery');
@@ -26,7 +26,7 @@
     var $submitActor = null;
     var $submitActors = $(this).find(':submit'); // All submit buttons in form
 
-    $(this).on('submit', function(e) {
+    $(this).on('submit', function (e) {
       e.preventDefault(); // Don't really submit.
 
       if (null === $submitActor) {
@@ -47,10 +47,10 @@
         action: $(this).data('wp-action'), // The PHP function name to call via AJAX
         btnProgressText: 'Wait..',
         hideFormAfterSucess: true,
-        beforeSerializeData: function() {},
-        beforeRedirect: function() {},
-        afterSuccess: function() {},
-        afterError: function() {}
+        beforeSerializeData: function () { },
+        beforeRedirect: function () { },
+        afterSuccess: function () { },
+        afterError: function () { }
       };
 
       var opts = $.extend({}, defaults, options);
@@ -61,23 +61,23 @@
 
       opts.beforeSerializeData(); // Callback function
 
-      var serializedData  = $(this).serialize(),
-          $btnSubmit      = $submitActor,
-          btnOrgText      = $btnSubmit.text(), // Get original text value
-          btnProgressText = opts.btnProgressText;
+      var serializedData = $(this).serialize(),
+        $btnSubmit = $submitActor,
+        btnOrgText = $btnSubmit.text(), // Get original text value
+        btnProgressText = opts.btnProgressText;
 
       $(this).find(':input').prop('disabled', true); // Set the disabled state
       $btnSubmit.text(btnProgressText); // Set in progress text
 
       var request = $.post(
         tofinoJS.ajaxUrl, {
-          action: opts.action, // Passed to WP for the ajax action
-          data: serializedData,
-          nextNonce: tofinoJS.nextNonce
-        }
+        action: opts.action, // Passed to WP for the ajax action
+        data: serializedData,
+        nextNonce: tofinoJS.nextNonce
+      }
       );
 
-      request.done(function(response) {
+      request.done(function (response) {
         $form.removeClass('submitting');
         if (response.success === true) {
           if (response.redirect) {
@@ -116,7 +116,7 @@
           $form.find(':input')
             .not(':input[type=button], :input[type=submit], :input[type=reset], :checkbox') // Select all inputs not buttons not checkbox
             .addClass('is-valid') // All valid / green. Server only returns invalid fields
-            .each(function() {
+            .each(function () {
               $(this).closest('.form-group').addClass('has-success');
             });
 
@@ -126,7 +126,7 @@
             var invalidFields = $.parseJSON(response.extra);
             var msgHTML = '';
 
-            $.each(invalidFields, function(key, value) {
+            $.each(invalidFields, function (key, value) {
               msgHTML += '<li>' + value + '</li>';
 
               $form.find('[name=' + key + ']')
@@ -153,7 +153,7 @@
         }
       });
 
-      request.fail(function() {
+      request.fail(function () {
         opts.responseDiv
           .addClass('alert alert-danger')
           .html('An error occured.');
@@ -163,7 +163,7 @@
       });
     });
 
-    $submitActors.click(function() { // Assign button on click
+    $submitActors.click(function () { // Assign button on click
       $submitActor = $(this);
     });
   };

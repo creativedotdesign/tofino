@@ -1,7 +1,4 @@
-// Import loadCSS
-import fgLoadcss from 'fg-loadcss';
-global.loadCSS = fgLoadcss.loadCSS; // Make it global
-
+// Import Popper
 import Popper from 'popper.js/dist/umd/popper';
 window.Popper = Popper;
 

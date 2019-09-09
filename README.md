@@ -16,10 +16,10 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 
 | Prerequisite              | How to check  | How to install                                  |
 | ------------------------- | ------------- | ----------------------------------------------- |
-| PHP >= 5.5.9              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 6.x.x          | `node -v`     | [nodejs.org](http://nodejs.org/)                |
-| gulp >= 3.9               | `gulp -v`     | `npm install -g gulp`                           |
-| Composer >= 1.0.0	        | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
+| PHP >= 7.0.0              | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 10.10.0        | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| yarn >= 3.9               | `yarn -v`     | `brew install yarn` (MacOS)                     |
+| Composer >= 1.9.0	        | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
@@ -31,7 +31,7 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 
 ## Features
 
-* [Bootstrap 4](http://getbootstrap.com/) (Pre-release Alpha 4)
+* [Bootstrap 4](http://getbootstrap.com/) (v4.3)
 * Multilingual ready (WPML)
 * Responsive
 * Theme Options via WP Customizer (Native)
@@ -52,15 +52,11 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 	* Data Tables for viewing data submitted via the contact form
 	* Maintenance mode
 	* jQuery in footer
-	* Critical CSS (with loadCSS function)
 	* [Theme Tracker](https://github.com/lambdacreatives/tracker)
 * JS ES6 compatible via Babel and Browserify.
 * [DOM-based routing](http://goo.gl/EUTi53) for DOM Ready and Window Ready via advanced router
 * [SCSS](http://sass-lang.com/)
-* [Gulp](http://gulpjs.com/) build script
-	* Includes [eslint](https://github.com/eslint/eslint), [stylelint](https://github.com/stylelint/stylelint), and [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) for keeping source code up to standard. Custom rulesets for adding additional / tweaking rules.
-	* Includes [Google Page Speed Insights](https://github.com/addyosmani/psi), [W3C Validation](https://github.com/addyosmani/psi) and [AccessSniff](https://github.com/yargalot/AccessSniff) via [Ngrok](https://github.com/bubenshchykov/ngrok)
-	* Use `gulp help` for a full task list with descriptions
+* [Laravel Mix](https://laravel-mix.com/) build script
 * [Composer](https://getcomposer.org/) for PHP package management
 * Custom Nav-walker Bootstrap 4 ready
 * Namespaced functions
@@ -80,9 +76,9 @@ We use [Deploybot](https://deploybot.com). The deployment VM is issued the follo
 
 ```
 composer install
-npm install npm -g
-npm install --loglevel error
-gulp --production
+yarn install npm -g
+yarn install
+npm run prod
 ```
 
 The following files and directories are excluded from being uploaded:
@@ -90,19 +86,14 @@ The following files and directories are excluded from being uploaded:
 ```
 assets
 bin
-gulp
 node_modules
-.eslintrc.yml
+.eslintrc.json
 .gitattributes
 .gitignore
 .stylelintrc.yml
-.travis.yml
-.npmrc
 .hound.yml
-bitbucket-pipelines.yml
 composer.json
 composer.lock
-gulpfile.js
 package.json
 ruleset.xml
 **/*.md
