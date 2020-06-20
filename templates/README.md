@@ -4,27 +4,27 @@ Template files go here. The naming of your template files is important. By namin
 
 ## Possible formats
 
- * `content-single-{post-type}-{post-slug}.php`
- * `content-single-{post-type}.php`
- * `content-single.php`
- * `content-page-{slug}.php`
- * `content-page.php`
- * `archive-{category}.php`
- * `archive-{taxonomy}-{term}.php`
- * `archive-{posttype}-{taxonomy}-{term}.php`
- * `archive-{post-type}.php`
- * `archive.php`
+- `content-single-{post-type}-{post-slug}.php`
+- `content-single-{post-type}.php`
+- `content-single.php`
+- `content-page-{slug}.php`
+- `content-page.php`
+- `archive-{category}.php`
+- `archive-{taxonomy}-{term}.php`
+- `archive-{posttype}-{taxonomy}-{term}.php`
+- `archive-{post-type}.php`
+- `archive.php`
 
 ## Default Templates
 
-Wordpress gives some default templates in the root theme folder. Apart from `header.php` and `footer.php` *you shouldn't have to edit these or create any new ones* - just create your own templates in this `templates` subdirectory.
+Wordpress gives some default templates in the root theme folder. Apart from `header.php` and `footer.php` _you shouldn't have to edit these or create any new ones_ - just create your own templates in this `templates` subdirectory.
 
-Therefore *do not edit or create these files*:
+Therefore _do not edit or create these files_:
 
-* archive.php
-* index.php
-* single.php
-* page.php
+- archive.php
+- index.php
+- single.php
+- page.php
 
 ## Front page
 
@@ -51,7 +51,3 @@ To create a custom home page:
 If you want to set both a static Frontpage and a Home page. For example you have a blog separate to the main website content and Frontpage.
 
 Create a page called home.php in the root including header.php and footer.php with a get_template_part pointing to a new template you'd create e.g. `templates/content-page-blog.php`
-
-## Email templates
-
-A default template has been provided (email/default-form.html) which is used in the AjaxForm class. Customize this html file or create a new file.

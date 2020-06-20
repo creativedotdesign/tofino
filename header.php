@@ -14,25 +14,23 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
 <?php n\notification('top'); ?>
 
 <!--[if lte IE 9]>
-  <div class="alert alert-danger browser-warning">
-    <p><?php _e('You are using an <strong>outdated</strong> browser. <a href="http://browsehappy.com/">Update your browser</a> to improve your experience.', 'tofino'); ?></p>
+  <div class="flex items-center px-4 py-3 text-sm font-bold text-white bg-red" role="alert">
+    <p><?php _e('To improve your experience <a href="https://browsehappy.com/" target="_blank" rel="noopener" class="font-bold">Update your browser</a>. Your browser is <strong>not supported</strong>', 'tofino'); ?></p>
   </div>
 <![endif]-->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light <?php echo m\menu_headroom(); ?> <?php echo m\menu_sticky(); ?> <?php echo m\menu_position(); ?>">
-  <a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
+<nav class="w-full bg-white py-4 px-6 justify-between flex <?php echo m\menu_sticky(); ?>">
+  <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
 
-  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="bar-wrapper">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </span>
+  <button class="flex bg-red-100 md:hidden" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+     <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+      <!-- <path fill-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"/> -->
+      <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+    </svg>
     <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="main-menu">
-    <?php
+  <div class="hidden w-auto lg:flex md:items-center" id="main-menu"><?php
     if (has_nav_menu('primary_navigation')) :
       wp_nav_menu([
         'menu'            => 'nav_menu',
@@ -43,7 +41,6 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
         'container_id'    => '',
         'menu_class'      => 'navbar-nav',
         'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-        'walker'          => new Tofino\Nav\NavWalker()
       ]);
     endif; ?>
   </div>

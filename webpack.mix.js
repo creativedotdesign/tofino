@@ -1,6 +1,5 @@
 const mix = require('laravel-mix');
 
-require('laravel-mix-imagemin');
 require('@ayctor/laravel-mix-svg-sprite');
 
 // Public Path
@@ -8,44 +7,38 @@ mix.setPublicPath('./dist');
 
 // Browsersync
 mix.browserSync({
-  proxy: process.env.BROWSERSYNC_PROXY_URL || 'tofino.lambda.host',
-  files: [
-    'css/**/*.css',
-    'js/**/*.js',
-    '**/*.php',
-    '!vendor/**/*.php'
-  ],
+  proxy: process.env.BROWSERSYNC_PROXY_URL || 'tofino.test',
+  files: ['css/**/*.css', 'js/**/*.js', '**/*.php', '!vendor/**/*.php'],
 });
 
 // Javascript
-mix.js('assets/scripts/main.js', 'js/scripts.js')
-  .js('assets/scripts/head.js', 'js/head-scripts.js')
+mix
+  .js('assets/scripts/main.js', 'js/scripts.js')
   .js('assets/scripts/wp-admin.js', 'js/wp-admin.js')
-  .autoload({ // Autoload jQuery where required
+  .autoload({
+    // Autoload jQuery where required
     jquery: ['$', 'window.jQuery'],
-    Tether: 'Tether'
   });
+// .extract(['vue', 'stickyfill-web-module', 'js-cookie']);
 
 // Styles
-mix.sass('assets/styles/main.scss', 'css/styles.css')
-  .sass('assets/styles/base/wp-admin.scss', 'css/wp-admin.css');
+mix.postCss('assets/styles/main.css', 'css/styles.css', [
+  /* eslint-disable global-require */
+  require('postcss-import'),
+  require('tailwindcss'),
+  require('postcss-mixins'),
+  require('postcss-nested'),
+]);
 
 // SVGs
-// mix.svgSprite('assets/svgs/sprites/*.svg', {
-//   output: {
-//     filename: 'svg/sprite.symbol.svg'
-//   }
-// });
-
-// Images
-mix.imagemin({ // Compress and copy images
-  from: 'assets/images/**/*',
-  to: 'img',
-  flatten: true,
+mix.svgSprite('assets/svgs/sprites/*.svg', {
+  output: {
+    filename: 'svg/sprite.symbol.svg',
+  }
 });
 
-// Fonts
-mix.copyDirectory('assets/fonts', 'fonts') // Copy fonts
+// Images
+mix.copy('assets/images/**/*.{jpg,jpeg,png,gif}', 'img');
 
 // Options
 mix.options({
@@ -55,13 +48,13 @@ mix.options({
 // Webpack config
 mix.webpackConfig({
   externals: {
-    "jquery": "jQuery"
-  }
+    jquery: 'jQuery',
+  },
 });
 
 // Source maps when not in production.
 if (!mix.inProduction()) {
-  mix.sourceMaps(true, 'source-map')
+  mix.sourceMaps(true, 'source-map');
 }
 
 // Hash and version files in production.

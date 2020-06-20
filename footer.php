@@ -7,12 +7,10 @@ if (get_theme_mod('footer_sticky') === 'enabled') : ?>
 
 <footer>
   <div class="container">
-    <div class="row">
-      <div class="col-xs-12"><?php
-      if (get_theme_mod('footer_text')) :
-        echo do_shortcode(get_theme_mod('footer_text')); // Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
-      endif; ?>
-      </div>
+    <div class="w-full"><?php
+    if (get_theme_mod('footer_text')) :
+      echo do_shortcode(get_theme_mod('footer_text')); // Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
+    endif; ?>
     </div>
   </div>
 </footer>
