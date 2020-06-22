@@ -22,7 +22,7 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
 <nav class="w-full bg-white py-4 px-6 justify-between flex <?php echo m\menu_sticky(); ?>">
   <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
 
-  <button class="flex bg-red-100 md:hidden" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="flex bg-red-100 lg:hidden" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
      <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
       <!-- <path fill-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"/> -->
       <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
@@ -30,7 +30,7 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
     <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
   </button>
 
-  <div class="hidden w-auto lg:flex md:items-center" id="main-menu"><?php
+  <div class="hidden w-auto lg:flex lg:items-center" id="main-menu"><?php
     if (has_nav_menu('primary_navigation')) :
       wp_nav_menu([
         'menu'            => 'nav_menu',
