@@ -1,0 +1,17 @@
+.maintenance-mode-alert {
+  background-color: red;
+  color: white;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999999;
+  padding: 20px;
+  text-align: center;
+
+  p {
+    font-size: 18px;
+  }
+}
+

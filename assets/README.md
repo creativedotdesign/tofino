@@ -1,9 +1,5 @@
 # Assets
 
-## /fonts
-
-Fonts here will be copied to `dist/fonts`.
-
 ## /images
 
 Images will be compressed, optimised and converted to progressive loading using Imagemin.
@@ -14,19 +10,19 @@ Javascript files belong here.
 
 Scripts will be minified when `npm run prod` is run.
 
-## /styles
+## /css
 
-SCSS files go here. Similarly to scripts, these will not automatically be added to `/dist`. To add your styles into `dist/css/main.css`, add your file name into `main.scss`.
+CSS files go here. Similarly to scripts, these will not automatically be added to `/dist`. To add your styles into `dist/css/main.css`, add your file name into `main.css`.
 
 ## /svgs
 
 ### Single SVGs
 
-SVGs added to `assets/svgs` will be minified and copied to dist/svg.
+SVGs added to `svgs` will be minified and copied to dist/svg.
 
 ### Sprites
 
-SVGs added to `assets/svgs/sprite` will be processed by the main build task and output as a single file to `dist/svg/sprite.symbol.svg`. You can use the svg shortcode to insert them in your template.
+SVGs added to `svgs/sprite` will be processed by the main build task and output as a single file to `dist/svg/sprite.symbol.svg`. You can use the svg shortcode to insert them in your template.
 
 ### Font Loader
 

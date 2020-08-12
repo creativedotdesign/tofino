@@ -1,44 +1,15 @@
-// We need jQuery
-var $ = window.jQuery;
-
-// Import Cookies
-import Cookies from 'js-cookie';
-
-// Import stickyfill
-var Stickyfill = require('stickyfill-web-module')();
-
-// Headroom
-import Headroom from 'headroom.js/dist/headroom.js';
-window.Headroom = Headroom;
-
-// Headroom jQuery
-import 'headroom.js/dist/jQuery.headroom.js';
+// Import Alert
+import Alert from '../modules/alert';
 
 export default {
   init() {
     // JavaScript to be fired on all pages
 
-    // Headroom JS
-    $("nav.headroom").headroom();
+    console.log('Testing DOM READY!');
 
-    // List for notication close
-    $('#tofino-notification .close').on('click', function () {
-      if (tofinoJS.cookieExpires) {
-        Cookies.set('tofino-notification-closed', 'yes', { expires: parseInt(tofinoJS.cookieExpires) });
-      } else {
-        Cookies.set('tofino-notification-closed', 'yes');
-      }
-    });
-
-    // Show the notfication using JS based on the cookie (fixes html caching issue)
-    if (tofinoJS.notificationJS === 'true' && !Cookies.get('tofino-notification-closed')) {
-      $('#tofino-notification').show();
-    }
-
-    // Assign sticky
-    var $sticky = document.getElementsByClassName('sticky-top');
-    if ($sticky.length) {
-      Stickyfill.add($sticky[0]);
+    // Alert
+    if (document.body.contains(document.getElementById('tofino-notification'))) {
+      Alert();
     }
   },
   finalize() {
@@ -46,5 +17,5 @@ export default {
   },
   loaded() {
     // Javascript to be fired on page once fully loaded
-  }
+  },
 };

@@ -1,0 +1,4 @@
+/* Menu Styles */
+.sticky-top {
+  @apply sticky top-0;
+}

@@ -1,0 +1,34 @@
+html {
+  height: 100%;
+}
+
+body {
+  /* Flexbox supported browsers only. */
+  -moz-font-feature-settings: 'kern';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &.footer-sticky {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
+    .wrapper {
+      flex: 1 0 auto;
+      width: 100%;
+    }
+  }
+
+  &.no-fout {
+    visibility: hidden;
+
+    .wf-inactive &,
+    .wf-active & {
+      visibility: visible;
+    }
+  }
+}
+
+footer {
+  @apply bg-gray-100;
+}
