@@ -1,0 +1,23 @@
+.notification-use-js {
+  #tofino-notification {
+    @apply hidden;
+  }
+}
+
+.alert {
+  @apply p-2;
+
+  &.notification {
+    &.bottom {
+      @apply fixed bottom-0 left-0 right-0;
+    }
+
+    &.top {
+      @apply relative;
+    }
+  }
+
+  svg {
+    @apply fill-current;
+  }
+}

@@ -1,0 +1,47 @@
+/* WordPress Generated Classes
+http://codex.wordpress.org/CSS#WordPress_Generated_Classes */
+
+/* Media alignment */
+.alignnone {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+}
+
+.aligncenter {
+  display: block;
+  margin: 0 auto;
+  height: auto;
+}
+
+.alignleft,
+.alignright {
+  margin-bottom: .75rem;
+}
+
+@screen sm {
+  /* Only float if not on a small device */
+  .alignleft {
+    margin-right: .75rem;
+
+
+    @apply float-left;
+  }
+
+  .alignright {
+    margin-left: .75rem;
+    @apply float-right;
+  }
+} 
+
+/* Enable responsive images in WP content */
+img {
+  &[class*='wp-image-'] {
+    @apply w-full h-auto;
+  }
+}
+
+/* Text meant only for screen readers */
+.screen-reader-text {
+  @apply sr-only;
+}

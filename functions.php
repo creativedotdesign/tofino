@@ -21,30 +21,26 @@ $theme_config = [
  *
  */
 $tofino_includes = [
-  'src/data-tables/contact-form-data.php',
-  "src/forms/contact-form.php",
-  "src/lib/nav-walker.php",
-  "src/lib/init.php",
-  "src/lib/assets.php",
-  "src/lib/helpers.php",
-  "src/lib/pagination.php",
-  "src/shortcodes/copyright.php",
-  "src/shortcodes/social-icons.php",
-  "src/shortcodes/svg.php",
-  "src/shortcodes/theme-option.php",
-  "src/theme-options/admin.php",
-  "src/theme-options/advanced.php",
-  "src/theme-options/client-data.php",
-  "src/theme-options/footer.php",
-  "src/theme-options/google-analytics.php",
-  "src/theme-options/google-recaptcha.php",
-  "src/theme-options/init.php",
-  "src/theme-options/maintenance-mode.php",
-  "src/theme-options/menu.php",
-  "src/theme-options/notifications.php",
-  "src/theme-options/social-networks.php",
-  "src/theme-options/theme-tracker.php",
-  "src/theme-options/dashboard-widget.php",
+  "inc/lib/init.php",
+  "inc/lib/assets.php",
+  "inc/lib/helpers.php",
+  "inc/lib/clean.php",
+  "inc/shortcodes/copyright.php",
+  "inc/shortcodes/social-icons.php",
+  "inc/shortcodes/svg.php",
+  "inc/shortcodes/theme-option.php",
+  "inc/theme-options/admin.php",
+  "inc/theme-options/advanced.php",
+  "inc/theme-options/client-data.php",
+  "inc/theme-options/dashboard-widget.php",
+  "inc/theme-options/footer.php",
+  "inc/theme-options/google-analytics.php",
+  "inc/theme-options/init.php",
+  "inc/theme-options/maintenance-mode.php",
+  "inc/theme-options/menu.php",
+  "inc/theme-options/notifications.php",
+  "inc/theme-options/social-networks.php",
+  "inc/theme-options/theme-tracker.php",
 ];
 
 foreach ($tofino_includes as $file) {
@@ -95,3 +91,23 @@ function missing_dist_error_notice() {
     <p><?php _e('/dist directory not found. You probably want to run yarn install and npm run dev on the command line.', 'tofino'); ?></p>
   </div><?php
 }
+
+
+// Set ACF JSON save path
+function acf_json_save_point($path) {
+  $path = get_stylesheet_directory() . '/src/acf-json'; // Update path
+
+  return $path;
+}
+add_filter('acf/settings/save_json', 'acf_json_save_point');
+
+
+// Set ACF JSON load path
+function acf_json_load_point($paths) {
+  unset($paths[0]); // Remove original path (optional)
+
+  $paths[] = get_stylesheet_directory() . '/src/acf-json';
+
+  return $paths;
+}
+add_filter('acf/settings/load_json', 'acf_json_load_point');
