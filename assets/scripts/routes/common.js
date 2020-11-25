@@ -5,8 +5,6 @@ export default {
   init() {
     // JavaScript to be fired on all pages
 
-    console.log('Testing DOM READY!');
-
     // Alert
     if (document.body.contains(document.getElementById('tofino-notification'))) {
       Alert();
