@@ -3,7 +3,11 @@
   "private": true,
   "version": "3.1.0",
   "description": "A WordPress starter theme for jumpstarting custom theme development.",
-  "keywords": ["WordPress", "theme", "tofino"],
+  "keywords": [
+    "WordPress",
+    "theme",
+    "tofino"
+  ],
   "scripts": {
     "dev": "npm run development",
     "development": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -33,9 +37,9 @@
     "@tailwindcss/jit": "^0.1.6",
     "autoprefixer": "^10.2.5",
     "babel-eslint": "^10.1.0",
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.26.14",
     "browser-sync-webpack-plugin": "^2.2.2",
-    "copy-webpack-plugin": "^5.0.4",
+    "copy-webpack-plugin": "^8.1.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.0.0",
