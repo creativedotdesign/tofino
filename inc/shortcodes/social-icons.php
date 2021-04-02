@@ -25,6 +25,7 @@ function social_icons($atts = []) {
       if (!empty($atts['platforms'])) {
         $platforms    = array_map('trim', explode(',', $atts['platforms']));
         $social_links = array_intersect_key($social_links, array_flip($platforms));
+        $social_links = array_replace(array_flip($platforms), $social_links); 
       }
 
       // Build the links and icons
