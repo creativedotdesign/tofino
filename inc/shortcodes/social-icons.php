@@ -19,7 +19,7 @@ function social_icons($atts = []) {
     ], $atts, 'social_icons');
 
     if (!empty($social_links) && (array_filter($social_links))) {
-      $output .= '<ul class="social-icons ' . $atts['class'] . '">';
+      $output .= '<ul class="social-icons' . ($atts['class'] ? ' ' . $atts['class'] : null) . '">';
 
       // Filter the social networks based on platform param
       if (!empty($atts['platforms'])) {

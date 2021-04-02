@@ -4,6 +4,7 @@
 
 @import 'base/alerts';
 @import 'base/menu';
+@import 'base/social-icons';
 @import 'base/structure';
 
 @import 'tailwindcss/utilities';
