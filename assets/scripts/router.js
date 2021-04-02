@@ -9,18 +9,18 @@
 // The routing fires all common scripts, followed by the page specific scripts.
 // Add additional events for more control over timing e.g. a finalize event
 export default class Router {
-  constructor(routes) {
+  constructor (routes) {
     this.routes = routes;
   }
 
-  fire(route, fn = 'init', args) {
+  fire (route, fn = 'init', args) {
     const fire = route !== '' && this.routes[route] && typeof this.routes[route][fn] === 'function';
     if (fire) {
       this.routes[route][fn](args);
     }
   }
 
-  loadEvents(type) {
+  loadEvents (type) {
     if (type == null) {
       this.fire('common'); // Fire common init JS
     }
@@ -30,7 +30,7 @@ export default class Router {
       .toLowerCase()
       .replace(/-/g, '_')
       .split(/\s+/)
-      .forEach((className) => {
+      .forEach(className => {
         if (type == null) {
           this.fire(className);
           this.fire(className, 'finalize');

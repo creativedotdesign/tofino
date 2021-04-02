@@ -1,15 +1,10 @@
 const mix = require('laravel-mix');
-
-require('@ayctor/laravel-mix-svg-sprite');
+const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 // Public Path
 mix.setPublicPath('./dist');
-
-// Browsersync
-mix.browserSync({
-  proxy: process.env.BROWSERSYNC_PROXY_URL || 'tofino.test',
-  files: ['css/**/*.css', 'js/**/*.js', '**/*.php', '!vendor/**/*.php'],
-});
 
 // Javascript
 mix
@@ -18,27 +13,61 @@ mix
   .autoload({
     // Autoload jQuery where required
     jquery: ['$', 'window.jQuery'],
-  });
-// .extract(['vue', 'stickyfill-web-module', 'js-cookie']);
+  })
+  .vue();
 
 // Styles
-mix.postCss('assets/styles/main.css', 'css/styles.css', [
-  /* eslint-disable global-require */
-  require('postcss-import'),
-  require('tailwindcss'),
-  require('postcss-mixins'),
-  require('postcss-nested'),
-]);
+mix.postCss('assets/styles/main.css', 'css/styles.css');
 
-// SVGs
-mix.svgSprite('assets/svgs/sprites/*.svg', {
-  output: {
-    filename: 'svg/sprite.symbol.svg',
-  }
+// Admin Styles
+mix.postCss('assets/styles/base/wp-admin.css', 'css/wp-admin.css');
+
+// Browsersync
+mix.browserSync({
+  proxy: process.env.BROWSERSYNC_PROXY_URL || 'tofino.test',
+  // files: ['css/**/*.css', 'js/**/*.js', '**/*.php', '!vendor/**/*.php'],
 });
 
-// Images
-mix.copy('assets/images/**/*.{jpg,jpeg,png,gif}', 'img');
+// Set up the spritemap and images plugins
+mix.webpackConfig({
+  plugins: [
+    new SVGSpritemapPlugin('assets/svgs/sprites/*.svg', {
+      output: {
+        filename: 'svg/sprite.symbol.svg',
+        chunk: { keep: true },
+        svg: { sizes: false },
+        svgo: true,
+      },
+      sprite: {
+        prefix: false,
+        generate: {
+          title: true,
+          symbol: true,
+        },
+      },
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'assets/images/',
+          to: 'img',
+          globOptions: {
+            expandDirectories: {
+              extensions: ['png', 'jpg', 'gif'],
+            },
+          },
+        },
+      ],
+    }),
+    new ImageminPlugin({ test: /\.(jpe?g|png|gif)$/i }),
+  ],
+});
+
+// SVGs
+mix.copy('assets/svgs/*.svg', 'dist/svg');
+
+// Fonts
+mix.copy('assets/fonts/**/*', 'dist/fonts');
 
 // Options
 mix.options({
