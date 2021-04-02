@@ -13,12 +13,6 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
 
 <?php n\notification('top'); ?>
 
-<!--[if lte IE 9]>
-  <div class="flex items-center px-4 py-3 text-sm font-bold text-white bg-red" role="alert">
-    <p><?php _e('To improve your experience <a href="https://browsehappy.com/" target="_blank" rel="noopener" class="font-bold">Update your browser</a>. Your browser is <strong>not supported</strong>', 'tofino'); ?></p>
-  </div>
-<![endif]-->
-
 <nav class="w-full bg-white py-4 px-6 justify-between flex <?php echo m\menu_sticky(); ?>">
   <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
 
