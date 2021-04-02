@@ -60,13 +60,13 @@ function main_script() {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
     $main_js = mix('js/scripts.js', 'dist');
 
-    wp_register_script('tofino/js', $main_js, [], null, true);
-    wp_enqueue_script('tofino/js');
+    wp_register_script('tofino', $main_js, [], null, true);
+    wp_enqueue_script('tofino');
 
     // $vendor_js = mix('js/vendor.js', 'dist');
 
-    // wp_register_script('tofino/vendor/js', $vendor_js, [], null, true);
-    // wp_enqueue_script('tofino/vendor/js');
+    // wp_register_script('tofino/vendor', $vendor_js, [], null, true);
+    // wp_enqueue_script('tofino/vendor');
   }
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
@@ -83,7 +83,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
  */
 function localize_scripts() {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    wp_localize_script('tofino/js', 'tofinoJS', [
+    wp_localize_script('tofino', 'tofinoJS', [
       'ajaxUrl'        => admin_url('admin-ajax.php'),
       'nextNonce'      => wp_create_nonce('next_nonce'),
       'cookieExpires'  => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires'): 999),
