@@ -43,19 +43,17 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
   _ Admin login screen logo
   _ Custom Dashboard Widget
   _ Google Analytics
-  _ Hotjar Tracking
   _ Social links
   _ Sticky menu
   _ Sticky footer
   _ Left/Center/Right menu positions
-  _ Telephone number
-  _ Email address
-  _ Company number
+  _ Client Data (Address, Telephone number, Email address, Company number)
   _ Footer text
   _ Notification text / EU Cookie notice with top/bottom positions
   _ Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
   _ Data Tables for viewing data submitted via the contact form
-  _ Maintenance mode \* jQuery in footer
+  - Maintenance mode popup
+  - jQuery in footer
 - JS ES6 compatible via Babel and Browserify.
 - [DOM-based routing](http://goo.gl/EUTi53) for DOM Ready and Window Ready via advanced router
 - [Laravel Mix](https://laravel-mix.com/) build script d
@@ -87,17 +85,16 @@ The following files and directories should not be deployed on the server:
 .env
 .git
 .github
-.eslintrc.json
+.eslintrc.js
 .gitignore
 .gitkeep
 .git-ftp-ignore
 .git-ftp-include
 .gitattributes
 .gitignore
-.stylelintrc.yml
-.hound.yml
+.prettierrc.js
+.stylelintrc.js
 assets
-bin
 node_modules
 composer.json
 composer.lock
@@ -105,7 +102,5 @@ package.json
 package-lock.json
 tailwind.config.js
 webpack.mix.js
-ruleset.xml
 **/*.md
-yarn.lock
 ```
