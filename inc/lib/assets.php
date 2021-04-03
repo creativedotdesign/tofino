@@ -39,7 +39,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\styles');
  * @return void
  */
 function admin_styles() {
-  $admin_css = mix('css/wp-admin.css', 'dist');
+  $admin_css = mix('dist/css/wp-admin.css', './');
   wp_register_style('tofino/css/admin', $admin_css);
   wp_enqueue_style('tofino/css/admin');
 }
