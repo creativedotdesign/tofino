@@ -13,6 +13,7 @@ $tofino_includes = [
   "inc/lib/assets.php",
   "inc/lib/helpers.php",
   "inc/lib/clean.php",
+  "inc/lib/CustomizrTextEditor.php",
   "inc/shortcodes/copyright.php",
   "inc/shortcodes/social-icons.php",
   "inc/shortcodes/svg.php",

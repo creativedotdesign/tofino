@@ -23,16 +23,16 @@ function notification_settings($wp_customize) {
 
   // Notification text
   $wp_customize->add_setting('notification_text', [
-    'default'           => '',
-    'sanitize_callback' => 'sanitize_text_field',
+    'default' => ''
   ]);
 
-  $wp_customize->add_control('notification_text', [
+  $wp_customize->add_control(new \Text_Editor_Custom_Control($wp_customize, 'notification_text', [
     'label'       => __('Notification Text', 'tofino'),
     'description' => __('Notification is shown until dismissed (at which point a cookie is set).', 'tofino'),
+    'settings'    => 'notification_text',
     'section'     => 'tofino_notification_settings',
-    'type'        => 'textarea'
-  ]);
+    'priority'    => 10
+  ]));
 
   // Notification expires
   $wp_customize->add_setting('notification_expires', [
@@ -91,7 +91,7 @@ function notification($position) {
       <!-- Notifcation <?php echo $position; ?> -->
       <div class="flex items-center bg-blue-400 text-white text-sm font-bold px-4 py-3 alert notification <?php echo $position; ?>" role="alert"  id="tofino-notification">
         <div class="container flex justify-between">
-          <p><?php echo nl2br(get_theme_mod('notification_text')); ?></p>
+          <span><?php echo nl2br(get_theme_mod('notification_text')); ?></span>
 
           <button type="button" class="w-5 h-5 js-close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true" class="text-white"><?php echo svg(['sprite' => 'icon-close', 'class' => 'w-full current-color h-full']); ?></span>
