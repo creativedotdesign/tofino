@@ -80,21 +80,19 @@ function missing_dist_error_notice() {
   </div><?php
 }
 
-
 // Set ACF JSON save path
 function acf_json_save_point($path) {
-  $path = get_stylesheet_directory() . '/src/acf-json'; // Update path
+  $path = get_stylesheet_directory() . '/inc/acf-json'; // Update path
 
   return $path;
 }
 add_filter('acf/settings/save_json', 'acf_json_save_point');
 
-
 // Set ACF JSON load path
 function acf_json_load_point($paths) {
   unset($paths[0]); // Remove original path (optional)
 
-  $paths[] = get_stylesheet_directory() . '/src/acf-json';
+  $paths[] = get_stylesheet_directory() . '/inc/acf-json';
 
   return $paths;
 }
