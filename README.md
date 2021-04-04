@@ -39,18 +39,18 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 - Multilingual ready (WPML)
 - Responsive
 - Theme Options via WP Customizer (Native)
-  _ Admin login screen logo
-  _ Custom Dashboard Widget
-  _ Google Analytics
-  _ Social links
-  _ Sticky menu
-  _ Sticky footer
-  _ Left/Center/Right menu positions
-  _ Client Data (Address, Telephone number, Email address, Company number)
-  _ Footer text
-  _ Notification text / EU Cookie notice with top/bottom positions
-  _ Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
-  _ Data Tables for viewing data submitted via the contact form
+  - Admin login screen logo
+  - Custom Dashboard Widget
+  - Google Analytics
+  - Social links
+  - Sticky menu
+  - Sticky footer
+  - Left/Center/Right menu positions
+  - Client Data (Address, Telephone number, Email address, Company number)
+  - Footer text
+  - Notification text / EU Cookie notice with top/bottom positions
+  - Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
+  - Data Tables for viewing data submitted via the contact form
   - Maintenance mode popup
   - jQuery in footer
 - JS ES6 compatible via Babel and Browserify.
