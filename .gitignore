@@ -5,11 +5,13 @@
 !.gitignore
 !.gitkeep
 !.gitattributes
-!.eslint.json
-!.stylelintrc.json
+!.eslintrc.js
+!.stylelintrc.js
 !.editorconfig
 !.env
-!.prettierrc
+!.prettierrc.js
+!.babelrc
+!.env.example
 
 # ignore node/grunt dependency directories
 node_modules/
