@@ -58,15 +58,17 @@ add_action('admin_head', __NAMESPACE__ . '\\admin_styles');
  */
 function main_script() {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
+    $manifest_js = mix('js/manifest.js', 'dist');
+    wp_register_script('tofino/manifest', $manifest_js, [], null, true);
+    wp_enqueue_script('tofino/manifest');
+
+    $vendor_js = mix('js/vendor.js', 'dist');
+    wp_register_script('tofino/vendor', $vendor_js, [], null, true);
+    wp_enqueue_script('tofino/vendor');
+
     $main_js = mix('js/scripts.js', 'dist');
-
-    wp_register_script('tofino', $main_js, [], null, true);
+    wp_register_script('tofino', $main_js, 'tofino/vendor', null, true);
     wp_enqueue_script('tofino');
-
-    // $vendor_js = mix('js/vendor.js', 'dist');
-
-    // wp_register_script('tofino/vendor', $vendor_js, [], null, true);
-    // wp_enqueue_script('tofino/vendor');
   }
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');

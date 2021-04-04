@@ -14,7 +14,8 @@ mix
     // Autoload jQuery where required
     jquery: ['$', 'window.jQuery'],
   })
-  .vue();
+  .vue()
+  .extract(['vue', 'body-scroll-lock', 'js-cookie', 'webfontloader']);
 
 // Styles
 mix.postCss('assets/styles/main.css', 'css/styles.css');
