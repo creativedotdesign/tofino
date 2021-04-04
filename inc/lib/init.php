@@ -66,7 +66,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\check_page_display');
  * @return void
  */
 function content_width() {
-  $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 640);
+  $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 1440);
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 
