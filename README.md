@@ -1,9 +1,6 @@
-# <<<<<<< Updated upstream
-
 [![devDependency Status](https://david-dm.org/creativedotdesign/tofino/dev-status.svg)](https://david-dm.org/creativedotdesign/tofino#info=devDependencies)
 
-> > > > > > > Stashed changes
-> > > > > > > <img src="https://raw.githubusercontent.com/creativedotdesign/tofino/master/screenshot.png" alt="Tofino" width="500">
+<img src="https://raw.githubusercontent.com/creativedotdesign/tofino/master/screenshot.png" alt="Tofino" width="500">
 
 # Tofino
 
@@ -11,15 +8,17 @@ A WordPress starter theme for jumpstarting custom theme development.
 
 Developed by [Daniel Hewes](https://github.com/danimalweb), [Jake Gully](https://github.com/mrchimp).
 
+Ongoing development is sponsored by [Creative Dot](https://creativdotdesign.com)
+
 Heavily inspired the by awesome WordPress starter theme [Sage](https://github.com/roots/sage) by [Roots](https://github.com/roots) from [Ben Word](https://github.com/retlehs) and [Scott Walkinshaw](https://github.com/swalkinshaw).
 
 ## Requirements
 
 | Prerequisite       | How to check  | How to install                                  |
 | ------------------ | ------------- | ----------------------------------------------- |
-| PHP >= 7.0.0       | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 14.10.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
-| Composer >= 1.9.0  | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
+| PHP >= 7.3.0       | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 12.16.3 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| Composer >= 2.0.0  | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 

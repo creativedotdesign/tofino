@@ -1,5 +1,39 @@
 ## Changelog
 
+### 3.0.0: Nov 25 2020
+
+- Tailwind v2
+- Updated Dependencies
+- Remove Bootstrap
+- Major Cleanup
+
+### 2.0.0: Sept 12 2019
+
+- New build scripts using Laravel-Mix
+- Lot's of bug fixes
+- Updated Boostrap to the latest version
+
+### 1.10.0: Aug 18 2017
+
+- Cookie notification doesn't play well with cache #251
+- Update critical styles task #238
+- Theme option - hide nav on scroll down #218
+- Ajax Form Data - Export and Delete #242
+
+### 1.9.0: Aug 16 2017
+
+- Fragment Cache is broken #250
+- Update and require Node Version 6.x #249
+- Add taxonomy only template route #247
+- Fix PHP Linter to exclude template files #246
+- Fix dashboard widget theme option #244
+- Ajax Form Construct Data Sanitize #243
+- Submitting AjaxForm from localhost fails to save data #240
+- social svgs padding and fill="currentColor" #239
+- Add file timestamp to svg sprite. #237
+- Empty \$user_email_address in Contact form demo #236
+- Update CSS & JS for Bootstrap 4 Beta Release
+
 ### 1.8.0: Feb 21 2017
 
 - Rename .bitbucket-pipelines.yml #221
