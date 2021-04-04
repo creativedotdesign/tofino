@@ -81,6 +81,7 @@ npm run prod
 The following files and directories should not be deployed on the server:
 
 ```
+.babelrc
 .editorconfig
 .env
 .git
