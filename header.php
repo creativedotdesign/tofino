@@ -32,10 +32,10 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
     </button>
 
     <?php
-    if (has_nav_menu('primary_navigation')) :
+    if (has_nav_menu('header_navigation')) :
       wp_nav_menu([
         'menu'            => 'nav_menu',
-        'theme_location'  => 'primary_navigation',
+        'theme_location'  => 'header_navigation',
         'depth'           => 2,
         'container'       => '',
         'container_class' => '',

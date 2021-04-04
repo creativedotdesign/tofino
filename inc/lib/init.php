@@ -36,7 +36,7 @@ function setup() {
 
   // Register wp_nav_menu() menus
   register_nav_menus([
-    'primary_navigation' => __('Primary Navigation', 'tofino')
+    'header_navigation' => __('Header Navigation', 'tofino')
   ]);
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
