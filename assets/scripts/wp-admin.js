@@ -1,10 +1,13 @@
 import Cookies from 'js-cookie';
 
-(function ($) {
-  $(document).ready(function () {
-    $('.maintenance-mode-alert button').on('click', function () {
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.body.contains(document.querySelector('.maintenance-mode-alert'))) {
+    const button = document.querySelector('.maintenance-mode-alert button');
+
+    button.addEventListener('click', () => {
       Cookies.set('tofino_maintenance_alert_dismissed', 'true');
-      $('.maintenance-mode-alert').fadeOut('fast');
+
+      document.querySelector('.maintenance-mode-alert').style.display = 'none';
     });
-  });
-}(jQuery));
+  }
+});

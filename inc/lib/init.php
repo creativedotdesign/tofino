@@ -36,7 +36,7 @@ function setup() {
 
   // Register wp_nav_menu() menus
   register_nav_menus([
-    'primary_navigation' => __('Primary Navigation', 'tofino')
+    'header_navigation' => __('Header Navigation', 'tofino')
   ]);
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
@@ -66,7 +66,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\check_page_display');
  * @return void
  */
 function content_width() {
-  $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 640);
+  $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 1440);
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 

@@ -19,4 +19,4 @@ namespace Tofino\ThemeOptions;
 function add_theme_options_link() {
   add_menu_page('Theme Settings', 'Theme Settings', 'edit_theme_options', 'customize.php');
 }
-add_action('admin_menu', __NAMESPACE__ . '\\add_theme_options_link');
+// add_action('admin_menu', __NAMESPACE__ . '\\add_theme_options_link');

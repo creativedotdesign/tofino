@@ -1,0 +1,7 @@
+sticky-top
+alert
+bottom
+top
+footer-sticky
+menu-fixed
+notification-use-js

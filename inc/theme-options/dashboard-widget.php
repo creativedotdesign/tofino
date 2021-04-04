@@ -78,5 +78,5 @@ add_action('wp_dashboard_setup', __NAMESPACE__ . '\\dashboard_widgets');
  * @return The widget content from the theme option or default text.
  */
 function get_widget_content() {
-  echo get_theme_mod('dash_widget_text', __('<a href ="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href ="https://github.com/mrchimp">MrChimp</a> and <a href ="https://github.com/danimalweb">Danimalweb</a>.', 'tofino'));
+  echo get_theme_mod('dash_widget_text', __('<a href ="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href ="https://creativedotdesign.com/">Creative Dot</a>.', 'tofino'));
 }

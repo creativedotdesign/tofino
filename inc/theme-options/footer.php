@@ -38,7 +38,7 @@ function footer_settings($wp_customize) {
   ]);
 
   $wp_customize->add_setting('footer_text', [
-    'default'           => __('<a href="https://github.com/creativedot/tofino">Tofino</a> theme by <a href ="https://github.com/mrchimp">MrChimp</a> and <a href ="https://github.com/danimalweb">Danimalweb</a>.', 'tofino'),
+    'default'           => __('[copyright]', 'tofino'),
     'sanitize_callback' => 'wp_kses_data',
   ]);
 

@@ -11,7 +11,7 @@ namespace Tofino\ThemeOptions\SocialNetworks;
 /**
  * Social icons
  *
- * Facebook, Twitter, Instagram, Google+, LinkedIn, YouTube, Pinterest, Vimeo, SoundCloud
+ * Facebook, Twitter, Instagram, LinkedIn, YouTube, Pinterest, Vimeo, SoundCloud
  *
  * @since 1.2.0
  * @param object $wp_customize Instance of WP_Customize_Manager class.
@@ -44,14 +44,6 @@ function social_settings($wp_customize) {
 
   $wp_customize->add_control('social[instagram]', [
     'label'   => __('Instagram', 'tofino'),
-    'section' => 'tofino_social_settings',
-    'type'    => 'url'
-  ]);
-
-  $wp_customize->add_setting('social[googleplus]', ['default' => '']);
-
-  $wp_customize->add_control('social[googleplus]', [
-    'label'   => __('GooglePlus', 'tofino'),
     'section' => 'tofino_social_settings',
     'type'    => 'url'
   ]);
