@@ -12,9 +12,9 @@ const Menu = () => {
       menu.classList.toggle('hidden');
 
       if (menu.classList.contains('hidden')) {
-        disableBodyScroll(menu);
-      } else {
         enableBodyScroll(menu);
+      } else {
+        disableBodyScroll(menu);
       }
     });
   });
@@ -24,7 +24,7 @@ const Menu = () => {
     if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
       menu.classList.add('hidden');
 
-      enableBodyScroll(menu);
+      disableBodyScroll(menu);
     }
   };
 };
