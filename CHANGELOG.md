@@ -1,26 +1,49 @@
-## Changelog
+# [3.1.0](https://github.com/creativedotdesign/tofino/compare/v3.0.0...v3.1.0) (2021-04-04)
 
-### 3.0.0: Nov 25 2020
+### Bug Fixes
+
+- ACF Correct JSON Paths. ([58edf47](https://github.com/creativedotdesign/tofino/commit/58edf477a1377f96f1d58c0aa6ccff3e810dfaf2))
+- Custom social icon order. Fixes [#294](https://github.com/creativedotdesign/tofino/issues/294). ([bbdabf2](https://github.com/creativedotdesign/tofino/commit/bbdabf2d24d63cddfa850fe13fe72ba153edc463))
+- Larger content width. ([08a66d3](https://github.com/creativedotdesign/tofino/commit/08a66d3dcf20674ffff2d39a62d3dc2d30c0a60f))
+- Menu tweaks. ([7781107](https://github.com/creativedotdesign/tofino/commit/77811079a501b0179cef436fa8fcd8cdeeb1fd0d))
+- Remove admin link to Customizr. ([e4c5544](https://github.com/creativedotdesign/tofino/commit/e4c5544e566f6b499446a918e4b86d312d9d8fed))
+- Update default footer. ([c624ecc](https://github.com/creativedotdesign/tofino/commit/c624ecc659b3b275b51c42980114c4df633d7fd6))
+- Update tracker URL to creativedot domain. ([bd8bd3f](https://github.com/creativedotdesign/tofino/commit/bd8bd3fbd8cfead3c6e3e27eb460e3d334d7caf6))
+
+### Features
+
+- A working mobile menu. ([257b968](https://github.com/creativedotdesign/tofino/commit/257b968ef0692197a94f57308bd766e60c8ef2a2))
+- Cleaner assets loading + remove more junk. ([cf56ada](https://github.com/creativedotdesign/tofino/commit/cf56ada39f9c0181db7c5520afe51465adcfb9d8))
+- Cleaner WordPress markup and trimmed admin area. ([8a9c18a](https://github.com/creativedotdesign/tofino/commit/8a9c18a5feb64f0d65ae8e79a1f3e5b2857c1197))
+- Enable HTML for notification/alert content. ([f093a9b](https://github.com/creativedotdesign/tofino/commit/f093a9ba7b33ac064fb90531c4ac9a7df470b516))
+- Misc Tweaks. ([24f3658](https://github.com/creativedotdesign/tofino/commit/24f36580c14680ec381d698bcd5c3c484845d3c6))
+- Remove Google Plus from social icons. ([c078437](https://github.com/creativedotdesign/tofino/commit/c078437e502f2804d453b922d55eadab863909f4))
+- Remove IE Banner from header. ([5df3892](https://github.com/creativedotdesign/tofino/commit/5df3892011a0d4bc5efcaed9d87cd6fdbbdf3be6))
+- Tailwind-JIT and Build Changes. ([6690b7b](https://github.com/creativedotdesign/tofino/commit/6690b7b3c7622e8b59a82704df7fc1a1e557aa27))
+- Tidy Youtube SVG. ([7e1f343](https://github.com/creativedotdesign/tofino/commit/7e1f343743743d1dbfdd26427836bac57136d28c))
+- Update default Widget Text. ([4641327](https://github.com/creativedotdesign/tofino/commit/4641327ef0c309fbeb1cf05ef9f504279e0ffbb8))
+
+# 3.0.0: Nov 25 2020
 
 - Tailwind v2
 - Updated Dependencies
 - Remove Bootstrap
 - Major Cleanup
 
-### 2.0.0: Sept 12 2019
+# 2.0.0: Sept 12 2019
 
 - New build scripts using Laravel-Mix
 - Lot's of bug fixes
 - Updated Boostrap to the latest version
 
-### 1.10.0: Aug 18 2017
+# 1.10.0: Aug 18 2017
 
 - Cookie notification doesn't play well with cache #251
 - Update critical styles task #238
 - Theme option - hide nav on scroll down #218
 - Ajax Form Data - Export and Delete #242
 
-### 1.9.0: Aug 16 2017
+# 1.9.0: Aug 16 2017
 
 - Fragment Cache is broken #250
 - Update and require Node Version 6.x #249
@@ -34,7 +57,7 @@
 - Empty \$user_email_address in Contact form demo #236
 - Update CSS & JS for Bootstrap 4 Beta Release
 
-### 1.8.0: Feb 21 2017
+# 1.8.0: Feb 21 2017
 
 - Rename .bitbucket-pipelines.yml #221
 - Fix single quote converted to html attribute in AjaxForm #226
@@ -48,7 +71,7 @@
 - Add truncate SCSS mixin
 - Update README files
 
-### 1.7.0: Dec 2 2016
+# 1.7.0: Dec 2 2016
 
 - New gulp tasks for performance / accessibility (PSI, WAVE, W3C)
 - New gulp task for tunneling (Ngrok), required for above gulp tasks.
@@ -66,7 +89,7 @@
 - Add page title helper function
 - Add template part with arguments help function
 
-### 1.6.0: Feb 19 2016
+# 1.6.0: Feb 19 2016
 
 - Update deps
 - Fix jQuery and Cookies JS module imports
@@ -79,7 +102,7 @@
 - AjaxForm, original button text if multiple buttons within form element
 - JS routes files aren't being watched
 
-### 1.5.0: Sept 13 2016
+# 1.5.0: Sept 13 2016
 
 - AjaxForm JS as ES6 module
 - Shrinkwrap NPM deps
@@ -94,7 +117,7 @@
 - Cleaner DOM routing for JS
 - Misc bug fixes
 
-### 1.4.0: May 29 2016
+# 1.4.0: May 29 2016
 
 - Fix tracker URL issue
 - Update NPM dependencies
@@ -116,7 +139,7 @@
 - Various minor bug fixes
 - Send custom email to user
 
-### 1.3.0: Mar 31 2016
+# 1.3.0: Mar 31 2016
 
 - SVG Shortcode documentation
 - Comment out unused Bootstrap components
@@ -126,7 +149,7 @@
 
 This release uses ES6 to include and call Javascript libraries. Browserify and Babelify are included in the scripts build task.
 
-### 1.2.0: Mar 16 2016
+# 1.2.0: Mar 16 2016
 
 - Refactor gulpfile.js and split gulp tasks (and use eslint)
 - Update npm dependencies
@@ -141,13 +164,13 @@ This release uses ES6 to include and call Javascript libraries. Browserify and B
 - Include default social network links and icons
 - Misc bugfixes
 
-### 1.1.0: Feb 19 2016
+# 1.1.0: Feb 19 2016
 
 - Bugfixes and stabilize dependancies.
 - Readme updates
 - New: Critical CSS
 - New: jQuery move to footer
 
-### 1.0.0: Jan 5 2016
+# 1.0.0: Jan 5 2016
 
 Initial Release
