@@ -7,9 +7,9 @@
  * @param mixed $atts options attributes array or string with sprite reference
  * @return string HTML SVG sprite code populated with parameters.
  */
-function svg($atts)
-{
-  global $theme_config;
+function svg($atts) {
+  // SVG Sprite URL
+  $svg_sprite_url = mix('dist/svg/sprite.symbol.svg', './');
 
   if (gettype($atts) === 'string') {
     $atts = [
@@ -56,6 +56,6 @@ function svg($atts)
     $atr_str .= ' ' . $key . '="' . esc_attr($value) . '"';
   }
 
-  return '<svg' . $atr_str . '>' . (!empty($title) ? '<title>' . $title . '</title>' : '') . '<use xlink:href="' . $theme_config['svg']['sprite_file'] . '#' . $sprite . '" /></svg>';
+  return '<svg' . $atr_str . '>' . (!empty($title) ? '<title>' . $title . '</title>' : '') . '<use xlink:href="' . $svg_sprite_url . '#' . $sprite . '" /></svg>';
 }
 add_shortcode('svg', 'svg');

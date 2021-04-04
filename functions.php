@@ -1,16 +1,4 @@
 <?php
-
-/**
- * Config array
- */
-$svg_url       = get_template_directory_uri() . '/dist/svg/sprite.symbol.svg';
-$svg_file_path = get_template_directory() . '/dist/svg/sprite.symbol.svg';
-
-$theme_config = [
-  'svg' => ['sprite_file' => $svg_url . '?v=' . filemtime($svg_file_path)]
-];
-
-
 /**
  * Tofino includes
  *
