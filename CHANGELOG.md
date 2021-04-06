@@ -1,3 +1,9 @@
+# [3.1.1](https://github.com/creativedotdesign/tofino/compare/v3.0.0...v3.1.1) (2021-04-06)
+
+## Features
+
+- Tailwind Version Update. ([fea6df5](https://github.com/creativedotdesign/tofino/commit/fea6df533c4fa8a84d91da8149903a8e2de7f544))
+
 # [3.1.0](https://github.com/creativedotdesign/tofino/compare/v3.0.0...v3.1.0) (2021-04-04)
 
 ### Bug Fixes
