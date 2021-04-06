@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'jit',
   purge: {
     content: [
       './*.php',
@@ -28,7 +29,7 @@ module.exports = {
           },
         },
         ['before', 'after']
-      )
+      );
     },
   ],
-}
+};
