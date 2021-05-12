@@ -51,7 +51,7 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "imagemin-webpack-plugin": "^2.4.2",
     "laravel-mix": "^6.0.12",
-    "postcss": "^8.2.8",
+    "postcss": "^8.2.10",
     "postcss-import": "^14.0.0",
     "postcss-nested": "^5.0.5",
     "prettier": "^2.2.1",
