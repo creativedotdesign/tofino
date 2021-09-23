@@ -182,3 +182,26 @@ function sanitize_choices($input, $setting) {
 function sanitize_textarea($input) {
   return implode("\n", array_map('sanitize_text_field', explode("\n", $input)));
 }
+
+
+/**
+ * Fix text orphan
+ *
+ * Make last space in a sentence a non breaking space to prevent typographic widows.
+ *
+ * @since 3.2.0
+ * @param type $str
+ * @return string
+ */
+function fix_text_orphan($str = '') {
+  $str   = trim($str); // Strip spaces.
+  $space = strrpos($str, ' '); // Find the last space.
+
+  // If there's a space then replace the last on with a non breaking space.
+  if (false !== $space) {
+    $str = substr($str, 0, $space) . '&nbsp;' . substr($str, $space + 1);
+  }
+
+  // Return the string.
+  return $str;
+}
