@@ -8,9 +8,10 @@ Generate copyright string, probably for use in the footer.
 
 Example usage:
 
-``[copyright]`` or ``copyright();``
+`[copyright]` or `copyright();`
 
 HTML output:
+
 ```
 &copy; 2020
 ```
@@ -21,7 +22,7 @@ Get a theme option. Uses the WordPress function `get_theme_mod()`.
 
 Example usage:
 
-``[option id="optionid" default="Default value"]``
+`[option id="optionid" default="Default value"]`
 
 or
 
@@ -38,7 +39,7 @@ Generate SVG sprite code for files from assets/svgs/sprites
 
 Example usage:
 
-``[svg sprite="facebook"]`` or ``[svg sprite="facebook" class="icon-facebook" title="Facebook" id="fb" preserveAspectRatio="align"]``
+`[svg sprite="facebook"]` or `[svg sprite="facebook" class="icon-facebook" title="Facebook" id="fb" preserveAspectRatio="align"]`
 
 or
 
@@ -50,9 +51,10 @@ svg([
 ```
 
 HTML output:
+
 ```
 <svg class="icon-facebook" title="Facebook" id="fb">
-  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://example.com/wp-content/themes/tofino/dist/svg/sprite.symbol.svg#facebook"></use>
+  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://example.com/wp-content/themes/tofino/dist/svg/sprite.svg#facebook"></use>
 </svg>
 ```
 
@@ -76,6 +78,7 @@ Example usage:
 ```
 
 HTML output:
+
 ```
 <ul class="social-icons social-icons-footer">
   <li><a href="http://facebook.com"><svg><use xlink:href="http://example.com/wp-content/themes/tofino/dist/svg/stripe.symbol.svg#facebook"></svg></a></li>

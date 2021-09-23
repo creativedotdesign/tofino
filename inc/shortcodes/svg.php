@@ -9,7 +9,7 @@
  */
 function svg($atts) {
   // SVG Sprite URL
-  $svg_sprite_url = mix('dist/svg/sprite.symbol.svg', './');
+  $svg_sprite_url = mix('dist/svg/sprite.svg', './');
 
   if (gettype($atts) === 'string') {
     $atts = [

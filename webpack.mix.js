@@ -8,20 +8,20 @@ mix.setPublicPath('./dist');
 
 // Javascript
 mix
-  .js('assets/scripts/main.js', 'js/scripts.js')
-  .js('assets/scripts/wp-admin.js', 'js/wp-admin.js')
+  .js('src/js/app.js', 'js/app.js')
+  .js('src/js/wp-admin.js', 'js/wp-admin.js')
   .autoload({
     // Autoload jQuery where required
     jquery: ['$', 'window.jQuery'],
   })
   .vue()
-  .extract(['vue', 'body-scroll-lock', 'js-cookie', 'webfontloader']);
+  .extract();
 
 // Styles
-mix.postCss('assets/styles/main.css', 'css/styles.css');
+mix.postCss('src/css/main.css', 'css/styles.css');
 
 // Admin Styles
-mix.postCss('assets/styles/base/wp-admin.css', 'css/wp-admin.css');
+mix.postCss('src/css/base/wp-admin.css', 'css/wp-admin.css');
 
 // Browsersync
 mix.browserSync({
@@ -32,9 +32,9 @@ mix.browserSync({
 // Set up the spritemap and images plugins
 mix.webpackConfig({
   plugins: [
-    new SVGSpritemapPlugin('assets/svgs/sprites/*.svg', {
+    new SVGSpritemapPlugin('src/svgs/sprites/*.svg', {
       output: {
-        filename: 'svg/sprite.symbol.svg',
+        filename: 'svg/sprite.svg',
         chunk: { keep: true },
         svg: { sizes: false },
         svgo: true,
@@ -50,7 +50,7 @@ mix.webpackConfig({
     new CopyPlugin({
       patterns: [
         {
-          from: 'assets/images/',
+          from: 'src/img/',
           to: 'img',
           globOptions: {
             expandDirectories: {
@@ -65,7 +65,7 @@ mix.webpackConfig({
 });
 
 // SVGs
-mix.copy('assets/svgs/*.svg', 'dist/svg');
+mix.copy('src/svgs/*.svg', 'dist/svg');
 
 // Fonts
 mix.copy('src/fonts/**/*', 'dist/fonts');
@@ -83,11 +83,15 @@ mix.webpackConfig({
   externals: {
     jquery: 'jQuery',
   },
+  output: {
+    chunkFilename: 'js/chunks/[name].js',
+    publicPath: process.env.THEME_PATH + '/dist' || '/wp-content/themes/tofino/dist/',
+  },
 });
 
 // Source maps when not in production.
 if (!mix.inProduction()) {
-  mix.sourceMaps(true, 'source-map');
+  mix.webpackConfig({ devtool: 'inline-source-map' });
 }
 
 // Hash and version files in production.
