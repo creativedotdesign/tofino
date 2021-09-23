@@ -65,7 +65,10 @@ mix.webpackConfig({
 mix.copy('assets/svgs/*.svg', 'dist/svg');
 
 // Fonts
-mix.copy('assets/fonts/**/*', 'dist/fonts');
+mix.copy('src/fonts/**/*', 'dist/fonts');
+
+// Disable success notification
+mix.disableSuccessNotifications();
 
 // Options
 mix.options({
