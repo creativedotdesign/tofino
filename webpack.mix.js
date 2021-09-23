@@ -24,7 +24,10 @@ mix.postCss('assets/styles/main.css', 'css/styles.css');
 mix.postCss('assets/styles/base/wp-admin.css', 'css/wp-admin.css');
 
 // Browsersync
-mix.browserSync(process.env.BROWSERSYNC_PROXY_URL || 'tofino.test');
+mix.browserSync({
+  proxy: process.env.BROWSERSYNC_PROXY_URL || 'tofino.test',
+  files: ['**/*.{php,vue,js,css}'],
+});
 
 // Set up the spritemap and images plugins
 mix.webpackConfig({
