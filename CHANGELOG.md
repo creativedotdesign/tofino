@@ -1,3 +1,27 @@
+# 3.2.0: (2021-09-25)
+
+### Bug Fixes
+
+- Add autofill utils fixes [#317](https://github.com/creativedotdesign/tofino/issues/317). ([6fa6aaf](https://github.com/creativedotdesign/tofino/commit/6fa6aaf60641668679e31f7fe9398cf0f9dc06c8))
+
+### Build
+
+- Fix browsersync refresh fixes [#300](https://github.com/creativedotdesign/tofino/issues/300). ([2760c89](https://github.com/creativedotdesign/tofino/commit/2760c8909c40f86d0f37e4544a41791ff4257aa1))
+- Disable LaravelMix Success Notification fixes [#316](https://github.com/creativedotdesign/tofino/issues/316). ([8e30c5f](https://github.com/creativedotdesign/tofino/commit/8e30c5f9acf32df0ff0cd49848bcb1555c8e2063))
+- Update deps. ([2eb56ed](https://github.com/creativedotdesign/tofino/commit/2eb56ed0bc94c65f7e545cc6733a131cf75fd501))
+- Remove old tailwind plugin no longer required. ([ab2dba3](https://github.com/creativedotdesign/tofino/commit/ab2dba3bbf790beb3d3df4498e7f88c9cf8fe1a9))
+
+### Features
+
+- Remove router, Promise load, mv folders fixes [#314](https://github.com/creativedotdesign/tofino/issues/314). ([701b2ee](https://github.com/creativedotdesign/tofino/commit/701b2ee2c887abfc1448aa5dfa86651f7bb858d9))
+- Register footer menu Fixes [#298](https://github.com/creativedotdesign/tofino/issues/298). ([a8006e3](https://github.com/creativedotdesign/tofino/commit/a8006e3d8744fcba80dc0a1e170e32ab4b1ef068))
+- Orphan/widow helper function. ([43db405](https://github.com/creativedotdesign/tofino/commit/43db405a64b4bc02efb2291c4f1186a4af558601))
+- Set date based media to off. Fixes [#311](https://github.com/creativedotdesign/tofino/issues/311). ([a26cda3](https://github.com/creativedotdesign/tofino/commit/a26cda33006ff64c7059653634c882f9fdd1746d))
+- Add ACF JSON Folder fixes [#307](https://github.com/creativedotdesign/tofino/issues/307). ([01513c9](https://github.com/creativedotdesign/tofino/commit/01513c9473ff833569d87e8bf282d62b9148467d))
+- Add header element fixes [#308](https://github.com/creativedotdesign/tofino/issues/308). ([852527a](https://github.com/creativedotdesign/tofino/commit/852527a99e91a39f3bafe8df75248a3575cc8a37))
+- Footer Menu Support fixes [#298](https://github.com/creativedotdesign/tofino/issues/298). ([a51c1f7](https://github.com/creativedotdesign/tofino/commit/a51c1f7711846f18ce79ae0659df6ad3fc888551))
+- Update webfontloader git + regen lockfile. ([3056bce](https://github.com/creativedotdesign/tofino/commit/3056bce4f9302d836ce92f56f8ff2536fa451ee5))
+
 # [3.1.1](https://github.com/creativedotdesign/tofino/compare/v3.0.0...v3.1.1) (2021-04-06)
 
 ## Features
@@ -26,7 +50,7 @@
 - Remove Google Plus from social icons. ([c078437](https://github.com/creativedotdesign/tofino/commit/c078437e502f2804d453b922d55eadab863909f4))
 - Remove IE Banner from header. ([5df3892](https://github.com/creativedotdesign/tofino/commit/5df3892011a0d4bc5efcaed9d87cd6fdbbdf3be6))
 - Tailwind-JIT and Build Changes. ([6690b7b](https://github.com/creativedotdesign/tofino/commit/6690b7b3c7622e8b59a82704df7fc1a1e557aa27))
-- Tidy Youtube SVG. ([7e1f343](https://github.com/creativedotdesign/tofino/commit/7e1f343743743d1dbfdd26427836bac57136d28c))
+- Tidy Youtube SVG. ([7e1f343](https://github.com/creativedotdesign/tofino/cçommit/7e1f343743743d1dbfdd26427836bac57136d28c))
 - Update default Widget Text. ([4641327](https://github.com/creativedotdesign/tofino/commit/4641327ef0c309fbeb1cf05ef9f504279e0ffbb8))
 
 # 3.0.0: Nov 25 2020

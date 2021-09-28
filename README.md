@@ -54,7 +54,6 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
   - Maintenance mode popup
   - jQuery in footer
 - JS ES6 compatible via Babel and Browserify.
-- [DOM-based routing](http://goo.gl/EUTi53) for DOM Ready and Window Ready via advanced router
 - [Laravel Mix](https://laravel-mix.com/) build script d
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
