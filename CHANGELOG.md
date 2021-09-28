@@ -1,8 +1,18 @@
+# 3.2.1: (2021-09-26)
+
+### Style
+
+- Cleaner Promise code. ([b1b8cff](https://github.com/creativedotdesign/tofino/commit/b1b8cff145845adff4647a10edbc5e4538c5ccb0))
+
+### Features
+
+- Add Responsive Image function. ([d7e917f](https://github.com/creativedotdesign/tofino/commit/d7e917f1c84f89d7db09133eed52852c53f9f9f7))
+
 # 3.2.0: (2021-09-25)
 
 ### Bug Fixes
 
-- Move stick-top class to new header element. ([4aa6d93](https://github.com/creativedotdesign/tofino/commit/4aa6d932cafda118e5ccbeb7bf2082113a559203)
+- Move stick-top class to new header element. ([4aa6d93](https://github.com/creativedotdesign/tofino/commit/4aa6d932cafda118e5ccbeb7bf2082113a559203))
 - Add ACF JSON Folder fixes [#307](https://github.com/creativedotdesign/tofino/issues/307). ([01513c9](https://github.com/creativedotdesign/tofino/commit/01513c9473ff833569d87e8bf282d62b9148467d))
 
 ### Build
