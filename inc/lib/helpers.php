@@ -205,3 +205,33 @@ function fix_text_orphan($str = '') {
   // Return the string.
   return $str;
 }
+
+
+/**
+ * Responsive Image Attrs
+ *
+ * Returns a clean array of the values needed for a responsive image
+ *
+ * @since 3.2.1
+ * @param integer $image_id (optional) Defaults to post featured image id
+ * @param string $size (optional) The image sized used for the main src
+ * @return array Values to populate into an img tag
+ */
+function responsive_image_attribute_values($image_id = null, $size = 'full') {
+  if (!$image_id) {
+    $image_id = get_post_thumbnail_id();
+  }
+
+  $meta = wp_get_attachment_metadata($image_id);
+  $url = wp_get_attachment_image_src($image_id, $size);
+  $sizes = wp_calculate_image_sizes($size, $url, $meta, $image_id);
+  $srcset = wp_get_attachment_image_srcset($image_id, $size);
+  $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
+
+  return [
+    'srcset' => $srcset,
+    'sizes' => $sizes,
+    'src' => $url[0],
+    'alt' => $alt
+  ];
+}

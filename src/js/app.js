@@ -2,7 +2,7 @@
 import scripts from './main';
 
 let domResolve;
-const domReady = new Promise(function (resolve) {
+const domReady = new Promise(resolve => {
   domResolve = resolve;
 });
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', domResolve);
 domReady.then(scripts.init).finally(scripts.finalize);
 
 let appLoaded;
-const appReady = new Promise(function (resolve) {
+const appReady = new Promise(resolve => {
   appLoaded = resolve;
 });
 
