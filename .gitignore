@@ -3,6 +3,7 @@
 
 # track this file .gitignore (i.e. do NOT ignore it)
 !.gitignore
+!.env
 !.gitkeep
 !.gitattributes
 !.eslintrc.js

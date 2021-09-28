@@ -98,3 +98,10 @@ function acf_json_load_point($paths) {
   return $paths;
 }
 add_filter('acf/settings/load_json', 'acf_json_load_point');
+
+
+/**
+ * Turn off YYYY/MM Media folders
+ *
+ */
+add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);

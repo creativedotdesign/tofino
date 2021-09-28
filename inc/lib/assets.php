@@ -66,7 +66,7 @@ function main_script() {
     wp_register_script('tofino/vendor', $vendor_js, [], null, true);
     wp_enqueue_script('tofino/vendor');
 
-    $main_js = mix('js/scripts.js', 'dist');
+    $main_js = mix('js/app.js', 'dist');
     wp_register_script('tofino', $main_js, 'tofino/vendor', null, true);
     wp_enqueue_script('tofino');
   }
@@ -90,7 +90,8 @@ function localize_scripts() {
       'nextNonce'      => wp_create_nonce('next_nonce'),
       'cookieExpires'  => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires'): 999),
       'themeUrl'       => get_template_directory_uri(),
-      'notificationJS' => (get_theme_mod('notification_use_js') ? 'true' : 'false')
+      'notificationJS' => (get_theme_mod('notification_use_js') ? 'true' : 'false'),
+      'siteURL'        => site_url(),
     ]);
   } 
 }
@@ -112,3 +113,38 @@ function admin_scripts() {
   wp_enqueue_script('tofino/js/admin');
 }
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
+
+
+/**
+ * Correct Image Sizes
+ *
+ * Set the images sizes to ones we really use.
+ *
+ * @since 3.2.0
+ * @return void
+ */
+function correct_image_sizes() {
+  remove_image_size('thumbnail');
+  remove_image_size('medium_large');
+  remove_image_size('large');
+  remove_image_size('1536x1536');
+
+  update_option('thumbnail_size_h', 0);
+  update_option('thumbnail_size_w', 0);
+
+  update_option('medium_size_h', 0);
+  update_option('medium_size_w', 565);
+
+  update_option('medium_large_size_h', 0);
+  update_option('medium_large_size_w', 0);
+  
+  update_option('large_size_h', 0);
+  update_option('large_size_w', 1152);
+
+  update_option('1536x1536_size_h', 0);
+  update_option('1536x1536_size_w', 0);
+
+  update_option('2048x2048_size_h', 0);
+  update_option('2048x2048_size_w', 2048);
+}
+add_action('init', __NAMESPACE__ . '\\correct_image_sizes');
