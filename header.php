@@ -13,8 +13,8 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
 
 <?php n\notification('top'); ?>
 
-<header>
-  <nav class="w-full bg-white py-4 px-6 justify-between flex <?php echo m\menu_sticky(); ?>">
+<header class="<?php echo m\menu_sticky(); ?>">
+  <nav class="w-full bg-white py-4 px-6 justify-between flex">
     <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
 
     <button class="flex lg:hidden js-menu-toggle" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
