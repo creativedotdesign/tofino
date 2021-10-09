@@ -106,3 +106,17 @@ function add_post_name_body_class(array $classes) {
   return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
+
+
+/**
+ * Add Google Tag Manager function call which is 
+ * supposed to be placed after opening body tag.
+ *
+ * @since 3.3.0
+ */
+function add_custom_body_open_code() {
+  if (function_exists('gtm4wp_the_gtm_tag')) {
+    gtm4wp_the_gtm_tag();
+  } 
+}
+add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');

@@ -11,6 +11,8 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
 </head>
 <body <?php body_class(); ?>>
 
+<?php wp_body_open(); ?>
+
 <?php n\notification('top'); ?>
 
 <header class="<?php echo m\menu_sticky(); ?>">
