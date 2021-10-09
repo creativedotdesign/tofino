@@ -13,6 +13,8 @@
 !.prettierrc.js
 !.babelrc
 !.env.example
+!.git-ftp-ignore
+!.github
 
 # ignore node/grunt dependency directories
 node_modules/
