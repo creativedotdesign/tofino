@@ -85,7 +85,7 @@ mix.webpackConfig({
   },
   output: {
     chunkFilename: 'js/chunks/[name].js',
-    publicPath: process.env.THEME_PATH + '/dist' || '/wp-content/themes/tofino/dist/',
+    publicPath: process.env.THEME_PATH + '/dist/' || '/wp-content/themes/tofino/dist/',
   },
 });
 

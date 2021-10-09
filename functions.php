@@ -106,3 +106,20 @@ add_filter('acf/settings/load_json', 'acf_json_load_point');
  *
  */
 add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);
+
+
+/**
+ * Prefetch_scripts that might be needed later
+ *
+ * @since 3.3.0
+ */
+function prefetch_scripts() {
+  $scripts = [
+    // Add scripts here
+  ];
+
+  foreach ($scripts as $script) {
+    echo '<link rel="prefetch" as="script" href="' . mix('js/chunks/' . $script .  '.js', 'dist') . '" crossorigin="anonymous"/>';
+  }
+}
+add_action('wp_head', 'prefetch_scripts');
