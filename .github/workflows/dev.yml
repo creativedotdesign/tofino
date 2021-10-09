@@ -48,13 +48,6 @@ jobs:
         id: dotenv
         uses: falti/dotenv-action@v0.2.7
 
-      - name: Test Environment Variables
-        run: |
-          echo "${{ steps.dotenv.outputs.DEPLOY }}"
-          echo "${{ steps.dotenv.outputs.SSH_LOGIN }}"
-          echo "${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}"
-          echo "${{ steps.dotenv.outputs.THEME_PATH }}"
-
       - name: Sync Files to Server
         env:
           dest: '${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.THEME_PATH }}'
