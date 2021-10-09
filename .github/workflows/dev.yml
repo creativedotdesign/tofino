@@ -56,9 +56,10 @@ jobs:
           echo "${{ steps.dotenv.outputs.THEME_PATH }}"
 
       - name: Sync Files to Server
-        if: ${{ steps.dotenv.outputs.DEPLOY }} == 'TRUE'
         env:
           dest: '${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.THEME_PATH }}'
+          deploy: '${{ steps.dotenv.outputs.DEPLOY }}'
+        if: ${{ env.deploy == 'TRUE' }}
         run: |
           echo "${{secrets.DEPLOY_KEY}}" > deploy_key
           chmod 600 ./deploy_key
