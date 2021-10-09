@@ -3,7 +3,6 @@ node_modules
 .vscode
 .editorconfig
 .env
-.env.example
 .git
 .github
 .gitignore

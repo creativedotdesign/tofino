@@ -12,7 +12,6 @@
 !.env
 !.prettierrc.js
 !.babelrc
-!.env.example
 !.git-ftp-ignore
 !.github
 
