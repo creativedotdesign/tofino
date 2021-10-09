@@ -14,6 +14,7 @@ $tofino_includes = [
   "inc/lib/helpers.php",
   "inc/lib/clean.php",
   "inc/lib/CustomizrTextEditor.php",
+  "inc/lib/FragmentCache.php",
   "inc/shortcodes/copyright.php",
   "inc/shortcodes/social-icons.php",
   "inc/shortcodes/svg.php",
