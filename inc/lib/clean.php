@@ -168,10 +168,26 @@ if (!is_admin()) {
 
 // Clean nav classes
 function clean_nav_classes($classes, $item) {
-  $classes = ['menu-item'];
+  $new_classes = ['menu-item'];
 
   if ($item->current) {
-    $classes[] = 'current';
+    $new_classes[] = 'current';
+  }
+
+  if (in_array('menu-item-has-children', $classes)) {
+    $new_classes[] = 'menu-item-has-children';
+  }
+
+  if ($item->menu_item_parent == 0 && in_array('current-menu-parent', $classes)) {
+    $new_classes[] = 'current-parent';
+  }
+
+  $custom_classes = get_post_meta($item->ID, '_menu_item_classes', true);
+
+  if (!empty(array_filter($custom_classes))) {
+    $classes = array_merge($new_classes, $custom_classes);
+  } else {
+    $classes = $new_classes;
   }
 
   return $classes;

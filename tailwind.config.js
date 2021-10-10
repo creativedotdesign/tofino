@@ -5,8 +5,8 @@ module.exports = {
       './*.php',
       './inc/**/*.php',
       './templates/**/*.php',
-      './assets/vue/*.vue',
-      './assets/styles/safelist.txt',
+      './src/vue/*.vue',
+      './src/styles/safelist.txt',
     ],
   },
   theme: {

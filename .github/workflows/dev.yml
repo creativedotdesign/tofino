@@ -1,0 +1,63 @@
+name: Development Build
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer Dependencies
+        run: composer install -o
+
+      - name: Get NPM Cache Directory
+        uses: actions/cache@v2
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install NPM Dependencies
+        run: npm install
+
+      - name: Build Dev Scripts
+        run: npm run dev
+
+      - name: Get .env Variables
+        id: dotenv
+        uses: falti/dotenv-action@v0.2.7
+
+      - name: Sync Files to Server
+        env:
+          dest: '${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.THEME_PATH }}'
+          deploy: '${{ steps.dotenv.outputs.DEPLOY }}'
+        if: ${{ env.deploy == 'TRUE' }}
+        run: |
+          echo "${{secrets.DEPLOY_KEY}}" > deploy_key
+          chmod 600 ./deploy_key
+          rsync -chav --delete \
+            -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
+            --exclude-from='.git-ftp-ignore' \
+            --exclude /deploy_key \
+            ./ ${{env.dest}}

@@ -73,33 +73,35 @@ We use [GitHub Actions](https://github.com/features/actions). The deployment scr
 ```
 composer install
 npm install
-npm run prod
+npm run dev
 ```
 
 The following files and directories should not be deployed on the server:
 
 ```
-.babelrc
+src
+node_modules
+.vscode
 .editorconfig
 .env
 .git
 .github
-.eslintrc.js
 .gitignore
 .gitkeep
 .git-ftp-ignore
 .git-ftp-include
 .gitattributes
 .gitignore
-.prettierrc.js
+.babelrc
 .stylelintrc.js
-assets
-node_modules
+.prettierrc.js
+.eslintrc.js
+postcss.config.js
 composer.json
 composer.lock
 package.json
 package-lock.json
 tailwind.config.js
 webpack.mix.js
-**/*.md
+*.md
 ```

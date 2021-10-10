@@ -1,3 +1,18 @@
+# 3.2.2: (2021-10-10)
+
+### Features
+
+- Add auto build & deploy Github action. Fixes [#312](https://github.com/creativedotdesign/tofino/issues/312). ([45f032](https://github.com/creativedotdesign/tofino/commit/45f032f8b39c8d9505a45fa57eba93de2bd3aa85))
+- Add body open hook for GTM script. Fixes [#326](https://github.com/creativedotdesign/tofino/issues/326). ([2a4e092](https://github.com/creativedotdesign/tofino/commit/2a4e09267affcfa5ecbf84cb9f073b26dcf69a85))
+
+### Bug Fixes
+
+- Update PHP min version. ([e7afd8](https://github.com/creativedotdesign/tofino/commit/e7afd841cca824d28ac3c93adf8c2599f22679ee))
+- Update Tailwind Purge Paths Fixes [#323](https://github.com/creativedotdesign/tofino/issues/323). ([ebf510](https://github.com/creativedotdesign/tofino/commit/ebf510302fdd1a79cb226d990d372b9a4acb831c))
+- Correct paths & add prefetch scripts. Fixes [#322](https://github.com/creativedotdesign/tofino/issues/322). ([c0f50a0](https://github.com/creativedotdesign/tofino/commit/c0f50a013407760bf3e199de18f735c30e892125))
+- Update menu class filter, fixes [#324](https://github.com/creativedotdesign/tofino/issues/324) & [#301](https://github.com/creativedotdesign/tofino/issues/301). ([4dc9638](https://github.com/creativedotdesign/tofino/commit/4dc963865240f0be8d4f92f7a80655f74f851177))
+- Add back in Fragment Cache script. Fixes [#325](https://github.com/creativedotdesign/tofino/issues/325). ([3933403](https://github.com/creativedotdesign/tofino/commit/39334032db792625172db73b9cbc51d8e1871596))
+
 # 3.2.1: (2021-09-26)
 
 ### Style
