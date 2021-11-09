@@ -14,5 +14,12 @@ module.exports = {
       center: true,
     },
   },
-  plugins: [require('@tailwindcss/aspect-ratio'), require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
+    require('tailwindcss-autofill'),
+    require('tailwindcss-text-fill'),
+    require('tailwindcss-shadow-fill'),
+    require('@tailwindcss/typography'),
+  ],
 };
