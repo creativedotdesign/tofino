@@ -4,6 +4,7 @@ module.exports = {
     content: [
       './*.php',
       './inc/**/*.php',
+      './src/svgs/**/*.svg',
       './templates/**/*.php',
       './src/vue/*.vue',
       './src/styles/safelist.txt',
