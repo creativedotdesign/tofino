@@ -15,6 +15,7 @@ node_modules
 .stylelintrc.js
 .prettierrc.js
 .eslintrc.js
+.npmrc
 postcss.config.js
 composer.json
 composer.lock
