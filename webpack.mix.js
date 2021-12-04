@@ -1,7 +1,7 @@
 const mix = require('laravel-mix');
 const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 // Public Path
 mix.setPublicPath('./dist');
@@ -60,7 +60,7 @@ mix.webpackConfig({
         },
       ],
     }),
-    new ImageminPlugin({ test: /\.(jpe?g|png|gif)$/i }),
+    new ImageMinimizerPlugin({ test: /\.(jpe?g|png|gif)$/i }),
   ],
 });
 
