@@ -244,3 +244,14 @@ function remove_help_tabs() {
   $screen->remove_help_tabs();
 }
 add_action('admin_head', __NAMESPACE__ . '\\remove_help_tabs');
+
+
+// Disable 404 redirect matches
+function no_redirect_on_404($redirect_url) {
+  if (is_404()) {
+    return false;
+  }
+
+  return $redirect_url;
+}
+add_filter('redirect_canonical', 'no_redirect_on_404');
