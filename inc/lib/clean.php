@@ -66,12 +66,19 @@ function remove_comment_support() {
 add_action('init', __NAMESPACE__ . '\\remove_comment_support', 100);
 
 
-// Remove comments from admin bar
-function remove_comments_admin_bar_render() {
+// Remove items from admin bar
+function remove_admin_bar_items() {
   global $wp_admin_bar;
   $wp_admin_bar->remove_menu('comments');
+  $wp_admin_bar->remove_node('search');
+  $wp_admin_bar->remove_node('customize');
+  $wp_admin_bar->remove_menu('themes');
+
+  if (!is_admin()) {
+    $wp_admin_bar->remove_node('my-account');
+  }
 }
-add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\remove_comments_admin_bar_render');
+add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\remove_admin_bar_items');
 
 
 // Remove script version
