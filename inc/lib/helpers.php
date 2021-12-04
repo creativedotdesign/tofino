@@ -191,14 +191,16 @@ function sanitize_textarea($input) {
  *
  * @since 3.2.0
  * @param type $str
+ * @param type $min_word_count
  * @return string
  */
-function fix_text_orphan($str = '') {
+function fix_text_orphan($str = '', $min_word_count = 3) {
   $str   = trim($str); // Strip spaces.
   $space = strrpos($str, ' '); // Find the last space.
+  $word_count = str_word_count($str);
 
   // If there's a space then replace the last on with a non breaking space.
-  if (false !== $space) {
+  if ((false !== $space) && $word_count > $min_word_count) {
     $str = substr($str, 0, $space) . '&nbsp;' . substr($str, $space + 1);
   }
 
