@@ -50,7 +50,3 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
     </div>
   </nav>
 </header>
-
-<?php if (get_theme_mod('footer_sticky') === 'enabled') : ?>
-  <div class="wrapper">
-<?php endif; ?>

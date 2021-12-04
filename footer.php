@@ -1,9 +1,5 @@
 <?php
-use \Tofino\ThemeOptions\Notifications as n;
-
-if (get_theme_mod('footer_sticky') === 'enabled') : ?>
-  </div>
-<?php endif; ?>
+use \Tofino\ThemeOptions\Notifications as n; ?>
 
 <!-- Nav Menu -->
 <div class="w-full">

@@ -6,12 +6,10 @@ body {
   @apply antialiased;
 
   &.footer-sticky {
-    @apply flex flex-col min-h-screen;
+    @apply h-full;
 
-    .wrapper {
-      flex: 1 0 auto;
-
-      @apply w-full;
+    > footer {
+      @apply top-[100vh] sticky;
     }
   }
 
