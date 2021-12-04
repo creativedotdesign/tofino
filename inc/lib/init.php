@@ -73,12 +73,6 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 
 
 /**
- * Remove admin bar
- */
-add_filter('show_admin_bar', '__return_false');
-
-
-/**
  * Add post_type and post_name to body class
  *
  * @since 1.0.0
