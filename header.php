@@ -16,10 +16,10 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
 <?php n\notification('top'); ?>
 
 <header class="<?php echo m\menu_sticky(); ?>">
-  <nav class="w-full bg-white py-4 px-6 justify-between flex">
+  <nav class="flex justify-between w-full px-6 py-4 bg-white">
     <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
 
-    <button class="flex lg:hidden js-menu-toggle" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
       <!-- Hamburger Icon -->
       <span class="w-6 h-6">
         <?php echo svg(['sprite' => 'icon-hamburger', 'class' => 'w-full h-full']); ?>
