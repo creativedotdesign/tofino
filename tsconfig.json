@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2020",
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "strict": true, // Enable strict type-checking options
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "noImplicitAny": false // Bypass raising errors on `any` type
+  },
+  "include": ["src/**/*"] // Frontend paths pattern
+}

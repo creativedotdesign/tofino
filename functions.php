@@ -1,4 +1,7 @@
 <?php
+
+use Idleberg\WordpressViteAssets\WordpressViteAssets;
+
 /**
  * Tofino includes
  *
@@ -10,6 +13,7 @@
  */
 $tofino_includes = [
   "inc/lib/init.php",
+  "inc/lib/vite.php",
   "inc/lib/assets.php",
   "inc/lib/helpers.php",
   "inc/lib/clean.php",
@@ -53,37 +57,38 @@ if (file_exists(get_template_directory() . '/vendor/autoload.php')) { // Check c
   require_once 'vendor/autoload.php';
 } else {
   if (is_admin()) {
-    add_action('admin_notices', 'composer_error_notice');
+    add_action('admin_notices', function () {
+      echo '<div class="error"><p>' . __('Composer autoload file not found. Run composer install on the command line.', 'tofino') . '</p></div>';
+    });
   } else {
-    wp_die(composer_error_notice(), __('An error occured.', 'tofino'));
+    wp_die(__('Composer autoload file not found. Run composer install on the command line.', 'tofino'), __('An error occured.', 'tofino'));
   }
 }
 
 // Check for missing dist directory. Result is cached by PHP.
-if (!is_dir(get_template_directory() . '/dist')) {
-  if (is_admin()) {
-    add_action('admin_notices', 'missing_dist_error_notice');
-  } else {
-    wp_die(missing_dist_error_notice(), __('An error occured.', 'tofino'));
-  }
-}
+// if (!is_dir(get_template_directory() . '/dist')) {
+//   if (is_admin()) {
+//     add_action('admin_notices', 'missing_dist_error_notice');
+//   } else {
+//     wp_die(missing_dist_error_notice(), __('An error occured.', 'tofino'));
+//   }
+// }
 
 // Admin notice for missing composer autoload.
-function composer_error_notice() {
-?><div class="error notice">
-    <p><?php _e('Composer autoload file not found. Run composer install on the command line.', 'tofino'); ?></p>
-  </div><?php
+function composer_error_notice()
+{
+  __('Composer autoload file not found. Run composer install on the command line.', 'tofino');
 }
 
 // Admin notice for missing dist directory.
-function missing_dist_error_notice() {
-?><div class="error notice">
-    <p><?php _e('/dist directory not found. You probably want to run yarn install and npm run dev on the command line.', 'tofino'); ?></p>
-  </div><?php
+function missing_dist_error_notice()
+{
+  _e('/dist directory not found. You probably want to run yarn install and npm run dev on the command line.', 'tofino');
 }
 
 // Set ACF JSON save path
-function acf_json_save_point($path) {
+function acf_json_save_point($path)
+{
   $path = get_stylesheet_directory() . '/inc/acf-json'; // Update path
 
   return $path;
@@ -91,7 +96,8 @@ function acf_json_save_point($path) {
 add_filter('acf/settings/save_json', 'acf_json_save_point');
 
 // Set ACF JSON load path
-function acf_json_load_point($paths) {
+function acf_json_load_point($paths)
+{
   unset($paths[0]); // Remove original path (optional)
 
   $paths[] = get_stylesheet_directory() . '/inc/acf-json';
@@ -108,18 +114,35 @@ add_filter('acf/settings/load_json', 'acf_json_load_point');
 add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);
 
 
-/**
- * Prefetch_scripts that might be needed later
- *
- * @since 3.3.0
- */
-function prefetch_scripts() {
-  $scripts = [
-    // Add scripts here
-  ];
+// function add_type_attribute($tag, $handle, $src) {
+//   // if not your script, do nothing and return original $tag
+//   if ( 'tofino/js/app.ts-js' !== $handle ) {
+//       return $tag;
+//   }
+//   // change the script tag by adding type="module" and return it.
+//   $tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+//   return $tag;
+// }
+// add_filter('script_loader_tag', 'add_type_attribute' , 10, 3);
 
-  foreach ($scripts as $script) {
-    echo '<link rel="prefetch" as="script" href="' . mix('js/chunks/' . $script .  '.js', 'dist') . '" crossorigin="anonymous"/>';
-  }
-}
-add_action('wp_head', 'prefetch_scripts');
+
+
+// $Vite = new \Tofino\Vite();
+
+// var_dump($Vite->isDevServerRunning());
+
+// \Tofino\Vite::register('app.ts');
+
+// $baseUrl = get_stylesheet_directory();
+// // $baseUrl = get_stylesheet_directory_uri();
+// $manifest = $baseUrl . "/dist/manifest.json";
+// $entryPoint = "js/app.ts";
+
+// // echo $baseUrl;
+// // echo $manifest;
+// // echo $entryPoint;
+
+// // die;
+
+// $viteAssets = new WordpressViteAssets($manifest, $baseUrl);
+// $viteAssets->addAction($entryPoint);

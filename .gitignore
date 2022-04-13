@@ -15,6 +15,7 @@
 !.git-ftp-ignore
 !.github
 !.npmrc
+!.prettierignore
 
 # ignore node/grunt dependency directories
 node_modules/

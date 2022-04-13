@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme Options
  *
@@ -17,7 +18,8 @@ namespace Tofino\ThemeOptions\ClientData;
  * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
-function client_data_settings($wp_customize) {
+function client_data_settings($wp_customize)
+{
   $wp_customize->add_section('tofino_client_data_settings', [
     'title'    => __('Client Data', 'tofino'),
     'priority' => 125

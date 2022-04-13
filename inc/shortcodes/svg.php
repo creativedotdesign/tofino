@@ -7,10 +7,8 @@
  * @param mixed $atts options attributes array or string with sprite reference
  * @return string HTML SVG sprite code populated with parameters.
  */
-function svg($atts) {
-  // SVG Sprite URL
-  $svg_sprite_url = mix('dist/svg/sprite.svg', './');
-
+function svg($atts)
+{
   if (gettype($atts) === 'string') {
     $atts = [
       'sprite' => $atts
@@ -30,7 +28,7 @@ function svg($atts) {
     if (is_int($atts['file'])) {
       $file = get_attached_file($atts['file']);
     } else {
-      $file = get_template_directory() . '/dist/svg/' . $atts['file'] . '.svg';
+      $file = get_template_directory() . '/dist/svgs/' . $atts['file'] . '.svg';
     }
 
     if (file_exists($file)) {
@@ -56,6 +54,6 @@ function svg($atts) {
     $atr_str .= ' ' . $key . '="' . esc_attr($value) . '"';
   }
 
-  return '<svg' . $atr_str . '>' . (!empty($title) ? '<title>' . $title . '</title>' : '') . '<use xlink:href="' . $svg_sprite_url . '#' . $sprite . '" /></svg>';
+  return '<svg' . $atr_str . '>' . (!empty($title) ? '<title>' . $title . '</title>' : '') . '<use href="#icon-' . $sprite . '" /></svg>';
 }
 add_shortcode('svg', 'svg');

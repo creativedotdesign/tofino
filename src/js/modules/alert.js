@@ -14,7 +14,7 @@ const Alert = () => {
   if (alert) {
     const closeIcon = document.querySelector('#tofino-notification .js-close');
 
-    closeIcon.addEventListener('click', e => {
+    closeIcon.addEventListener('click', () => {
       if (tofinoJS.cookieExpires) {
         let date = new Date();
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * Initialize and setup theme
@@ -15,7 +16,8 @@ namespace Tofino\Init;
  * @since 1.5.0
  * @return void
  */
-function php_version_check() {
+function php_version_check()
+{
   $php_version = phpversion();
   if (version_compare($php_version, '7.3.0', '<')) {
     wp_die('<div class="error notice"><p>' . __('PHP version >= 7.3.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
@@ -30,7 +32,8 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
  * @since 1.0.0
  * @return void
  */
-function setup() {
+function setup()
+{
   add_theme_support('title-tag'); // Enable plugins to manage the document title
   add_theme_support('post-thumbnails'); // Enable featured images for Posts
 
@@ -52,7 +55,8 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
  * @since 1.2.0
  * @return void
  */
-function check_page_display() {
+function check_page_display()
+{
   if ((!is_admin()) && (get_option('show_on_front') === 'posts') && (locate_template('home.php') === '')) {
     wp_die('Front page display setting is set to Latest Posts but no home.php file exists. Please update the settings selecting a Static page or create the home.php as per the documentation.', 'An error occured.');
   }
@@ -66,7 +70,8 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\check_page_display');
  * @since 1.0.0
  * @return void
  */
-function content_width() {
+function content_width()
+{
   $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 1440);
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
@@ -79,7 +84,8 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
  * @param array $classes array of current classes on the body tag
  * @return array updated to include the post_type and post_name
  */
-function add_post_name_body_class(array $classes) {
+function add_post_name_body_class(array $classes)
+{
   global $post;
   if (isset($post) && is_single()) {
     $classes[] = $post->post_type . '-' . $post->post_name;
@@ -108,9 +114,10 @@ add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
  *
  * @since 3.3.0
  */
-function add_custom_body_open_code() {
+function add_custom_body_open_code()
+{
   if (function_exists('gtm4wp_the_gtm_tag')) {
     gtm4wp_the_gtm_tag();
-  } 
+  }
 }
 add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');

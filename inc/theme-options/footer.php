@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme Options
  *
@@ -15,7 +16,8 @@ namespace Tofino\ThemeOptions\Footer;
  * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
-function footer_settings($wp_customize) {
+function footer_settings($wp_customize)
+{
   $wp_customize->add_section('tofino_footer_settings', [
     'title'    => __('Footer', 'tofino'),
     'priority' => 145
@@ -59,7 +61,8 @@ add_action('customize_register', __NAMESPACE__ . '\\footer_settings');
  * @param array $classes Array of classes passed to the body tag by WP.
  * @return void
  */
-function add_footer_sticky_class($classes) {
+function add_footer_sticky_class($classes)
+{
   if (get_theme_mod('footer_sticky') === 'enabled') {
     $classes[] = 'footer-sticky';
   }

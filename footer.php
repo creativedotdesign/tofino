@@ -1,4 +1,5 @@
 <?php
+
 use \Tofino\ThemeOptions\Notifications as n; ?>
 
 <!-- Nav Menu -->

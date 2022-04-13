@@ -30,4 +30,4 @@ if (locate_template('templates/content-page-' . $template . '.php') != '') {
   get_template_part('templates/content-page', $template);
 }
 
-get_footer(); ?>
+get_footer();

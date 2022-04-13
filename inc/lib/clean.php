@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Load CSS and JS files
  *
@@ -12,26 +13,29 @@ namespace Tofino\Clean;
 define('DISALLOW_FILE_EDIT', true);
 
 // Remove default post from admin menu bar
-function remove_default_post_type_menu_bar($wp_admin_bar) {
+function remove_default_post_type_menu_bar($wp_admin_bar)
+{
   $wp_admin_bar->remove_node('new-post');
 }
 add_action('admin_bar_menu', __NAMESPACE__ . '\\remove_default_post_type_menu_bar', 999);
 
 
 // Remove widgets from dashboard
-function remove_widgets() {
+function remove_widgets()
+{
   remove_meta_box('dashboard_quick_press', 'dashboard', 'side');
-  remove_meta_box('dashboard_activity','dashboard', 'normal');
-  remove_meta_box('dashboard_primary','dashboard','side');
-  remove_meta_box('dashboard_secondary','dashboard','side');
+  remove_meta_box('dashboard_activity', 'dashboard', 'normal');
+  remove_meta_box('dashboard_primary', 'dashboard', 'side');
+  remove_meta_box('dashboard_secondary', 'dashboard', 'side');
   remove_meta_box('dashboard_site_health', 'dashboard', 'normal');
-  remove_meta_box('dashboard_right_now', 'dashboard', 'normal');  
+  remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
 }
 add_action('wp_dashboard_setup', __NAMESPACE__ . '\\remove_widgets', 999);
 
 
 // Remove Howdy from Admin Area
-function change_howdy($wp_admin_bar) {
+function change_howdy($wp_admin_bar)
+{
   $my_account = $wp_admin_bar->get_node('my-account');
   $title   = str_replace('Howdy, ', '', $my_account->title);
   $wp_admin_bar->add_node([
@@ -43,7 +47,8 @@ add_filter('admin_bar_menu', __NAMESPACE__ . '\\change_howdy', 25);
 
 
 // Remove WP Logo from Admin Area
-function admin_bar_remove_logo() {
+function admin_bar_remove_logo()
+{
   global $wp_admin_bar;
   $wp_admin_bar->remove_menu('wp-logo');
 }
@@ -51,7 +56,8 @@ add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\admin_bar_remove_log
 
 
 // Remove comments from admin menu
-function remove_comments_admin_menus() {
+function remove_comments_admin_menus()
+{
   remove_menu_page('edit-comments.php');
   remove_menu_page('options-discussion');
 }
@@ -59,7 +65,8 @@ add_action('admin_menu', __NAMESPACE__ . '\\remove_comments_admin_menus');
 
 
 // Remove comment support from post and pages
-function remove_comment_support() {
+function remove_comment_support()
+{
   remove_post_type_support('post', 'comments');
   remove_post_type_support('page', 'comments');
 }
@@ -67,7 +74,8 @@ add_action('init', __NAMESPACE__ . '\\remove_comment_support', 100);
 
 
 // Remove items from admin bar
-function remove_admin_bar_items() {
+function remove_admin_bar_items()
+{
   global $wp_admin_bar;
   $wp_admin_bar->remove_menu('comments');
   $wp_admin_bar->remove_node('search');
@@ -82,7 +90,8 @@ add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\remove_admin_bar_ite
 
 
 // Remove script version
-function remove_script_version($src) {
+function remove_script_version($src)
+{
   $parts = explode('?ver', $src);
   return $parts[0];
 }
@@ -95,7 +104,8 @@ add_filter('use_block_editor_for_post_type', '__return_false', 10);
 
 
 // Don't load Gutenberg-related stylesheets.
-function remove_block_css() {
+function remove_block_css()
+{
   wp_dequeue_style('wp-block-library'); // WordPress core
   wp_dequeue_style('wp-block-library-theme'); // WordPress core
   wp_dequeue_style('wc-block-style'); // WooCommerce
@@ -104,14 +114,14 @@ function remove_block_css() {
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\remove_block_css', 100);
 
 
-function remove_extra_markup () {
+function remove_extra_markup()
+{
   // Remove Post Formats
   remove_theme_support('post-formats');
 
   // Remove the REST API lines from the HTML Header
   remove_action('wp_head', 'rest_output_link_wp_head', 10);
   remove_action('wp_head', 'wp_oembed_add_discovery_links', 10);
-  
 
   // Remove gunk in header
   remove_action('wp_head', 'rsd_link');
@@ -166,15 +176,21 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\remove_extra_markup');
 
 // Defer scripts
 if (!is_admin()) {
-	function add_defer_attribute($tag, $handle) {
-    return str_replace(' src', ' defer src', $tag);	
-	}
-	add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
+  function add_defer_attribute($tag, $handle)
+  {
+    if ($handle === 'tofino') {
+      return str_replace('script src', 'script type="module" src', $tag);
+    } else {
+      return str_replace(' src', ' defer src', $tag);
+    }
+  }
+  add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
 }
 
 
 // Clean nav classes
-function clean_nav_classes($classes, $item) {
+function clean_nav_classes($classes, $item)
+{
   $new_classes = ['menu-item'];
 
   if ($item->current) {
@@ -203,7 +219,8 @@ add_filter('nav_menu_css_class', __NAMESPACE__ . '\\clean_nav_classes', 10, 2);
 
 
 // Remove dashicons
-function dequeue_dashicon() {
+function dequeue_dashicon()
+{
   if (current_user_can('update_core')) {
     return;
   }
@@ -214,14 +231,16 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\dequeue_dashicon');
 
 
 // Disable embeds
-function disable_embed(){
+function disable_embed()
+{
   wp_dequeue_script('wp-embed');
 }
 add_action('wp_footer', __NAMESPACE__ . '\\disable_embed');
 
 
 // Add/remove body_class() classes
-function remove_body_classes($classes) {
+function remove_body_classes($classes)
+{
   // Add post/page slug if not present
   if (is_single() || is_page() && !is_front_page()) {
     if (!in_array(basename(get_permalink()), $classes)) {
@@ -235,18 +254,20 @@ function remove_body_classes($classes) {
   $classes        = array_diff($classes, $remove_classes);
   return $classes;
 }
-add_filter('body_class', __NAMESPACE__ . '\\remove_body_classes'); 
+add_filter('body_class', __NAMESPACE__ . '\\remove_body_classes');
 
 
 // Remove 'text/css' and 'text/javascript' from enqueued stylesheets and scripts
-function cleaner_script_style_tags() {
+function cleaner_script_style_tags()
+{
   add_theme_support('html5', ['script', 'style']);
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\cleaner_script_style_tags');
 
 
 // Remove Help Tabs
-function remove_help_tabs() {
+function remove_help_tabs()
+{
   $screen = get_current_screen();
   $screen->remove_help_tabs();
 }
@@ -254,7 +275,8 @@ add_action('admin_head', __NAMESPACE__ . '\\remove_help_tabs');
 
 
 // Disable 404 redirect matches
-function no_redirect_on_404($redirect_url) {
+function no_redirect_on_404($redirect_url)
+{
   if (is_404()) {
     return false;
   }
@@ -262,3 +284,11 @@ function no_redirect_on_404($redirect_url) {
   return $redirect_url;
 }
 add_filter('redirect_canonical', 'no_redirect_on_404');
+
+
+// Remove new v5.9 global styles
+function remove_global_css() {
+  remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
+	remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
+}
+add_filter('init', __NAMESPACE__ . '\\remove_global_css');

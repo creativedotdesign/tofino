@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme Options
  *
@@ -15,7 +16,8 @@ namespace Tofino\ThemeOptions\DashboardWidgets;
  * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
-function widget_settings($wp_customize) {
+function widget_settings($wp_customize)
+{
   $wp_customize->add_section('tofino_dash_widget_settings', [
     'title'    => __('Dashboard Widget', 'tofino'),
     'priority' => 160
@@ -53,7 +55,8 @@ add_action('customize_register', __NAMESPACE__ . '\\widget_settings');
  *
  * @return void
  */
-function dashboard_widgets() {
+function dashboard_widgets()
+{
   $widget_id = 'tofino_theme_widget';
 
   // Add the widget
@@ -77,6 +80,7 @@ add_action('wp_dashboard_setup', __NAMESPACE__ . '\\dashboard_widgets');
  *
  * @return The widget content from the theme option or default text.
  */
-function get_widget_content() {
+function get_widget_content()
+{
   echo get_theme_mod('dash_widget_text', __('<a href ="https://github.com/lambdacreatives/tofino">Tofino</a> theme by <a href ="https://creativedotdesign.com/">Creative Dot</a>.', 'tofino'));
 }

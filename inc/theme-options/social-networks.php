@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme Options
  *
@@ -17,7 +18,8 @@ namespace Tofino\ThemeOptions\SocialNetworks;
  * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
-function social_settings($wp_customize) {
+function social_settings($wp_customize)
+{
   $wp_customize->add_section('tofino_social_settings', [
     'title'       => __('Social Networks', 'tofino'),
     'description' => 'Links to various social networks. Remember to add the SVG icon for any new networks you add.',

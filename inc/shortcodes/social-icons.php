@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Social icons shortcode
  *
@@ -6,7 +7,8 @@
  * @param array $atts class value to include on the UL element.
  * @return string HTML output of unordered list with social icons as SVGS with links.
  */
-function social_icons($atts = []) {
+function social_icons($atts = [])
+{
   $theme_mods = get_theme_mods();
   $output     = '';
 
@@ -25,7 +27,7 @@ function social_icons($atts = []) {
       if (!empty($atts['platforms'])) {
         $platforms    = array_map('trim', explode(',', $atts['platforms']));
         $social_links = array_intersect_key($social_links, array_flip($platforms));
-        $social_links = array_replace(array_flip($platforms), $social_links); 
+        $social_links = array_replace(array_flip($platforms), $social_links);
       }
 
       // Build the links and icons

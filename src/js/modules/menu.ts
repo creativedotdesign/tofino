@@ -3,8 +3,8 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 const Menu = () => {
   // Menu Toggle
-  const buttons = document.querySelectorAll('.js-menu-toggle'),
-    menu = document.getElementById('main-menu');
+  const buttons = document.querySelectorAll('.js-menu-toggle');
+  const menu = document.getElementById('main-menu');
 
   buttons.forEach(el => {
     el.addEventListener('click', () => {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme Options
  *
@@ -15,7 +16,8 @@ namespace Tofino\ThemeOptions\Menu;
  * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
-function menu_settings($wp_customize) {
+function menu_settings($wp_customize)
+{
   $wp_customize->add_section('tofino_menu_settings', [
     'title'    => __('Menu Options', 'tofino'),
     'priority' => 100
@@ -48,7 +50,8 @@ add_action('customize_register', __NAMESPACE__ . '\\menu_settings');
  * @since 1.0.0
  * @return void
  */
-function menu_sticky() {
+function menu_sticky()
+{
   if (get_theme_mod('menu_sticky') === 'enabled') {
     return 'sticky-top';
   }
@@ -64,7 +67,8 @@ function menu_sticky() {
  * @param array $classes Array of classes passed to the body tag by WP.
  * @return void
  */
-function add_menu_sticky_class($classes) {
+function add_menu_sticky_class($classes)
+{
   if (get_theme_mod('menu_sticky') === 'enabled') {
     $classes[] = 'menu-fixed';
   }

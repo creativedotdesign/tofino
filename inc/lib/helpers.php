@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * Helper functions
@@ -15,7 +16,8 @@ namespace Tofino\Helpers;
  * @since 1.7.0
  * @return string
  */
-function title() {
+function title()
+{
   if (is_home()) {
     if ($home = get_option('page_for_posts', true)) {
       return get_the_title($home);
@@ -48,7 +50,8 @@ function title() {
  * @param string filepart
  * @param mixed wp_args style argument list
  */
-function hm_get_template_part($file, $template_args = []) {
+function hm_get_template_part($file, $template_args = [])
+{
   $template_args = wp_parse_args($template_args);
 
   if (file_exists(get_template_directory() . '/' . $file . '.php')) {
@@ -85,7 +88,8 @@ function hm_get_template_part($file, $template_args = []) {
  * @param integer $page_id The id of the page
  * @return string pagename (slug)
  */
-function get_page_name($page_id = null) {
+function get_page_name($page_id = null)
+{
   global $pagename;
   if (!$pagename || $page_id) { // Not found in the query_var. Permalinks probably not enabled.
     $page_id  = ($page_id ? $page_id : get_the_ID());
@@ -108,7 +112,8 @@ function get_page_name($page_id = null) {
  * @param  string $post_type page, post etc
  * @return integer|null
  */
-function get_id_by_slug($slug, $post_type = 'page') {
+function get_id_by_slug($slug, $post_type = 'page')
+{
   $page = get_page_by_path($slug, 'OBJECT', $post_type);
   if ($page) {
     return $page->ID;
@@ -138,7 +143,8 @@ function get_id_by_slug($slug, $post_type = 'page') {
  * @param  string  $meta_key The meta key to search
  * @return object  A PHP Object containing the meta data with key value pairs
  */
-function get_complete_meta($post_id, $meta_key) {
+function get_complete_meta($post_id, $meta_key)
+{
   global $wpdb;
   $mid = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $post_id, $meta_key));
   if ($mid != '') {
@@ -158,7 +164,8 @@ function get_complete_meta($post_id, $meta_key) {
  * @param object $setting The setting to validate.
  * @since 1.2.0
  */
-function sanitize_choices($input, $setting) {
+function sanitize_choices($input, $setting)
+{
   global $wp_customize;
   $control = $wp_customize->get_control($setting->id);
   if (array_key_exists($input, $control->choices)) {
@@ -179,7 +186,8 @@ function sanitize_choices($input, $setting) {
  * @param string $input The input.
  * @return string Sanitized string.
  */
-function sanitize_textarea($input) {
+function sanitize_textarea($input)
+{
   return implode("\n", array_map('sanitize_text_field', explode("\n", $input)));
 }
 
@@ -194,7 +202,8 @@ function sanitize_textarea($input) {
  * @param type $min_word_count
  * @return string
  */
-function fix_text_orphan($str = '', $min_word_count = 3) {
+function fix_text_orphan($str = '', $min_word_count = 3)
+{
   $str   = trim($str); // Strip spaces.
   $space = strrpos($str, ' '); // Find the last space.
   $word_count = str_word_count($str);
@@ -219,7 +228,8 @@ function fix_text_orphan($str = '', $min_word_count = 3) {
  * @param string $size (optional) The image sized used for the main src
  * @return array Values to populate into an img tag
  */
-function responsive_image_attribute_values($image_id = null, $size = 'full') {
+function responsive_image_attribute_values($image_id = null, $size = 'full')
+{
   if (!$image_id) {
     $image_id = get_post_thumbnail_id();
   }

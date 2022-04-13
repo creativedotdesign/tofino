@@ -18,9 +18,9 @@
   ],
   "keywords": ["WordPress", "theme", "tofino"],
   "require": {
-    "php": ">=7.3.0",
+    "php": ">=7.4.0",
     "composer/installers": "~v1.10.0",
-    "mindkomm/theme-lib-mix": "^1.1"
+    "idleberg/wordpress-vite-assets": "^0.5.0"
   },
   "autoload": {
     "psr-4": {

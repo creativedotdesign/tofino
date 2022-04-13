@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme Options
  *
@@ -17,7 +18,8 @@ namespace Tofino\ThemeOptions\Advanced;
  * @param object $wp_customize Instance of WP_Customize_Manager class.
  * @return void
  */
-function advanced_settings($wp_customize) {
+function advanced_settings($wp_customize)
+{
   $wp_customize->add_section('tofino_advanced_settings', [
     'title'    => __('Advanced', 'tofino'),
     'priority' => 150

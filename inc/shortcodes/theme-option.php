@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme option shortcode
  *
@@ -8,7 +9,8 @@
  * @param mixed $atts option id as string or array with id and a default value.
  * @return string The option data value if found or the default value.
  */
-function ot_shortcode($atts) {
+function ot_shortcode($atts)
+{
   if (gettype($atts) === 'string') {
     $atts = [
       'id' => $atts

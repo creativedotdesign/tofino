@@ -2,6 +2,10 @@ html {
   @apply h-full;
 }
 
+footer {
+  @apply bg-gray-100;
+}
+
 body {
   @apply antialiased;
 
@@ -21,8 +25,4 @@ body {
       @apply visible;
     }
   }
-}
-
-footer {
-  @apply bg-gray-100;
 }
