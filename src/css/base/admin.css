@@ -1,7 +1,5 @@
 .maintenance-mode-alert {
-  @apply fixed hidden inset-0 p-5 text-center text-white bg-red-600;
-
-  z-index: 999999;
+  @apply fixed inset-0 p-5 text-center text-white bg-red-600 z-[99999];
 
   h1 {
     @apply text-white;

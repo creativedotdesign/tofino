@@ -10,27 +10,6 @@
 namespace Tofino\Assets;
 
 /**
- * Load styles
- *
- * Register and enqueue the main stylesheet.
- * Filemtime added as a querystring to ensure correct version is sent to the client.
- * Called using call_css() function.
- *
- * @see call_css()
- * @since 1.0.0
- * @return void
- */
-function styles()
-{
-  $main_css = mix('css/styles.css', 'dist');
-
-  wp_register_style('tofino', $main_css);
-  wp_enqueue_style('tofino');
-}
-// add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\styles');
-
-
-/**
  * Load admin styles
  *
  * Register and enqueue the stylesheet used in the admin area.
@@ -42,8 +21,7 @@ function styles()
  */
 function admin_styles()
 {
-  $admin_css = mix('dist/css/wp-admin.css', './');
-  wp_register_style('tofino/css/admin', $admin_css);
+  wp_register_style('tofino/css/admin', get_stylesheet_directory_uri() . '/dist/admin.css', [], false);
   wp_enqueue_style('tofino/css/admin');
 }
 add_action('login_head', __NAMESPACE__ . '\\admin_styles');
@@ -80,13 +58,15 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
 function localize_scripts()
 {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
+    $alert = get_field('alert', 'general-options');
+
     wp_localize_script('tofino', 'tofinoJS', [
-      'ajaxUrl'        => admin_url('admin-ajax.php'),
-      'nextNonce'      => wp_create_nonce('next_nonce'),
-      'cookieExpires'  => (get_theme_mod('notification_expires') ? get_theme_mod('notification_expires') : 999),
-      'themeUrl'       => get_template_directory_uri(),
-      'notificationJS' => (get_theme_mod('notification_use_js') ? 'true' : 'false'),
-      'siteURL'        => site_url(),
+      'ajaxUrl' => admin_url('admin-ajax.php'),
+      'nextNonce' => wp_create_nonce('next_nonce'),
+      'cookieExpires' => $alert['expires'] ? $alert['expires'] : 999,
+      'themeUrl' => get_template_directory_uri(),
+      'alertJS' => $alert['display_with_javascript'] ? 'true' : 'false',
+      'siteURL' => site_url(),
     ]);
   }
 }
@@ -104,8 +84,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
  */
 function admin_scripts()
 {
-  $admin_js = mix('dist/js/wp-admin.js', './');
-  wp_register_script('tofino/js/admin', $admin_js);
+  wp_register_script('tofino/js/admin',  get_stylesheet_directory_uri() . '/dist/admin.js', [], null);
   wp_enqueue_script('tofino/js/admin');
 }
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');

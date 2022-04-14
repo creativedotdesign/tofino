@@ -1,7 +1,3 @@
-<?php
-
-use \Tofino\ThemeOptions\Menu as m;
-use \Tofino\ThemeOptions\Notifications as n; ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
 
@@ -15,9 +11,9 @@ use \Tofino\ThemeOptions\Notifications as n; ?>
 
   <?php wp_body_open(); ?>
 
-  <?php n\notification('top'); ?>
+  <?php Tofino\Init\alert('top'); ?>
 
-  <header class="<?php echo m\menu_sticky(); ?>">
+  <header class="<?php echo Tofino\Init\menu_sticky(); ?>">
     <nav class="flex justify-between w-full px-6 py-4 bg-white">
       <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
 

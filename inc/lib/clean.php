@@ -29,6 +29,7 @@ function remove_widgets()
   remove_meta_box('dashboard_secondary', 'dashboard', 'side');
   remove_meta_box('dashboard_site_health', 'dashboard', 'normal');
   remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
+  remove_meta_box('wpseo-dashboard-overview', 'dashboard', 'normal');
 }
 add_action('wp_dashboard_setup', __NAMESPACE__ . '\\remove_widgets', 999);
 
@@ -175,7 +176,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\remove_extra_markup');
 
 
 // Defer scripts
-if (!is_admin()) {
+if (!is_admin() && $GLOBALS['pagenow'] != 'wp-login.php') {
   function add_defer_attribute($tag, $handle)
   {
     if ($handle === 'tofino') {

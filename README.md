@@ -13,11 +13,10 @@ Ongoing development is sponsored by [Creative Dot](https://creativdotdesign.com)
 Heavily inspired the by awesome WordPress starter theme [Sage](https://github.com/roots/sage) by [Roots](https://github.com/roots) from [Ben Word](https://github.com/retlehs) and [Scott Walkinshaw](https://github.com/swalkinshaw).
 
 ## Requirements
-
 | Prerequisite       | How to check  | How to install                                  |
 | ------------------ | ------------- | ----------------------------------------------- |
-| PHP >= 7.3.0       | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 12.16.3 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| PHP >= 7.4.0       | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 14.0.0  | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | Composer >= 2.0.0  | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
@@ -35,26 +34,25 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 
 ## Features
 
-- [tailwindcss](http://tailwindcss.com/)(v2.0)
+- [tailwindcss](http://tailwindcss.com/)(v3.0)
 - Multilingual ready (WPML)
 - Responsive
-- Theme Options via WP Customizer (Native)
+- General Options via ACF
   - Admin login screen logo
   - Custom Dashboard Widget
-  - Google Analytics
   - Social links
   - Sticky menu
   - Sticky footer
-  - Left/Center/Right menu positions
   - Client Data (Address, Telephone number, Email address, Company number)
   - Footer text
-  - Notification text / EU Cookie notice with top/bottom positions
-  - Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
+  - Alert Bar with top/bottom positions
+  - Contact form and custom email templates
   - Data Tables for viewing data submitted via the contact form
   - Maintenance mode popup
-  - jQuery in footer
-- JS ES6 compatible via Babel and Browserify.
-- [Laravel Mix](https://laravel-mix.com/) build script d
+  - Custom 404 page
+- [Advanced Custom Fields](https://www.advancedcustomfields.com/resources/getting-started/)
+- TypeSctipts (JS)
+- [Vite](https://vitejs.dev/guide/) build script
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
 - Auto post type / slug based template routing
@@ -73,7 +71,7 @@ We use [GitHub Actions](https://github.com/features/actions). The deployment scr
 ```
 composer install
 npm install
-npm run dev
+npm run build
 ```
 
 The following files and directories should not be deployed on the server:
@@ -84,6 +82,7 @@ node_modules
 .vscode
 .editorconfig
 .env
+.eslintrc.js
 .git
 .github
 .gitignore
@@ -92,16 +91,16 @@ node_modules
 .git-ftp-include
 .gitattributes
 .gitignore
-.babelrc
 .stylelintrc.js
 .prettierrc.js
-.eslintrc.js
-postcss.config.js
+.npmrc
 composer.json
 composer.lock
 package.json
 package-lock.json
+postcss.config.js
 tailwind.config.js
-webpack.mix.js
+vite.config.js
+phpcs.xml
 *.md
 ```

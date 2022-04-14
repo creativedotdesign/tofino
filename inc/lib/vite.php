@@ -4,7 +4,6 @@ namespace Tofino;
 
 class Vite
 {
-
   public static $serverUrl = 'http://localhost:3000';
 
   public static function isDevServerRunning()
@@ -37,7 +36,7 @@ class Vite
   public static function register($entry)
   {
     $url = self::isDevServerRunning()
-      ? 'http://localhost:3000/' . $entry
+      ? self::$serverUrl . '/' . $entry
       : self::assetUrl($entry);
 
     if (!$url) {
@@ -81,7 +80,6 @@ class Vite
 
 
   // Helpers to locate files
-
   private static function getManifest(): array
   {
     $content = file_get_contents(get_stylesheet_directory() . '/dist/manifest.json');

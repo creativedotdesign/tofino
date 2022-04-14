@@ -1,11 +1,12 @@
 module.exports = {
   content: [
-    './*.php',
+    './header.php',
+    './footer.php',
+    './404.php',
     './inc/**/*.php',
-    './src/svgs/**/*.svg',
     './templates/**/*.php',
+    './src/svgs/**/*.svg',
     './src/vue/*.vue',
-    './src/styles/safelist.txt',
   ],
   theme: {
     container: {

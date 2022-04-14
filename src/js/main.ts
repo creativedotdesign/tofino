@@ -1,6 +1,3 @@
-// Menu
-import Menu from './modules/menu';
-
 // Import Font loader
 import WebFont from 'webfontloader';
 
@@ -14,26 +11,42 @@ export default {
 
     // Load Fonts
     WebFont.load({
-      classes: false,
+            classes: false,
       events: false,
       google: {
         families: ['Roboto:wght@300;400;700'],
         display: 'swap',
         version: 2,
       },
+    })
+
+    // Define the selectors and src for dynamic imports
+    const scripts: {
+      selector: string,
+      src: string,
+    }[] = [
+      {
+        selector: '#tofino-alert', // Alert
+        src: 'alert',
+      },
+      {
+        selector: '#main-menu', // Main menu
+        src: 'menu',
+      },
+    ];
+
+    // Loop through the scripts and import the src
+    scripts.forEach(({ selector, src }) => {
+      const el: HTMLElement | null = document.querySelector(selector);
+
+      if (el) {
+        import(`./modules/${src}.ts`).then(({ default: script }) => {
+          script();
+        });
+      } else {
+        console.warn(`Tofino Theme: Could not find ${selector} for script ${src}.ts.`);
+      }
     });
-
-    // Alert
-    if (document.getElementById('tofino-notification')) {
-      import('./modules/alert').then((Module) => {
-        Module.default();
-      });
-    }
-
-    // Menu
-    if (document.getElementById('main-menu')) {
-      Menu();
-    }
 
     if (document.getElementById('app')) {
       // Vue

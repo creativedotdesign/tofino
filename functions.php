@@ -1,7 +1,5 @@
 <?php
 
-use Idleberg\WordpressViteAssets\WordpressViteAssets;
-
 /**
  * Tofino includes
  *
@@ -17,24 +15,8 @@ $tofino_includes = [
   "inc/lib/assets.php",
   "inc/lib/helpers.php",
   "inc/lib/clean.php",
-  "inc/lib/CustomizrTextEditor.php",
   "inc/lib/FragmentCache.php",
-  "inc/shortcodes/copyright.php",
-  "inc/shortcodes/social-icons.php",
-  "inc/shortcodes/svg.php",
-  "inc/shortcodes/theme-option.php",
-  "inc/theme-options/admin.php",
-  "inc/theme-options/advanced.php",
-  "inc/theme-options/client-data.php",
-  "inc/theme-options/dashboard-widget.php",
-  "inc/theme-options/footer.php",
-  "inc/theme-options/google-analytics.php",
-  "inc/theme-options/init.php",
-  "inc/theme-options/maintenance-mode.php",
-  "inc/theme-options/menu.php",
-  "inc/theme-options/notifications.php",
-  "inc/theme-options/social-networks.php",
-  "inc/theme-options/theme-tracker.php",
+  "inc/lib/shortcodes.php",
 ];
 
 foreach ($tofino_includes as $file) {
@@ -65,84 +47,41 @@ if (file_exists(get_template_directory() . '/vendor/autoload.php')) { // Check c
   }
 }
 
+
 // Check for missing dist directory. Result is cached by PHP.
-// if (!is_dir(get_template_directory() . '/dist')) {
-//   if (is_admin()) {
-//     add_action('admin_notices', 'missing_dist_error_notice');
-//   } else {
-//     wp_die(missing_dist_error_notice(), __('An error occured.', 'tofino'));
-//   }
-// }
+if (!is_dir(get_template_directory() . '/dist')) {
+  if (is_admin()) {
+    add_action('admin_notices', 'missing_dist_error_notice');
+  } else {
+    wp_die(missing_dist_error_notice(), __('An error occured.', 'tofino'));
+  }
+}
+
+
+// Check for ACF Plugin.
+if (!class_exists('acf')) {
+  if (is_admin()) {
+    add_action('admin_notices', 'missing_acf_plugin_notice');
+  }
+}
+
 
 // Admin notice for missing composer autoload.
 function composer_error_notice()
 {
-  __('Composer autoload file not found. Run composer install on the command line.', 'tofino');
+  echo '<div class="error notice"><p><strong>' . __('Theme Error', 'tofino') . '</strong> - ' . __('Composer autoload file not found. Run composer install on the command line.', 'tofino') . '</p></div>';
 }
+
 
 // Admin notice for missing dist directory.
 function missing_dist_error_notice()
 {
-  _e('/dist directory not found. You probably want to run yarn install and npm run dev on the command line.', 'tofino');
+  echo '<div class="error notice"><p><strong>' . __('Theme Error', 'tofino') . '</strong> - ' . __('/dist directory not found. You probably want to run npm install and npm run prod on the command line.', 'tofino') . '</p></div>';
 }
 
-// Set ACF JSON save path
-function acf_json_save_point($path)
+
+// Admin notice for missing ACF plugin.
+function missing_acf_plugin_notice()
 {
-  $path = get_stylesheet_directory() . '/inc/acf-json'; // Update path
-
-  return $path;
+  echo '<div class="error notice"><p><strong>' . __('Missing Plugin', 'tofino') . '</strong> - ' . __('Advanced Custom Fields Pro plugin not found. Please install it.', 'tofino') . '</p></div>';
 }
-add_filter('acf/settings/save_json', 'acf_json_save_point');
-
-// Set ACF JSON load path
-function acf_json_load_point($paths)
-{
-  unset($paths[0]); // Remove original path (optional)
-
-  $paths[] = get_stylesheet_directory() . '/inc/acf-json';
-
-  return $paths;
-}
-add_filter('acf/settings/load_json', 'acf_json_load_point');
-
-
-/**
- * Turn off YYYY/MM Media folders
- *
- */
-add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);
-
-
-// function add_type_attribute($tag, $handle, $src) {
-//   // if not your script, do nothing and return original $tag
-//   if ( 'tofino/js/app.ts-js' !== $handle ) {
-//       return $tag;
-//   }
-//   // change the script tag by adding type="module" and return it.
-//   $tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
-//   return $tag;
-// }
-// add_filter('script_loader_tag', 'add_type_attribute' , 10, 3);
-
-
-
-// $Vite = new \Tofino\Vite();
-
-// var_dump($Vite->isDevServerRunning());
-
-// \Tofino\Vite::register('app.ts');
-
-// $baseUrl = get_stylesheet_directory();
-// // $baseUrl = get_stylesheet_directory_uri();
-// $manifest = $baseUrl . "/dist/manifest.json";
-// $entryPoint = "js/app.ts";
-
-// // echo $baseUrl;
-// // echo $manifest;
-// // echo $entryPoint;
-
-// // die;
-
-// $viteAssets = new WordpressViteAssets($manifest, $baseUrl);
-// $viteAssets->addAction($entryPoint);

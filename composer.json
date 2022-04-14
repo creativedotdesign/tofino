@@ -20,7 +20,7 @@
   "require": {
     "php": ">=7.4.0",
     "composer/installers": "~v1.10.0",
-    "idleberg/wordpress-vite-assets": "^0.5.0"
+    "respect/validation": "^2.2"
   },
   "autoload": {
     "psr-4": {

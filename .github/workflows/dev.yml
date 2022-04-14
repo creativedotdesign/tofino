@@ -41,8 +41,8 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
 
-      - name: Build Prod Scripts
-        run: npm run prod
+      - name: Build Scripts
+        run: npm run build
 
       - name: Get .env Variables
         id: dotenv

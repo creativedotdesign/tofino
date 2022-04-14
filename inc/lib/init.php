@@ -19,8 +19,8 @@ namespace Tofino\Init;
 function php_version_check()
 {
   $php_version = phpversion();
-  if (version_compare($php_version, '7.3.0', '<')) {
-    wp_die('<div class="error notice"><p>' . __('PHP version >= 7.3.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
+  if (version_compare($php_version, '7.4.0', '<')) {
+    wp_die('<div class="error notice"><p>' . __('PHP version >= 7.4.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
   }
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
@@ -92,9 +92,11 @@ function add_post_name_body_class(array $classes)
   }
 
   // Add no-fount class if theme option set to true
-  if (get_theme_mod('no_fout')) {
+  if (get_field('no_fout', 'general-options')) {
     $classes[] = 'no-fout';
   }
+
+  $classes[] = 'footer-sticky';
 
   // Add page slug if it doesn't exist
   if (is_single() || is_page() && !is_front_page()) {
@@ -121,3 +123,224 @@ function add_custom_body_open_code()
   }
 }
 add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');
+
+
+/**
+ * Add general options page
+ *
+ * Add the link to the admin menu.
+ *
+ * @since 4.0.0
+ * @return void
+ */
+function acf_add_options_pages()
+{
+  if (function_exists('acf_add_options_page')) {
+    acf_add_options_page([
+      'page_title'  => 'General Options',
+      'menu_title'  => 'General Options',
+      'menu_slug'   => 'general-options',
+      'post_id'     => 'general-options',
+    ]);
+  }
+}
+add_action('acf/init', __NAMESPACE__ . '\\acf_add_options_pages');
+
+
+/**
+ * Admin login logo
+ *
+ * Displays the logo uplaoded via theme options to the login screen.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function admin_login_logo()
+{
+  $admin_logo = get_field('login_logo', 'general-options');
+  
+  if ($admin_logo) { ?>
+    <style type="text/css">
+      .login h1 a {
+        background-image: url(<?php echo $admin_logo; ?>);
+        padding-bottom: 30px;
+      }
+    </style><?php
+  }
+}
+add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
+
+
+// Show or hide the admin bar
+function admin_bar()
+{
+  if (get_field('admin_bar', 'general-options')) {
+    add_filter('show_admin_bar', '__return_false');
+  }
+}
+add_action('init', __NAMESPACE__ . '\\admin_bar');
+
+
+  /**
+ * Show maintenance mode message in admin area
+ *
+ * Check the maintenance_mode_enabled Theme Option. If enabled display a notice in
+ * the admin area at the top of every screen. Also show a popup window to the user
+ * and set a cookie.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function show_maintenance_message()
+{
+  if (get_field('maintenance_mode', 'general-options')) {
+    echo '<div class="error notice"><p><strong>' . __('Maintenance Mode', 'tofino') . '</strong> ' . get_field('maintenance_mode_text', 'general-options') . '</p></div>'; 
+
+    if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
+      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_field('maintenance_mode_text', 'general-options') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
+    }
+  }
+}
+add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
+
+
+/**
+ * Alert
+ *
+ * Display Alert Top/Bottom based on theme option setting.
+ *
+ * @since 1.0.0
+ * @param string $position The position of the alert e.g. Top, Bottom
+ * @return void
+ */
+function alert($position)
+{
+  $alert = get_field('alert', 'general-options');
+
+  if ($alert['enabled']) {
+    $position = $alert['position'];
+
+    if ($alert['message'] && !isset($_COOKIE['tofino-alert-closed'])) {
+      \Tofino\Helpers\hm_get_template_part('templates/partials/alert', [
+        'position' => $position,
+        'message' => $alert['message']
+      ]);
+    }
+  }
+}
+
+
+/**
+ * Adds the alert classes to the body.
+ *
+ * @since 1.9.0
+ * @param array $classes Array of classes passed to the body tag by WP.
+ * @return void
+ */
+function add_alert_class($classes)
+{
+  $alert = get_field('alert', 'general-options');
+
+  if ($alert['display_with_javascript']) {
+    $classes[] = 'alert-use-js';
+  }
+  return $classes;
+}
+add_filter('body_class', __NAMESPACE__ . '\\add_alert_class');
+
+
+/**
+ * Menu Sticky
+ *
+ * Returns menu sticky class based on theme option setting.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function menu_sticky()
+{
+  if (get_field('sticky_menu', 'general-options') == 1) {
+    return 'sticky-top';
+  }
+}
+
+
+/**
+ * Add theme options to body class
+ *
+ * Adds the menu-sticky classes to the body.
+ *
+ * @since 1.0.0
+ * @param array $classes Array of classes passed to the body tag by WP.
+ * @return void
+ */
+function add_menu_sticky_class($classes)
+{
+  if (get_field('sticky_menu', 'general-options') == 1) {
+    $classes[] = 'menu-fixed';
+  }
+  return $classes;
+}
+add_filter('body_class', __NAMESPACE__ . '\\add_menu_sticky_class');
+
+
+/**
+ * Dashboard Widgets
+ *
+ * Create WP Dashbaord Widget based on theme options
+ *
+ * @return void
+ */
+function dashboard_widgets()
+{
+  $widget_id = 'tofino_theme_widget';
+
+  $widget_data = get_field('dashboard_widget', 'general-options');
+
+  if ($widget_data['enabled']) {
+    // Add the widget
+    wp_add_dashboard_widget(
+      $widget_id,
+      $widget_data['title'],
+      function() use ($widget_data) {
+        echo '<p>' . $widget_data['text'] . '</p>';
+      }
+    );
+
+    // Re-order so our widget is first
+    global $wp_meta_boxes;
+    $widget = $wp_meta_boxes['dashboard']['normal']['core'][$widget_id];
+    unset($wp_meta_boxes['dashboard']['normal']['core'][$widget_id]);
+    $wp_meta_boxes['dashboard']['normal']['high'][$widget_id] = $widget;
+  }
+}
+add_action('wp_dashboard_setup', __NAMESPACE__ . '\\dashboard_widgets');
+
+
+// Set ACF JSON save path
+function acf_json_save_point($path)
+{
+  $path = get_stylesheet_directory() . '/inc/acf-json'; // Update path
+
+  return $path;
+}
+add_filter('acf/settings/save_json', __NAMESPACE__ . '\\acf_json_save_point');
+
+
+// Set ACF JSON load path
+function acf_json_load_point($paths)
+{
+  unset($paths[0]); // Remove original path (optional)
+
+  $paths[] = get_stylesheet_directory() . '/inc/acf-json';
+
+  return $paths;
+}
+add_filter('acf/settings/load_json', __NAMESPACE__ . '\\acf_json_load_point');
+
+
+/**
+ * Turn off YYYY/MM Media folders
+ *
+ */
+add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);

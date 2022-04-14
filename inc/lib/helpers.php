@@ -119,7 +119,7 @@ function get_id_by_slug($slug, $post_type = 'page')
     return $page->ID;
   } else {
     if (function_exists('icl_object_id')) { //WPML installed
-      $page = get_page(icl_object_id($page->ID, 'page', true, ICL_LANGUAGE_CODE));
+      $page = get_post(icl_object_id($page->ID, 'page', true, ICL_LANGUAGE_CODE));
       if ($page) {
         return $page->ID;
       } else {
