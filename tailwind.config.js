@@ -3,10 +3,11 @@ module.exports = {
     './header.php',
     './footer.php',
     './404.php',
+    './functions.php',
     './inc/**/*.php',
     './templates/**/*.php',
     './src/svgs/**/*.svg',
-    './src/vue/*.vue',
+    './src/vue/**/*.vue',
   ],
   theme: {
     container: {

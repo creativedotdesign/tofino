@@ -5,7 +5,7 @@ import scripts from './main';
 import '../css/main.css';
 
 let domResolve;
-const domReady = new Promise((resolve) => {
+const domReady: Promise<void> = new Promise((resolve) => {
   domResolve = resolve;
 });
 
@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', domResolve);
 // init app when ready
 domReady.then(scripts.init).finally(scripts.finalize);
 
-let appLoaded
-const appReady = new Promise((resolve) => {
+let appLoaded;
+const appReady: Promise<void> = new Promise((resolve) => {
   appLoaded = resolve;
 });
 

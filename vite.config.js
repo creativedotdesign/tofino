@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
 import liveReload from 'vite-plugin-live-reload';
@@ -9,7 +9,7 @@ export default ({ mode }) => {
   process.env = {...process.env, ...loadEnv(mode, process.cwd())};
 
   return defineConfig({
-    publicDir: path.resolve(__dirname, "./src/assets"),
+    publicDir: path.resolve(__dirname, "./src/public"),
     root: path.resolve(__dirname, "./src"),
     base: process.env.NODE_ENV === 'production' ? `${process.env.VITE_THEME_PATH}/dist/`: '/',
     build: {
@@ -35,11 +35,14 @@ export default ({ mode }) => {
       },
     },
     plugins: [
-      vue(),
+      splitVendorChunkPlugin(),
+      vue({
+        reactivityTransform: true
+      }),
       eslintPlugin(),
       liveReload([`${__dirname}/*.php`, `${__dirname}/(lib|templates)/**/*.php`]),
       createSvgIconsPlugin({
-        iconDirs: [path.resolve(process.cwd(), 'src/assets/svgs/sprites')],
+        iconDirs: [path.resolve(process.cwd(), 'src/sprite')],
         symbolId: 'icon-[name]',
         customDomId: 'tofino-sprite',
       }),
@@ -56,7 +59,7 @@ export default ({ mode }) => {
     },
     resolve: {
       alias: {
-        '@': '/js',
+        '@': path.resolve(__dirname, './src'),
         'vue': 'vue/dist/vue.esm-bundler.js'
       },
     },

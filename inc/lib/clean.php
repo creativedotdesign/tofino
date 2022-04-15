@@ -195,15 +195,19 @@ function clean_nav_classes($classes, $item)
   $new_classes = ['menu-item'];
 
   if ($item->current) {
-    $new_classes[] = 'current';
+    $new_classes[] = 'menu-item-current';
   }
 
   if (in_array('menu-item-has-children', $classes)) {
     $new_classes[] = 'menu-item-has-children';
   }
 
+  if ($item->menu_item_parent == 0) {
+    $new_classes[] = 'menu-item-top-level';
+  }
+
   if ($item->menu_item_parent == 0 && in_array('current-menu-parent', $classes)) {
-    $new_classes[] = 'current-parent';
+    $new_classes[] = 'menu-item-current-parent';
   }
 
   $custom_classes = get_post_meta($item->ID, '_menu_item_classes', true);

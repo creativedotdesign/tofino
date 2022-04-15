@@ -2,16 +2,11 @@
 import '../css/base/admin.css';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  console.log('Tofino Theme: Admin');
-
   if (document.querySelector('.maintenance-mode-alert')) {
     const button: HTMLElement | null = document.querySelector('.maintenance-mode-alert button');
 
     if (button) {
       button.addEventListener('click', () => {
-        console.log('Tofino Theme: Maintenance mode alert button clicked');
-
         const date = new Date();
 
         date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);

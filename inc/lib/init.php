@@ -344,3 +344,20 @@ add_filter('acf/settings/load_json', __NAMESPACE__ . '\\acf_json_load_point');
  *
  */
 add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);
+
+
+// Responsive Embed
+// @TODO: Add Vimeo
+function video_embed_wrapper($html) {
+  $html = '<div class="relative my-6 aspect-w-16 aspect-h-9">' . $html . '</div>';
+
+  return $html;
+}
+add_filter('embed_oembed_html', __NAMESPACE__ . '\\video_embed_wrapper', 10, 4);
+
+
+// Truncate excerpt length
+function truncate_excerpt_length($length){
+  return 55;
+}
+add_filter('excerpt_length', __NAMESPACE__ . '\\truncate_excerpt_length');
