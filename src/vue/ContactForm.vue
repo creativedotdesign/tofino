@@ -19,7 +19,7 @@ const validationSchema = object({
 });
 
 const { handleSubmit, errors, setErrors } = useForm({
-  validationSchema
+  validationSchema,
 });
 
 const { value: firstName } = useField('firstName');
@@ -29,14 +29,14 @@ const { value: phone } = useField('phone');
 const { value: message } = useField('message');
 
 // Submit Handler
-const submit = handleSubmit(async values => {
+const submit = handleSubmit(async (values) => {
   try {
     const response = await fetch(tofinoJS.ajaxUrl, {
-      method: "post",
+      method: 'post',
       body: new URLSearchParams({
-        action: "ajax-contact",
-        data: JSON.stringify(values)
-      })
+        action: 'ajax-contact',
+        data: JSON.stringify(values),
+      }),
     });
 
     console.log(form);
@@ -59,25 +59,19 @@ const submit = handleSubmit(async values => {
     console.error(error);
 
     success.value = false;
-    responseMessage.value = "A system error has occured. Please try again later.";
+    responseMessage.value = 'A system error has occured. Please try again later.';
   }
 });
 </script>
 
 <template>
   <!-- Response Message -->
-  <div 
-    v-if="responseMessage"
-    class="text-xl text-center md:text-2xl"
-  >
+  <div v-if="responseMessage" class="text-xl text-center md:text-2xl">
     {{ responseMessage }}
   </div>
 
   <!-- Error Messages -->
-  <ul
-    v-if="Object.keys(errors).length !== 0"
-    class="mb-8 text-2xl text-center text-red-500"
-  >
+  <ul v-if="Object.keys(errors).length !== 0" class="mb-8 text-2xl text-center text-red-500">
     <li v-for="error in errors" :key="error">{{ error }}</li>
   </ul>
 
@@ -85,10 +79,9 @@ const submit = handleSubmit(async values => {
   <form
     ref="form"
     class="flex flex-col md:flex-row md:flex-wrap md:justify-between"
-    :class="{ hidden : success}"
+    :class="{ hidden: success }"
     @submit.prevent="submit"
   >
-
     <!-- First Name -->
     <div class="relative mb-6 w-full md:w-[48%]">
       <base-input
@@ -144,8 +137,6 @@ const submit = handleSubmit(async values => {
     </div>
 
     <!-- Submit -->
-    <button type="submit" class="self-center md:self-start">
-      Send
-    </button>
+    <button type="submit" class="self-center md:self-start">Send</button>
   </form>
 </template>

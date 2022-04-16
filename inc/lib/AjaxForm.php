@@ -8,10 +8,6 @@
 
 namespace Tofino;
 
-// Alias Respect Validation classes
-// use \Respect\Validation\Validator as v;
-// use \Respect\Validation\Exceptions\NestedValidationExceptionInterface;
-
 /**
  * Ajax Form
  *

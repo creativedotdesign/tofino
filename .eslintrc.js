@@ -1,13 +1,19 @@
 module.exports = {
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended', 'plugin:vue/vue3-recommended', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:prettier/recommended',
+  ],
   globals: {
     browser: true,
     tofinoJS: true,
   },
   parserOptions: {
-    parser: '@typescript-eslint/parser'
+    parser: '@typescript-eslint/parser',
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ['@typescript-eslint'],
   env: {
     node: true,
     es2021: true,

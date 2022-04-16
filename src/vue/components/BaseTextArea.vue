@@ -1,28 +1,22 @@
 <template>
-  <label
-    v-if="label"
-    class="block mb-1.5"
-    :class="{ 'text-red-500' : error }"
-    :for="id"
-  >
+  <label v-if="label" class="block mb-1.5" :class="{ 'text-red-500': error }" :for="id">
     {{ label }}
   </label>
-  <div
-    class="relative"
-  >
+  <div class="relative">
     <textarea
       :id="id"
       class="w-full px-4 py-3 outline-none focus:outline-none focus:ring-transparent"
-      :class="{ 'border-red-500' : error }"
+      :class="{ 'border-red-500': error }"
       rows="9"
       v-bind="{
         ...$attrs,
-        onInput: updateValue
+        onInput: updateValue,
       }"
       :name="id"
       :value="modelValue"
       :aria-describedby="error ? `${id}-error` : null"
-      :aria-invalid="error ? true : false">
+      :aria-invalid="error ? true : false"
+    >
     </textarea>
   </div>
 </template>
@@ -36,13 +30,13 @@ const props = withDefaults(defineProps<ContactFormProps>(), {
   label: '',
   id: '',
   error: '',
-  modelValue: ''
+  modelValue: '',
 });
 
 const emits = defineEmits<{
   updateValue: {
-    value: string,
-  }
+    value: string;
+  };
 }>();
 
 const { updateValue } = SetupFormComponent(props, emits);

@@ -1,27 +1,15 @@
 // Import Font loader
 import * as WebFont from 'webfontloader';
-
 import { createApp, defineAsyncComponent } from 'vue';
-
+import { WebFontInterface } from '@/js/interfaceTypes';
 import 'virtual:svg-icons-register';
 
 export default {
   init() {
     // JavaScript to be fired on all pages
 
-    // Interface for WebFontLoader
-    interface WebFont {
-      classes: boolean;
-      events: boolean;
-      google: {
-        families: string[];
-        display: string;
-        version: number;
-      };
-    }
-
     // Config for WebFontLoader
-    const fontConfig: WebFont = {
+    const fontConfig: WebFontInterface = {
       classes: false,
       events: false,
       google: {
@@ -39,9 +27,9 @@ export default {
 
     // Define the selectors and src for dynamic imports
     const scripts: {
-      selector: string,
-      src: string,
-      type: ScriptType
+      selector: string;
+      src: string;
+      type: ScriptType;
     }[] = [
       {
         selector: '#tofino-alert', // Alert
@@ -69,9 +57,7 @@ export default {
           // Dynamically Import Vue Component
           createApp({
             components: {
-              [src]: defineAsyncComponent(() =>
-                import(`../vue/${src}.vue`)
-              ),
+              [src]: defineAsyncComponent(() => import(`../vue/${src}.vue`)),
             },
           }).mount(el);
         } else if (type === 'ts') {

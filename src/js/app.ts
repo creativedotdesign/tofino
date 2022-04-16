@@ -2,7 +2,7 @@
 import scripts from './main';
 
 // Import CSS
-import '../css/main.css';
+import '@/css/main.css';
 
 let domResolve;
 const domReady: Promise<void> = new Promise((resolve) => {

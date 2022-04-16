@@ -10,14 +10,11 @@
  *
  */
 $tofino_includes = [
-  "inc/lib/AjaxForm.php",
   "inc/lib/contact-form.php",
   "inc/lib/init.php",
-  "inc/lib/vite.php",
   "inc/lib/assets.php",
   "inc/lib/helpers.php",
   "inc/lib/clean.php",
-  "inc/lib/FragmentCache.php",
   "inc/lib/shortcodes.php",
 ];
 
@@ -41,11 +38,9 @@ if (file_exists(get_template_directory() . '/vendor/autoload.php')) { // Check c
   require_once 'vendor/autoload.php';
 } else {
   if (is_admin()) {
-    add_action('admin_notices', function () {
-      echo '<div class="error"><p>' . __('Composer autoload file not found. Run composer install on the command line.', 'tofino') . '</p></div>';
-    });
+    add_action('admin_notices', composer_error_notice());
   } else {
-    wp_die(__('Composer autoload file not found. Run composer install on the command line.', 'tofino'), __('An error occured.', 'tofino'));
+    wp_die(composer_error_notice(), __('An error occured.', 'tofino'));
   }
 }
 

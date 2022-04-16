@@ -28,7 +28,7 @@
 
       <div class="absolute inset-0 hidden w-full h-screen bg-white lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
         <!-- Close Icon -->
-        <button class="absolute right-0 z-10 w-6 h-6 top-6 md:right-4 md:hidden js-menu-toggle">
+        <button class="absolute right-0 z-10 w-6 h-6 top-6 md:right-4 lg:hidden js-menu-toggle">
           <?php echo svg(['sprite' => 'icon-close', 'class' => 'w-full h-full']); ?>
         </button>
 

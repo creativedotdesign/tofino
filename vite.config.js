@@ -3,16 +3,16 @@ import vue from '@vitejs/plugin-vue';
 import VueTypeImports from 'vite-plugin-vue-type-imports';
 import eslintPlugin from 'vite-plugin-eslint';
 import liveReload from 'vite-plugin-live-reload';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 
 export default ({ mode }) => {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd())};
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
-    publicDir: path.resolve(__dirname, "./src/public"),
-    root: path.resolve(__dirname, "./src"),
-    base: process.env.NODE_ENV === 'production' ? `${process.env.VITE_THEME_PATH}/dist/`: '/',
+    publicDir: path.resolve(__dirname, './src/public'),
+    root: path.resolve(__dirname, './src'),
+    base: process.env.NODE_ENV === 'production' ? `${process.env.VITE_THEME_PATH}/dist/` : '/',
     build: {
       outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
@@ -39,7 +39,7 @@ export default ({ mode }) => {
       splitVendorChunkPlugin(),
       VueTypeImports(),
       vue({
-        reactivityTransform: true
+        reactivityTransform: true,
       }),
       eslintPlugin(),
       liveReload([`${__dirname}/*.php`, `${__dirname}/(lib|templates)/**/*.php`]),
@@ -62,7 +62,7 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
-        'vue': 'vue/dist/vue.esm-bundler.js'
+        vue: 'vue/dist/vue.esm-bundler.js',
       },
     },
   });

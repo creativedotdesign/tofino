@@ -1,5 +1,5 @@
 // Import CSS
-import '../css/base/admin.css';
+import '@/css/base/admin.css';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.querySelector('.maintenance-mode-alert')) {
