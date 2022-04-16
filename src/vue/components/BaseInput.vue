@@ -29,13 +29,7 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, withDefaults } from 'vue';
 import SetupFormComponent from '@/js/SetupFormComponent';
-
-interface ContactFormProps {
-  label: string,
-  id: string,
-  error: string,
-  modelValue: string
-};
+import { ContactFormProps } from '@/js/interfaceTypes';
 
 const props = withDefaults(defineProps<ContactFormProps>(), {
   label: '',

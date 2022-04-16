@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Contact form
  *
@@ -57,8 +58,8 @@ function ajax_contact() {
   $post_meta = [
     'contact_form_firstname' => $data['firstName'],
     'contact_form_lastname' => $data['lastName'],
-    'contact_form_email'   => $data['email'],
-    'contact_form_phone'   => $data['phone'],
+    'contact_form_email' => $data['email'],
+    'contact_form_phone' => $data['phone'],
     'contact_form_message' => $data['message'],
   ];
 
@@ -70,16 +71,16 @@ function ajax_contact() {
   $settings = get_field('contact_form', 'general-options');
 
   $admin_email_success = $form->sendEmail([ // Send out an email
-    'to'                 => $form->getRecipient('contact_form'),
-    'reply-to'           => $data['firstName'] . ' ' . $data['lastName'] . '<' . $user_email_address . '>', // Name <email@domain.com>
-    'subject'            => $settings['subject'],
-    'cc'                 => $settings['cc_address'],
-    'from'               => $settings['from_address'], // If not defined or blank the server default email address will be used
+    'to' => $form->getRecipient('contact_form'),
+    'reply-to' => $data['firstName'] . ' ' . $data['lastName'] . '<' . $user_email_address . '>', // Name <email@domain.com>
+    'subject' => $settings['subject'],
+    'cc' => $settings['cc_address'],
+    'from' => $settings['from_address'], // If not defined or blank the server default email address will be used
     'remove_submit_data' => false,
-    'user_email'         => false,
-    'message'            => null,
-    'template'           => 'email-body.html',
-    'remove_keys'        => ['ip_address', 'referrer']
+    'user_email' => false,
+    'message' => null,
+    'template' => 'email-body.html',
+    'remove_keys' => ['ip_address', 'referrer']
   ]);
 
   if (!$admin_email_success) {
@@ -123,20 +124,22 @@ function create_post_type() {
     'show_in_rest' => false,
     'rest_base' => '',
     'rest_controller_class' => 'WP_REST_Posts_Controller',
-    'acfe_archive_template' => '',
-    'acfe_archive_ppp' => 0,
-    'acfe_archive_orderby' => NULL,
-    'acfe_archive_order' => NULL,
-    'acfe_single_template' => '',
-    'acfe_admin_archive' => false,
-    'acfe_admin_ppp' => 10,
-    'acfe_admin_orderby' => 'date',
-    'acfe_admin_order' => 'DESC',
     'capability_type' => 'post',
     'capabilities' => [
-      'create_posts' => false
+      // 'create_posts' => false
     ],
-    'map_meta_cap' => false,
+    'map_meta_cap' => NULL,
   ]);
 }
 add_action( 'init', __NAMESPACE__ . '\\create_post_type' );
+
+
+// Make Contact Form fields read only
+function acf_load_contact_form_field( $field ) {
+  if (strpos($field['name'], 'contact_form_') === 0) {
+    $field['disabled'] = true;
+  }
+
+  return $field;
+}
+add_filter('acf/load_field', __NAMESPACE__ . '\\acf_load_contact_form_field');

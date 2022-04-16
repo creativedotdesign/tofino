@@ -1,4 +1,4 @@
-import { ContactFormProps } from '@/js/types/components.interface';
+import { ContactFormProps } from '@/js/interfaceTypes';
 
 export default (props: ContactFormProps, emit) => {
   const updateValue = (event: Event) => {

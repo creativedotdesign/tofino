@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import VueTypeImports from 'vite-plugin-vue-type-imports';
 import eslintPlugin from 'vite-plugin-eslint';
 import liveReload from 'vite-plugin-live-reload';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
@@ -36,6 +37,7 @@ export default ({ mode }) => {
     },
     plugins: [
       splitVendorChunkPlugin(),
+      VueTypeImports(),
       vue({
         reactivityTransform: true
       }),

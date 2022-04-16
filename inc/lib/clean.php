@@ -297,3 +297,24 @@ function remove_global_css() {
 	remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 }
 add_filter('init', __NAMESPACE__ . '\\remove_global_css');
+
+
+/**
+ * Wordpress: Filter admin columns and remove yoast seo columns
+ */
+function yoast_seo_remove_columns($columns) {
+  if (in_array('wordpress-seo/wp-seo.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+    /* remove the Yoast SEO columns */
+    unset($columns['wpseo-score']);
+    unset($columns['wpseo-title']);
+    unset($columns['wpseo-metadesc']);
+    unset($columns['wpseo-focuskw']);
+    unset($columns['wpseo-score-readability']);
+    unset($columns['wpseo-links']);
+    unset($columns['wpseo-linked']);
+  }
+
+	return $columns;
+}
+add_filter('manage_edit-post_columns', __NAMESPACE__ . '\\yoast_seo_remove_columns');
+add_filter('manage_edit-page_columns', __NAMESPACE__ . '\\yoast_seo_remove_columns');
