@@ -22,7 +22,8 @@ use \Respect\Validation\Validator as v;
  * @since 1.2.0
  * @return void
  */
-function ajax_contact() {
+function ajax_contact()
+{
   // check_ajax_referer('next_nonce', 'security');
 
   $form = new \Tofino\AjaxForm(); // Required
@@ -67,7 +68,7 @@ function ajax_contact() {
   foreach ($post_meta as $key => $value) {
     update_field($key, $value, $post_id);
   }
-  
+
   $settings = get_field('contact_form', 'general-options');
 
   $admin_email_success = $form->sendEmail([ // Send out an email
@@ -99,7 +100,8 @@ add_action('wp_ajax_ajax-contact', __NAMESPACE__ . '\\ajax_contact');
 add_action('wp_ajax_nopriv_ajax-contact', __NAMESPACE__ . '\\ajax_contact');
 
 
-function create_post_type() {
+function create_post_type()
+{
   register_post_type('contact_submission', [
     'label' => 'Contact Form',
     'description' => '',
@@ -125,17 +127,16 @@ function create_post_type() {
     'rest_base' => '',
     'rest_controller_class' => 'WP_REST_Posts_Controller',
     'capability_type' => 'post',
-    'capabilities' => [
-      // 'create_posts' => false
-    ],
-    'map_meta_cap' => NULL,
+    'capabilities' => [],
+    'map_meta_cap' => null,
   ]);
 }
-add_action( 'init', __NAMESPACE__ . '\\create_post_type' );
+add_action('init', __NAMESPACE__ . '\\create_post_type');
 
 
 // Make Contact Form fields read only
-function acf_load_contact_form_field( $field ) {
+function acf_load_contact_form_field($field)
+{
   if (strpos($field['name'], 'contact_form_') === 0) {
     $field['disabled'] = true;
   }

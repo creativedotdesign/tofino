@@ -1,7 +1,7 @@
 // Import Font loader
 import * as WebFont from 'webfontloader';
 import { createApp, defineAsyncComponent } from 'vue';
-import { WebFontInterface } from '@/js/interfaceTypes';
+import { WebFontInterface } from '@/js/types';
 import 'virtual:svg-icons-register';
 
 export default {
@@ -70,6 +70,8 @@ export default {
         console.warn(`Tofino Theme: Could not find ${selector} for script ${src}.ts.`);
       }
     });
+
+    this.finalize();
   },
   finalize() {
     // JavaScript to be fired after init

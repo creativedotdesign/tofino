@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { withDefaults } from 'vue';
+import SetupFormComponent from '@/js/SetupFormComponent';
+import { ContactFormProps, EmitUpdateValue } from '@/js/types';
+
+const props = withDefaults(defineProps<ContactFormProps>(), {
+  label: '',
+  id: '',
+  error: '',
+  modelValue: '',
+});
+
+const emits = defineEmits<EmitUpdateValue>();
+
+const { updateValue } = SetupFormComponent(props, emits);
+</script>
+
 <template>
   <label v-if="label" class="block mb-1.5" :class="{ 'text-red-500': error }" :for="id">
     {{ label }}
@@ -20,24 +37,3 @@
     </textarea>
   </div>
 </template>
-
-<script setup lang="ts">
-import { defineProps, defineEmits, withDefaults } from 'vue';
-import SetupFormComponent from '@/js/SetupFormComponent';
-import { ContactFormProps } from '@/js/interfaceTypes';
-
-const props = withDefaults(defineProps<ContactFormProps>(), {
-  label: '',
-  id: '',
-  error: '',
-  modelValue: '',
-});
-
-const emits = defineEmits<{
-  updateValue: {
-    value: string;
-  };
-}>();
-
-const { updateValue } = SetupFormComponent(props, emits);
-</script>

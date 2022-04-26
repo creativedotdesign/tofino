@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BaseInput from '@/vue/components/BaseInput.vue';
-import BaseTextArea from '@/vue/components/BaseTextArea.vue';
+import BaseInput from '@/vue/BaseInput.vue';
+import BaseTextArea from '@/vue/BaseTextArea.vue';
 
 import { ref } from 'vue';
 import { useField, useForm } from 'vee-validate';
@@ -8,7 +8,6 @@ import { object, string } from 'yup';
 
 const success = ref<boolean>(false);
 const responseMessage = ref<string>('');
-const form = ref<HTMLElement>();
 
 const validationSchema = object({
   firstName: string().required().label('First Name'),
@@ -18,18 +17,21 @@ const validationSchema = object({
   message: string().required().label('Message'),
 });
 
-const { handleSubmit, errors, setErrors } = useForm({
+const { handleSubmit, errors, setErrors, isSubmitting } = useForm({
   validationSchema,
 });
 
-const { value: firstName } = useField('firstName');
-const { value: lastName } = useField('lastName');
-const { value: email } = useField('email');
-const { value: phone } = useField('phone');
-const { value: message } = useField('message');
+const { value: firstName } = useField<string>('firstName');
+const { value: lastName } = useField<string>('lastName');
+const { value: email } = useField<string>('email');
+const { value: phone } = useField<string>('phone');
+const { value: message } = useField<string>('message');
 
 // Submit Handler
 const submit = handleSubmit(async (values) => {
+  // Delay the script by 4 seconds for testing purposes
+  // await new Promise((resolve) => setTimeout(resolve, 4000));
+
   try {
     const response = await fetch(tofinoJS.ajaxUrl, {
       method: 'post',
@@ -38,8 +40,6 @@ const submit = handleSubmit(async (values) => {
         data: JSON.stringify(values),
       }),
     });
-
-    console.log(form);
 
     const data = await response.json();
 
@@ -77,7 +77,6 @@ const submit = handleSubmit(async (values) => {
 
   <!-- Form -->
   <form
-    ref="form"
     class="flex flex-col md:flex-row md:flex-wrap md:justify-between"
     :class="{ hidden: success }"
     @submit.prevent="submit"
@@ -137,6 +136,13 @@ const submit = handleSubmit(async (values) => {
     </div>
 
     <!-- Submit -->
-    <button type="submit" class="self-center md:self-start">Send</button>
+    <button
+      type="submit"
+      class="self-center md:self-start"
+      :disabled="isSubmitting"
+      :class="{ 'cursor-wait': isSubmitting }"
+    >
+      {{ isSubmitting ? 'Sending...' : 'Send' }}
+    </button>
   </form>
 </template>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AjaxForm
  *
@@ -105,16 +106,17 @@ class AjaxForm
           return $recipient;
         } else {
           $this->response['message'] = __('No email address found.', 'tofino');
+
           return json_encode($this->response);
         }
       } else {
         $this->response['message'] = __('No contact form settings found.', 'tofino');
-        
+
         return wp_send_json($this->response);
       }
     } else {
       $this->response['message'] = __('Theme Option not passed to getRecipient function.', 'tofino');
-      
+
       return wp_send_json($this->response);
     }
   }
@@ -174,7 +176,7 @@ class AjaxForm
       $form_content = null;
       if ($settings['remove_submit_data'] == false) {
         $form_content = '<table>';
-        
+
         foreach ($this->form_data as $key => $value) { // Loop through each array item ouput the key value as a string
           if (!in_array($key, $settings['remove_keys'])) { // Check key is not in remove keys array
             if ($key == 'date_time') { // Convert unix timestamp to human readable date

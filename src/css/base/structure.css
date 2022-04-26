@@ -7,7 +7,7 @@ footer {
 }
 
 body {
-  @apply antialiased;
+  @apply antialiased font-roboto;
 
   &.footer-sticky {
     @apply h-full;

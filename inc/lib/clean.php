@@ -157,9 +157,6 @@ function remove_extra_markup()
   // Remove oEmbed-specific JavaScript from the front-end and back-end.
   remove_action('wp_head', 'wp_oembed_add_host_js');
 
-  // Remove all embeds rewrite rules.
-  // add_filter('rewrite_rules_array', 'disable_embeds_rewrites');
-
   // Remove welcome dashboard panel
   remove_action('welcome_panel', 'wp_welcome_panel');
 
@@ -292,9 +289,10 @@ add_filter('redirect_canonical', 'no_redirect_on_404');
 
 
 // Remove new v5.9 global styles
-function remove_global_css() {
+function remove_global_css()
+{
   remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
-	remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
+  remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 }
 add_filter('init', __NAMESPACE__ . '\\remove_global_css');
 
@@ -302,7 +300,8 @@ add_filter('init', __NAMESPACE__ . '\\remove_global_css');
 /**
  * Wordpress: Filter admin columns and remove yoast seo columns
  */
-function yoast_seo_remove_columns($columns) {
+function yoast_seo_remove_columns($columns)
+{
   if (in_array('wordpress-seo/wp-seo.php', apply_filters('active_plugins', get_option('active_plugins')))) {
     /* remove the Yoast SEO columns */
     unset($columns['wpseo-score']);
@@ -314,7 +313,38 @@ function yoast_seo_remove_columns($columns) {
     unset($columns['wpseo-linked']);
   }
 
-	return $columns;
+  return $columns;
 }
 add_filter('manage_edit-post_columns', __NAMESPACE__ . '\\yoast_seo_remove_columns');
 add_filter('manage_edit-page_columns', __NAMESPACE__ . '\\yoast_seo_remove_columns');
+
+
+// Remove Yoast from Admin Bar
+function remove_yoast_admin_bar()
+{
+  global $wp_admin_bar;
+  $wp_admin_bar->remove_menu('wpseo-menu');
+}
+add_action('wp_before_admin_bar_render', __NAMESPACE__ . '\\remove_yoast_admin_bar');
+
+
+// Login Screen: Don't inform user which piece of credential was incorrect
+function failed_login()
+{
+  return __('The login information you have entered is incorrect. Please try again.', 'tofino');
+}
+add_filter('login_errors', __NAMESPACE__ . '\\failed_login');
+
+
+// Disable RSS feeds
+function disable_rss_feeds()
+{
+  wp_die(__('No feeds available!'));
+}
+add_action('do_feed', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+add_action('do_feed_rdf', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+add_action('do_feed_rss', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+add_action('do_feed_rss2', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+add_action('do_feed_atom', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+add_action('do_feed_rss2_comments', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+add_action('do_feed_atom_comments', __NAMESPACE__ . '\\disable_rss_feeds', 1);

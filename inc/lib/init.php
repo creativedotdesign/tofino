@@ -158,14 +158,9 @@ add_action('acf/init', __NAMESPACE__ . '\\acf_add_options_pages');
 function admin_login_logo()
 {
   $admin_logo = get_field('login_logo', 'general-options');
-  
-  if ($admin_logo) { ?>
-    <style type="text/css">
-      .login h1 a {
-        background-image: url(<?php echo $admin_logo; ?>);
-        padding-bottom: 30px;
-      }
-    </style><?php
+
+  if ($admin_logo) {
+    echo '<style type="text/css">.login h1 a { background-image: url(' . $admin_logo . '); padding-bottom: 30px; }</style>';
   }
 }
 add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
@@ -181,7 +176,7 @@ function admin_bar()
 add_action('init', __NAMESPACE__ . '\\admin_bar');
 
 
-  /**
+/**
  * Show maintenance mode message in admin area
  *
  * Check the maintenance_mode_enabled Theme Option. If enabled display a notice in
@@ -194,7 +189,7 @@ add_action('init', __NAMESPACE__ . '\\admin_bar');
 function show_maintenance_message()
 {
   if (get_field('maintenance_mode', 'general-options')) {
-    echo '<div class="error notice"><p><strong>' . __('Maintenance Mode', 'tofino') . '</strong> ' . get_field('maintenance_mode_text', 'general-options') . '</p></div>'; 
+    echo '<div class="error notice"><p><strong>' . __('Maintenance Mode', 'tofino') . '</strong> ' . get_field('maintenance_mode_text', 'general-options') . '</p></div>';
 
     if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
       echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_field('maintenance_mode_text', 'general-options') . '</p><button>' . __('I understand', 'tofino') . '</button></div>';
@@ -302,7 +297,7 @@ function dashboard_widgets()
     wp_add_dashboard_widget(
       $widget_id,
       $widget_data['title'],
-      function() use ($widget_data) {
+      function () use ($widget_data) {
         echo '<p>' . $widget_data['text'] . '</p>';
       }
     );
@@ -347,7 +342,8 @@ add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);
 
 
 // Responsive Embed
-function video_embed_wrapper($html) {
+function video_embed_wrapper($html)
+{
   $html = '<div class="relative my-6 aspect-w-16 aspect-h-9">' . $html . '</div>';
 
   return $html;
@@ -356,7 +352,8 @@ add_filter('embed_oembed_html', __NAMESPACE__ . '\\video_embed_wrapper', 10, 4);
 
 
 // Truncate excerpt length
-function truncate_excerpt_length($length){
+function truncate_excerpt_length($length)
+{
   return 55;
 }
 add_filter('excerpt_length', __NAMESPACE__ . '\\truncate_excerpt_length');

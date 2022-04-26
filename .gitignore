@@ -8,7 +8,6 @@
 !.gitattributes
 !.eslintrc.js
 !.stylelintrc.js
-!.editorconfig
 !.env
 !.prettierrc.js
 !.git-ftp-ignore

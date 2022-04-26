@@ -6,12 +6,15 @@ module.exports = {
     './functions.php',
     './inc/**/*.php',
     './templates/**/*.php',
-    './src/svgs/**/*.svg',
-    './src/vue/**/*.vue',
+    './src/public/svgs/**/*.svg',
+    './src/**/*.vue',
   ],
   theme: {
     container: {
       center: true,
+    },
+    fontFamily: {
+      roboto: ['Roboto'],
     },
   },
   plugins: [

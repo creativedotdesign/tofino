@@ -1,4 +1,4 @@
-import { ContactFormProps, EmitUpdateValue } from '@/js/interfaceTypes';
+import { ContactFormProps, EmitUpdateValue } from '@/js/types';
 
 export default (props: ContactFormProps, emit: EmitUpdateValue) => {
   const updateValue = (event: Event) => {

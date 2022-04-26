@@ -1,5 +1,3 @@
-[![devDependency Status](https://david-dm.org/creativedotdesign/tofino/dev-status.svg)](https://david-dm.org/creativedotdesign/tofino#info=devDependencies)
-
 <img src="https://raw.githubusercontent.com/creativedotdesign/tofino/master/screenshot.png" alt="Tofino" width="500">
 
 # Tofino
@@ -13,11 +11,12 @@ Ongoing development is sponsored by [Creative Dot](https://creativdotdesign.com)
 Heavily inspired the by awesome WordPress starter theme [Sage](https://github.com/roots/sage) by [Roots](https://github.com/roots) from [Ben Word](https://github.com/retlehs) and [Scott Walkinshaw](https://github.com/swalkinshaw).
 
 ## Requirements
-| Prerequisite       | How to check  | How to install                                  |
-| ------------------ | ------------- | ----------------------------------------------- |
-| PHP >= 7.4.0       | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 14.0.0  | `node -v`     | [nodejs.org](http://nodejs.org/)                |
-| Composer >= 2.0.0  | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
+
+| Prerequisite      | How to check  | How to install                                  |
+| ----------------- | ------------- | ----------------------------------------------- |
+| PHP >= 7.4.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 14.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| Composer >= 2.0.0 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
@@ -34,7 +33,7 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
 
 ## Features
 
-- [tailwindcss](http://tailwindcss.com/)(v3.0)
+- [TailwindCSS](http://tailwindcss.com/)(v3.0)
 - Multilingual ready (WPML)
 - Responsive
 - General Options via ACF
@@ -47,18 +46,18 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
   - Footer text
   - Alert Bar with top/bottom positions
   - Contact form and custom email templates
-  - Data Tables for viewing data submitted via the contact form
   - Maintenance mode popup
   - Custom 404 page
 - [Advanced Custom Fields](https://www.advancedcustomfields.com/resources/getting-started/)
-- TypeSctipts (JS)
+- TypeScript
 - [Vite](https://vitejs.dev/guide/) build script
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
 - Auto post type / slug based template routing
 - Shortcodes
 - [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts.
-- Fragment Cache class
+- Fragment Cache PHP Class
+- AjaxForm
 
 ## Documentation
 
