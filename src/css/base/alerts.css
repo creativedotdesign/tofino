@@ -1,5 +1,5 @@
-.notification-use-js {
-  #tofino-notification {
+.alert-use-js {
+  #tofino-alert {
     @apply hidden;
   }
 }
@@ -7,14 +7,12 @@
 .alert {
   @apply p-2;
 
-  &.notification {
-    &.bottom {
-      @apply fixed bottom-0 left-0 right-0;
-    }
+  &.bottom {
+    @apply fixed bottom-0 z-10 left-0 right-0;
+  }
 
-    &.top {
-      @apply relative;
-    }
+  &.top {
+    @apply relative;
   }
 
   svg {

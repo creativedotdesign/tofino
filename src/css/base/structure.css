@@ -2,8 +2,12 @@ html {
   @apply h-full;
 }
 
+footer {
+  @apply bg-gray-100;
+}
+
 body {
-  @apply antialiased;
+  @apply antialiased font-roboto;
 
   &.footer-sticky {
     @apply h-full;
@@ -21,8 +25,4 @@ body {
       @apply visible;
     }
   }
-}
-
-footer {
-  @apply bg-gray-100;
 }

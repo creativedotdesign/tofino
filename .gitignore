@@ -8,13 +8,12 @@
 !.gitattributes
 !.eslintrc.js
 !.stylelintrc.js
-!.editorconfig
 !.env
 !.prettierrc.js
-!.babelrc
 !.git-ftp-ignore
 !.github
 !.npmrc
+!.prettierignore
 
 # ignore node/grunt dependency directories
 node_modules/

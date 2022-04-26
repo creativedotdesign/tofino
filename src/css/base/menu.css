@@ -1,6 +1,6 @@
 /* Menu Styles */
 .sticky-top {
-  @apply sticky top-0;
+  @apply sticky top-0 z-20;
 }
 
 #menu-header-menu {
