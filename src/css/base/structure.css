@@ -10,7 +10,7 @@ body {
   @apply antialiased font-roboto;
 
   &.footer-sticky {
-    @apply h-full;
+    @apply h-screen;
 
     > footer {
       @apply top-[100vh] sticky;
