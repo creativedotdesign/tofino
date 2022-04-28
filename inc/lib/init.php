@@ -169,7 +169,7 @@ add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
 // Show or hide the admin bar
 function admin_bar()
 {
-  if (get_field('admin_bar', 'general-options')) {
+  if (!get_field('admin_bar', 'general-options')) {
     add_filter('show_admin_bar', '__return_false');
   }
 }
