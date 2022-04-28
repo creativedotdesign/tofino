@@ -105,9 +105,9 @@ class AjaxForm
         if ($recipient) {
           return $recipient;
         } else {
-          $this->response['message'] = __('No email address found.', 'tofino');
+          $this->response['message'] = __('No recipient email address found.', 'tofino');
 
-          return json_encode($this->response);
+          return wp_send_json($this->response);
         }
       } else {
         $this->response['message'] = __('No contact form settings found.', 'tofino');
