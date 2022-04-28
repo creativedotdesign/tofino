@@ -285,7 +285,7 @@ function no_redirect_on_404($redirect_url)
 
   return $redirect_url;
 }
-add_filter('redirect_canonical', 'no_redirect_on_404');
+add_filter('redirect_canonical', __NAMESPACE__ . '\\no_redirect_on_404');
 
 
 // Remove new v5.9 global styles
