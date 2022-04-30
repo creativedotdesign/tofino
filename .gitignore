@@ -27,3 +27,7 @@ dist/
 # ignore npm debug log file
 npm-debug.log
 yarn-debug.log
+
+# cypress
+cypress/videos/
+cypress/screenshots/

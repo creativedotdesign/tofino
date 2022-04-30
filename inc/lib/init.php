@@ -96,8 +96,6 @@ function add_post_name_body_class(array $classes)
     $classes[] = 'no-fout';
   }
 
-  $classes[] = 'footer-sticky';
-
   // Add page slug if it doesn't exist
   if (is_single() || is_page() && !is_front_page()) {
     if (!in_array($post->post_name, $classes)) {
@@ -213,11 +211,11 @@ function alert($position)
   $alert = get_field('alert', 'general-options');
 
   if ($alert['enabled']) {
-    $position = $alert['position'];
+    $alert_position = strtolower($alert['position']);
 
-    if ($alert['message'] && !isset($_COOKIE['tofino-alert-closed'])) {
+    if ($alert['message'] && !isset($_COOKIE['tofino-alert-closed']) && $position === $alert_position) {
       \Tofino\Helpers\hm_get_template_part('templates/partials/alert', [
-        'position' => $position,
+        'position' => $alert_position,
         'message' => $alert['message']
       ]);
     }

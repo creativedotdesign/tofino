@@ -29,19 +29,19 @@ npm install
 npm run dev
 ```
 
-Once you have activated the theme, access Theme Options (WP Customizer) update an option and select save to commit the default values to the database.
+Note that the Vite Dev Server runs on port 3000. You access the website via the hostname and Vite will HMR or refresh automatically. If the Vite Dev Server is not running the website will pull it's assets from the /dist directory.
 
 ## Features
 
 - [TailwindCSS](http://tailwindcss.com/)(v3.0)
 - Multilingual ready (WPML)
 - Responsive
+- Cypress testing framework
 - General Options via ACF
   - Admin login screen logo
   - Custom Dashboard Widget
   - Social links
-  - Sticky menu
-  - Sticky footer
+  - Sticky header menu
   - Client Data (Address, Telephone number, Email address, Company number)
   - Footer text
   - Alert Bar with top/bottom positions
@@ -49,15 +49,19 @@ Once you have activated the theme, access Theme Options (WP Customizer) update a
   - Maintenance mode popup
   - Custom 404 page
 - [Advanced Custom Fields](https://www.advancedcustomfields.com/resources/getting-started/)
-- TypeScript
+- ACF JSON Folder
+- [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/guide/) build script
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
 - Auto post type / slug based template routing
 - Shortcodes
-- [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts.
+- SVG Sprite
+- [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts
+- VueJS v3.x with Composition API
+- Contact Form with VeeValidate and Yup
+- AjaxForm PHP Class
 - Fragment Cache PHP Class
-- AjaxForm
 
 ## Documentation
 
@@ -92,6 +96,7 @@ node_modules
 .gitignore
 .stylelintrc.js
 .prettierrc.js
+.prettierignore
 .npmrc
 composer.json
 composer.lock
@@ -99,7 +104,9 @@ package.json
 package-lock.json
 postcss.config.js
 tailwind.config.js
+tsconfig.json
 vite.config.js
 phpcs.xml
 *.md
+cypress
 ```

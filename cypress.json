@@ -1,0 +1,5 @@
+{
+  "testFiles": "**/*{spec,cy}.{js,ts}",
+  "componentFolder": "src",
+  "video": false
+}

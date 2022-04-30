@@ -66,12 +66,16 @@ const submit = handleSubmit(async (values) => {
 
 <template>
   <!-- Response Message -->
-  <div v-if="responseMessage" class="text-xl text-center md:text-2xl">
+  <div
+    v-if="responseMessage"
+    class="text-center text-xl md:text-2xl"
+    data-cy="contact-response-message"
+  >
     {{ responseMessage }}
   </div>
 
   <!-- Error Messages -->
-  <ul v-if="Object.keys(errors).length !== 0" class="mb-8 text-2xl text-center text-red-500">
+  <ul v-if="Object.keys(errors).length !== 0" class="mb-8 text-center text-2xl text-red-500">
     <li v-for="error in errors" :key="error">{{ error }}</li>
   </ul>
 
@@ -79,6 +83,7 @@ const submit = handleSubmit(async (values) => {
   <form
     class="flex flex-col md:flex-row md:flex-wrap md:justify-between"
     :class="{ hidden: success }"
+    data-cy="contact-form"
     @submit.prevent="submit"
   >
     <!-- First Name -->
@@ -126,7 +131,7 @@ const submit = handleSubmit(async (values) => {
     </div>
 
     <!-- Message -->
-    <div class="relative w-full mb-6 lg:mb-10">
+    <div class="relative mb-6 w-full lg:mb-10">
       <base-text-area
         id="contact-message"
         v-model="message"
