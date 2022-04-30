@@ -1,34 +1,29 @@
 <?php
-use \Tofino\ThemeOptions\Notifications as n;
-
-if (get_theme_mod('footer_sticky') === 'enabled') : ?>
+if (has_nav_menu('footer_navigation')) : ?>
+  <!-- Nav Menu -->
+  <div class="w-full">
+    <div class="container"><?php
+        wp_nav_menu([
+          'menu'            => 'nav_menu',
+          'theme_location'  => 'footer_navigation',
+          'depth'           => 1,
+          'container'       => '',
+          'container_class' => '',
+          'container_id'    => '',
+          'menu_class'      => 'footer-nav',
+          'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+        ]); ?>
+    </div>
   </div>
-<?php endif; ?>
-
-<!-- Nav Menu -->
-<div class="w-full">
-  <div class="container"><?php
-    if (has_nav_menu('footer_navigation')) :
-      wp_nav_menu([
-        'menu'            => 'nav_menu',
-        'theme_location'  => 'footer_navigation',
-        'depth'           => 1,
-        'container'       => '',
-        'container_class' => '',
-        'container_id'    => '',
-        'menu_class'      => 'footer-nav',
-        'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-      ]);
-    endif; ?>
-  </div>
-</div>
-<!-- Close Nav Menu -->
+  <!-- Close Nav Menu --><?php
+endif; ?>
 
 <footer>
   <div class="container">
     <div class="w-full text-center"><?php
-    if (get_theme_mod('footer_text')) :
-      echo do_shortcode(get_theme_mod('footer_text')); // Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
+    $footer_text = get_field('footer_text', 'general-options');
+    if ($footer_text) :
+      echo do_shortcode($footer_text); // Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
     endif; ?>
     </div>
   </div>
@@ -36,7 +31,7 @@ if (get_theme_mod('footer_sticky') === 'enabled') : ?>
 
 <?php wp_footer(); ?>
 
-<?php n\notification('bottom'); ?>
+<?php Tofino\Init\alert('bottom'); ?>
 
 </body>
 </html>

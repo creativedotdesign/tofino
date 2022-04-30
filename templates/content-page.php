@@ -1,13 +1,17 @@
-<main>
-  <div class="container">
-    <div class="w-11/12 mx-auto md:w-full"><?php
-      while (have_posts()) : the_post(); ?>
-        <h1><?php echo \Tofino\Helpers\title(); ?></h1>
-
-        <?php echo do_shortcode('[social_icons platforms="soundcloud,twitter,facebook,pinterest"]'); ?>
-
-        <?php the_content(); ?><?php
-      endwhile; ?>
-    </div>
-  </div>
+<main><?php
+  // Check if the flexible content field has rows of data
+  if (have_rows('content_modules')) :
+    $i = 1;
+    while (have_rows('content_modules')) : the_row(); // Loop ACF layouts and display the matching partial
+      $row_layout = str_replace('_', '-', get_row_layout()); // Replace _ with - for the filename ?>
+      <!-- Start <?php echo $row_layout; ?> -->
+      <div class="module module-<?php echo $row_layout; ?> module-<?php echo $i; ?>">
+        <?php get_template_part('templates/modules/' . $row_layout); ?>
+      </div>
+      <!-- End <?php echo $row_layout; ?> --><?php
+      $i++;
+    endwhile;
+  else :
+    the_content();
+  endif; ?>
 </main>

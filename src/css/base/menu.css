@@ -1,12 +1,12 @@
 /* Menu Styles */
 .sticky-top {
-  @apply sticky top-0;
+  @apply sticky top-0 z-20;
 }
 
 #menu-header-menu {
-  @apply lg:inline-flex;
+  @apply lg:inline-flex mt-10 lg:mt-0;
 
   .menu-item {
-    @apply lg:mr-4;
+    @apply lg:mr-4 text-center lg:text-left;
   }
 }

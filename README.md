@@ -1,5 +1,3 @@
-[![devDependency Status](https://david-dm.org/creativedotdesign/tofino/dev-status.svg)](https://david-dm.org/creativedotdesign/tofino#info=devDependencies)
-
 <img src="https://raw.githubusercontent.com/creativedotdesign/tofino/master/screenshot.png" alt="Tofino" width="500">
 
 # Tofino
@@ -14,11 +12,11 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 
 ## Requirements
 
-| Prerequisite       | How to check  | How to install                                  |
-| ------------------ | ------------- | ----------------------------------------------- |
-| PHP >= 7.3.0       | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 12.16.3 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
-| Composer >= 2.0.0  | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
+| Prerequisite      | How to check  | How to install                                  |
+| ----------------- | ------------- | ----------------------------------------------- |
+| PHP >= 7.4.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 14.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| Composer >= 2.0.0 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
 
@@ -31,36 +29,39 @@ npm install
 npm run dev
 ```
 
-Once you have activated the theme, access Theme Options (WP Customizer) update an option and select save to commit the default values to the database.
+Note that the Vite Dev Server runs on port 3000. You access the website via the hostname and Vite will HMR or refresh automatically. If the Vite Dev Server is not running the website will pull it's assets from the /dist directory.
 
 ## Features
 
-- [tailwindcss](http://tailwindcss.com/)(v2.0)
+- [TailwindCSS](http://tailwindcss.com/)(v3.0)
 - Multilingual ready (WPML)
 - Responsive
-- Theme Options via WP Customizer (Native)
+- Cypress testing framework
+- General Options via ACF
   - Admin login screen logo
   - Custom Dashboard Widget
-  - Google Analytics
   - Social links
-  - Sticky menu
-  - Sticky footer
-  - Left/Center/Right menu positions
+  - Sticky header menu
   - Client Data (Address, Telephone number, Email address, Company number)
   - Footer text
-  - Notification text / EU Cookie notice with top/bottom positions
-  - Contact form with [Google reCAPTCHA](https://www.google.com/recaptcha) and custom email templates
-  - Data Tables for viewing data submitted via the contact form
+  - Alert Bar with top/bottom positions
+  - Contact form and custom email templates
   - Maintenance mode popup
-  - jQuery in footer
-- JS ES6 compatible via Babel and Browserify.
-- [Laravel Mix](https://laravel-mix.com/) build script d
+  - Custom 404 page
+- [Advanced Custom Fields](https://www.advancedcustomfields.com/resources/getting-started/)
+- ACF JSON Folder
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/guide/) build script
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
 - Auto post type / slug based template routing
 - Shortcodes
-- [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts.
-- Fragment Cache class
+- SVG Sprite
+- [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts
+- VueJS v3.x with Composition API
+- Contact Form with VeeValidate and Yup
+- AjaxForm PHP Class
+- Fragment Cache PHP Class
 
 ## Documentation
 
@@ -73,7 +74,7 @@ We use [GitHub Actions](https://github.com/features/actions). The deployment scr
 ```
 composer install
 npm install
-npm run dev
+npm run build
 ```
 
 The following files and directories should not be deployed on the server:
@@ -84,6 +85,7 @@ node_modules
 .vscode
 .editorconfig
 .env
+.eslintrc.js
 .git
 .github
 .gitignore
@@ -92,16 +94,19 @@ node_modules
 .git-ftp-include
 .gitattributes
 .gitignore
-.babelrc
 .stylelintrc.js
 .prettierrc.js
-.eslintrc.js
-postcss.config.js
+.prettierignore
+.npmrc
 composer.json
 composer.lock
 package.json
 package-lock.json
+postcss.config.js
 tailwind.config.js
-webpack.mix.js
+tsconfig.json
+vite.config.js
+phpcs.xml
 *.md
+cypress
 ```

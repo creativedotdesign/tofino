@@ -1,4 +1,5 @@
 <?php
+
 namespace Tofino;
 
 /**
@@ -13,16 +14,19 @@ namespace Tofino;
  * @url https://codex.wordpress.org/Class_Reference/WP_Object_Cache
  * @url https://gist.github.com/markjaquith/2653957
  */
-class FragmentCache {
+class FragmentCache
+{
   private $key = null;
   private $ttl = null;
 
-  public function __construct($key, $ttl) {
+  public function __construct($key, $ttl)
+  {
     $this->key = $key;
     $this->ttl = $ttl;
   }
 
-  public function output() {
+  public function output()
+  {
     $output = get_transient($this->key);
     if (!empty($output)) { // It was in the cache
       echo $output;
@@ -33,7 +37,8 @@ class FragmentCache {
     }
   }
 
-  public function store() {
+  public function store()
+  {
     $output = ob_get_flush(); // Flushes the buffers
     set_transient($this->key, $output, $this->ttl);
   }
