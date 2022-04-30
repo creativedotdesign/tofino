@@ -17,7 +17,7 @@ export default ({ mode }) => {
       outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
       manifest: true,
-      minify: false,
+      // minify: false,
       sourcemap: process.env.NODE_ENV === 'production' ? false : 'inline',
       target: 'es2018',
       rollupOptions: {
