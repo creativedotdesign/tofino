@@ -1,3 +1,22 @@
+# 4.0.0 (2022-04-30)
+
+### Features
+
+- Remove Laravel Mix/Webpack and replace with Vite.
+- Replace native WordPress options with ACF Options Page.
+- Update Screenshot.
+- ACF Flexible Content.
+- Update Tailwind to latest version.
+- Add Cypress tests.
+- Include Vue.js v3.
+- TypeScript all the things.
+- Remove unused shortcodes.
+- Include new Contact Form and AjaxForm PHP Class.
+- Additional WordPress clean functions.
+- Fix admin maintance mode.
+- Update SVG Sprite loading.
+- Lot's of misc improvements.
+
 # 3.2.2: (2021-10-10)
 
 ### Features
