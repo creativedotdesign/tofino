@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://tofino.test/",
   "testFiles": "**/*{spec,cy}.{js,ts}",
-  "componentFolder": "src"
+  "componentFolder": "src",
+  "video": false
 }

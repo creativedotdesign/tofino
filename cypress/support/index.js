@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
-Cypress.Commands.add('vue', () => {
-  return cy.wrap(Cypress.vueWrapper);
-});
+import './vue';
+import './assertions';
+import './baseUrl';
+import './checkElementExists';

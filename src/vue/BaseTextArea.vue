@@ -16,7 +16,7 @@ const { updateValue } = SetupFormComponent(props, emits);
 </script>
 
 <template>
-  <label v-if="label" class="block mb-1.5" :class="{ 'text-red-500': error }" :for="id">
+  <label v-if="label" class="mb-1.5 block" :class="{ 'text-red-500': error }" :for="id">
     {{ label }}
   </label>
   <div class="relative">

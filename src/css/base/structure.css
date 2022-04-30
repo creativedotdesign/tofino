@@ -9,14 +9,6 @@ footer {
 body {
   @apply antialiased font-roboto;
 
-  &.footer-sticky {
-    @apply h-screen;
-
-    > footer {
-      @apply top-[100vh] sticky;
-    }
-  }
-
   &.no-fout {
     @apply invisible;
 

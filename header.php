@@ -14,10 +14,12 @@
   <?php Tofino\Init\alert('top'); ?>
 
   <header class="<?php echo Tofino\Init\menu_sticky(); ?>">
-    <nav class="flex justify-between w-full px-6 py-4 bg-white">
-      <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>"><?php echo bloginfo('name'); ?></a>
+    <nav class="flex justify-between w-full px-6 py-4 bg-gray-100">
+      <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>">
+        <?php echo bloginfo('name'); ?>
+      </a>
 
-      <button class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation" data-cy="open-mobile-menu">
         <!-- Hamburger Icon -->
         <span class="w-6 h-6">
           <?php echo svg(['sprite' => 'icon-hamburger', 'class' => 'w-full h-full']); ?>
@@ -26,23 +28,24 @@
         <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
       </button>
 
-      <div class="absolute inset-0 hidden w-full h-screen bg-white lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
+      <div class="absolute inset-0 bg-white lg:bg-transparent hidden w-full h-screen lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
         <!-- Close Icon -->
-        <button class="absolute right-0 z-10 w-6 h-6 top-6 md:right-4 lg:hidden js-menu-toggle">
+        <button class="absolute z-10 w-4 h-4 top-5 right-7 lg:hidden js-menu-toggle"
+          data-cy="close-mobile-menu"
+        >
           <?php echo svg(['sprite' => 'icon-close', 'class' => 'w-full h-full']); ?>
         </button>
 
-        <?php
-        if (has_nav_menu('header_navigation')) :
+        <?php if (has_nav_menu('header_navigation')):
           wp_nav_menu([
-            'menu'            => 'nav_menu',
-            'theme_location'  => 'header_navigation',
-            'depth'           => 2,
-            'container'       => '',
+            'menu' => 'nav_menu',
+            'theme_location' => 'header_navigation',
+            'depth' => 2,
+            'container' => '',
             'container_class' => '',
-            'container_id'    => '',
-            'menu_class'      => 'navbar-nav',
-            'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+            'container_id' => '',
+            'menu_class' => 'navbar-nav',
+            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
           ]);
         endif; ?>
       </div>
