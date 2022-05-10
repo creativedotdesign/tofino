@@ -24,7 +24,14 @@ foreach ($tofino_includes as $file) {
   if (!$filepath = locate_template($file)) {
     trigger_error(sprintf(__('Error locating %s for inclusion', 'tofino'), $file), E_USER_ERROR);
   }
-  require_once $filepath;
+
+  if (!class_exists('acf') && $GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
+    wp_die(missing_acf_plugin_notice(), __('An error occured.', 'tofino'));
+  }
+
+  if (class_exists('acf')) {
+    require_once $filepath;
+  }
 }
 unset($file, $filepath);
 
