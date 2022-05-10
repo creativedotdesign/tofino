@@ -10,6 +10,8 @@
  *
  */
 $tofino_includes = [
+  "inc/lib/vite.php",
+  "inc/lib/AjaxForm.php",
   "inc/lib/contact-form.php",
   "inc/lib/init.php",
   "inc/lib/assets.php",
