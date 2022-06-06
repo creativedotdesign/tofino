@@ -50,7 +50,7 @@ jobs:
 
       - name: Sync Files to Server
         env:
-          dest: '${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.THEME_PATH }}'
+          dest: '${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.VITE_THEME_PATH }}'
           deploy: '${{ steps.dotenv.outputs.DEPLOY }}'
         if: ${{ env.deploy == 'TRUE' }}
         run: |

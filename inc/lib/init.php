@@ -36,6 +36,7 @@ function setup()
 {
   add_theme_support('title-tag'); // Enable plugins to manage the document title
   add_theme_support('post-thumbnails'); // Enable featured images for Posts
+  add_post_type_support('page', 'excerpt'); // Enable excerpts for Pages
 
   // Register wp_nav_menu() menus
   register_nav_menus([
