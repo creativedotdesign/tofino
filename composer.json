@@ -23,12 +23,17 @@
   ],
   "require": {
     "php": ">=7.4.0",
-    "composer/installers": "~v1.10.0",
-    "respect/validation": "^2.2"
+    "composer/installers": "~v2.2.0",
+    "respect/validation": "^2.2.4"
   },
   "autoload": {
     "psr-4": {
       "Tofino\\": "inc/lib/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
     }
   }
 }

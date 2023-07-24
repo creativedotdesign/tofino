@@ -2,7 +2,25 @@
 import * as WebFont from 'webfontloader';
 import { createApp, defineAsyncComponent } from 'vue';
 import { WebFontInterface } from '@/js/types';
+import { DefaultApolloClient } from '@vue/apollo-composable';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
+import { createPinia } from 'pinia';
 import 'virtual:svg-icons-register';
+
+// HTTP connection to the API
+const httpLink = createHttpLink({
+  // You should use an absolute URL here
+  uri: '/graphql',
+});
+
+// Cache implementation
+const cache = new InMemoryCache();
+
+// Create the apollo client
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache,
+});
 
 export default {
   init() {
@@ -59,7 +77,10 @@ export default {
             components: {
               [src]: defineAsyncComponent(() => import(`../vue/${src}.vue`)),
             },
-          }).mount(el);
+          })
+            .provide(DefaultApolloClient, apolloClient)
+            .use(createPinia())
+            .mount(el);
         } else if (type === 'ts') {
           // Dynamically Import Typescript File
           import(`./modules/${src}.ts`).then(({ default: script }) => {
@@ -67,7 +88,7 @@ export default {
           });
         }
       } else {
-        console.warn(`Tofino Theme: Could not find ${selector} for script ${src}.ts.`);
+        // console.warn(`Tofino Theme: Could not find ${selector} for script ${src}.ts.`);
       }
     });
 
