@@ -13,7 +13,8 @@
     "build": "vite build",
     "cy": "cypress open",
     "tests": "npx cypress run",
-    "ct": "npx cypress open-ct"
+    "ct": "npx cypress open-ct",
+    "tunnel": "lt --port 80 --subdomain tofino --local-host tofino.test --print-requests --local-https false"
   },
   "author": "Daniel Hewes <daniel@creativedotdesign.com>",
   "repository": {
