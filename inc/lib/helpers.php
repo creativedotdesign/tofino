@@ -207,7 +207,7 @@ function responsive_image_attribute_values($image_id = null, $size = 'full')
     'srcset' => $srcset,
     'sizes' => $sizes,
     'src' => $url[0],
-    'alt' => $alt
+    'alt' => esc_attr($alt)
   ];
 }
 
