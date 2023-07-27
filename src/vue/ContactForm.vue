@@ -1,31 +1,47 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useForm, configure } from 'vee-validate';
+
 import BaseInput from '@/vue/BaseInput.vue';
 import BaseTextArea from '@/vue/BaseTextArea.vue';
 
-import { ref } from 'vue';
-import { useField, useForm } from 'vee-validate';
-import { object, string } from 'yup';
+const success = ref(false);
+const responseMessage = ref('');
+const formVisible = ref(true);
 
-const success = ref<boolean>(false);
-const responseMessage = ref<string>('');
+const { handleSubmit, errors, setErrors, isSubmitting } = useForm();
 
-const validationSchema = object({
-  firstName: string().required().label('First Name'),
-  lastName: string().required().label('Last Name'),
-  email: string().required().email().label('Email Address'),
-  phone: string().label('Phone Number'),
-  message: string().required().label('Message'),
+configure({
+  generateMessage: (ctx) => {
+    const messages = {
+      required: `This field is required.`,
+      email: `${ctx.field} is not a valid email.`,
+    };
+
+    return messages[ctx.rule.name] || 'This field is invalid';
+  },
 });
 
-const { handleSubmit, errors, setErrors, isSubmitting } = useForm({
-  validationSchema,
-});
-
-const { value: firstName } = useField<string>('firstName');
-const { value: lastName } = useField<string>('lastName');
-const { value: email } = useField<string>('email');
-const { value: phone } = useField<string>('phone');
-const { value: message } = useField<string>('message');
+const textInputs = [
+  {
+    name: 'firstName',
+    label: 'First Name',
+    rules: 'required',
+    type: 'text',
+  },
+  {
+    name: 'lastName',
+    label: 'Last Name',
+    rules: 'required',
+    type: 'text',
+  },
+  {
+    name: 'emailAddress',
+    label: 'Email',
+    rules: 'required|email',
+    type: 'email',
+  },
+];
 
 // Submit Handler
 const submit = handleSubmit(async (values) => {
@@ -74,70 +90,23 @@ const submit = handleSubmit(async (values) => {
     {{ responseMessage }}
   </div>
 
-  <!-- Error Messages -->
-  <ul v-if="Object.keys(errors).length !== 0" class="mb-8 text-center text-2xl text-red-500">
-    <li v-for="error in errors" :key="error">{{ error }}</li>
-  </ul>
-
   <!-- Form -->
   <form
+    v-if="formVisible"
+    novalidate
     class="flex flex-col md:flex-row md:flex-wrap md:justify-between"
     :class="{ hidden: success }"
     data-cy="contact-form"
     @submit.prevent="submit"
   >
     <!-- First Name -->
-    <div class="relative mb-6 w-full md:w-[48%]">
-      <base-input
-        id="contact-first-name"
-        v-model="firstName"
-        label="First Name"
-        type="text"
-        :error="errors.firstName"
-      ></base-input>
-    </div>
-
-    <!-- Last Name -->
-    <div class="relative mb-6 w-full md:w-[48%]">
-      <base-input
-        id="contact-last-name"
-        v-model="lastName"
-        label="Last Name"
-        type="text"
-        :error="errors.lastName"
-      ></base-input>
-    </div>
-
-    <!-- Email -->
-    <div class="relative mb-6 w-full md:w-[48%]">
-      <base-input
-        id="contact-email"
-        v-model="email"
-        label="Email"
-        type="email"
-        :error="errors.email"
-      ></base-input>
-    </div>
-
-    <!-- Phone -->
-    <div class="relative mb-6 w-full md:w-[48%]">
-      <base-input
-        id="contact-phone"
-        v-model="phone"
-        label="Phone"
-        type="text"
-        :error="errors.phone"
-      ></base-input>
+    <div v-for="(input, index) in textInputs" :key="index" class="relative mb-6 w-full md:w-[48%]">
+      <base-input :name="input.name" :label="input.label" :rules="input.rules" :type="input.type" />
     </div>
 
     <!-- Message -->
     <div class="relative mb-6 w-full lg:mb-10">
-      <base-text-area
-        id="contact-message"
-        v-model="message"
-        label="Message"
-        :error="errors.message"
-      ></base-text-area>
+      <base-text-area name="message" label="Message" rules="required"></base-text-area>
     </div>
 
     <!-- Submit -->
@@ -150,4 +119,9 @@ const submit = handleSubmit(async (values) => {
       {{ isSubmitting ? 'Sending...' : 'Send' }}
     </button>
   </form>
+
+  <!-- Error Messages -->
+  <div v-if="Object.keys(errors).length !== 0" class="mb-8 text-center text-2xl text-red-500">
+    A validation error has occured. Please check the form and try again.
+  </div>
 </template>
