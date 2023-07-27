@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
@@ -5,7 +6,7 @@ import liveReload from 'vite-plugin-live-reload';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import path from 'path';
 
-export default ({ mode }) => {
+export default ({ mode }: { mode: string }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
@@ -52,6 +53,14 @@ export default ({ mode }) => {
         customDomId: 'tofino-sprite',
       }),
     ],
+    test: {
+      include: [`${__dirname}/src/js/tests/*.ts`],
+      globals: true,
+      environment: 'jsdom',
+      coverage: {
+        provider: 'istanbul',
+      },
+    },
     server: {
       cors: true,
       strictPort: true,

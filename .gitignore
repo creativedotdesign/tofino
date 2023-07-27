@@ -31,3 +31,6 @@ yarn-debug.log
 # cypress
 cypress/videos/
 cypress/screenshots/
+
+# vitest
+*.ts.snap

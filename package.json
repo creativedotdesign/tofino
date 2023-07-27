@@ -11,8 +11,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "tests": "vitest",
+    "tests-ui": "vitest --ui",
     "cy": "cypress open",
-    "tests": "npx cypress run",
+    "cy-run": "npx cypress run",
     "ct": "npx cypress open-ct",
     "tunnel": "lt --port 80 --subdomain tofino --local-host tofino.test --print-requests --local-https false"
   },
@@ -42,9 +44,14 @@
     "@tailwindcss/forms": "^0.5.4",
     "@tailwindcss/typography": "^0.5.9",
     "@types/body-scroll-lock": "^3.1.0",
+    "@types/jest": "^29.5.3",
     "@types/webfontloader": "^1.6.34",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@vee-validate/rules": "^4.10.8",
     "@vitejs/plugin-vue": "^4.0.0",
+    "@vitest/coverage-istanbul": "^0.33.0",
+    "@vitest/ui": "^0.33.0",
+    "@vue/test-utils": "^2.4.1",
     "autoprefixer": "^10.4.14",
     "dotenv": "^16.3.1",
     "eslint": "^8.45.0",
@@ -52,6 +59,7 @@
     "eslint-plugin-cypress": "^2.13.3",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.15.1",
+    "jsdom": "^22.1.0",
     "postcss": "^8.4.27",
     "postcss-import": "^15.1.0",
     "prettier": "^3.0.0",
@@ -62,7 +70,8 @@
     "vite": "^4.4.7",
     "vite-plugin-browser-sync": "^1.0.2",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-live-reload": "^3.0.2"
+    "vite-plugin-live-reload": "^3.0.2",
+    "vitest": "^0.33.0"
   },
   "dependencies": {
     "@vue/apollo-composable": "^4.0.0-beta.8",
@@ -71,7 +80,6 @@
     "vee-validate": "^4.7.4",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue": "^3.3.4",
-    "webfontloader": "github:creativedotdesign/webfontloader#feature/google-fonts-v2",
-    "yup": "^1.2.0"
+    "webfontloader": "github:creativedotdesign/webfontloader#feature/google-fonts-v2"
   }
 }

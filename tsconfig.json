@@ -11,7 +11,8 @@
       "@/*": ["./src/*"]
     },
     "types": [
-      "vite/client" // if using vite-plugin-typescript
+      "vite/client", // if using vite-plugin-typescript
+      "jest" // if using jest
     ],
     "strict": true, // Enable strict type-checking options
     "skipLibCheck": true, // Skip type checking of declaration files
