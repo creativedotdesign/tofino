@@ -100,13 +100,12 @@ add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
  */
 function correct_image_sizes()
 {
-  remove_image_size('thumbnail');
   remove_image_size('medium_large');
   remove_image_size('large');
   remove_image_size('1536x1536');
 
   update_option('thumbnail_size_h', 0);
-  update_option('thumbnail_size_w', 0);
+  update_option('thumbnail_size_w', 250);
 
   update_option('medium_size_h', 0);
   update_option('medium_size_w', 565);
