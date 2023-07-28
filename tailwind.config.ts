@@ -1,4 +1,6 @@
-module.exports = {
+import type { Config } from 'tailwindcss';
+
+export default {
   content: [
     './header.php',
     './footer.php',
@@ -22,4 +24,4 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
   ],
-};
+} satisfies Config;
