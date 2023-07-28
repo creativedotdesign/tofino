@@ -5,6 +5,26 @@ namespace Tofino;
 class Vite
 {
   public static $serverUrl = 'http://localhost:3000';
+  // public static $serverUrl = 'https://tofino.loca.lt';
+
+  public static function getBrowserSyncUrl($port = 3001)
+  {
+    $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+
+    socket_connect($sock, "8.8.8.8", 53);
+    socket_getsockname($sock, $addr); // $name passed by reference
+    socket_shutdown($sock);
+    socket_close($sock);
+
+    return 'http://' . $addr . ':' . $port;
+  }
+
+  public static function isBrowserSyncRunning() {
+    // Get the header
+    if (isset($_SERVER['HTTP_BROWSER_SYNC'])) {
+      return true;
+    }
+  }
 
   public static function isDevServerRunning()
   {
@@ -35,9 +55,22 @@ class Vite
 
   public static function register($entry)
   {
-    $url = self::isDevServerRunning()
-      ? self::$serverUrl . '/' . $entry
-      : self::assetUrl($entry);
+    if (self::isDevServerRunning()) {
+      $browserSyncUrl = self::getBrowserSyncUrl();
+      $browserSyncUrl = str_replace(['http://', 'https://'], '', $browserSyncUrl);
+      $browserSyncUrl = explode(':', $browserSyncUrl)[0];
+
+      // The header Sec-Fetch-User only exists when browser-sync is running via localhost.
+      $is_browser_sync_on_localhost = isset($_SERVER['HTTP_SEC_FETCH_USER']);
+
+      if (self::isBrowserSyncRunning() && !$is_browser_sync_on_localhost) {
+        $url = self::getBrowserSyncUrl(3000) . '/' . $entry;
+      } else {
+        $url = self::$serverUrl . '/' . $entry;
+      }
+    } else {
+      $url = self::assetUrl($entry);
+    }
 
     if (!$url) {
       return '';
@@ -49,7 +82,7 @@ class Vite
 
   private static function jsPreloadImports($entry)
   {
-    if (self::isDevServerRunning()) {
+    if (self::isDevServerRunning() || self::isBrowserSyncRunning()) {
       return;
     }
 
@@ -66,23 +99,30 @@ class Vite
   private static function cssTag(string $entry): string
   {
     // not needed on dev, it's inject by Vite
-    if (self::isDevServerRunning()) {
+    if (self::isDevServerRunning() || self::isBrowserSyncRunning()) {
       return '';
     }
 
     $tags = '';
+
     foreach (self::cssUrls($entry) as $url) {
       wp_register_style("tofino/$entry", $url);
       wp_enqueue_style("tofino/$entry", $url);
     }
+
     return $tags;
   }
-
 
   // Helpers to locate files
   private static function getManifest(): array
   {
-    $content = file_get_contents(get_stylesheet_directory() . '/dist/manifest.json');
+    $file = get_stylesheet_directory() . '/dist/manifest.json';
+
+    if (!file_exists($file)) {
+      return [];
+    }
+
+    $content = @file_get_contents(get_stylesheet_directory() . '/dist/manifest.json');
 
     return json_decode($content, true);
   }

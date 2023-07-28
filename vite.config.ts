@@ -2,8 +2,8 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint';
-import liveReload from 'vite-plugin-live-reload';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import VitePluginBrowserSync from 'vite-plugin-browser-sync';
 import path from 'path';
 
 export default ({ mode }: { mode: string }) => {
@@ -46,7 +46,21 @@ export default ({ mode }: { mode: string }) => {
         reactivityTransform: true,
       }),
       eslintPlugin(),
-      liveReload([`${__dirname}/*.php`, `${__dirname}/(lib|templates)/**/*.php`]),
+      VitePluginBrowserSync({
+        bs: {
+          online: true,
+          notify: false,
+          proxy: {
+            target: process.env.VITE_ASSET_URL,
+            ws: true,
+            proxyReq: [
+              (proxyReq) => {
+                proxyReq.setHeader('Browser-Sync', true);
+              },
+            ],
+          },
+        },
+      }),
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), 'src/sprite')],
         symbolId: 'icon-[name]',
@@ -62,12 +76,12 @@ export default ({ mode }: { mode: string }) => {
       },
     },
     server: {
+      host: true,
       cors: true,
       strictPort: true,
       port: 3000,
       hmr: {
         port: 3000,
-        host: 'localhost',
         protocol: 'ws',
       },
     },
