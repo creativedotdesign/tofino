@@ -35,5 +35,8 @@
     "allow-plugins": {
       "composer/installers": true
     }
+  },
+  "require-dev": {
+    "php-stubs/acf-pro-stubs": "^6.0"
   }
 }
