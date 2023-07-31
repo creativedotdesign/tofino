@@ -70,6 +70,7 @@ export default ({ mode }: { mode: string }) => {
     test: {
       include: [`${__dirname}/src/js/tests/*.ts`],
       globals: true,
+      watch: false,
       environment: 'jsdom',
       coverage: {
         provider: 'istanbul',
