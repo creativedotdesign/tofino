@@ -25,5 +25,10 @@ tailwind.config.js
 tsconfig.json
 vite.config.js
 phpcs.xml
-*.md
+\*.md
 cypress
+cypress.config.js
+prettier.config.js
+stylelint.config.ts
+tailwind.config.ts
+vite.config.ts
