@@ -8,3 +8,12 @@ export interface WebFontInterface {
     version: number;
   };
 }
+
+export interface Scripts extends Array<Script> {}
+
+// Define Script interface
+export interface Script {
+  selector: string;
+  src: string;
+  type: 'vue' | 'ts';
+}
