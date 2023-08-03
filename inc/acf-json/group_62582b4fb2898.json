@@ -326,7 +326,7 @@
         },
         {
             "key": "field_62582cf120ff5",
-            "label": "Alert",
+            "label": "Alerts",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -342,11 +342,11 @@
             "endpoint": 0
         },
         {
-            "key": "field_62582cfd20ff6",
-            "label": "Alert",
-            "name": "alert",
+            "key": "field_64cbca686cd2f",
+            "label": "Alerts",
+            "name": "alerts",
             "aria-label": "",
-            "type": "group",
+            "type": "repeater",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -355,7 +355,14 @@
                 "class": "",
                 "id": ""
             },
+            "show_in_graphql": 1,
             "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Alert",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_625835f7f6d88",
@@ -371,11 +378,65 @@
                         "class": "",
                         "id": ""
                     },
+                    "show_in_graphql": 1,
                     "message": "",
                     "default_value": 0,
-                    "ui": 1,
                     "ui_on_text": "",
-                    "ui_off_text": ""
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "parent_repeater": "field_64cbca686cd2f"
+                },
+                {
+                    "key": "field_62582d7120ff9",
+                    "label": "Position",
+                    "name": "position",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "Alert position. Bottom = Fixed over footer. Top = Fixed above top menu.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "show_in_graphql": 1,
+                    "choices": {
+                        "Top": "Top",
+                        "Bottom": "Bottom"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_64cbca686cd2f"
+                },
+                {
+                    "key": "field_62582d5620ff8",
+                    "label": "Expires",
+                    "name": "expires",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "Number of days until the alert expires. Set via a cookie.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "show_in_graphql": 1,
+                    "default_value": 999,
+                    "min": "",
+                    "max": 999,
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_64cbca686cd2f"
                 },
                 {
                     "key": "field_62582d0f20ff7",
@@ -395,75 +456,8 @@
                     "tabs": "all",
                     "toolbar": "basic",
                     "media_upload": 0,
-                    "delay": 0
-                },
-                {
-                    "key": "field_62582d5620ff8",
-                    "label": "Expires",
-                    "name": "expires",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "Number of days until the alert expires. Set via a cookie.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 999,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "min": "",
-                    "max": 999,
-                    "step": ""
-                },
-                {
-                    "key": "field_62582d7120ff9",
-                    "label": "Position",
-                    "name": "position",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "Alert position. Bottom = Fixed over footer. Top = Fixed above top menu.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "Top": "Top",
-                        "Bottom": "Bottom"
-                    },
-                    "default_value": false,
-                    "allow_null": 0,
-                    "multiple": 0,
-                    "ui": 0,
-                    "return_format": "value",
-                    "ajax": 0,
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_62582d9b20ffa",
-                    "label": "Display with JavaScript",
-                    "name": "display_with_javascript",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "message": "Display Alert using Javascript. Work around for when the website has a static cache.",
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "",
-                    "ui_off_text": ""
+                    "delay": 0,
+                    "parent_repeater": "field_64cbca686cd2f"
                 }
             ]
         },
@@ -876,5 +870,9 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1678576461
+    "show_in_graphql": 0,
+    "graphql_field_name": "generalOptions",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1691079796
 }

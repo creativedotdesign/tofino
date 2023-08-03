@@ -26,8 +26,8 @@ export default {
     // Define the selectors and src for dynamic imports
     const scripts: Scripts = [
       {
-        selector: '#tofino-alert', // Alert
-        src: 'alert',
+        selector: '.alert', // Alert
+        src: 'alerts',
         type: 'ts',
       },
       {

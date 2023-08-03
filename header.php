@@ -11,7 +11,7 @@
 
   <?php wp_body_open(); ?>
 
-  <?php Tofino\Init\alert('top'); ?>
+  <?php Tofino\Init\alerts('top'); ?>
 
   <header class="<?php echo Tofino\Init\menu_sticky(); ?>">
     <nav class="flex justify-between w-full px-6 py-4 bg-gray-100">

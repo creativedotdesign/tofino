@@ -199,48 +199,38 @@ add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
 
 
 /**
- * Alert
+ * Alerts
  *
- * Display Alert Top/Bottom based on theme option setting.
+ * Display Alerts Top/Bottom based on theme option setting.
  *
  * @since 1.0.0
  * @param string $position The position of the alert e.g. Top, Bottom
  * @return void
  */
-function alert($position)
+function alerts($position)
 {
-  $alert = get_field('alert', 'general-options');
+  $alerts = get_field('alerts', 'general-options');
 
-  if ($alert['enabled']) {
-    $alert_position = strtolower($alert['position']);
+  if ($alerts) {
+    $i = 1;
 
-    if ($alert['message'] && !isset($_COOKIE['tofino-alert-closed']) && $position === $alert_position) {
-      \Tofino\Helpers\hm_get_template_part('templates/partials/alert', [
-        'position' => $alert_position,
-        'message' => $alert['message']
-      ]);
+    foreach ($alerts as $alert) {
+      if ($alert['enabled']) {
+        $alert_position = strtolower($alert['position']);
+
+        if ($alert['message'] && !isset($_COOKIE['tofino-alert-' . $i . '-closed']) && $position === $alert_position) {
+          \Tofino\Helpers\hm_get_template_part('templates/partials/alert', [
+            'position' => $alert_position,
+            'message' => $alert['message'],
+            'id' => $i
+          ]);
+        }
+      }
+
+      $i++;
     }
   }
 }
-
-
-/**
- * Adds the alert classes to the body.
- *
- * @since 1.9.0
- * @param array $classes Array of classes passed to the body tag by WP.
- * @return void
- */
-function add_alert_class($classes)
-{
-  $alert = get_field('alert', 'general-options');
-
-  if ($alert['display_with_javascript']) {
-    $classes[] = 'alert-use-js';
-  }
-  return $classes;
-}
-add_filter('body_class', __NAMESPACE__ . '\\add_alert_class');
 
 
 /**
