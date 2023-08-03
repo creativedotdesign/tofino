@@ -2,8 +2,8 @@
 $data = (!empty($template_args) ? $template_args : null);
 
 if ($data) : ?>
-  <!-- Alert <?php echo $data['position']; ?> -->
-  <div class="flex items-center bg-blue-400 text-white text-sm font-bold px-4 py-3 alert <?php echo $data['position']; ?>" role="alert" id="tofino-alert">
+  <!-- Alert <?php echo $data['position']; ?> | ID <?php echo $data['id']; ?> -->
+  <div class="items-center text-white text-sm font-bold px-4 py-3 alert <?php echo $data['position']; ?>" data-alert-id="<?php echo $data['id']; ?>" role="alert">
     <div class="container flex justify-between">
       <span><?php echo $data['message']; ?></span>
 

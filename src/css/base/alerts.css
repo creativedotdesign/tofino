@@ -1,11 +1,5 @@
-.alert-use-js {
-  #tofino-alert {
-    @apply hidden;
-  }
-}
-
 .alert {
-  @apply p-2;
+  @apply p-2 hidden bg-blue-400;
 
   &.bottom {
     @apply fixed bottom-0 z-10 left-0 right-0;

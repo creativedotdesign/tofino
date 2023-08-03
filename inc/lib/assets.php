@@ -58,14 +58,24 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
 function localize_scripts()
 {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    $alert = get_field('alert', 'general-options');
+    $alerts = get_field('alerts', 'general-options');
+
+    if ($alerts) {
+      $expires = [];
+
+      $i = 1;
+      foreach ($alerts as $alert) {
+        // Get the expires from each alert and add to array.
+        $expires[$i] = $alert['expires'];
+        $i++;
+      }
+    }
 
     wp_localize_script('tofino', 'tofinoJS', [
       'ajaxUrl' => admin_url('admin-ajax.php'),
       'nextNonce' => wp_create_nonce('next_nonce'),
-      'cookieExpires' => $alert['expires'] ? $alert['expires'] : 999,
+      'cookieExpires' => $alerts ? $expires : null,
       'themeUrl' => get_template_directory_uri(),
-      'alertJS' => $alert['display_with_javascript'] ? 'true' : 'false',
       'siteURL' => site_url(),
     ]);
   }
