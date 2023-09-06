@@ -35,11 +35,6 @@ export default {
         src: 'menu',
         type: 'ts',
       },
-      {
-        selector: '.js-contact-form', // Search
-        src: 'ContactForm', // VueJS Component name
-        type: 'vue',
-      },
     ];
 
     // Load the scripts
