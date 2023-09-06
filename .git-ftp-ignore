@@ -12,16 +12,13 @@ node_modules
 .git-ftp-include
 .gitattributes
 .gitignore
-.stylelintrc.js
-.prettierrc.js
 .prettierignore
 .npmrc
 composer.json
 composer.lock
 package.json
 package-lock.json
-postcss.config.js
-tailwind.config.js
+postcss.config.ts
 tsconfig.json
 vite.config.js
 phpcs.xml
