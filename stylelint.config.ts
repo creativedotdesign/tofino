@@ -1,7 +1,9 @@
-module.exports = {
+import { Config } from 'stylelint';
+
+const stylelintConfig: Config = {
   extends: 'stylelint-config-recommended',
-  'prettier.stylelintIntegration': true,
   rules: {
+    'prettier/stylelintIntegration': true,
     'at-rule-no-unknown': [
       true,
       {
@@ -16,3 +18,5 @@ module.exports = {
     ],
   },
 };
+
+export default stylelintConfig;

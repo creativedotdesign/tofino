@@ -31,7 +31,7 @@ endif; ?>
 
 <?php wp_footer(); ?>
 
-<?php Tofino\Init\alert('bottom'); ?>
+<?php Tofino\Init\alerts('bottom'); ?>
 
 </body>
 </html>

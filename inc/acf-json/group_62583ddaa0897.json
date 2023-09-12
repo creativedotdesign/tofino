@@ -6,6 +6,7 @@
             "key": "field_62586c9af1a1a",
             "label": "Content Modules",
             "name": "content_modules",
+            "aria-label": "",
             "type": "flexible_content",
             "instructions": "",
             "required": 0,
@@ -15,6 +16,7 @@
                 "class": "",
                 "id": ""
             },
+            "show_in_graphql": 1,
             "layouts": {
                 "layout_62586ca1c1a98": {
                     "key": "layout_62586ca1c1a98",
@@ -26,6 +28,7 @@
                             "key": "field_62586caef1a1b",
                             "label": "General Content",
                             "name": "general_content",
+                            "aria-label": "",
                             "type": "clone",
                             "instructions": "",
                             "required": 0,
@@ -47,16 +50,17 @@
                     "min": "",
                     "max": ""
                 },
-                "layout_6259b233e7e63": {
-                    "key": "layout_6259b233e7e63",
-                    "name": "contact_form",
-                    "label": "Contact Form",
+                "layout_64c975f9f72ae": {
+                    "key": "layout_64c975f9f72ae",
+                    "name": "form",
+                    "label": "Form",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_6259b235e7e64",
-                            "label": "Contact Form",
-                            "name": "contact_form",
+                            "key": "field_64c97600f72b1",
+                            "label": "Form",
+                            "name": "form",
+                            "aria-label": "",
                             "type": "clone",
                             "instructions": "",
                             "required": 0,
@@ -67,7 +71,7 @@
                                 "id": ""
                             },
                             "clone": [
-                                "group_6259b20cf1b1f"
+                                "group_63bee2ff52da2"
                             ],
                             "display": "seamless",
                             "layout": "block",
@@ -79,9 +83,9 @@
                     "max": ""
                 }
             },
-            "button_label": "Add Row",
             "min": "",
-            "max": ""
+            "max": "",
+            "button_label": "Add Row"
         }
     ],
     "location": [
@@ -114,5 +118,9 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1650060559
+    "show_in_graphql": 0,
+    "graphql_field_name": "__pageModules",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1693961110
 }

@@ -14,8 +14,8 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 
 | Prerequisite      | How to check  | How to install                                  |
 | ----------------- | ------------- | ----------------------------------------------- |
-| PHP >= 7.4.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 14.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| PHP >= 8.1.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 18.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | Composer >= 2.0.0 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
@@ -33,10 +33,9 @@ Note that the Vite Dev Server runs on port 3000. You access the website via the 
 
 ## Features
 
-- [TailwindCSS](http://tailwindcss.com/)(v3.0)
+- [TailwindCSS](http://tailwindcss.com/)(v3.3)
 - Multilingual ready (WPML)
 - Responsive
-- Cypress testing framework
 - General Options via ACF
   - Admin login screen logo
   - Custom Dashboard Widget
@@ -45,13 +44,14 @@ Note that the Vite Dev Server runs on port 3000. You access the website via the 
   - Client Data (Address, Telephone number, Email address, Company number)
   - Footer text
   - Alert Bar with top/bottom positions
-  - Contact form and custom email templates
   - Maintenance mode popup
   - Custom 404 page
 - [Advanced Custom Fields](https://www.advancedcustomfields.com/resources/getting-started/)
 - ACF JSON Folder
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/guide/) build script
+- [Vitest](https://vitest.dev/) for testing Vue components
+- [Cypress](https://www.cypress.io/) for Integration and E2E tests
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
 - Auto post type / slug based template routing
@@ -59,7 +59,8 @@ Note that the Vite Dev Server runs on port 3000. You access the website via the 
 - SVG Sprite
 - [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts
 - VueJS v3.x with Composition API
-- Contact Form with VeeValidate and Yup
+- Pinia State Management
+- Form support via Tofino Form Builder plugin
 - AjaxForm PHP Class
 - Fragment Cache PHP Class
 
@@ -94,19 +95,21 @@ node_modules
 .git-ftp-include
 .gitattributes
 .gitignore
-.stylelintrc.js
-.prettierrc.js
 .prettierignore
 .npmrc
 composer.json
 composer.lock
 package.json
 package-lock.json
-postcss.config.js
-tailwind.config.js
+postcss.config.ts
 tsconfig.json
 vite.config.js
 phpcs.xml
-*.md
+\*.md
 cypress
+cypress.config.js
+prettier.config.js
+stylelint.config.ts
+tailwind.config.ts
+vite.config.ts
 ```

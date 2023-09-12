@@ -206,8 +206,8 @@ function responsive_image_attribute_values($image_id = null, $size = 'full')
   return [
     'srcset' => $srcset,
     'sizes' => $sizes,
-    'src' => $url[0],
-    'alt' => $alt
+    'src' => ($url ? $url[0] : null),
+    'alt' => esc_attr($alt)
   ];
 }
 
@@ -226,4 +226,41 @@ function wrap_last_word($string, $class)
 
   // Returns the glued pieces
   return implode(" ", $pieces);
+}
+
+
+// Get a sub field from within a layout of a flexible content field on a specific page
+function get_flex_field_by_page_id($flex_field, $flex_layout, $flex_field_layout = '', $page_id = null) {
+  $page_id = $page_id ? $page_id : get_the_ID();
+
+  $fields = get_field($flex_field, $page_id);
+
+  if ($fields) {
+    foreach($fields as $field) {
+      if ($flex_field_layout) {
+        if ($field['acf_fc_layout'] === $flex_layout) {
+          return $field[$flex_field_layout];
+        }
+      } else { // No flex_field_layout
+        return $field;
+      }
+    }
+  }
+}
+
+
+// Check if a page contains only a single module
+function is_single_module_page($module_name, $page_id) {
+  // Get the ACF Flexible Content field value for the specified page
+  $modules = get_field('content_modules', $page_id);
+
+  // Check if the field exists and contains only one module
+  if ($modules && is_array($modules) && count($modules) === 1) {
+    // Check if the module name matches the specified module
+    if ($modules[0]['acf_fc_layout'] === $module_name) {
+      return true; // The page contains only the specified module
+    }
+  }
+
+  return false; // The page does not contain only the specified module
 }

@@ -1,4 +1,6 @@
-module.exports = {
+import type { Config } from 'tailwindcss';
+
+export default {
   content: [
     './header.php',
     './footer.php',
@@ -19,7 +21,9 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
   ],
-};
+} satisfies Config;

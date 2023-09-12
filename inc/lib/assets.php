@@ -58,14 +58,24 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
 function localize_scripts()
 {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    $alert = get_field('alert', 'general-options');
+    $alerts = get_field('alerts', 'general-options');
+
+    if ($alerts) {
+      $expires = [];
+
+      $i = 1;
+      foreach ($alerts as $alert) {
+        // Get the expires from each alert and add to array.
+        $expires[$i] = $alert['expires'];
+        $i++;
+      }
+    }
 
     wp_localize_script('tofino', 'tofinoJS', [
       'ajaxUrl' => admin_url('admin-ajax.php'),
       'nextNonce' => wp_create_nonce('next_nonce'),
-      'cookieExpires' => $alert['expires'] ? $alert['expires'] : 999,
+      'cookieExpires' => $alerts ? $expires : null,
       'themeUrl' => get_template_directory_uri(),
-      'alertJS' => $alert['display_with_javascript'] ? 'true' : 'false',
       'siteURL' => site_url(),
     ]);
   }
@@ -100,13 +110,12 @@ add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
  */
 function correct_image_sizes()
 {
-  remove_image_size('thumbnail');
   remove_image_size('medium_large');
   remove_image_size('large');
   remove_image_size('1536x1536');
 
   update_option('thumbnail_size_h', 0);
-  update_option('thumbnail_size_w', 0);
+  update_option('thumbnail_size_w', 250);
 
   update_option('medium_size_h', 0);
   update_option('medium_size_w', 565);
