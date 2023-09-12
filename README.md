@@ -51,7 +51,7 @@ Note that the Vite Dev Server runs on port 3000. You access the website via the 
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/guide/) build script
 - [Vitest](https://vitest.dev/) for testing Vue components
-- [Cypress] (https://www.cypress.io/) for Integration and E2E tests
+- [Cypress](https://www.cypress.io/) for Integration and E2E tests
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
 - Auto post type / slug based template routing
