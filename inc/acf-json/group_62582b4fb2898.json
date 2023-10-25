@@ -54,8 +54,8 @@
                 },
                 {
                     "key": "field_62582baf7433c",
-                    "label": "Twitter",
-                    "name": "twitter",
+                    "label": "X",
+                    "name": "x",
                     "aria-label": "",
                     "type": "url",
                     "instructions": "",
@@ -188,7 +188,12 @@
                     "default_value": "",
                     "placeholder": ""
                 }
-            ]
+            ],
+            "acfe_seamless_style": 0,
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large"
         },
         {
             "key": "field_62582c658641c",
@@ -300,7 +305,8 @@
                     "placeholder": "",
                     "maxlength": "",
                     "rows": 4,
-                    "new_lines": "br"
+                    "new_lines": "br",
+                    "acfe_textarea_code": 0
                 },
                 {
                     "key": "field_62582cba86421",
@@ -322,7 +328,12 @@
                     "append": "",
                     "maxlength": ""
                 }
-            ]
+            ],
+            "acfe_seamless_style": 0,
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large"
         },
         {
             "key": "field_62582cf120ff5",
@@ -363,6 +374,7 @@
             "collapsed": "",
             "button_label": "Add Alert",
             "rows_per_page": 20,
+            "acfe_repeater_stylised_button": 0,
             "sub_fields": [
                 {
                     "key": "field_625835f7f6d88",
@@ -412,7 +424,9 @@
                     "ui": 0,
                     "ajax": 0,
                     "placeholder": "",
-                    "parent_repeater": "field_64cbca686cd2f"
+                    "parent_repeater": "field_64cbca686cd2f",
+                    "allow_custom": 0,
+                    "search_placeholder": ""
                 },
                 {
                     "key": "field_62582d5620ff8",
@@ -521,7 +535,9 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": ""
+            "mime_types": "",
+            "uploader": "",
+            "acfe_thumbnail": 0
         },
         {
             "key": "field_62582f156d924",
@@ -561,7 +577,8 @@
             "placeholder": "",
             "maxlength": "",
             "rows": 3,
-            "new_lines": ""
+            "new_lines": "",
+            "acfe_textarea_code": 0
         },
         {
             "key": "field_62582f536d926",
@@ -657,7 +674,8 @@
                     "placeholder": "",
                     "maxlength": "",
                     "rows": 3,
-                    "new_lines": ""
+                    "new_lines": "",
+                    "acfe_textarea_code": 0
                 },
                 {
                     "key": "field_62586874293b0",
@@ -679,7 +697,12 @@
                     "ui_on_text": "",
                     "ui_off_text": ""
                 }
-            ]
+            ],
+            "acfe_seamless_style": 0,
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large"
         },
         {
             "key": "field_625830820081b",
@@ -716,7 +739,8 @@
             "placeholder": "",
             "maxlength": "",
             "rows": 4,
-            "new_lines": ""
+            "new_lines": "",
+            "acfe_textarea_code": 0
         }
     ],
     "location": [
@@ -737,9 +761,12 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "show_in_graphql": 0,
-    "graphql_field_name": "generalOptions",
-    "map_graphql_types_from_location_rules": 0,
-    "graphql_types": "",
-    "modified": 1693961135
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1698260055
 }

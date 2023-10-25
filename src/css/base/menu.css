@@ -1,4 +1,8 @@
 /* Menu Styles */
+.inactive {
+  @apply hidden;
+}
+
 .sticky-top {
   @apply sticky top-0 z-20;
 }
