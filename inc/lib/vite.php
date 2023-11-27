@@ -5,7 +5,6 @@ namespace Tofino;
 class Vite
 {
   public static $serverUrl = 'http://localhost:3000';
-  // public static $serverUrl = 'https://tofino.loca.lt';
 
   public static function getBrowserSyncUrl($port = 3001)
   {
@@ -28,17 +27,11 @@ class Vite
 
   public static function isDevServerRunning()
   {
-    $file = @fopen(self::$serverUrl . "/@vite/client", "r");
-
-    if (!$file) {
-      error_clear_last();
-
+    if (in_array(wp_get_environment_type(), ['local', 'development']) && is_array(wp_remote_get(self::$serverUrl))) {
+      return true;
+    } else {
       return false;
     }
-
-    fclose($file);
-
-    return true;
   }
 
   public static function base_path()

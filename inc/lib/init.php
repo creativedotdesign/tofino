@@ -19,8 +19,8 @@ namespace Tofino\Init;
 function php_version_check()
 {
   $php_version = phpversion();
-  if (version_compare($php_version, '7.4.0', '<')) {
-    wp_die('<div class="error notice"><p>' . __('PHP version >= 7.4.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
+  if (version_compare($php_version, '8.0.0', '<')) {
+    wp_die('<div class="error notice"><p>' . __('PHP version >= 8.0.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
   }
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
@@ -346,3 +346,24 @@ function truncate_excerpt_length($length)
   return 55;
 }
 add_filter('excerpt_length', __NAMESPACE__ . '\\truncate_excerpt_length');
+
+
+// Clear cache on options save
+function clear_cache_options_save($post_id)
+{
+  $screen = get_current_screen();
+
+  if (strpos($screen->id, 'general-options') == true && $post_id == 'general-options') {
+    // Clear object cache
+    wp_cache_flush();
+
+    // Check if class WpeCommon exists
+    if (class_exists('\WpeCommon')) {
+      error_log('WpeCommon exists');
+
+      WpeCommon::purge_memcached();
+      WpeCommon::purge_varnish_cache();
+    }
+  }
+}
+add_action('acf/save_post', __NAMESPACE__ . '\\clear_cache_options_save', 20);
