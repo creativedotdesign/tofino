@@ -31,9 +31,11 @@ npm run dev
 
 Note that the Vite Dev Server runs on port 3000. You access the website via the hostname and Vite will HMR or refresh automatically. If the Vite Dev Server is not running the website will pull it's assets from the /dist directory.
 
+Important: You MUST set `WP_ENVIRONMENT_TYPE` to `development` or `local` in your wp-config.php file for the Vite Dev Server to work. Local by Flywheel does this automatically.
+
 ## Features
 
-- [TailwindCSS](http://tailwindcss.com/)(v3.3)
+- [TailwindCSS](http://tailwindcss.com/) (v3.3)
 - Multilingual ready (WPML)
 - Responsive
 - General Options via ACF
