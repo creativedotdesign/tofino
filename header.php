@@ -28,7 +28,7 @@
         <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
       </button>
 
-      <div class="absolute inset-0 bg-white lg:bg-transparent hidden w-full h-screen lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
+      <div class="inactive absolute inset-0 bg-white lg:bg-transparent w-full h-screen lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
         <!-- Close Icon -->
         <button class="absolute z-10 w-4 h-4 top-5 right-7 lg:hidden js-menu-toggle"
           data-cy="close-mobile-menu"

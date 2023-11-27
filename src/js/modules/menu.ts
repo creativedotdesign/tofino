@@ -10,9 +10,9 @@ export default () => {
     buttons.forEach((el) => {
       el.addEventListener('click', () => {
         // Toggle the hide class
-        menu.classList.toggle('hidden');
+        menu.classList.toggle('inactive');
 
-        if (menu.classList.contains('hidden')) {
+        if (menu.classList.contains('inactive')) {
           enableBodyScroll(menu);
 
           document.body.classList.remove('menu-open');
@@ -26,8 +26,8 @@ export default () => {
 
     // Close menu on ESC key
     document.onkeydown = (e) => {
-      if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
-        menu.classList.add('hidden');
+      if (e.key === 'Escape' && !menu.classList.contains('inactive')) {
+        menu.classList.add('inactive');
 
         document.body.classList.remove('menu-open');
 
