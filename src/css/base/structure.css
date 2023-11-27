@@ -2,12 +2,16 @@ html {
   @apply h-full;
 }
 
+main {
+  @apply flex-auto;
+}
+
 footer {
   @apply bg-gray-100;
 }
 
 body {
-  @apply antialiased font-roboto;
+  @apply antialiased font-roboto flex flex-col min-h-full;
 
   &.no-fout {
     @apply invisible;
