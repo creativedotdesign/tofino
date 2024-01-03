@@ -90,7 +90,44 @@ function svg($atts)
     }
 
     if (file_exists($file)) {
-      return file_get_contents($file);
+      $file_contents = file_get_contents($file);
+
+      if ($file_contents) {
+        if ($atts['class']) {
+          // Check if class already exists on the svg tag, if found merge the classes
+          if (preg_match('/<svg[^>]*class="([^"]*)"/', $file_contents, $matches)) {
+            $classes = array_filter(array_map('trim', explode(' ', $matches[1])));
+
+            if (!in_array($atts['class'], $classes)) {
+              $classes[] = $atts['class'];
+            }
+
+            // Keep any existing attributes on the svg tag
+            $file_contents = str_replace($matches[0], '<svg class="' . implode(' ', $classes) . '"', $file_contents);
+
+            // $file_contents = str_replace($matches[0], '<svg class="' . implode(' ', $classes) . '"', $file_contents);
+          } else {
+            // Class doesn't exist, add it to the svg tag after the existing attributes
+            if (preg_match('/<svg([^>]*)>/', $file_contents, $matches)) {
+              $file_contents = str_replace($matches[0], '<svg' . $matches[1] . ' class="' . $atts['class'] . '">', $file_contents);
+            }
+          }
+        }
+
+        if ($atts['title']) {
+          // Check if a title tag already exists, if found replace the title
+          if (preg_match('/<title[^>]*>([^<]*)<\/title>/', $file_contents, $matches)) {
+            $file_contents = str_replace($matches[0], '<title>' . $atts['title'] . '</title>', $file_contents);
+          } else {
+            // Title doesn't exist, add it inside the svg tag after the existing attributes
+            if (preg_match('/<svg([^>]*)>/', $file_contents, $matches)) {
+              $file_contents = str_replace($matches[0], '<svg' . $matches[1] . '><title>' . $atts['title'] . '</title>', $file_contents);
+            }
+          }
+        }
+
+        return $file_contents;
+      }
     }
   }
 
