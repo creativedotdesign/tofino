@@ -3,45 +3,38 @@ http://codex.wordpress.org/CSS#WordPress_Generated_Classes */
 
 /* Media alignment */
 .alignnone {
-  margin-left: 0;
-  margin-right: 0;
-  max-width: 100%;
+  @apply mx-0 max-w-full;
 }
 
 .aligncenter {
-  display: block;
-  margin: 0 auto;
-  height: auto;
+  @apply mx-auto block h-auto;
 }
 
 .alignleft,
 .alignright {
-  margin-bottom: .75rem;
+  @apply mb-3;
 }
 
-@screen sm {
-  /* Only float if not on a small device */
-  .alignleft {
-    margin-right: .75rem;
+.alignleft {
+  @apply mr-3 sm:float-left;
+}
 
-
-    @apply float-left;
-  }
-
-  .alignright {
-    margin-left: .75rem;
-    @apply float-right;
-  }
-} 
+.alignright {
+  @apply ml-3 sm:float-right;
+}
 
 /* Enable responsive images in WP content */
 img {
   &[class*='wp-image-'] {
-    @apply w-full h-auto;
+    @apply h-auto w-full md:w-auto;
   }
 }
 
 /* Text meant only for screen readers */
 .screen-reader-text {
   @apply sr-only;
+}
+
+.wp-caption .wp-caption-text {
+  @apply !text-base !font-normal;
 }
