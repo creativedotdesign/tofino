@@ -29,3 +29,4 @@ prettier.config.js
 stylelint.config.ts
 tailwind.config.ts
 vite.config.ts
+vite-env.d.ts
