@@ -3,7 +3,7 @@ node_modules
 .vscode
 .editorconfig
 .env
-.eslintrc.js
+.eslintrc.cjs
 .git
 .github
 .gitignore
@@ -18,14 +18,13 @@ composer.json
 composer.lock
 package.json
 package-lock.json
-postcss.config.ts
+postcss.config.cts
 tsconfig.json
-vite.config.js
 phpcs.xml
 \*.md
 cypress
-cypress.config.js
-prettier.config.js
+cypress.config.ts
+prettier.config.cjs
 stylelint.config.ts
 tailwind.config.ts
 vite.config.ts
