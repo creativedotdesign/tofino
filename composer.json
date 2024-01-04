@@ -22,7 +22,7 @@
     "tofino"
   ],
   "require": {
-    "php": ">=7.4.0",
+    "php": ">=8.2.0",
     "composer/installers": "~v2.2.0",
     "respect/validation": "^2.2.4"
   },
