@@ -14,8 +14,8 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 
 | Prerequisite      | How to check  | How to install                                  |
 | ----------------- | ------------- | ----------------------------------------------- |
-| PHP >= 8.1.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 18.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| PHP >= 8.2.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js >= 20.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | Composer >= 2.0.0 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Installation
@@ -35,7 +35,7 @@ Important: You MUST set `WP_ENVIRONMENT_TYPE` to `development` or `local` in you
 
 ## Features
 
-- [TailwindCSS](http://tailwindcss.com/) (v3.3)
+- [TailwindCSS](http://tailwindcss.com/) (v3.4)
 - Multilingual ready (WPML)
 - Responsive
 - General Options via ACF
@@ -88,7 +88,7 @@ node_modules
 .vscode
 .editorconfig
 .env
-.eslintrc.js
+.eslintrc.cjs
 .git
 .github
 .gitignore
@@ -103,15 +103,16 @@ composer.json
 composer.lock
 package.json
 package-lock.json
-postcss.config.ts
+postcss.config.cts
 tsconfig.json
-vite.config.js
+vite.config.ts
 phpcs.xml
 \*.md
 cypress
-cypress.config.js
-prettier.config.js
+cypress.config.ts
+prettier.config.cjs
 stylelint.config.ts
 tailwind.config.ts
 vite.config.ts
+vite-env.d.ts
 ```
