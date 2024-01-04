@@ -1,23 +1,6 @@
 import { createApp, defineAsyncComponent } from 'vue';
-import { DefaultApolloClient } from '@vue/apollo-composable';
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { createPinia } from 'pinia';
 import { Scripts } from './types';
-
-// HTTP connection to the API
-const httpLink = createHttpLink({
-  // You should use an absolute URL here
-  uri: '/graphql',
-});
-
-// Cache implementation
-const cache = new InMemoryCache();
-
-// Create the apollo client
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-});
 
 export const loadScripts = async (scripts: Scripts) => {
   // Loop through the scripts and import the src
@@ -31,7 +14,6 @@ export const loadScripts = async (scripts: Scripts) => {
             [src]: defineAsyncComponent(() => import(`../vue/${src}.vue`)),
           },
         })
-          .provide(DefaultApolloClient, apolloClient)
           .use(createPinia())
           .mount(el);
 

@@ -1,4 +1,4 @@
 import './vue';
 import './assertions';
-import './baseUrl';
+// import './baseUrl';
 import './checkElementExists';

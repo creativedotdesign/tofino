@@ -16,6 +16,13 @@ jobs:
         with:
           fetch-depth: 2
 
+      # Set up Node.js version 20
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -60,6 +67,14 @@ jobs:
         run: |
           echo "${{ secrets.DEPLOY_KEY }}" > deploy_key
           chmod 600 ./deploy_key
+
+          # Deleting 'dist' folder on the server if it exists
+          echo "Checking and deleting 'dist' folder on the server if it exists..."
+          ssh -i ./deploy_key -o StrictHostKeyChecking=no ${{ steps.dotenv.outputs.SSH_LOGIN }} 'if [ -d "${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.VITE_THEME_PATH }}/dist" ]; then rm -rf ${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.VITE_THEME_PATH }}/dist; fi'
+
+          # Starting rsync operation
+          echo "Starting rsync operation..."
+
           rsync -chav --delete \
             -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
             --exclude-from='.git-ftp-ignore' \

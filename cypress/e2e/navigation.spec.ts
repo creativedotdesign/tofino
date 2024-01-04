@@ -1,13 +1,13 @@
 // Import tailwindcss config file
 import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config.js';
+import tailwindConfig from '../../tailwind.config';
 
 const fullConfig = resolveConfig(tailwindConfig);
 const screens = fullConfig.theme.screens;
 
 describe('Navigation Tests', () => {
   it('Mobile Menu, check functionality', () => {
-    cy.baseUrl();
+    cy.visit('/');
 
     // Mobile Viewport
     const mobileHeight = 812;
@@ -55,7 +55,7 @@ describe('Navigation Tests', () => {
   });
 
   it('Navbar is sticky or not sticky', () => {
-    cy.baseUrl();
+    cy.visit('/');
 
     // Desktop Viewport
     cy.viewport(parseInt(screens.lg, 10), 660);

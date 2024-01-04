@@ -1,26 +1,26 @@
 # lib
 
-Custom php code (that doesn't come from composer) goes here. The following files are base tofino code which you *probably* don't want to edit:
+Custom php code (that doesn't come from composer) goes here. The following files are base tofino code which you _probably_ don't want to edit:
 
-* `AjaxForm.php`
-* `assets.php`
-* `FragmentCache.php`
-* `helpers.php`
-* `init.php`
+- `AjaxForm.php`
+- `assets.php`
+- `FragmentCache.php`
+- `helpers.php`
+- `init.php`
 
 ## Assets
 
 The enqueuing of JS and CSS files happens in this file.
 
-If you need to add a new local JS variable, find the function named ``localize_scripts`` in this file.
+If you need to add a new local JS variable, find the function named `localize_scripts` in this file.
 
 ## Helpers
 
-Helper functions / wrappers to assist with development. Current functions include: ``get_id_by_slug``, ``get_page_name``, ``get_complete_meta`` and sanitize functions used in the Theme Options.
+Helper functions / wrappers to assist with development. Current functions include: `get_id_by_slug`, `get_page_name`, `get_complete_meta` and sanitize functions used in the Theme Options.
 
 ## Init
 
-Theme setup functions. Includes a PHP Version Check, registration of navigation menus, ``add_theme_support``, global content width and hide admin bar on the front end.
+Theme setup functions. Includes a PHP Version Check, registration of navigation menus, `add_theme_support`, global content width and hide admin bar on the front end.
 
 ## Fragment Cache
 
@@ -64,6 +64,10 @@ HTML output:
 ## [svg]
 
 Generate SVG sprite code for files from assets/svgs/sprites
+
+You can add custom Titles and Classes to the SVG via the shortcode attributes.
+
+You can only retireve the Title and Classes from an existing SVG using file, this does not work when using a sprite.
 
 Example usage:
 
@@ -123,7 +127,7 @@ Upload a custom admin logo to be displayed on the login screen.
 
 This logo is also used in the email templates for branding.
 
-You might need to add some additional css to tweak the logo size / position. Add your CSS in to the file ``src/css/base/admin.scss``.
+You might need to add some additional css to tweak the logo size / position. Add your CSS in to the file `src/css/base/admin.scss`.
 
 ## No FOUT
 
@@ -154,4 +158,3 @@ Commonly used in the EU for the Cookie Law text or for general flash messages, p
 ## Social Networks
 
 Add links to various social networks. Remember to add the SVG icon for any new networks you add.
-

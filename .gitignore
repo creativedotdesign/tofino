@@ -6,7 +6,6 @@
 !.env
 !.gitkeep
 !.gitattributes
-!.eslintrc.js
 !.stylelintrc.js
 !.env
 !.prettierrc.js
@@ -14,6 +13,7 @@
 !.github
 !.npmrc
 !.prettierignore
+!.eslintrc.cjs
 
 # ignore node/grunt dependency directories
 node_modules/
@@ -31,6 +31,8 @@ yarn-debug.log
 # cypress
 cypress/videos/
 cypress/screenshots/
+cypress/axe-reports/
+cypress/downloads/
 
 # vitest
 *.ts.snap

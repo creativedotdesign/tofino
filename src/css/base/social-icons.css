@@ -1,12 +1,12 @@
 .social-icons {
-  @apply pl-0 list-none;
+  @apply list-none pl-0;
 
   li {
     @apply inline-block;
   }
 
   svg {
-    @apply w-6 h-6;
+    @apply h-6 w-6;
   }
 
   a {

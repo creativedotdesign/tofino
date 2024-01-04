@@ -1,3 +1,26 @@
+# 4.2.0 (2024-01-04)
+
+### Features
+
+- Remove GraphQL from all vue instances ([522d3d9](https://github.com/creativedotdesign/tofino/commit/522d3d9a96381bbc5b0e3e7a42931572643124b7))
+- Add Copyright, ALT, Media Credit to images ([a3a5a60](https://github.com/creativedotdesign/tofino/commit/a3a5a603d40ad7bcb8c529922d5110d37cb831f1))
+- Add Title and Class support to SVG Files. Fixes [#366](https://github.com/creativedotdesign/tofino/issues/366) ([05c88ad](https://github.com/creativedotdesign/tofino/commit/05c88ad7c2543c78267fe38d3f0f78382ed8a981))
+
+### Bug Fixes
+
+- Convert WP Classes to Tailwind versions. Fixes [#361](https://github.com/creativedotdesign/tofino/issues/361) ([bc3e2bc](https://github.com/creativedotdesign/tofino/commit/bc3e2bc9bb07d4c5add35873e039d719b0a7a2c9))
+
+### Build / CI
+
+- Deps & Build Updates ([e927a3c](https://github.com/creativedotdesign/tofino/commit/e927a3c4d78b79e57982edac2f7678bc352cf74b))
+- Use Node v20 for GH Action ([539392b](https://github.com/creativedotdesign/tofino/commit/539392b81e252ae9c0af290bca2d3cc9465ee051))
+- Allow files to be hashed ([4f73e74](https://github.com/creativedotdesign/tofino/commit/4f73e741d44b78c42d36705fc0f008d238e6d0ce))
+- Delete dist folder on server if it exists before deployment ([bd6c55d](https://github.com/creativedotdesign/tofino/commit/bd6c55d0536b935b99fc104e9f0a649fe7efc4b8))
+
+### Tests
+
+- Convert tests to latest Cypress and TS ([4947415](https://github.com/creativedotdesign/tofino/commit/4947415302f5dc0c7592789cc49f0f68ac576aac))
+
 # 4.1.0 (2023-11-26)
 
 ### Features

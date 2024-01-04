@@ -109,13 +109,13 @@ class Vite
   // Helpers to locate files
   private static function getManifest(): array
   {
-    $file = get_stylesheet_directory() . '/dist/manifest.json';
+    $file = get_stylesheet_directory() . '/dist/.vite/manifest.json';
 
     if (!file_exists($file)) {
       return [];
     }
 
-    $content = @file_get_contents(get_stylesheet_directory() . '/dist/manifest.json');
+    $content = @file_get_contents(get_stylesheet_directory() . '/dist/.vite/manifest.json');
 
     return json_decode($content, true);
   }

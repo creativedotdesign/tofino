@@ -8,9 +8,9 @@
 }
 
 #menu-header-menu {
-  @apply lg:inline-flex mt-10 lg:mt-0;
+  @apply mt-10 lg:mt-0 lg:inline-flex;
 
   .menu-item {
-    @apply lg:mr-4 text-center lg:text-left;
+    @apply text-center lg:mr-4 lg:text-left;
   }
 }
