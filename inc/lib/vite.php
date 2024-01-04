@@ -99,8 +99,8 @@ class Vite
     $tags = '';
 
     foreach (self::cssUrls($entry) as $url) {
-      wp_register_style("tofino/$entry", $url);
-      wp_enqueue_style("tofino/$entry", $url);
+      wp_register_style("tofino-" . sanitize_title($entry), $url);
+      wp_enqueue_style("tofino-" . sanitize_title($entry), $url);
     }
 
     return $tags;

@@ -55,6 +55,7 @@
     "axe-html-reporter": "^2.2.3",
     "cypress": "^13.6.2",
     "cypress-axe": "^1.5.0",
+    "cypress-html-validate": "^6.1.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

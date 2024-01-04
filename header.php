@@ -19,10 +19,10 @@
         <?php echo bloginfo('name'); ?>
       </a>
 
-      <button class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation" data-cy="open-mobile-menu">
+      <button type="button" class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation" data-cy="open-mobile-menu">
         <!-- Hamburger Icon -->
         <span class="w-6 h-6">
-          <?php echo svg(['sprite' => 'icon-hamburger', 'class' => 'w-full h-full']); ?>
+          <?php echo svg(['sprite' => 'icon-hamburger', 'title' => 'Open Menu', 'class' => 'w-full h-full']); ?>
         </span>
 
         <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
@@ -30,10 +30,10 @@
 
       <div class="inactive absolute inset-0 bg-white lg:bg-transparent w-full h-screen lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
         <!-- Close Icon -->
-        <button class="absolute z-10 w-4 h-4 top-5 right-7 lg:hidden js-menu-toggle"
+        <button type="button" class="absolute z-10 w-4 h-4 top-5 right-7 lg:hidden js-menu-toggle"
           data-cy="close-mobile-menu"
         >
-          <?php echo svg(['sprite' => 'icon-close', 'class' => 'w-full h-full']); ?>
+          <?php echo svg(['sprite' => 'icon-close', 'title' => 'Close Menu', 'class' => 'w-full h-full']); ?>
         </button>
 
         <?php if (has_nav_menu('header_navigation')):
