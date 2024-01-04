@@ -1,3 +1,25 @@
+# 4.1.0 (2023-11-26)
+
+### Features
+
+- Add cypress axe testing to tofino [9061e3e](https://github.com/creativedotdesign/tofino/commit/dbc4eedf963f212ab0809c5c9da8f3c4f4e34cd1)
+- Sticky Footer, 404 centered [3ddcc23](https://github.com/creativedotdesign/tofino/commit/3ddcc239f4b05be5bd543030968b61cd56f29ff7)
+- Replace Tailwind hidden class in menu TS code Fixes [#357](https://github.com/creativedotdesign/tofino/issues/357)
+- Change Twitter SVG icon to X Fixes [#358](https://github.com/creativedotdesign/tofino/issues/358)
+- Add TikTok to social media links Fixes [#359](https://github.com/creativedotdesign/tofino/issues/359)
+- Breakup General Options into smaller ACF and use Clone Fixes [#363](https://github.com/creativedotdesign/tofino/issues/363)
+- Vite Dev Server Check environment variable [03e146f](https://github.com/creativedotdesign/tofino/commit/03e146f00dd479c3dbaf8b7372a76afa9b3429a5)
+- Add new helper functions `get_flex_field_by_page_id` and `is_single_module_page` [3e4c201](https://github.com/creativedotdesign/tofino/commit/3e4c201375086a90649c64d2b0d4333a0011e1f8)
+- Remove Contact Form, add ACF for Form Selector. [bc439ad](https://github.com/creativedotdesign/tofino/commit/bc439ad660c237413cb01e2985e3038d65a630f9)
+- Allow multiple alerts [4fe5982](https://github.com/creativedotdesign/tofino/commit/4fe59821affee110497e0ddf530f87eec1ca652e)
+- Add ACF Stubs for Intelephense [5a05aa9](https://github.com/creativedotdesign/tofino/commit/5a05aa94549a6326281988797b2719fee1bb1e8b)
+- Add Thumbnail size images [c4e1124](https://github.com/creativedotdesign/tofino/commit/c4e1124ed7521f47b95c9f3e89a3808337d0f650)
+- BrowserSync on localhost and network addresses [e8bdfb2](https://github.com/creativedotdesign/tofino/commit/e8bdfb2c8caceb11e5ba15a9156fbbb01595e8c5)
+
+### Refactor
+
+- Move script loader into own file [92e8fbe](https://github.com/creativedotdesign/tofino/commit/92e8fbeae25ce83339d745c1121540a6c81992b0)
+
 # 4.0.0 (2022-04-30)
 
 ### Features
