@@ -14,7 +14,7 @@
     "tests": "vitest",
     "tests-ui": "vitest --ui",
     "cy": "cypress open",
-    "cy-run": "npx cypress run",
+    "cy-run": "npx cypress run --browser chrome",
     "ct": "npx cypress open-ct"
   },
   "author": "Daniel Hewes <daniel@creativedotdesign.com>",

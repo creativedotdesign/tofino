@@ -1,6 +1,10 @@
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress';
+import * as dotenv from 'dotenv';
+import setupPlugins from './cypress/plugins/index';
 
-module.exports = defineConfig({
+dotenv.config();
+
+export default defineConfig({
   video: false,
   enableScreenshots: true,
   axeIgnoreContrast: true,
@@ -8,10 +12,14 @@ module.exports = defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
+      setupPlugins(on, config);
     },
+    baseUrl: process.env.VITE_ASSET_URL,
     specPattern: 'cypress/e2e/**/*{spec,cy}.{js,ts}',
   },
+  // env: {
+  //   baseUrl: process.env.VITE_ASSET_URL,
+  // },
   component: {
     setupNodeEvents(on, config) {},
     specPattern: 'src/**/*{spec,cy}.{js,ts}',

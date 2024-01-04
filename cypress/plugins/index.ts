@@ -1,15 +1,12 @@
-const { startDevServer } = require('@cypress/vite-dev-server');
-require('dotenv').config();
-const axios = require('axios');
-const { createHtmlReport } = require('axe-html-reporter');
+import * as dotenv from 'dotenv';
+import axios from 'axios';
+import { createHtmlReport } from 'axe-html-reporter';
 
-module.exports = (on, config) => {
-  on('dev-server:start', (options) => {
-    return startDevServer({ options });
-  });
+dotenv.config();
 
+export default (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) => {
   on('task', {
-    processAccessibilityViolations(violations) {
+    processAccessibilityViolations(violations: any[]) {
       createHtmlReport({
         results: { violations: violations },
         options: {
@@ -31,6 +28,11 @@ module.exports = (on, config) => {
           },
         });
 
+        // Check respose status
+        if (response.status !== 200) {
+          throw new Error('Error fetching sitemap');
+        }
+
         const xml = response.data;
         const locs = [...xml.matchAll(`<loc>(.|\n)*?</loc>`)].map(([loc]) =>
           loc.replace('<loc>', '').replace('</loc>', '')
@@ -39,25 +41,23 @@ module.exports = (on, config) => {
         return locs;
       } catch (error) {
         console.error('Error fetching sitemap:', error);
-        throw error; // Re-throw the error to ensure Cypress is aware of the failure
+        throw error;
       }
     },
   });
 
   on('task', {
-    log(message) {
+    log(message: string) {
       console.log(message);
 
       return null;
     },
-    table(message) {
+    table(message: any) {
       console.table(message);
 
       return null;
     },
   });
-
-  config.env.baseUrl = process.env.VITE_ASSET_URL;
 
   return config;
 };

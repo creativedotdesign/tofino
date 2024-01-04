@@ -1,4 +1,19 @@
-export const screenshotViolations = (violations, pageName, breakpointName) => {
+// Define types for better type-checking and readability
+type Violation = {
+  id: string;
+  nodes: Array<{ target: string[] }>;
+};
+
+type HtmlDetails = {
+  tagName: string | null;
+  textContent: string | null;
+};
+
+export const screenshotViolations = (
+  violations: Violation[],
+  pageName: string,
+  breakpointName: string
+): void => {
   cy.task('log', `Screenshotting violations for ${pageName} at ${breakpointName} breakpoint`);
 
   violations.forEach((violation, index) => {
@@ -54,7 +69,7 @@ export const screenshotViolations = (violations, pageName, breakpointName) => {
   });
 };
 
-const extractHtmlDetails = (htmlString) => {
+const extractHtmlDetails = (htmlString: string): HtmlDetails => {
   // Using regular expressions to find the tag name and text content
   const tagNameRegex = /<(\w+)/;
   const textContentRegex = />([^<]+)</;
@@ -84,12 +99,21 @@ const extractHtmlDetails = (htmlString) => {
   return { tagName, textContent };
 };
 
+// Define a type for the violations parameter
+type ViolationData = {
+  description: string;
+  id: string;
+  impact: string;
+  nodes: number;
+  domNodes: string[];
+};
+
 /**
  * Display the accessibility violation table in the terminal
  * @param violations array of results returned by Axe
  * @link https://github.com/component-driven/cypress-axe#in-your-spec-file
  */
-export const terminalLog = (violations) => {
+export const terminalLog = (violations: ViolationData[]): void => {
   cy.task('log', 'Violations: ' + violations.length);
 
   // pluck specific keys to keep the table readable
@@ -107,6 +131,7 @@ export const terminalLog = (violations) => {
   cy.task('table', violationData);
 };
 
+// Define an enum for severity indicators
 const severityIndicators = {
   minor: '⚪️',
   moderate: '🟡',
@@ -114,7 +139,7 @@ const severityIndicators = {
   critical: '🔴',
 };
 
-export const cypressLog = (violations) => {
+export const cypressLog = (violations: ViolationData[]): void => {
   violations.forEach((violation) => {
     const targets = violation.nodes.map(({ target }) => target);
     const nodes = Cypress.$(targets.join(','));

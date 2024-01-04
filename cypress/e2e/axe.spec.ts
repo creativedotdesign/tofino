@@ -1,19 +1,31 @@
 import 'cypress-axe';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config.ts';
+import tailwindConfig from '../../tailwind.config';
+import { screenshotViolations, cypressLog, terminalLog } from '../support/helpers/index';
+
+// Type for viewport sizes
+type ViewportSize = {
+  name: string;
+  width: number;
+  height: number;
+};
+
+// Type for violation callback
+type ViolationCallback = (violations: any[]) => void; // Replace 'any' with the actual type of violations if known
 
 const fullConfig = resolveConfig(tailwindConfig);
-const screens = fullConfig.theme.screens;
+const screens: { [key: string]: string } = fullConfig.theme.screens;
 
-let allViolations = []; // Holds violations from all pages
+let allViolations: any[] = []; // Replace 'any' with the actual type of violations
 
 before(() => {
   allViolations = []; // Reset before the test suite runs
 });
 
-import { screenshotViolations, cypressLog, terminalLog } from '../support/helpers';
-
-export const createAccessibilityCallback = (pageName, breakpointName) => {
+export const createAccessibilityCallback = (
+  pageName: string,
+  breakpointName: string
+): ViolationCallback => {
   cy.task('log', `Running accessibility checks for ${pageName} at ${breakpointName} breakpoint`);
 
   return (violations) => {
@@ -28,7 +40,7 @@ export const createAccessibilityCallback = (pageName, breakpointName) => {
   };
 };
 
-const viewportSizes = [
+const viewportSizes: ViewportSize[] = [
   {
     name: 'Mobile',
     width: 320,
