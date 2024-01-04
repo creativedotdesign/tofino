@@ -1,8 +1,8 @@
 .alert {
-  @apply p-2 hidden bg-blue-400;
+  @apply hidden bg-blue-400 p-2;
 
   &.bottom {
-    @apply fixed bottom-0 z-10 left-0 right-0;
+    @apply fixed bottom-0 left-0 right-0 z-10;
   }
 
   &.top {

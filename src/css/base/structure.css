@@ -11,7 +11,7 @@ footer {
 }
 
 body {
-  @apply antialiased font-roboto flex flex-col min-h-full;
+  @apply flex min-h-full flex-col font-roboto antialiased;
 
   &.no-fout {
     @apply invisible;
@@ -21,4 +21,8 @@ body {
       @apply visible;
     }
   }
+}
+
+.highlight-violation {
+  @apply outline-1 outline-red-500;
 }

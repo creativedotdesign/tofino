@@ -69,6 +69,7 @@
     "prettier-plugin-tailwindcss": "^0.5.10",
     "stylelint": "^16.1.0",
     "stylelint-config-recommended": "^14.0.0",
+    "stylelint-prettier": "^5.0.0",
     "ts-node": "^10.9.2",
     "vite": "^5.0.10",
     "vite-plugin-browser-sync": "^2.0.1",
