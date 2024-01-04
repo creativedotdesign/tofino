@@ -1,4 +1,4 @@
-src
+/src/
 node_modules
 .vscode
 .editorconfig
@@ -21,8 +21,8 @@ package-lock.json
 postcss.config.cts
 tsconfig.json
 phpcs.xml
-\*.md
-cypress
+**/*.md
+/cypress/
 cypress.config.ts
 prettier.config.cjs
 stylelint.config.ts
