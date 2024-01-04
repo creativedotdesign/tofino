@@ -27,9 +27,6 @@ export default ({ mode }: { mode: string }) => {
         },
         external: ['jquery'],
         output: {
-          entryFileNames: `[name].js`,
-          chunkFileNames: `[name].js`,
-          assetFileNames: `[name].[ext]`,
           globals: {
             jquery: 'jQuery',
           },
