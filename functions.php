@@ -17,6 +17,7 @@ $tofino_includes = [
   "inc/lib/helpers.php",
   "inc/lib/clean.php",
   "inc/lib/shortcodes.php",
+  "inc/lib/ACFAutosize.php",
 ];
 
 foreach ($tofino_includes as $file) {
