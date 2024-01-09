@@ -71,13 +71,20 @@ function localize_scripts()
       }
     }
 
-    wp_localize_script('tofino', 'tofinoJS', [
+    $data = [
       'ajaxUrl' => admin_url('admin-ajax.php'),
       'nextNonce' => wp_create_nonce('next_nonce'),
       'cookieExpires' => isset($expires) ? $expires : null,
       'themeUrl' => get_template_directory_uri(),
       'siteURL' => site_url(),
-    ]);
+    ];
+
+    // Add WPML language code to JS
+    if (function_exists('icl_object_id')) {
+      $data['language'] = apply_filters('wpml_current_language', null);
+    }
+
+    wp_localize_script('tofino', 'tofinoJS', $data);
   }
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
