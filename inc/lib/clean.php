@@ -172,17 +172,17 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\remove_extra_markup');
 
 
 // Defer scripts
-if (!is_admin() && $GLOBALS['pagenow'] != 'wp-login.php') {
-  function add_defer_attribute($tag, $handle)
-  {
-    if ($handle === 'tofino' || $handle === 'form-builder') {
-      return str_replace('script src', 'script type="module" src', $tag);
-    } else {
-      return str_replace(' src', ' defer src', $tag);
-    }
+function add_defer_attribute($tag, $handle)
+{
+  if (str_starts_with($handle, 'tofino') || $handle === 'form-builder') {
+    return str_replace('script src', 'script type="module" src', $tag);
+  } else if (!is_admin() && $GLOBALS['pagenow'] != 'wp-login.php') {
+    return str_replace(' src', ' defer src', $tag);
+  } else {
+    return $tag;
   }
-  add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
 }
+add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
 
 
 // Clean nav classes

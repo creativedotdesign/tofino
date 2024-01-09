@@ -9,30 +9,11 @@
 
 namespace Tofino\Assets;
 
-/**
- * Load admin styles
- *
- * Register and enqueue the stylesheet used in the admin area.
- * Filemtime added as a querystring to ensure correct version is sent to the client.
- * Function added to both the login_head (Login page) and admin_head (Admin pages)
- *
- * @since 1.0.0
- * @return void
- */
-function admin_styles()
-{
-  wp_register_style('tofino/css/admin', get_stylesheet_directory_uri() . '/dist/admin.css', [], false);
-  wp_enqueue_style('tofino/css/admin');
-}
-add_action('login_head', __NAMESPACE__ . '\\admin_styles');
-add_action('admin_head', __NAMESPACE__ . '\\admin_styles');
-
 
 /**
  * Main JS script
  *
  * Register and enqueue the mains js used in front end.
- * Filemtime added as a querystring to ensure correct version is sent to the client.
  *
  * @since 1.1.0
  * @return void
@@ -93,18 +74,17 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
 /**
  * Load admin scripts
  *
- * Register and enqueue the scripts used in the admin area.
- * Filemtime added as a querystring to ensure correct version is sent to the client.
+ * Register and enqueue the scripts and css used in the admin area.
  *
  * @since 1.0.0
  * @return void
  */
 function admin_scripts()
 {
-  wp_register_script('tofino/js/admin',  get_stylesheet_directory_uri() . '/dist/admin.js', [], null);
-  wp_enqueue_script('tofino/js/admin');
+  \Tofino\Vite::useVite('js/admin.ts');
 }
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
+add_action('login_head', __NAMESPACE__ . '\\admin_scripts');
 
 
 /**
