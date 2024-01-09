@@ -19,8 +19,8 @@ namespace Tofino\Init;
 function php_version_check()
 {
   $php_version = phpversion();
-  if (version_compare($php_version, '8.2.0', '<')) {
-    wp_die('<div class="error notice"><p>' . __('PHP version >= 8.2.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
+  if (version_compare($php_version, '8.1.0', '<')) {
+    wp_die('<div class="error notice"><p>' . __('PHP version >= 8.1.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
   }
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
@@ -281,7 +281,7 @@ function dashboard_widgets()
 
   $widget_data = get_field('dashboard_widget', 'general-options');
 
-  if ($widget_data['enabled']) {
+  if ($widget_data && array_key_exists('enabled', $widget_data) && $widget_data['enabled']) {
     // Add the widget
     wp_add_dashboard_widget(
       $widget_id,
