@@ -125,19 +125,8 @@ add_action('init', __NAMESPACE__ . '\\correct_image_sizes');
 // Automatically populate image attachment metadata
 function populate_img_meta($post_id) {
   // Only run if the attachment is an image
-  if (strpos(get_post_mime_type($post_id), 'image') === false) {
+  if (get_post_mime_type($post_id) !== 'image/jpeg') {
     return;
-  }
-
-  // Get EXIF data from the attachment file
-  $exif = exif_read_data(get_attached_file($post_id));
-
-  if (array_key_exists('Copyright', $exif)) {
-    $exif_credit = wp_slash(wp_strip_all_tags($exif['Copyright']));
-  }
-
-  if (array_key_exists('ImageDescription', $exif)) {
-    $exif_img_alt = wp_slash(wp_strip_all_tags($exif['ImageDescription']));
   }
 
   // set post title to be the file name
@@ -154,14 +143,27 @@ function populate_img_meta($post_id) {
  
   wp_update_post($attachment_post);
 
-  // Update the Media Credit
-  if (!empty($exif_credit)) {
-    update_field('media_credit', $exif_credit, $post_id);
-  }
+  // Get EXIF data from the attachment file
+  $exif = exif_read_data(get_attached_file($post_id));
 
-  // Update the alternative text, which is stored in post meta table
-  if (!empty($exif_img_alt)) {
-    update_post_meta($post_id, '_wp_attachment_image_alt', $exif_img_alt);
+  if ($exif) {
+    if (array_key_exists('Copyright', $exif)) {
+      $exif_credit = wp_slash(wp_strip_all_tags($exif['Copyright']));
+  
+      // Update the Media Credit
+      if (!empty($exif_credit)) {
+        update_field('media_credit', $exif_credit, $post_id);
+      }
+    }
+  
+    if (array_key_exists('ImageDescription', $exif)) {
+      $exif_img_alt = wp_slash(wp_strip_all_tags($exif['ImageDescription']));
+  
+      // Update the alternative text, which is stored in post meta table
+      if (!empty($exif_img_alt)) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', $exif_img_alt);
+      }
+    }
   }
 }
 add_filter('add_attachment', __NAMESPACE__ . '\\populate_img_meta');
