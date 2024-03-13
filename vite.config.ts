@@ -5,6 +5,7 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import VitePluginBrowserSync from 'vite-plugin-browser-sync';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import path from 'path';
+import vue from '@vitejs/plugin-vue';
 
 export default ({ mode }: { mode: string }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
@@ -34,6 +35,7 @@ export default ({ mode }: { mode: string }) => {
       },
     },
     plugins: [
+      vue(),
       eslintPlugin(),
       chunkSplitPlugin({
         strategy: 'unbundle',
