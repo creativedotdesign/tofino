@@ -181,7 +181,7 @@ function show_maintenance_message()
     echo '<div class="error notice"><p><strong>' . __('Maintenance Mode', 'tofino') . '</strong> ' . get_field('maintenance_mode_text', 'option') . '</p></div>';
 
     if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
-      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_field('maintenance_mode_text', 'option') . '</p><button type="button">' . __('I understand', 'tofino') . '</button></div>';
+      echo '<div class="maintenance-mode-alert"><div><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_field('maintenance_mode_text', 'option') . '</p><button type="button">' . __('I understand', 'tofino') . '</button></div></div>';
     }
   }
 }

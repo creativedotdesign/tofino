@@ -1,12 +1,20 @@
 .maintenance-mode-alert {
-  @apply fixed inset-0 z-[99999] bg-red-600 p-5 text-center text-white;
+  @apply fixed inset-0 z-[99999] flex justify-center bg-red-600 p-5 text-center text-white;
+
+  div {
+    @apply self-center;
+  }
 
   h1 {
     @apply text-white;
   }
 
   p {
-    @apply text-sm;
+    @apply text-lg;
+  }
+
+  button {
+    @apply border-none bg-white px-4 py-2 font-medium uppercase;
   }
 }
 
