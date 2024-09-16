@@ -341,19 +341,10 @@ add_filter('excerpt_length', __NAMESPACE__ . '\\truncate_excerpt_length');
 // Clear cache on options save
 function clear_cache_options_save($post_id)
 {
-  $screen = get_current_screen();
-
-  if (strpos($screen->id, 'general-options') == true && $post_id == 'general-options') {
-    // Clear object cache
-    wp_cache_flush();
-
-    // Check if class WpeCommon exists
-    if (class_exists('\WpeCommon')) {
-      error_log('WpeCommon exists');
-
-      WpeCommon::purge_memcached();
-      WpeCommon::purge_varnish_cache();
-    }
-  }
+  // Check if it's an options page
+	if ($post_id === 'options') {
+		// Flush the object cache
+		wp_cache_flush();
+	}
 }
 add_action('acf/save_post', __NAMESPACE__ . '\\clear_cache_options_save', 20);
