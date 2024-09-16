@@ -8,7 +8,7 @@ if ($data) : ?>
       <span><?php echo $data['message']; ?></span>
 
       <button type="button" class="w-5 h-5 js-close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true" class="text-white"><?php echo svg(['sprite' => 'icon-close', 'class' => 'w-full current-color h-full']); ?></span>
+        <span aria-hidden="true" class="text-white"><?php echo svg(['sprite' => 'close', 'class' => 'w-full current-color h-full']); ?></span>
         <span class="sr-only"><?php _e('Close', 'tofino'); ?></span>
       </button>
     </div>

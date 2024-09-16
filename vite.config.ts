@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig, loadEnv } from 'vite';
 import eslintPlugin from 'vite-plugin-eslint';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import { svgSpritemap } from 'vite-plugin-svg-spritemap';
 import VitePluginBrowserSync from 'vite-plugin-browser-sync';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import path from 'path';
@@ -62,10 +62,10 @@ export default ({ mode }: { mode: string }) => {
           },
         },
       }),
-      createSvgIconsPlugin({
-        iconDirs: [path.resolve(process.cwd(), 'src/sprite')],
-        symbolId: 'icon-[name]',
-        customDomId: 'tofino-sprite',
+      svgSpritemap({
+        pattern: 'src/sprite/*.svg',
+        filename: 'sprite.svg',
+        prefix: 'icon',
       }),
     ],
     define: { __VUE_PROD_DEVTOOLS__: false },

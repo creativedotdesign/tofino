@@ -1,7 +1,7 @@
 // Import Font loader
 import * as WebFont from 'webfontloader';
 import { WebFontInterface } from '@/js/types';
-import 'virtual:svg-icons-register';
+
 import { loadScripts } from '@/js/scriptLoader';
 import { Scripts } from '@/js/types';
 

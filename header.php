@@ -22,7 +22,7 @@
       <button type="button" class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation" data-cy="open-mobile-menu">
         <!-- Hamburger Icon -->
         <span class="w-6 h-6">
-          <?php echo svg(['sprite' => 'icon-hamburger', 'title' => 'Open Menu', 'class' => 'w-full h-full']); ?>
+          <?php echo svg(['sprite' => 'hamburger', 'title' => 'Open Menu', 'class' => 'w-full h-full']); ?>
         </span>
 
         <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
@@ -33,7 +33,7 @@
         <button type="button" class="absolute z-10 w-4 h-4 top-5 right-7 lg:hidden js-menu-toggle"
           data-cy="close-mobile-menu"
         >
-          <?php echo svg(['sprite' => 'icon-close', 'title' => 'Close Menu', 'class' => 'w-full h-full']); ?>
+          <?php echo svg(['sprite' => 'close', 'title' => 'Close Menu', 'class' => 'w-full h-full']); ?>
         </button>
 
         <?php if (has_nav_menu('header_navigation')):

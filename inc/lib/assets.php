@@ -167,3 +167,15 @@ function populate_img_meta($post_id) {
   }
 }
 add_filter('add_attachment', __NAMESPACE__ . '\\populate_img_meta');
+
+
+// Add SVG sprite to footer
+function add_svg_sprite_to_footer()
+{
+  $svg_sprite = get_template_directory() . '/dist/sprite.svg';
+
+  if (file_exists($svg_sprite)) {
+    echo file_get_contents($svg_sprite);
+  }
+}
+add_action('wp_footer', __NAMESPACE__ . '\\add_svg_sprite_to_footer');
