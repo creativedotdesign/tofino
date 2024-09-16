@@ -49,17 +49,17 @@ export default ({ mode }: { mode: string }) => {
       }),
       VitePluginBrowserSync({
         dev: {
-        bs: {
-          online: true,
-          notify: false,
-          proxy: {
-            target: process.env.VITE_ASSET_URL,
-            ws: true,
-            proxyReq: [
-              (proxyReq) => {
-                proxyReq.setHeader('Browser-Sync', true);
-              },
-            ],
+          bs: {
+            online: true,
+            notify: false,
+            proxy: {
+              target: process.env.VITE_ASSET_URL,
+              ws: true,
+              proxyReq: [
+                (proxyReq) => {
+                  proxyReq.setHeader('Browser-Sync', true);
+                },
+              ],
             },
           },
         },
