@@ -48,6 +48,7 @@ export default ({ mode }: { mode: string }) => {
         },
       }),
       VitePluginBrowserSync({
+        dev: {
         bs: {
           online: true,
           notify: false,
@@ -59,6 +60,7 @@ export default ({ mode }: { mode: string }) => {
                 proxyReq.setHeader('Browser-Sync', true);
               },
             ],
+            },
           },
         },
       }),
