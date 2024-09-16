@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig, loadEnv } from 'vite';
-import eslintPlugin from 'vite-plugin-eslint';
+import eslintPlugin from '@nabla/vite-plugin-eslint';
 import { svgSpritemap } from 'vite-plugin-svg-spritemap';
 import VitePluginBrowserSync from 'vite-plugin-browser-sync';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
