@@ -97,7 +97,7 @@ class AjaxForm
   public function getRecipient($theme_option_field)
   {
     if ($theme_option_field) {
-      $contact_form_settings = get_field($theme_option_field, 'general-options');
+      $contact_form_settings = get_field($theme_option_field, 'option');
 
       if ($contact_form_settings) {
         $recipient = $contact_form_settings['to_address']; // Email address from contact form options

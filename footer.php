@@ -17,7 +17,7 @@
         <!-- Close Nav Menu --><?php
       endif;
 
-      $footer_text = get_field('footer_text', 'general-options');
+      $footer_text = get_field('footer_text', 'option');
       if ($footer_text) :
         echo do_shortcode($footer_text); // Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
       endif; ?>

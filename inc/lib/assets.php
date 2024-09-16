@@ -39,7 +39,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
 function localize_scripts()
 {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    $alerts = get_field('alerts', 'general-options');
+    $alerts = get_field('alerts', 'option');
 
     if ($alerts) {
       $expires = [];

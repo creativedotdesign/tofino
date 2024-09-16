@@ -21,33 +21,32 @@
             "maxlength": "",
             "rows": 4,
             "placeholder": "",
-            "new_lines": ""
+            "new_lines": "",
+            "wpml_cf_preferences": 2
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "options_page",
                 "operator": "==",
-                "value": "post"
+                "value": "footer"
             }
         ]
     ],
     "menu_order": 0,
     "position": "normal",
-    "style": "default",
+    "style": "seamless",
     "label_placement": "left",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfe_display_title": "",
-    "acfe_autosync": [
-        "json"
-    ],
-    "acfe_form": 0,
-    "acfe_meta": "",
-    "acfe_note": "",
-    "modified": 1698684435
+    "acfml_field_group_mode": "translation",
+    "show_in_graphql": 0,
+    "graphql_field_name": "footer",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "modified": 1726510975
 }

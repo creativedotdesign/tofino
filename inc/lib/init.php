@@ -93,7 +93,7 @@ function add_post_name_body_class(array $classes)
   }
 
   // Add no-fount class if theme option set to true
-  if (get_field('no_fout', 'general-options')) {
+  if (get_field('no_fout', 'option')) {
     $classes[] = 'no-fout';
   }
 
@@ -125,28 +125,6 @@ add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');
 
 
 /**
- * Add general options page
- *
- * Add the link to the admin menu.
- *
- * @since 4.0.0
- * @return void
- */
-function acf_add_options_pages()
-{
-  if (function_exists('acf_add_options_page')) {
-    acf_add_options_page([
-      'page_title'  => 'General Options',
-      'menu_title'  => 'General Options',
-      'menu_slug'   => 'general-options',
-      'post_id'     => 'general-options',
-    ]);
-  }
-}
-add_action('acf/init', __NAMESPACE__ . '\\acf_add_options_pages');
-
-
-/**
  * Admin login logo
  *
  * Displays the logo uplaoded via theme options to the login screen.
@@ -156,7 +134,7 @@ add_action('acf/init', __NAMESPACE__ . '\\acf_add_options_pages');
  */
 function admin_login_logo()
 {
-  $admin_logo = get_field('login_logo', 'general-options');
+  $admin_logo = get_field('login_logo', 'option');
 
   if ($admin_logo) {
     echo '<style type="text/css">.login h1 a { background-image: url(' . $admin_logo . '); padding-bottom: 30px; }</style>';
@@ -168,7 +146,7 @@ add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
 // Show or hide the admin bar
 function admin_bar()
 {
-  if (!get_field('admin_bar', 'general-options')) {
+  if (!get_field('admin_bar', 'option')) {
     add_filter('show_admin_bar', '__return_false');
   }
 }
@@ -187,11 +165,11 @@ add_action('init', __NAMESPACE__ . '\\admin_bar');
  */
 function show_maintenance_message()
 {
-  if (get_field('maintenance_mode', 'general-options')) {
-    echo '<div class="error notice"><p><strong>' . __('Maintenance Mode', 'tofino') . '</strong> ' . get_field('maintenance_mode_text', 'general-options') . '</p></div>';
+  if (get_field('maintenance_mode', 'option')) {
+    echo '<div class="error notice"><p><strong>' . __('Maintenance Mode', 'tofino') . '</strong> ' . get_field('maintenance_mode_text', 'option') . '</p></div>';
 
     if (!isset($_COOKIE['tofino_maintenance_alert_dismissed'])) {
-      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_field('maintenance_mode_text', 'general-options') . '</p><button type="button">' . __('I understand', 'tofino') . '</button></div>';
+      echo '<div class="maintenance-mode-alert"><h1>' . __('Maintenance Mode', 'tofino') . '</h1><p>' . get_field('maintenance_mode_text', 'option') . '</p><button type="button">' . __('I understand', 'tofino') . '</button></div>';
     }
   }
 }
@@ -209,7 +187,7 @@ add_action('admin_notices', __NAMESPACE__ . '\\show_maintenance_message');
  */
 function alerts($position)
 {
-  $alerts = get_field('alerts', 'general-options');
+  $alerts = get_field('alerts', 'option');
 
   if ($alerts) {
     $i = 1;
@@ -243,7 +221,7 @@ function alerts($position)
  */
 function menu_sticky()
 {
-  if (get_field('sticky_menu', 'general-options') == 1) {
+  if (get_field('sticky_menu', 'option') == 1) {
     return 'sticky-top';
   }
 }
@@ -260,7 +238,7 @@ function menu_sticky()
  */
 function add_menu_sticky_class($classes)
 {
-  if (get_field('sticky_menu', 'general-options') == 1) {
+  if (get_field('sticky_menu', 'option') == 1) {
     $classes[] = 'menu-fixed';
   }
   return $classes;
@@ -279,7 +257,7 @@ function dashboard_widgets()
 {
   $widget_id = 'tofino_theme_widget';
 
-  $widget_data = get_field('dashboard_widget', 'general-options');
+  $widget_data = get_field('dashboard_widget', 'option');
 
   if ($widget_data && array_key_exists('enabled', $widget_data) && $widget_data['enabled']) {
     // Add the widget
