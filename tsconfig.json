@@ -12,7 +12,6 @@
       "@/*": ["./src/*"]
     },
     "types": [
-      "vite/client", // if using vite-plugin-typescript
       "jest", // if using jest
       "node" // if using node
     ],
