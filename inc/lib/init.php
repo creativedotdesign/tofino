@@ -109,6 +109,18 @@ function add_post_name_body_class(array $classes)
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
 
 
+
+function admin_body_class(string $classes)
+{
+  if (get_field('hide_preview_button', 'option')) {
+    $classes .= ' hide-preview-button';
+  }
+
+  return $classes;
+}
+add_filter('admin_body_class', __NAMESPACE__ . '\\admin_body_class');
+
+
 /**
  * Add Google Tag Manager function call which is 
  * supposed to be placed after opening body tag.

@@ -9,3 +9,7 @@
     @apply text-sm;
   }
 }
+
+.wp-admin.hide-preview-button #submitpost #preview-action {
+  @apply hidden;
+}
