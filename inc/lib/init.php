@@ -323,7 +323,7 @@ add_filter('option_uploads_use_yearmonth_folders', '__return_false', 100);
 // Responsive Embed
 function video_embed_wrapper($html)
 {
-  $html = '<div class="relative my-6 aspect-w-16 aspect-h-9">' . $html . '</div>';
+  $html = '<div class="relative my-6 aspect-video">' . $html . '</div>';
 
   return $html;
 }
