@@ -10,6 +10,10 @@ Javascript files belong here.
 
 Scripts will be minified when `npm run build` is run.
 
+## /vue
+
+Vue components belong here.
+
 ## /css
 
 CSS files go here. Similarly to scripts, these will not automatically be added to `/dist`. To add your styles into `dist/css/main.css`, add your file name into `main.css`.
