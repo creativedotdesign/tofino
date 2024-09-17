@@ -72,6 +72,15 @@ if (!class_exists('acf')) {
 }
 
 
+// Check for ACF Extended Plugin.
+function check_acf_extended_plugin() {
+  if (!is_plugin_active('acf-extended/acf-extended.php')) {
+    add_action('admin_notices', 'missing_acf_extended_plugin_notice');
+  }
+}
+add_action('admin_init', 'check_acf_extended_plugin');
+
+
 // Admin notice for missing composer autoload.
 function composer_error_notice()
 {
@@ -90,4 +99,10 @@ function missing_dist_error_notice()
 function missing_acf_plugin_notice()
 {
   echo '<div class="error notice"><p><strong>' . __('Missing Plugin', 'tofino') . '</strong> - ' . __('Advanced Custom Fields Pro plugin not found. Please install it.', 'tofino') . '</p></div>';
+}
+
+
+// Admin notice for missing ACF Extended plugin.
+function missing_acf_extended_plugin_notice() {
+  echo '<div class="error notice"><p><strong>' . __('Missing Plugin', 'tofino') . '</strong> - ' . __('Advanced Custom Fields: Extended plugin not found. Please install it.', 'tofino') . '</p></div>';
 }
