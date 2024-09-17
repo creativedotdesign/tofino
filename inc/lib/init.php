@@ -348,3 +348,36 @@ function clear_cache_options_save($post_id)
 	}
 }
 add_action('acf/save_post', __NAMESPACE__ . '\\clear_cache_options_save', 20);
+
+
+// Add excerpt to pages always
+function always_show_edit_post_show_excerpt() {
+  $user = wp_get_current_user();
+  $unchecked = get_user_meta($user->ID, 'metaboxhidden_post', true);
+
+  if (!empty($unchecked)) {
+    $key = array_search('postexcerpt', $unchecked);
+
+    if (false !== $key) {
+      array_splice($unchecked, $key, 1);
+      update_user_meta($user->ID, 'metaboxhidden_post', $unchecked);
+    }
+  }
+}
+add_action('admin_init', __NAMESPACE__ . '\\always_show_edit_post_show_excerpt', 10);
+
+
+// Add excerpt to pages always
+function show_excerpt_meta_box($hidden, $screen) {
+  if ('post' == $screen->base) {
+    foreach ($hidden as $key => $value) {
+      if ('postexcerpt' == $value) {
+        unset($hidden[$key]);
+        break;
+      }
+    }
+  }
+
+  return $hidden;
+}
+add_filter('default_hidden_meta_boxes', __NAMESPACE__ . '\\show_excerpt_meta_box', 10, 2);
