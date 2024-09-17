@@ -1,0 +1,107 @@
+{
+    "key": "group_66e8b2aebe427",
+    "title": "Page Template",
+    "fields": [
+        {
+            "key": "field_66e8b2afb1015",
+            "label": "Page Template",
+            "name": "page_template",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 1,
+            "choices": {
+                "": "Custom",
+                "[\"general_content\",\"form\"]": "Level 2",
+                "[\"form\"]": "Level 3"
+            },
+            "default_value": "custom",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "show_in_graphql": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": ""
+        },
+        {
+            "key": "field_66e8b39fc2148",
+            "label": "Update Layout",
+            "name": "update_layout",
+            "aria-label": "",
+            "type": "acfe_button",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_66e8b2afb1015",
+                        "operator": "!=",
+                        "value": ""
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "graphql_field_name": "updateLayout",
+            "wpml_cf_preferences": 2,
+            "button_value": "Update Layout",
+            "button_type": "button",
+            "button_class": "button button-secondary",
+            "button_id": "",
+            "button_before": "",
+            "button_after": "",
+            "button_ajax": 0,
+            "allow_in_bindings": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            },
+            {
+                "param": "post_status",
+                "operator": "==",
+                "value": "draft"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfml_field_group_mode": "translation",
+    "acfe_form": 0,
+    "show_in_graphql": 0,
+    "graphql_field_name": "pageTemplate",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1726602541
+}

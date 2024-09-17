@@ -21,3 +21,7 @@
 .wp-admin.hide-preview-button #submitpost #preview-action {
   @apply hidden;
 }
+
+#post-body-content #acf_after_title-sortables:has(#acf-group_66e8b2aebe427) {
+  @apply mt-0;
+}
