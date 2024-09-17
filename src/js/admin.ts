@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Check if we are on a post edit screen
-  if (document.querySelector('.post-php') && typeof acf !== 'undefined') {
+  if (document.querySelector('.wp-admin form#post')) {
     const layouts = acf.getFields({
       name: 'page_template',
     });
