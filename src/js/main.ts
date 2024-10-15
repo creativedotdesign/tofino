@@ -35,6 +35,11 @@ export default {
         src: 'menu',
         type: 'ts',
       },
+      {
+        selector: '[data-scroll-reveal]', // Menu scroll reveal
+        src: 'menu-scroll-reveal',
+        type: 'ts',
+      },
     ];
 
     // Load the scripts

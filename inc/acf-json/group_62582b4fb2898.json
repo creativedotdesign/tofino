@@ -17,7 +17,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_653fd8c7d84a0",
@@ -61,7 +62,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_62582c728641d",
@@ -105,7 +107,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_64cbca686cd2f",
@@ -149,7 +152,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_62582eb26d922",
@@ -280,6 +284,31 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_670ea264b85c2",
+            "label": "Menu Scroll Reveal",
+            "name": "menu_scroll_reveal",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Hide the sticky menu while scrolling down, reveal it when scrolling up.",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "menuScrollReveal",
+            "graphql_non_null": 0
+        },
+        {
             "key": "field_62583945a5b17",
             "label": "Dashboard Widget",
             "name": "dashboard_widget",
@@ -294,6 +323,11 @@
                 "id": ""
             },
             "layout": "block",
+            "acfe_seamless_style": 0,
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
             "sub_fields": [
                 {
                     "key": "field_6258394fa5b18",
@@ -356,12 +390,7 @@
                     "ui_on_text": "",
                     "ui_off_text": ""
                 }
-            ],
-            "acfe_seamless_style": 0,
-            "acfe_group_modal": 0,
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
+            ]
         },
         {
             "key": "field_625830820081b",
@@ -378,7 +407,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_6258308a0081c",
@@ -431,7 +461,11 @@
         "json"
     ],
     "acfe_form": 0,
+    "show_in_graphql": 1,
+    "graphql_field_name": "generalOptions",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1698685152
+    "modified": 1729012421
 }
