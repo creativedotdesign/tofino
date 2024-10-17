@@ -1,0 +1,15 @@
+.module-iframe iframe {
+  @apply hidden h-screen w-full opacity-0;
+
+  &.active {
+    @apply block;
+  }
+
+  &.loaded {
+    @apply opacity-100;
+  }
+}
+
+iframe.iframe-col-app {
+  @apply relative min-h-0;
+}

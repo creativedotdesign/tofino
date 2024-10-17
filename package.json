@@ -79,7 +79,9 @@
     "vitest": "^1.1.1"
   },
   "dependencies": {
+    "@iframe-resizer/parent": "^5.3.1",
     "body-scroll-lock": "^3.1.5",
+    "iframe-resizer": "^5.3.1",
     "pinia": "^2.1.7",
     "tailwindcss": "^3.4.0",
     "vue": "^3.4.4",

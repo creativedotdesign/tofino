@@ -7,4 +7,6 @@
 @import 'base/social-icons';
 @import 'base/structure';
 
+@import 'components/iframe';
+
 @import 'tailwindcss/utilities';
