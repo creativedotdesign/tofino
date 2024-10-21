@@ -126,9 +126,7 @@
                             },
                             "wpml_cf_preferences": 1,
                             "choices": {
-                                "": "Select",
-                                "form": "Form",
-                                "general_content": "General Content"
+                                "": "Select"
                             },
                             "default_value": false,
                             "return_format": "value",
@@ -168,13 +166,20 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0,
+    "show_in_rest": false,
     "acfe_display_title": "",
     "acfe_autosync": [
         "json"
     ],
     "acfe_form": 0,
+    "show_in_graphql": 0,
+    "graphql_field_name": "layouts",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1726606286
+    "modified": 1726758744,
+    "acfe_categories": {
+        "options": "Options"
+    }
 }

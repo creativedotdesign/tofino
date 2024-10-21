@@ -1,4 +1,6 @@
 <?php
+// Check for dependencies
+require_once "inc/lib/dependencies.php";
 
 /**
  * Tofino includes
@@ -19,15 +21,12 @@ $tofino_includes = [
   "inc/lib/shortcodes.php",
   "inc/lib/ACFAutosize.php",
   "inc/lib/layouts.php",
+  "inc/lib/DisablePostType.php",
 ];
 
 foreach ($tofino_includes as $file) {
   if (!$filepath = locate_template($file)) {
     trigger_error(sprintf(__('Error locating %s for inclusion', 'tofino'), $file), E_USER_ERROR);
-  }
-
-  if (!class_exists('acf') && $GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    wp_die(missing_acf_plugin_notice(), __('An error occured.', 'tofino'));
   }
 
   if (class_exists('acf')) {
@@ -36,74 +35,5 @@ foreach ($tofino_includes as $file) {
 }
 unset($file, $filepath);
 
-
-/**
- * Composer dependencies
- *
- * External dependencies are defined in the composer.json and autoloaded.
- * Use 'composer dump-autoload -o' after adding new files.
- *
- */
-if (file_exists(get_template_directory() . '/vendor/autoload.php')) { // Check composer autoload file exists. Result is cached by PHP.
-  require_once 'vendor/autoload.php';
-} else {
-  if (is_admin()) {
-    add_action('admin_notices', composer_error_notice());
-  } else {
-    wp_die(composer_error_notice(), __('An error occured.', 'tofino'));
-  }
-}
-
-
-// Check for missing dist directory. Result is cached by PHP.
-if (!is_dir(get_template_directory() . '/dist')) {
-  if (is_admin()) {
-    add_action('admin_notices', 'missing_dist_error_notice');
-  } else {
-    wp_die(missing_dist_error_notice(), __('An error occured.', 'tofino'));
-  }
-}
-
-
-// Check for ACF Plugin.
-if (!class_exists('acf')) {
-  if (is_admin()) {
-    add_action('admin_notices', 'missing_acf_plugin_notice');
-  }
-}
-
-
-// Check for ACF Extended Plugin.
-function check_acf_extended_plugin() {
-  if (!is_plugin_active('acf-extended/acf-extended.php')) {
-    add_action('admin_notices', 'missing_acf_extended_plugin_notice');
-  }
-}
-add_action('admin_init', 'check_acf_extended_plugin');
-
-
-// Admin notice for missing composer autoload.
-function composer_error_notice()
-{
-  echo '<div class="error notice"><p><strong>' . __('Theme Error', 'tofino') . '</strong> - ' . __('Composer autoload file not found. Run composer install on the command line.', 'tofino') . '</p></div>';
-}
-
-
-// Admin notice for missing dist directory.
-function missing_dist_error_notice()
-{
-  echo '<div class="error notice"><p><strong>' . __('Theme Error', 'tofino') . '</strong> - ' . __('/dist directory not found. You probably want to run npm install and npm run prod on the command line.', 'tofino') . '</p></div>';
-}
-
-
-// Admin notice for missing ACF plugin.
-function missing_acf_plugin_notice()
-{
-  echo '<div class="error notice"><p><strong>' . __('Missing Plugin', 'tofino') . '</strong> - ' . __('Advanced Custom Fields Pro plugin not found. Please install it.', 'tofino') . '</p></div>';
-}
-
-
-// Admin notice for missing ACF Extended plugin.
-function missing_acf_extended_plugin_notice() {
-  echo '<div class="error notice"><p><strong>' . __('Missing Plugin', 'tofino') . '</strong> - ' . __('Advanced Custom Fields: Extended plugin not found. Please install it.', 'tofino') . '</p></div>';
-}
+// Disable Gutenberg (only works on functions.php)
+add_filter('use_block_editor_for_post', '__return_false');

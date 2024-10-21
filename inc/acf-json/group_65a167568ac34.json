@@ -3,6 +3,31 @@
     "title": "Admin",
     "fields": [
         {
+            "key": "field_66eadfd454ff0",
+            "label": "Disable Post Type",
+            "name": "disable_post_type",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Removes the default post type.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "disablePostType",
+            "graphql_non_null": 0
+        },
+        {
             "key": "field_66e86caf93f4e",
             "label": "Hide Preview Button",
             "name": "hide_preview_button",
@@ -26,6 +51,56 @@
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "previewButton",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_66ea0a44efa94",
+            "label": "Auto Generate Page Modules",
+            "name": "auto_generate_page_modules",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Auto generate content modules using field groups added to the Page Modules category.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "autoGeneratePageModules",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_66ead4240eb46",
+            "label": "Show ACF Admin",
+            "name": "show_acf_admin",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Turn on access to ACF in the admin area.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "showAcfAdmin",
             "graphql_non_null": 0
         },
         {
@@ -272,11 +347,20 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0,
-    "acfml_field_group_mode": "translation",
+    "show_in_rest": false,
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfe_form": 0,
     "show_in_graphql": 1,
     "graphql_field_name": "admin",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1726510885
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1726778969,
+    "acfe_categories": {
+        "options": "Options"
+    }
 }

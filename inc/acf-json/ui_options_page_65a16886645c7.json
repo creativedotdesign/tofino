@@ -1,9 +1,9 @@
 {
     "key": "ui_options_page_65a16886645c7",
-    "title": "General Options",
+    "title": "Options",
     "active": true,
     "menu_order": 0,
-    "page_title": "General Options",
+    "page_title": "Options",
     "menu_slug": "general-options",
     "parent_slug": "none",
     "advanced_configuration": 1,
@@ -23,5 +23,5 @@
     "post_id": "",
     "autoload": 0,
     "show_in_graphql": 0,
-    "modified": 1726507489
+    "modified": 1726757865
 }

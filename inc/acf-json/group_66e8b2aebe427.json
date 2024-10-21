@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_66e8b2afb1015",
-            "label": "Page Template",
+            "label": "Select Page Template",
             "name": "page_template",
             "aria-label": "",
             "type": "select",
@@ -16,16 +16,16 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
             "choices": {
-                "": "Custom",
-                "[\"general_content\",\"form\"]": "Level 2",
-                "[\"form\"]": "Level 3"
+                "": "Custom"
             },
             "default_value": "custom",
             "return_format": "value",
             "multiple": 0,
+            "acfe_settings": "",
+            "acfe_validate": "",
             "allow_null": 0,
+            "acfe_permissions": "",
             "allow_in_bindings": 0,
             "ui": 0,
             "show_in_graphql": 0,
@@ -57,7 +57,6 @@
                 "id": ""
             },
             "graphql_field_name": "updateLayout",
-            "wpml_cf_preferences": 2,
             "button_value": "Update Layout",
             "button_type": "button",
             "button_class": "button button-secondary",
@@ -65,6 +64,8 @@
             "button_before": "",
             "button_after": "",
             "button_ajax": 0,
+            "acfe_settings": "",
+            "acfe_permissions": "",
             "allow_in_bindings": 0
         }
     ],
@@ -90,12 +91,11 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0,
+    "show_in_rest": false,
     "acfe_display_title": "",
     "acfe_autosync": [
         "json"
     ],
-    "acfml_field_group_mode": "translation",
     "acfe_form": 0,
     "show_in_graphql": 0,
     "graphql_field_name": "pageTemplate",
@@ -103,5 +103,5 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1726602541
+    "modified": 1726775073
 }

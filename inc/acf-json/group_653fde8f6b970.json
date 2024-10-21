@@ -127,7 +127,8 @@
                     "parent_repeater": "field_653fde8fdf14f",
                     "wpml_cf_preferences": 2
                 }
-            ]
+            ],
+            "acfe_repeater_stylised_button": 0
         }
     ],
     "location": [
@@ -147,11 +148,20 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0,
-    "acfml_field_group_mode": "translation",
+    "show_in_rest": false,
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfe_form": 0,
     "show_in_graphql": 0,
     "graphql_field_name": "alerts",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1726511049
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1726758715,
+    "acfe_categories": {
+        "options": "Options"
+    }
 }
