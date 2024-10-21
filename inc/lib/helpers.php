@@ -279,3 +279,14 @@ function is_single_module_page($module_name, $page_id) {
 
   return false; // The page does not contain only the specified module
 }
+
+
+// Check acf link target
+function check_target($target)
+{
+  if ($target === '_blank') {
+    return $target;
+  } else {
+    return '_self';
+  }
+}
