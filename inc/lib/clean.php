@@ -10,12 +10,27 @@
 namespace Tofino\Clean;
 
 
-// Remove default post from admin menu bar
-function remove_default_post_type_menu_bar($wp_admin_bar)
+// Remove New Menu Items
+function remove_new_items_from_admin_menu_bar($wp_admin_bar)
 {
   $wp_admin_bar->remove_node('new-post');
+  $wp_admin_bar->remove_node('new-content');
+  $wp_admin_bar->remove_node('new-page');
+  $wp_admin_bar->remove_node('new-user');
+  $wp_admin_bar->remove_node('new-media');
+
+  $my_account = $wp_admin_bar->get_node('my-account');
+
+  if (isset($my_account->title)) {
+    $new_title = str_replace('Howdy,', '', $my_account->title);
+    
+    $wp_admin_bar->add_node([
+      'id' => 'my-account',
+      'title' => $new_title,
+    ]);
+  }
 }
-add_action('admin_bar_menu', __NAMESPACE__ . '\\remove_default_post_type_menu_bar', 999);
+add_action('admin_bar_menu', __NAMESPACE__ . '\\remove_new_items_from_admin_menu_bar', 9992);
 
 
 // Remove widgets from dashboard
@@ -46,6 +61,7 @@ function remove_comments_admin_menus()
 {
   remove_menu_page('edit-comments.php');
   remove_menu_page('options-discussion');
+  remove_submenu_page('options-general.php', 'options-discussion.php');
 }
 add_action('admin_menu', __NAMESPACE__ . '\\remove_comments_admin_menus');
 
@@ -240,6 +256,7 @@ function remove_body_classes($classes)
   $home_id_class  = 'page-id-' . get_option('page_on_front');
   $remove_classes = ['page-template-default', $home_id_class];
   $classes        = array_diff($classes, $remove_classes);
+
   return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\remove_body_classes');
@@ -334,3 +351,41 @@ add_action('do_feed_rss2', __NAMESPACE__ . '\\disable_rss_feeds', 1);
 add_action('do_feed_atom', __NAMESPACE__ . '\\disable_rss_feeds', 1);
 add_action('do_feed_rss2_comments', __NAMESPACE__ . '\\disable_rss_feeds', 1);
 add_action('do_feed_atom_comments', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+
+
+// Remove WP Patterns from admin menu
+function remove_wp_block_menu() 
+{
+  remove_submenu_page('themes.php', 'site-editor.php?path=/patterns');
+  
+  $customize_url = add_query_arg('return', urlencode(remove_query_arg(wp_removable_query_args(), wp_unslash($_SERVER['REQUEST_URI']))), 'customize.php');
+
+	remove_submenu_page('themes.php', $customize_url);
+}
+add_action('admin_menu', __NAMESPACE__ . '\\remove_wp_block_menu', 100);
+
+
+// Remove Extensions from GraphQL response
+function remove_graphql_extensions($response)
+{
+  if (is_array($response) && isset($response['extensions'])) {
+    unset($response['extensions']);
+  }
+
+  if (is_object($response) && isset($response->extensions)) {
+    unset($response->extensions);
+  }
+
+  return $response;
+}
+add_filter('graphql_request_results', __NAMESPACE__ . '\\remove_graphql_extensions', 99, 1);
+
+
+// Disable theme and plugin editors
+function disable_theme_plugin_editors()
+{
+  if (!defined('DISALLOW_FILE_EDIT')) {
+    define('DISALLOW_FILE_EDIT', true);
+  }
+}
+add_action('init', __NAMESPACE__ . '\\disable_theme_plugin_editors');

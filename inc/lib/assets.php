@@ -65,6 +65,10 @@ function localize_scripts()
       $data['language'] = apply_filters('wpml_current_language', null);
     }
 
+    if (function_exists('graphql_get_endpoint')) {
+      $data['graphqlEndpoint'] = graphql_get_endpoint();
+    }
+
     wp_localize_script('tofino', 'tofinoJS', $data);
   }
 }

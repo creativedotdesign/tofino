@@ -385,3 +385,69 @@ function show_excerpt_meta_box($hidden, $screen) {
   return $hidden;
 }
 add_filter('default_hidden_meta_boxes', __NAMESPACE__ . '\\show_excerpt_meta_box', 10, 2);
+
+
+// Update ACF settings
+function acf_update_settings() 
+{
+  acf_update_setting('rest_api_enabled', false);
+  acf_update_setting('rest_api_embed_links', false);
+  acf_update_setting('enqueue_google_maps', false);
+  acf_update_setting('preload_blocks', false);
+  acf_update_setting('enable_shortcode', false);
+  acf_update_setting('acfe/php', false);
+  acf_update_setting('acfe/modules/block_types', false);
+  acf_update_setting('acfe/modules/forms', false);
+  acf_update_setting('acfe/modules/post_types', false);
+  acf_update_setting('acfe/modules/taxonomies', false);
+  acf_update_setting('acfe/modules/options', false);
+  acf_update_setting('acfe/modules/options_pages', false);
+}
+add_action('acf/init', __NAMESPACE__ . '\\acf_update_settings');
+
+
+// Toggle ACF admin based on environment and ACF Option
+function acf_toggle_admin()
+{
+  if (in_array(wp_get_environment_type(), ['local', 'development']) || get_field('show_acf_admin', 'option')) {
+    return true;
+  } else {
+    return false;
+  }
+}
+add_filter('acf/settings/show_admin', __NAMESPACE__ . '\\acf_toggle_admin');
+
+
+// Toggle GraphQL admin based on environment
+function graphql_show_admin()
+{
+  if (in_array(wp_get_environment_type(), ['local', 'development'])) {
+    return true;
+  } else {
+    return false;
+  }
+}
+add_filter('graphql_show_admin', __NAMESPACE__ . '\\graphql_show_admin');
+
+
+// Disable ACF field browser
+add_filter('acf/field_group/enable_field_browser', '__return_false');
+
+
+// Clear maintenance mode cookie
+function maintenance_mode_clear_cookie($value, $post_id, $field, $original)
+{
+  if (!$value) {
+    // Delete the cookie
+    setcookie('tofino_maintenance_alert_dismissed', '', time() - 3600, '/');
+  }
+
+  // Check value has changed from false to true
+  if ($value && !$original) {
+    // Delete the cookie
+    setcookie('tofino_maintenance_alert_dismissed', '', time() - 3600, '/');
+  }
+
+  return $value;
+}
+add_action('acf/update_value/name=maintenance_mode', __NAMESPACE__ . '\\maintenance_mode_clear_cookie', 10, 4);
