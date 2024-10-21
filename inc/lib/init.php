@@ -116,6 +116,10 @@ function admin_body_class(string $classes)
     $classes .= ' hide-preview-button';
   }
 
+  if (get_field('auto_generate_page_modules', 'option')) {
+    $classes .= ' auto-generate-page-modules';
+  }
+
   return $classes;
 }
 add_filter('admin_body_class', __NAMESPACE__ . '\\admin_body_class');

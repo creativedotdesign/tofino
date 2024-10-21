@@ -29,7 +29,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+                "value": "all"
             }
         ]
     ],
@@ -41,7 +41,7 @@
     "hide_on_screen": "",
     "active": false,
     "description": "",
-    "show_in_rest": 0,
+    "show_in_rest": false,
     "acfe_display_title": "",
     "acfe_autosync": [
         "json"
@@ -53,7 +53,7 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1726619316,
+    "modified": 1729532744,
     "acfe_categories": {
         "page-module": "Page Module"
     }
