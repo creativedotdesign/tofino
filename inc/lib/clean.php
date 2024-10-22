@@ -175,7 +175,7 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\remove_extra_markup');
 if (!is_admin() && $GLOBALS['pagenow'] != 'wp-login.php') {
   function add_defer_attribute($tag, $handle)
   {
-    if ($handle === 'tofino') {
+    if ($handle === 'tofino' || $handle === 'form-builder') {
       return str_replace('script src', 'script type="module" src', $tag);
     } else {
       return str_replace(' src', ' defer src', $tag);
