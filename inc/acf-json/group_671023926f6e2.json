@@ -26,10 +26,10 @@
         },
         {
             "key": "field_6710243cffa8f",
-            "label": "Class",
-            "name": "iframe_custom_class",
+            "label": "Add CSS container class",
+            "name": "iframe_container",
             "aria-label": "",
-            "type": "text",
+            "type": "true_false",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -38,15 +38,15 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
             "show_in_graphql": 1,
             "graphql_description": "",
-            "graphql_field_name": "class",
+            "graphql_field_name": "iframeCustomClass",
             "graphql_non_null": 0
         }
     ],
@@ -79,5 +79,5 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1729111156
+    "modified": 1729715747
 }

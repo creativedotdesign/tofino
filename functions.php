@@ -90,3 +90,31 @@ function missing_acf_plugin_notice()
 {
   echo '<div class="error notice"><p><strong>' . __('Missing Plugin', 'tofino') . '</strong> - ' . __('Advanced Custom Fields Pro plugin not found. Please install it.', 'tofino') . '</p></div>';
 }
+
+
+function add_theme_css_to_map_app() {
+  if (class_exists('DCI_WebApp_Map')) {
+    $DCI_WebApp_Map = new DCI_WebApp_Map();
+
+    echo '<link rel="stylesheet" type="text/css" href="' . $DCI_WebApp_Map->get_main_asset('css', 'js/app.ts', get_stylesheet_directory(). '/dist/.vite', get_stylesheet_directory_uri() . '/dist/') . '">';
+    echo '<script type="module" src="' . $DCI_WebApp_Map->get_main_asset('file', 'js/app.ts', get_stylesheet_directory(). '/dist/.vite', get_stylesheet_directory_uri() . '/dist/') . '"></script>';
+  }
+}
+add_action('dci_map_app_head', 'add_theme_css_to_map_app');
+
+
+function add_theme_css_to_company_cluster_app() {
+  if (class_exists('DCI_Company_Cluster')) {
+    $DCI_Company_Cluster = new DCI_Company_Cluster();
+
+    echo '<link rel="stylesheet" type="text/css" href="' . $DCI_Company_Cluster->get_main_asset('css', 'js/app.ts', get_stylesheet_directory(). '/dist/.vite', get_stylesheet_directory_uri() . '/dist/') . '">';
+    echo '<script type="module" src="' . $DCI_Company_Cluster->get_main_asset('file', 'js/app.ts', get_stylesheet_directory(). '/dist/.vite', get_stylesheet_directory_uri() . '/dist/') . '"></script>';
+  }
+}
+add_action('dci_company_cluster_app_head', 'add_theme_css_to_company_cluster_app');
+
+
+// Increase post limit to 1000
+add_filter('graphql_connection_max_query_amount', function($amount, $source, $args, $context, $info) {
+  return 2000;
+}, 12, 5);

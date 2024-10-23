@@ -7,31 +7,45 @@ export default () => {
     threshold: 1,
   };
 
-  const iFrameModule: HTMLElement | null = document.querySelector('.module-iframe .js-main-div');
-  const iframe: HTMLElement | null = document.querySelector('.module-iframe iframe');
-
-  if (iFrameModule) {
-    const observer = new IntersectionObserver((entries) => {
-      const isIntersecting =
-        typeof entries[0].isIntersecting === 'boolean'
-          ? entries[0].isIntersecting
-          : entries[0].intersectionRatio > 0;
-
-      if (isIntersecting) {
-        iframe?.classList.add('active');
-
-        observer.unobserve(iFrameModule);
-      }
-    }, options);
-
-    observer.observe(iFrameModule);
-  }
-
-  iframeResize(
-    {
-      license: 'GPLv3',
-      waitForLoad: true,
-    },
-    iframe
+  const iFrameModules: NodeListOf<HTMLElement> = document.querySelectorAll(
+    '.module-iframe [data-iframe]'
   );
+
+  iFrameModules.forEach((iFrameModule) => {
+    const iframe: HTMLIFrameElement | null = iFrameModule.querySelector('iframe');
+    const loading: HTMLElement | null = iFrameModule.querySelector('.js-loading');
+
+    if (iframe) {
+      const observer = new IntersectionObserver((entries) => {
+        const isIntersecting =
+          typeof entries[0].isIntersecting === 'boolean'
+            ? entries[0].isIntersecting
+            : entries[0].intersectionRatio > 0;
+
+        if (isIntersecting) {
+          iframe.classList.add('active');
+
+          observer.unobserve(iFrameModule);
+        }
+      }, options);
+
+      observer.observe(iFrameModule);
+
+      iframe.addEventListener('load', () => {
+        iframe.classList.add('loaded');
+
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      });
+
+      iframeResize(
+        {
+          license: 'GPLv3',
+          waitForLoad: true,
+        },
+        iframe
+      );
+    }
+  });
 };

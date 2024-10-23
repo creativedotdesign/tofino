@@ -9,4 +9,7 @@
 
 @import 'components/iframe';
 
+@import 'layouts/company-cluster';
+@import 'layouts/map-app';
+
 @import 'tailwindcss/utilities';
