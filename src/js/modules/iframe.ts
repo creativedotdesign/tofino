@@ -41,6 +41,14 @@ export default () => {
 
       iframeResize(
         {
+          onScroll: ({ top }) => {
+            window.scrollTo({
+              top: top,
+              behavior: 'smooth',
+            });
+
+            return false; // Stop iframe-resizer scrolling the page
+          },
           license: 'GPLv3',
           waitForLoad: true,
         },
