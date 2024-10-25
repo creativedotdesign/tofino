@@ -6,21 +6,25 @@ import VitePluginBrowserSync from 'vite-plugin-browser-sync';
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import path from 'path';
 import vue from '@vitejs/plugin-vue';
+import { onProxyRes } from './src/js/helpers/middleware';
+import { bold, lightMagenta } from 'kolorist';
+import getPostCSSConfig from './postcss.config.ts';
 
 export default ({ mode }: { mode: string }) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  const env = loadEnv(mode, process.cwd(), '');
 
   return defineConfig({
+    // appType: 'custom',
     publicDir: path.resolve(__dirname, './src/public'),
     root: path.resolve(__dirname, './src'),
-    base: process.env.NODE_ENV === 'production' ? `${process.env.VITE_THEME_PATH}/dist/` : '/',
+    base: env.NODE_ENV === 'production' ? `${env.VITE_THEME_PATH}/dist/` : '/',
     build: {
       outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
       manifest: true,
       // minify: false,
-      sourcemap: process.env.NODE_ENV === 'production' ? false : 'inline',
-      target: 'es2018',
+      sourcemap: env.NODE_ENV === 'production' ? false : 'inline',
+      target: 'es2021',
       rollupOptions: {
         input: {
           app: '/js/app.ts',
@@ -34,16 +38,21 @@ export default ({ mode }: { mode: string }) => {
         },
       },
     },
+    optimizeDeps: {
+      include: ['vue', 'pinia', 'webfontloader', 'body-scroll-lock'],
+    },
     plugins: [
       vue(),
       eslintPlugin(),
       chunkSplitPlugin({
-        strategy: 'unbundle',
+        strategy: 'default',
         customChunk: (args) => {
           const { id } = args;
+
           if (id.includes('node_modules')) {
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+            return id.split('node_modules/')[1].split('/')[0];
           }
+
           return null;
         },
       }),
@@ -53,7 +62,7 @@ export default ({ mode }: { mode: string }) => {
             online: true,
             notify: false,
             proxy: {
-              target: process.env.VITE_ASSET_URL,
+              target: env.VITE_ASSET_URL,
               ws: true,
               proxyReq: [
                 (proxyReq) => {
@@ -69,7 +78,26 @@ export default ({ mode }: { mode: string }) => {
         filename: 'sprite.svg',
         prefix: 'icon',
       }),
+      {
+        // Log the proxy server address in the console
+        name: 'log-proxy-address',
+        configureServer(server) {
+          if (server.printUrls) {
+            const originalPrintUrls = server.printUrls;
+
+            server.printUrls = () => {
+              originalPrintUrls();
+              console.log(
+                `  ${lightMagenta('➜')}  ${bold('Proxy Server: ')}${lightMagenta(env.VITE_ASSET_URL + '/' || 'N/A')}`
+              );
+            };
+          }
+        },
+      },
     ],
+    css: {
+      postcss: getPostCSSConfig(env.NODE_ENV || 'development') as any,
+    },
     define: { __VUE_PROD_DEVTOOLS__: false },
     test: {
       include: [`${__dirname}/src/js/tests/*.ts`],
@@ -85,6 +113,20 @@ export default ({ mode }: { mode: string }) => {
       cors: true,
       strictPort: true,
       port: 3000,
+      proxy: {
+        '/graphql/': {
+          target: env.VITE_ASSET_URL,
+          changeOrigin: true,
+          selfHandleResponse: true, // Indicates that the response should be handled by the proxy
+          configure: (proxy) => {
+            proxy.on('proxyRes', onProxyRes);
+          },
+        },
+        '/wp-content/uploads/': {
+          target: env.VITE_ASSET_URL,
+          changeOrigin: true,
+        },
+      },
       hmr: {
         port: 3000,
         protocol: 'ws',

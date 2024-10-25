@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "es2020",
+    "target": "es2022",
+    "module": "es2022",
     "importHelpers": true,
     "isolatedModules": true,
     "moduleResolution": "node",

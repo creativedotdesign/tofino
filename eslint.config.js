@@ -9,7 +9,6 @@ export default [
       'plugin:@typescript-eslint/recommended',
       'plugin:vue/vue3-recommended',
       'plugin:prettier/recommended',
-      'plugin:cypress/recommended',
     ],
     globals: {
       browser: 'readonly',
