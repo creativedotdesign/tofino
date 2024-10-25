@@ -120,6 +120,18 @@ function admin_body_class(string $classes)
     $classes .= ' auto-generate-page-modules';
   }
 
+  if (is_admin()) {
+    $current_screen = get_current_screen();
+
+    // Check if the screen is the dashboard
+    if ($current_screen && 'dashboard' === $current_screen->id) {
+      $classes .= ' admin-dashboard';
+
+      // Hide the screen options tab
+      add_filter('screen_options_show_screen', '__return_false');
+    }
+  }
+
   return $classes;
 }
 add_filter('admin_body_class', __NAMESPACE__ . '\\admin_body_class');
