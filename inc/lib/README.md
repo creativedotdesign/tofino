@@ -2,7 +2,6 @@
 
 Custom php code (that doesn't come from composer) goes here. The following files are base tofino code which you _probably_ don't want to edit:
 
-- `AjaxForm.php`
 - `assets.php`
 - `FragmentCache.php`
 - `helpers.php`
