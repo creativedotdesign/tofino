@@ -22,10 +22,7 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "disablePostType",
-            "graphql_non_null": 0
+            "show_in_graphql": 0
         },
         {
             "key": "field_66e86caf93f4e",
@@ -41,17 +38,13 @@
                 "class": "",
                 "id": ""
             },
-            "wpml_cf_preferences": 1,
             "message": "",
             "default_value": 0,
             "allow_in_bindings": 0,
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "previewButton",
-            "graphql_non_null": 0
+            "show_in_graphql": 0
         },
         {
             "key": "field_66ea0a44efa94",
@@ -67,16 +60,13 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
+            "message": "Experimental, use at your own risk.",
             "default_value": 0,
             "allow_in_bindings": 0,
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "autoGeneratePageModules",
-            "graphql_non_null": 0
+            "show_in_graphql": 0
         },
         {
             "key": "field_66ead4240eb46",
@@ -98,10 +88,7 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 1,
-            "graphql_description": "",
-            "graphql_field_name": "showAcfAdmin",
-            "graphql_non_null": 0
+            "show_in_graphql": 0
         },
         {
             "key": "field_62582eb26d922",
@@ -119,38 +106,11 @@
             },
             "message": "",
             "default_value": 0,
-            "ui": 1,
+            "allow_in_bindings": 1,
             "ui_on_text": "",
             "ui_off_text": "",
-            "wpml_cf_preferences": 1
-        },
-        {
-            "key": "field_62582ee46d923",
-            "label": "Login Logo",
-            "name": "login_logo",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "You might need to add some additional css to tweak the logo size \/ position. Add your CSS in to the file assets\/styles\/base\/admin.css.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "url",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "uploader": "",
-            "acfe_thumbnail": 0,
-            "wpml_cf_preferences": 1
+            "ui": 1,
+            "show_in_graphql": 0
         },
         {
             "key": "field_62582f156d924",
@@ -168,10 +128,11 @@
             },
             "message": "",
             "default_value": 0,
-            "ui": 1,
+            "allow_in_bindings": 1,
             "ui_on_text": "",
             "ui_off_text": "",
-            "wpml_cf_preferences": 1
+            "ui": 1,
+            "show_in_graphql": 0
         },
         {
             "key": "field_62582f2c6d925",
@@ -188,12 +149,13 @@
                 "id": ""
             },
             "default_value": "This site is currently in maintenance mode. Any changes you make may be overwritten or removed.",
-            "placeholder": "",
-            "maxlength": "",
-            "rows": 3,
-            "new_lines": "",
             "acfe_textarea_code": 0,
-            "wpml_cf_preferences": 2
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "",
+            "show_in_graphql": 0
         },
         {
             "key": "field_62582f536d926",
@@ -211,10 +173,11 @@
             },
             "message": "",
             "default_value": 0,
-            "ui": 1,
+            "allow_in_bindings": 1,
             "ui_on_text": "",
             "ui_off_text": "",
-            "wpml_cf_preferences": 1
+            "ui": 1,
+            "show_in_graphql": 0
         },
         {
             "key": "field_6258359c5a86d",
@@ -232,10 +195,11 @@
             },
             "message": "",
             "default_value": 0,
-            "ui": 1,
+            "allow_in_bindings": 1,
             "ui_on_text": "",
             "ui_off_text": "",
-            "wpml_cf_preferences": 1
+            "ui": 1,
+            "show_in_graphql": 0
         },
         {
             "key": "field_62583945a5b17",
@@ -254,9 +218,7 @@
             "layout": "block",
             "acfe_seamless_style": 0,
             "acfe_group_modal": 0,
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large",
+            "show_in_graphql": 0,
             "sub_fields": [
                 {
                     "key": "field_6258394fa5b18",
@@ -284,7 +246,7 @@
                     "label": "Text",
                     "name": "text",
                     "aria-label": "",
-                    "type": "textarea",
+                    "type": "wysiwyg",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -293,13 +255,16 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "<a href =\"https:\/\/github.com\/creativedotdesign\/tofino\">Tofino<\/a> theme by <a href =\"https:\/\/creativedotdesign.com\/\">Creative Dot<\/a>.",
-                    "placeholder": "",
-                    "maxlength": "",
-                    "rows": 3,
-                    "new_lines": "",
-                    "acfe_textarea_code": 0,
-                    "wpml_cf_preferences": 2
+                    "default_value": "<a href=\"https:\/\/github.com\/creativedotdesign\/tofino\">Tofino<\/a> theme by <a href =\"https:\/\/creativedotdesign.com\/\">Creative Dot<\/a>.",
+                    "allow_in_bindings": 1,
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "text",
+                    "graphql_non_null": 0
                 },
                 {
                     "key": "field_62586874293b0",
@@ -327,7 +292,176 @@
                     "graphql_non_null": 0
                 }
             ],
-            "wpml_cf_preferences": 1
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large"
+        },
+        {
+            "key": "field_671a51c202047",
+            "label": "Custom Login Screen",
+            "name": "custom_login_screen",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0
+        },
+        {
+            "key": "field_671a51ef02048",
+            "label": "Login Screen",
+            "name": "login_screen",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_671a51c202047",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "acfe_seamless_style": 1,
+            "show_in_graphql": 0,
+            "sub_fields": [
+                {
+                    "key": "field_62582ee46d923",
+                    "label": "Logo",
+                    "name": "logo",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "You might need to add some additional css to tweak the logo size \/ position. Add your CSS in to the file admin.css.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "uploader": "",
+                    "return_format": "id",
+                    "library": "all",
+                    "acfe_thumbnail": 0,
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "allow_in_bindings": 0,
+                    "preview_size": "medium",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "loginLogo"
+                },
+                {
+                    "key": "field_671a7ca0e9739",
+                    "label": "Logo Max Height",
+                    "name": "logo_max_height",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_62582ee46d923",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 80,
+                    "min": "",
+                    "max": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "px",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "logoMaxHeight",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_671a522a02049",
+                    "label": "Text",
+                    "name": "text",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Admin CMS",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "text",
+                    "graphql_non_null": 0
+                },
+                {
+                    "key": "field_671a52370204a",
+                    "label": "Button Color",
+                    "name": "button_color",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "#000000",
+                    "enable_opacity": 0,
+                    "return_format": "string",
+                    "allow_in_bindings": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "buttonColor",
+                    "graphql_non_null": 0
+                }
+            ],
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large"
         }
     ],
     "location": [
@@ -353,13 +487,13 @@
         "json"
     ],
     "acfe_form": 0,
-    "show_in_graphql": 1,
+    "show_in_graphql": 0,
     "graphql_field_name": "admin",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1726778969,
+    "modified": 1729789139,
     "acfe_categories": {
         "options": "Options"
     }

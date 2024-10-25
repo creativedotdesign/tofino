@@ -21,6 +21,7 @@ $tofino_includes = [
   "inc/lib/class/ACFAutosize.php",
   "inc/lib/layouts.php",
   "inc/lib/class/DisablePostType.php",
+  "inc/lib/class/CustomLoginForm.php",
 ];
 
 foreach ($tofino_includes as $file) {

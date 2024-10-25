@@ -140,25 +140,6 @@ function add_custom_body_open_code()
 add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');
 
 
-/**
- * Admin login logo
- *
- * Displays the logo uplaoded via theme options to the login screen.
- *
- * @since 1.0.0
- * @return void
- */
-function admin_login_logo()
-{
-  $admin_logo = get_field('login_logo', 'option');
-
-  if ($admin_logo) {
-    echo '<style type="text/css">.login h1 a { background-image: url(' . $admin_logo . '); padding-bottom: 30px; }</style>';
-  }
-}
-add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
-
-
 // Show or hide the admin bar
 function admin_bar()
 {
