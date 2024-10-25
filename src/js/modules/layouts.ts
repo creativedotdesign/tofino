@@ -33,7 +33,15 @@ export const acfLayouts = () => {
     }
 
     const addLayoutsToContentModules = (layouts: string[]) => {
-      const field = acf.getField('field_content_modules');
+      const autoPageModules = document.getElementsByClassName('.auto-generate-page-modules');
+
+      let fieldKey = 'field_62586c9af1a1a';
+
+      if (autoPageModules.length > 0) {
+        fieldKey = 'field_content_modules';
+      }
+
+      const field = acf.getField(fieldKey);
 
       // Get all current layouts
       const currentLayouts = field.$layouts();

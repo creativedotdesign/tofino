@@ -25,3 +25,138 @@
 #post-body-content #acf_after_title-sortables:has(#acf-group_66e8b2aebe427) {
   @apply mt-0;
 }
+
+#wpadminbar #wp-admin-bar-site-name > .ab-item {
+  @apply cursor-default text-inherit before:text-inherit hover:bg-inherit hover:text-inherit;
+}
+
+#dashboard-widgets-wrap .empty-container {
+  @apply hidden;
+}
+
+#wp-admin-bar-user-info .avatar,
+#wpadminbar #wp-admin-bar-my-account.with-avatar > a img {
+  @apply hidden;
+}
+
+#wpadminbar #wp-admin-bar-my-account.with-avatar #wp-admin-bar-user-actions > li {
+  @apply ml-4;
+}
+
+#wpadminbar .quicklinks .menupop.hover #wp-admin-bar-user-actions li .ab-item {
+  @apply min-w-0;
+
+  span {
+    @apply first:hidden;
+  }
+}
+
+body.login.custom-login-screen {
+  @apply block h-auto bg-gray-100 text-neutral-800;
+
+  h1 {
+    @apply text-2xl font-semibold;
+  }
+
+  .login-logo {
+    @apply mx-auto block;
+  }
+
+  .login-logo + h1 {
+    @apply mt-6;
+  }
+
+  #lostpasswordform {
+    @apply m-0 border-none p-0 shadow-none;
+  }
+
+  h1:has(a) {
+    @apply hidden;
+  }
+
+  .notice {
+    @apply m-0 border-l-0 px-0 py-2 font-semibold shadow-none;
+  }
+
+  .notice-error {
+    @apply text-red-600;
+  }
+
+  .notice + #loginform,
+  .notice + #lostpasswordform {
+    @apply pt-0;
+  }
+
+  #login {
+    @apply mt-[10%] w-64 bg-white p-10 pt-8 shadow-xl;
+  }
+
+  .login-title {
+    @apply leading-none;
+  }
+
+  #loginform,
+  #lostpasswordform {
+    @apply mx-auto my-0 max-w-sm rounded-none border-none bg-white px-0 pb-0 pt-6 shadow-none;
+
+    &.shake {
+      @apply animate-none;
+    }
+
+    p {
+      @apply mb-4;
+    }
+
+    label {
+      @apply mb-0.5 text-sm font-normal text-neutral-800;
+    }
+
+    .input {
+      @apply m-0 w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-base leading-tight text-neutral-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+    }
+
+    .input-password {
+      @apply tracking-wider;
+    }
+
+    .password-input[type='text'] {
+      @apply tracking-normal;
+
+      font-family: inherit;
+    }
+
+    .button-primary {
+      @apply block w-full rounded-none border-none bg-[var(--button-color)] px-4 py-1.5 font-bold text-[#f0f0f1] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+    }
+
+    .forgetmenot {
+      @apply block w-full;
+    }
+
+    #rememberme {
+      @apply rounded-none shadow-none;
+    }
+
+    .wp-hide-pw {
+      @apply flex text-neutral-800;
+    }
+
+    .lost-password-link a {
+      @apply text-xs text-neutral-800 no-underline;
+    }
+  }
+
+  #nav:has(.wp-login-log-in) {
+    @apply p-0;
+
+    a {
+      @apply text-xs text-neutral-800 no-underline;
+    }
+  }
+
+  #backtoblog,
+  .language-switcher,
+  #nav:has(.wp-login-lost-password) {
+    @apply hidden;
+  }
+}

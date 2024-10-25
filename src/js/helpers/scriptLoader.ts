@@ -1,6 +1,6 @@
 import { createApp, defineAsyncComponent } from 'vue';
 import { createPinia } from 'pinia';
-import { Scripts } from './types';
+import { Scripts } from '@/js/types/types';
 
 export const loadScripts = async (scripts: Scripts) => {
   // Loop through the scripts and import the src
@@ -11,7 +11,7 @@ export const loadScripts = async (scripts: Scripts) => {
       if (type === 'vue') {
         createApp({
           components: {
-            [src]: defineAsyncComponent(() => import(`../vue/${src}.vue`)),
+            [src]: defineAsyncComponent(() => import(`@/js/vue/${src}.vue`)),
           },
         })
           .use(createPinia())
@@ -20,7 +20,7 @@ export const loadScripts = async (scripts: Scripts) => {
         // console.log(`Tofino Theme: Loaded ${selector} for Vue component ${src}.vue.`);
       } else if (type === 'ts') {
         // Dynamically Import Typescript File
-        import(`./modules/${src}.ts`).then(({ default: script }) => {
+        import(`@/js/modules/${src}.ts`).then(({ default: script }) => {
           script();
         });
 
