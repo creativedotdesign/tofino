@@ -19,5 +19,5 @@
     "skipLibCheck": true, // Skip type checking of declaration files
     "noImplicitAny": false // Bypass raising errors on `any` type
   },
-  "include": ["src/**/**.ts", "src/**/*.vue"]
+  "include": ["src/types/vite-env.d.ts", "src/**/*.ts", "src/**/*.vue"]
 }
