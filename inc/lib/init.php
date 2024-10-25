@@ -444,3 +444,14 @@ function maintenance_mode_clear_cookie($value, $post_id, $field, $original)
   return $value;
 }
 add_action('acf/update_value/name=maintenance_mode', __NAMESPACE__ . '\\maintenance_mode_clear_cookie', 10, 4);
+
+
+// Add SVG to allowed mime types
+function add_svg_to_mime_types($mimes)
+{
+	// Allow SVG file upload
+	$mimes['svg'] = 'image/svg+xml';
+
+	return $mimes;
+}
+add_filter('upload_mimes', __NAMESPACE__ . '\\add_svg_to_mime_types');
