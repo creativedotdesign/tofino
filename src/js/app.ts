@@ -35,6 +35,11 @@ const init = () => {
       src: 'menu',
       type: 'ts',
     },
+    {
+      selector: '[data-iframe]', // iFrame
+      src: 'iframe',
+      type: 'ts',
+    },
   ];
 
   // Load the scripts

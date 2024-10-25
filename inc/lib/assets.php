@@ -69,6 +69,12 @@ function localize_scripts()
       $data['graphqlEndpoint'] = graphql_get_endpoint();
     }
 
+    $iframe_resizer_license = get_field('iframe_resizer_license_key', 'option');
+
+    if ($iframe_resizer_license) {
+      $data['iframeResizerLicense'] = $iframe_resizer_license;
+    }
+
     wp_localize_script('tofino', 'tofinoJS', $data);
   }
 }

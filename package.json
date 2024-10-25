@@ -79,6 +79,7 @@
     "vitest": "^1.1.1"
   },
   "dependencies": {
+    "@iframe-resizer/parent": "^5.3.2",
     "body-scroll-lock": "^3.1.5",
     "pinia": "^2.2.4",
     "tailwindcss": "^3.4.14",

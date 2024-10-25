@@ -1,0 +1,17 @@
+.module-iframe {
+  .loading-spinner svg path {
+    @apply text-red-500;
+  }
+
+  iframe {
+    @apply hidden h-screen w-full opacity-0;
+
+    &.active {
+      @apply block;
+    }
+
+    &.loaded {
+      @apply opacity-100;
+    }
+  }
+}

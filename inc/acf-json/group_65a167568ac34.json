@@ -462,6 +462,31 @@
             "acfe_group_modal_close": 0,
             "acfe_group_modal_button": "",
             "acfe_group_modal_size": "large"
+        },
+        {
+            "key": "field_671c0c73e5f41",
+            "label": "iFrame Resizer License Key",
+            "name": "iframe_resizer_license_key",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "See https:\/\/iframe-resizer.com\/ for more details.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "GPLv3",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "iframeResizerLicenseKey",
+            "graphql_non_null": 0
         }
     ],
     "location": [
@@ -493,7 +518,7 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1729789139,
+    "modified": 1729891561,
     "acfe_categories": {
         "options": "Options"
     }
