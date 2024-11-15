@@ -279,3 +279,41 @@ function is_single_module_page($module_name, $page_id) {
 
   return false; // The page does not contain only the specified module
 }
+
+
+// Check acf link target
+function check_target($target)
+{
+  if ($target === '_blank') {
+    return $target;
+  } else {
+    return '_self';
+  }
+}
+
+
+/**
+ * Function to render the module layout file
+ * 
+ * @param string $layout Name of the layout file
+ */
+function render_module($layout)
+{
+  // Get paths where modules exist
+  $paths = apply_filters('tofino_custom_module_paths', [get_template_directory() . '/templates/modules/']);
+
+  foreach ($paths as $path) {
+    $file_path = $path . $layout . '.php';
+
+    if (file_exists($file_path)) { 
+      include $file_path;
+
+      // Set plugin flag if loaded from plugin directory
+      $is_from_plugin = strpos($path, get_template_directory()) === false;
+
+      if ($is_from_plugin) {
+        echo "<!-- Module loaded from plugin -->";
+      }
+    }
+  }
+}

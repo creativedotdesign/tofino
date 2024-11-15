@@ -53,7 +53,6 @@ Important: You MUST set `WP_ENVIRONMENT_TYPE` to `development` or `local` in you
 - [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/guide/) build script
 - [Vitest](https://vitest.dev/) for testing Vue components
-- [Cypress](https://www.cypress.io/) for Integration and E2E tests
 - [Composer](https://getcomposer.org/) for PHP package management
 - Namespaced functions
 - Auto post type / slug based template routing
@@ -63,7 +62,6 @@ Important: You MUST set `WP_ENVIRONMENT_TYPE` to `development` or `local` in you
 - VueJS v3.x with Composition API
 - Pinia State Management
 - Form support via Tofino Form Builder plugin
-- AjaxForm PHP Class
 - Fragment Cache PHP Class
 
 ## Documentation
@@ -80,39 +78,4 @@ npm install
 npm run build
 ```
 
-The following files and directories should not be deployed on the server:
-
-```
-src
-node_modules
-.vscode
-.editorconfig
-.env
-.eslintrc.cjs
-.git
-.github
-.gitignore
-.gitkeep
-.git-ftp-ignore
-.git-ftp-include
-.gitattributes
-.gitignore
-.prettierignore
-.npmrc
-composer.json
-composer.lock
-package.json
-package-lock.json
-postcss.config.cts
-tsconfig.json
-vite.config.ts
-phpcs.xml
-\*.md
-cypress
-cypress.config.ts
-prettier.config.cjs
-stylelint.config.ts
-tailwind.config.ts
-vite.config.ts
-vite-env.d.ts
-```
+Review the `.git-ftp-ignore` file to check which files and directories should not be deployed on the server.

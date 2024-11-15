@@ -8,9 +8,6 @@
           'menu'            => 'nav_menu',
           'theme_location'  => 'footer_navigation',
           'depth'           => 1,
-          'container'       => '',
-          'container_class' => '',
-          'container_id'    => '',
           'menu_class'      => 'footer-nav',
           'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
         ]); ?>

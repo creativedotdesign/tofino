@@ -10,12 +10,27 @@
 namespace Tofino\Clean;
 
 
-// Remove default post from admin menu bar
-function remove_default_post_type_menu_bar($wp_admin_bar)
+// Remove New Menu Items
+function remove_new_items_from_admin_menu_bar($wp_admin_bar)
 {
   $wp_admin_bar->remove_node('new-post');
+  $wp_admin_bar->remove_node('new-content');
+  $wp_admin_bar->remove_node('new-page');
+  $wp_admin_bar->remove_node('new-user');
+  $wp_admin_bar->remove_node('new-media');
+
+  $my_account = $wp_admin_bar->get_node('my-account');
+
+  if (isset($my_account->title)) {
+    $new_title = str_replace('Howdy,', '', $my_account->title);
+
+    $wp_admin_bar->add_node([
+      'id' => 'my-account',
+      'title' => $new_title,
+    ]);
+  }
 }
-add_action('admin_bar_menu', __NAMESPACE__ . '\\remove_default_post_type_menu_bar', 999);
+add_action('admin_bar_menu', __NAMESPACE__ . '\\remove_new_items_from_admin_menu_bar', 9992);
 
 
 // Remove widgets from dashboard
@@ -46,6 +61,7 @@ function remove_comments_admin_menus()
 {
   remove_menu_page('edit-comments.php');
   remove_menu_page('options-discussion');
+  remove_submenu_page('options-general.php', 'options-discussion.php');
 }
 add_action('admin_menu', __NAMESPACE__ . '\\remove_comments_admin_menus');
 
@@ -240,6 +256,7 @@ function remove_body_classes($classes)
   $home_id_class  = 'page-id-' . get_option('page_on_front');
   $remove_classes = ['page-template-default', $home_id_class];
   $classes        = array_diff($classes, $remove_classes);
+
   return $classes;
 }
 add_filter('body_class', __NAMESPACE__ . '\\remove_body_classes');
@@ -334,3 +351,131 @@ add_action('do_feed_rss2', __NAMESPACE__ . '\\disable_rss_feeds', 1);
 add_action('do_feed_atom', __NAMESPACE__ . '\\disable_rss_feeds', 1);
 add_action('do_feed_rss2_comments', __NAMESPACE__ . '\\disable_rss_feeds', 1);
 add_action('do_feed_atom_comments', __NAMESPACE__ . '\\disable_rss_feeds', 1);
+
+
+// Remove WP Patterns from admin menu
+function remove_wp_block_menu()
+{
+  remove_submenu_page('themes.php', 'site-editor.php?path=/patterns');
+
+  $customize_url = add_query_arg('return', urlencode(remove_query_arg(wp_removable_query_args(), wp_unslash($_SERVER['REQUEST_URI']))), 'customize.php');
+
+  remove_submenu_page('themes.php', $customize_url);
+}
+add_action('admin_menu', __NAMESPACE__ . '\\remove_wp_block_menu', 100);
+
+
+// Remove Extensions from GraphQL response
+function remove_graphql_extensions($response)
+{
+  if (is_array($response) && isset($response['extensions'])) {
+    unset($response['extensions']);
+  }
+
+  if (is_object($response) && isset($response->extensions)) {
+    unset($response->extensions);
+  }
+
+  return $response;
+}
+add_filter('graphql_request_results', __NAMESPACE__ . '\\remove_graphql_extensions', 99, 1);
+
+
+// Disable theme and plugin editors
+function disable_theme_plugin_editors()
+{
+  if (!defined('DISALLOW_FILE_EDIT')) {
+    define('DISALLOW_FILE_EDIT', true);
+  }
+}
+add_action('init', __NAMESPACE__ . '\\disable_theme_plugin_editors');
+
+
+// Disable the "Confirm Admin Login" prompt
+function disable_confirm_admin_email($expire)
+{
+  return 0; // Set expiration to 0, disabling the prompt
+}
+add_filter('admin_email_check_interval', __NAMESPACE__ . '\\disable_confirm_admin_email');
+
+
+// Remove Yoast SEO Dashboard Overview
+function remove_wpseo_dashboard_overview()
+{
+  // In some cases, you may need to replace 'side' with 'normal' or 'advanced'.
+  remove_meta_box('wpseo-wincher-dashboard-overview', 'dashboard', 'normal');
+}
+add_action('wp_dashboard_setup', __NAMESPACE__ . '\\remove_wpseo_dashboard_overview', 9999);
+
+
+// Remove welcome panel
+function remove_welcome_panel()
+{
+  remove_action('welcome_panel', 'wp_welcome_panel');
+}
+add_action('admin_init', __NAMESPACE__ . '\\remove_welcome_panel');
+
+
+// Remove customizer support
+function remove_cusomtizer_support()
+{
+  remove_action('wp_before_admin_bar_render', 'wp_customize_support_script');
+}
+add_action('admin_bar_menu', __NAMESPACE__ . '\\remove_cusomtizer_support', 50);
+
+
+// Removes the WordPress version number from the footer
+function remove_wp_version_footer()
+{
+  return '';
+}
+add_filter('update_footer', __NAMESPACE__ . '\\remove_wp_version_footer', 9999);
+
+
+// Customize the WordPress Admin Bar to make the site name and Visit Site inline
+function customize_admin_bar_move_node($wp_admin_bar)
+{
+  $visit_site_node = $wp_admin_bar->get_node('view-site');
+
+  if ($visit_site_node) {
+    $visit_site_node->parent = false;
+
+    $visit_site_node->meta['class'] = 'visit-site-inline';
+
+    $wp_admin_bar->add_node($visit_site_node);
+  }
+
+  // Modify the site name node to prevent it from being a dropdown
+  $site_name_node = $wp_admin_bar->get_node('site-name');
+
+  if ($site_name_node) {
+    $site_name_node->href = false;
+
+    if (isset($site_name_node->meta['class'])) {
+      unset($site_name_node->meta['class']);
+    }
+
+    // Re-add the modified site name node as a top-level item
+    $wp_admin_bar->add_node($site_name_node);
+  }
+}
+add_action('admin_bar_menu', __NAMESPACE__ . '\\customize_admin_bar_move_node', 998);
+
+
+// Customize the WordPress Admin Bar to remove the avatar
+function remove_admin_bar_avatar($wp_admin_bar)
+{
+  // Remove the avatar from the main "My Account" node
+  $my_account_node = $wp_admin_bar->get_node('user-info');
+
+  // var_dump($my_account_node);
+
+  if ($my_account_node) {
+    // Remove the avatar HTML from the "My Account" node title
+    $my_account_node->title = preg_replace('/<img[^>]+>/', '', $my_account_node->title);
+
+    // Re-add the modified "My Account" node
+    $wp_admin_bar->add_node($my_account_node);
+  }
+}
+add_action('admin_bar_menu', __NAMESPACE__ . '\\remove_admin_bar_avatar', 999);

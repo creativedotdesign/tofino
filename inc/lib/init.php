@@ -116,6 +116,22 @@ function admin_body_class(string $classes)
     $classes .= ' hide-preview-button';
   }
 
+  if (get_field('auto_generate_page_modules', 'option')) {
+    $classes .= ' auto-generate-page-modules';
+  }
+
+  if (is_admin()) {
+    $current_screen = get_current_screen();
+
+    // Check if the screen is the dashboard
+    if ($current_screen && 'dashboard' === $current_screen->id) {
+      $classes .= ' admin-dashboard';
+
+      // Hide the screen options tab
+      add_filter('screen_options_show_screen', '__return_false');
+    }
+  }
+
   return $classes;
 }
 add_filter('admin_body_class', __NAMESPACE__ . '\\admin_body_class');
@@ -134,25 +150,6 @@ function add_custom_body_open_code()
   }
 }
 add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');
-
-
-/**
- * Admin login logo
- *
- * Displays the logo uplaoded via theme options to the login screen.
- *
- * @since 1.0.0
- * @return void
- */
-function admin_login_logo()
-{
-  $admin_logo = get_field('login_logo', 'option');
-
-  if ($admin_logo) {
-    echo '<style type="text/css">.login h1 a { background-image: url(' . $admin_logo . '); padding-bottom: 30px; }</style>';
-  }
-}
-add_action('login_head', __NAMESPACE__ . '\\admin_login_logo');
 
 
 // Show or hide the admin bar
@@ -348,3 +345,120 @@ function clear_cache_options_save($post_id)
 	}
 }
 add_action('acf/save_post', __NAMESPACE__ . '\\clear_cache_options_save', 20);
+
+
+// Add excerpt to pages always
+function always_show_edit_post_show_excerpt() {
+  $user = wp_get_current_user();
+  $unchecked = get_user_meta($user->ID, 'metaboxhidden_post', true);
+
+  if (!empty($unchecked)) {
+    $key = array_search('postexcerpt', $unchecked);
+
+    if (false !== $key) {
+      array_splice($unchecked, $key, 1);
+      update_user_meta($user->ID, 'metaboxhidden_post', $unchecked);
+    }
+  }
+}
+add_action('admin_init', __NAMESPACE__ . '\\always_show_edit_post_show_excerpt', 10);
+
+
+// Add excerpt to pages always
+function show_excerpt_meta_box($hidden, $screen) {
+  if ('post' == $screen->base) {
+    foreach ($hidden as $key => $value) {
+      if ('postexcerpt' == $value) {
+        unset($hidden[$key]);
+        break;
+      }
+    }
+  }
+
+  return $hidden;
+}
+add_filter('default_hidden_meta_boxes', __NAMESPACE__ . '\\show_excerpt_meta_box', 10, 2);
+
+
+// Update ACF settings
+function acf_update_settings() 
+{
+  acf_update_setting('rest_api_enabled', false);
+  acf_update_setting('rest_api_embed_links', false);
+  acf_update_setting('enqueue_google_maps', false);
+  acf_update_setting('preload_blocks', false);
+  acf_update_setting('enable_shortcode', false);
+  acf_update_setting('acfe/php', false);
+  acf_update_setting('acfe/modules/block_types', false);
+  acf_update_setting('acfe/modules/forms', false);
+  acf_update_setting('acfe/modules/post_types', false);
+  acf_update_setting('acfe/modules/taxonomies', false);
+  acf_update_setting('acfe/modules/options', false);
+  acf_update_setting('acfe/modules/options_pages', false);
+}
+add_action('acf/init', __NAMESPACE__ . '\\acf_update_settings');
+
+
+// Toggle ACF admin based on environment and ACF Option
+function acf_toggle_admin()
+{
+  if (in_array(wp_get_environment_type(), ['local', 'development']) || get_field('show_acf_admin', 'option')) {
+    return true;
+  } else {
+    return false;
+  }
+}
+add_filter('acf/settings/show_admin', __NAMESPACE__ . '\\acf_toggle_admin');
+
+
+// Toggle GraphQL admin based on environment
+function graphql_show_admin()
+{
+  if (in_array(wp_get_environment_type(), ['local', 'development'])) {
+    return true;
+  } else {
+    return false;
+  }
+}
+add_filter('graphql_show_admin', __NAMESPACE__ . '\\graphql_show_admin');
+
+
+// Disable ACF field browser
+add_filter('acf/field_group/enable_field_browser', '__return_false');
+
+
+// Clear maintenance mode cookie
+function maintenance_mode_clear_cookie($value, $post_id, $field, $original)
+{
+  if (!$value) {
+    // Delete the cookie
+    setcookie('tofino_maintenance_alert_dismissed', '', time() - 3600, '/');
+  }
+
+  // Check value has changed from false to true
+  if ($value && !$original) {
+    // Delete the cookie
+    setcookie('tofino_maintenance_alert_dismissed', '', time() - 3600, '/');
+  }
+
+  return $value;
+}
+add_action('acf/update_value/name=maintenance_mode', __NAMESPACE__ . '\\maintenance_mode_clear_cookie', 10, 4);
+
+
+// Add SVG to allowed mime types
+function add_svg_to_mime_types($mimes)
+{
+	// Allow SVG file upload
+	$mimes['svg'] = 'image/svg+xml';
+
+	return $mimes;
+}
+add_filter('upload_mimes', __NAMESPACE__ . '\\add_svg_to_mime_types');
+
+
+function failed_login_401()
+{
+  status_header(401);
+}
+add_action('wp_login_failed', __NAMESPACE__ . '\\failed_login_401');

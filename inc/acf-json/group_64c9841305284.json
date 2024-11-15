@@ -41,10 +41,20 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0,
+    "show_in_rest": false,
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfe_form": 0,
     "show_in_graphql": 0,
-    "graphql_field_name": "test",
+    "graphql_field_name": "mediaAttachments",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
-    "modified": 1704223836
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1726758803,
+    "acfe_categories": {
+        "media": "Media"
+    }
 }

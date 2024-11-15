@@ -1,0 +1,12 @@
+@import 'tailwindcss/base';
+
+@import 'tailwindcss/components';
+
+@import 'base/alerts';
+@import 'base/menu';
+@import 'base/social-icons';
+@import 'base/structure';
+
+@import 'components/iframe';
+
+@import 'tailwindcss/utilities';

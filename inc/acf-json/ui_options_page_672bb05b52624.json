@@ -1,20 +1,20 @@
 {
-    "key": "ui_options_page_65a16886645c7",
-    "title": "Options",
+    "key": "ui_options_page_672bb05b52624",
+    "title": "Form Builder",
     "active": true,
     "menu_order": 0,
-    "page_title": "Options",
-    "menu_slug": "general-options",
+    "page_title": "Form Builder",
+    "menu_slug": "form-builder",
     "parent_slug": "none",
     "advanced_configuration": 1,
     "icon_url": "",
-    "menu_title": "",
-    "position": "",
+    "menu_title": "Form Builder",
+    "position": 10,
     "redirect": 0,
     "description": "",
     "menu_icon": {
         "type": "dashicons",
-        "value": "dashicons-admin-generic"
+        "value": "dashicons-forms"
     },
     "update_button": "Update",
     "updated_message": "Options Updated",
@@ -23,5 +23,5 @@
     "post_id": "",
     "autoload": 0,
     "show_in_graphql": 0,
-    "modified": 1726757865
+    "modified": 1731607380
 }
