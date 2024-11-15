@@ -511,6 +511,7 @@
     "acfe_autosync": [
         "json"
     ],
+    "acfml_field_group_mode": "translation",
     "acfe_form": 0,
     "show_in_graphql": 0,
     "graphql_field_name": "admin",
@@ -518,7 +519,7 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1729891561,
+    "modified": 1731604985,
     "acfe_categories": {
         "options": "Options"
     }

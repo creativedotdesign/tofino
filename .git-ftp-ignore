@@ -1,9 +1,9 @@
 /src/
-node_modules
+node\*modules
 .vscode
 .editorconfig
 .env
-.eslint.config.ts
+.eslint.config.js
 .git
 .github
 .gitignore
@@ -17,8 +17,7 @@ package.json
 package-lock.json
 postcss.config.ts
 tsconfig.json
-phpcs.xml
-**/*.md
+phpcs.xml \*\*/\_.md
 .prettierrc
 stylelint.config.ts
 tailwind.config.ts

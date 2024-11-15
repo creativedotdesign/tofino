@@ -17,7 +17,8 @@
                 "id": ""
             },
             "choices": {
-                "": "Custom"
+                "": "Custom",
+                "[\"general_content\",\"form_select\"]": "Test Layout 1"
             },
             "default_value": "custom",
             "return_format": "value",
@@ -88,7 +89,9 @@
     "style": "seamless",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": "",
+    "hide_on_screen": [
+        "the_content"
+    ],
     "active": true,
     "description": "",
     "show_in_rest": false,
@@ -103,5 +106,5 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1726775073
+    "modified": 1729543484
 }

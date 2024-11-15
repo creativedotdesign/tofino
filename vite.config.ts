@@ -14,7 +14,6 @@ export default ({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return defineConfig({
-    // appType: 'custom',
     publicDir: path.resolve(__dirname, './src/public'),
     root: path.resolve(__dirname, './src'),
     base: env.NODE_ENV === 'production' ? `${env.VITE_THEME_PATH}/dist/` : '/',
@@ -61,6 +60,7 @@ export default ({ mode }: { mode: string }) => {
           bs: {
             online: true,
             notify: false,
+            port: 3002,
             proxy: {
               target: env.VITE_ASSET_URL,
               ws: true,
@@ -86,10 +86,10 @@ export default ({ mode }: { mode: string }) => {
             const originalPrintUrls = server.printUrls;
 
             server.printUrls = () => {
-              originalPrintUrls();
               console.log(
-                `  ${lightMagenta('➜')}  ${bold('Proxy Server: ')}${lightMagenta(env.VITE_ASSET_URL + '/' || 'N/A')}`
+                `  ${lightMagenta('➜')}  ${bold('Proxy:   ')}${lightMagenta(env.VITE_ASSET_URL + '/' || 'N/A')}`
               );
+              originalPrintUrls();
             };
           }
         },
@@ -99,15 +99,6 @@ export default ({ mode }: { mode: string }) => {
       postcss: getPostCSSConfig(env.NODE_ENV || 'development') as any,
     },
     define: { __VUE_PROD_DEVTOOLS__: false },
-    test: {
-      include: [`${__dirname}/src/js/tests/*.ts`],
-      globals: true,
-      watch: false,
-      environment: 'jsdom',
-      coverage: {
-        provider: 'istanbul',
-      },
-    },
     server: {
       host: true,
       cors: true,
@@ -126,9 +117,14 @@ export default ({ mode }: { mode: string }) => {
           target: env.VITE_ASSET_URL,
           changeOrigin: true,
         },
+        '/wp-admin': {
+          target: process.env.VITE_LOCAL_URL,
+          changeOrigin: true,
+        },
       },
       hmr: {
         port: 3000,
+        host: 'localhost',
         protocol: 'ws',
       },
     },

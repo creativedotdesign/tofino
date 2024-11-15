@@ -17,15 +17,15 @@
                 "id": ""
             },
             "acfe_flexible_advanced": 0,
-            "layouts": [
-                {
-                    "key": "layout_62586ca1c1a98",
+            "layouts": {
+                "layout_66e9fc13df61f": {
+                    "key": "layout_66e9fc13df61f",
                     "name": "general_content",
                     "label": "General Content",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_62586caef1a1b",
+                            "key": "field_6716bcc404299",
                             "label": "General Content",
                             "name": "general_content",
                             "aria-label": "",
@@ -38,6 +38,7 @@
                                 "class": "",
                                 "id": ""
                             },
+                            "graphql_field_name": "generalContent",
                             "clone": [
                                 "group_62586c11ea98d"
                             ],
@@ -45,7 +46,6 @@
                             "layout": "block",
                             "prefix_label": 0,
                             "prefix_name": 0,
-                            "wpml_cf_preferences": 1,
                             "acfe_seamless_style": 0,
                             "acfe_clone_modal": 0,
                             "acfe_clone_modal_close": 0,
@@ -64,7 +64,7 @@
                     "acfe_flexible_modal_edit_size": false,
                     "acfe_flexible_category": false
                 }
-            ],
+            },
             "min": "",
             "max": "",
             "button_label": "Add Row",
@@ -107,7 +107,7 @@
         ]
     ],
     "menu_order": 0,
-    "position": "acf_after_title",
+    "position": "normal",
     "style": "seamless",
     "label_placement": "top",
     "instruction_placement": "label",
@@ -132,11 +132,11 @@
         "json"
     ],
     "acfe_form": 0,
-    "show_in_graphql": 1,
+    "show_in_graphql": 0,
     "graphql_field_name": "__pageModules",
     "map_graphql_types_from_location_rules": 0,
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1726688649
+    "modified": 1729892148
 }

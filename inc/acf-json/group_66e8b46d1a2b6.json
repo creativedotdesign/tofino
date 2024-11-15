@@ -16,12 +16,16 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
+            "message": "Experimental, use at your own risk.",
             "default_value": 0,
             "allow_in_bindings": 0,
             "ui_on_text": "",
             "ui_off_text": "",
-            "ui": 1
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "customLayouts",
+            "graphql_non_null": 0
         },
         {
             "key": "field_66e8b46db4145",
@@ -178,7 +182,7 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1726758744,
+    "modified": 1729551355,
     "acfe_categories": {
         "options": "Options"
     }

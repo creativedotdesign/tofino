@@ -6,7 +6,9 @@ class Vite
 {
   public static $serverUrl = 'http://localhost:3000';
 
-  public static function getBrowserSyncUrl($port = 3001)
+  public static $handle = 'tofino';
+
+  public static function getBrowserSyncUrl($port = 3002)
   {
     $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 
@@ -69,8 +71,8 @@ class Vite
       return '';
     }
 
-    wp_register_script("tofino", $url, false, true, true);
-    wp_enqueue_script("tofino");
+    wp_register_script(self::$handle, $url, false, true, true);
+    wp_enqueue_script(self::$handle);
   }
 
   private static function jsPreloadImports($entry)
@@ -99,8 +101,8 @@ class Vite
     $tags = '';
 
     foreach (self::cssUrls($entry) as $url) {
-      wp_register_style("tofino-" . sanitize_title($entry), $url);
-      wp_enqueue_style("tofino-" . sanitize_title($entry), $url);
+      wp_register_style(self::$handle . "-" . sanitize_title($entry), $url);
+      wp_enqueue_style(self::$handle . "-" . sanitize_title($entry), $url);
     }
 
     return $tags;

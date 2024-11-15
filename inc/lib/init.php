@@ -455,3 +455,10 @@ function add_svg_to_mime_types($mimes)
 	return $mimes;
 }
 add_filter('upload_mimes', __NAMESPACE__ . '\\add_svg_to_mime_types');
+
+
+function failed_login_401()
+{
+  status_header(401);
+}
+add_action('wp_login_failed', __NAMESPACE__ . '\\failed_login_401');

@@ -101,4 +101,6 @@ class CustomLoginForm {
   }
 }
 
-new CustomLoginForm();
+add_filter('acf/init', function() {
+  new CustomLoginForm(); 
+});

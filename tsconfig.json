@@ -12,7 +12,6 @@
       "@/*": ["./src/*"]
     },
     "types": [
-      "jest", // if using jest
       "node" // if using node
     ],
     "strict": true, // Enable strict type-checking options

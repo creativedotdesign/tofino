@@ -37,7 +37,13 @@ function acf_load_layouts_select_options(array $field)
   // reset choices
   $field['choices'] = [];
 
-  $content_modules = get_field_object('field_content_modules');
+  if (get_field('auto_generate_page_modules', 'option')) {
+    $field_key = 'field_content_modules';
+  } else {
+    $field_key = 'field_62586c9af1a1a';
+  }
+
+  $content_modules = get_field_object($field_key);
 
   // Add one empty option
   $field['choices'][''] = 'Select';
@@ -132,20 +138,14 @@ function auto_generate_page_modules() {
 
     $field_groups = get_posts($args);
 
-    // var_dump($field_groups);
-
     $dynamic_page_modules = [];
 
     // Loop through all the field groups and find the terms attached to them
     foreach ($field_groups as $field_group) {
       $post_name = $field_group->post_name;
 
-      // var_dump($post_name);
-
       // Get the terms attached to the field group
       $group = acf_get_field_group($post_name);
-
-      // var_dump($group);
 
       if ($group && array_key_exists('acfe_categories', $group)) {
         $categories = $group['acfe_categories'];
