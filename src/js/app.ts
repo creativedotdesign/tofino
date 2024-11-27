@@ -1,7 +1,7 @@
 import { Scripts } from '@/js/types/types';
 import { loadScripts } from '@/js/helpers/scriptLoader';
-import * as WebFont from 'webfontloader';
-import { WebFontInterface } from '@/js/types/types';
+// import * as WebFont from 'webfontloader';
+// import { WebFontInterface } from '@/js/types/types';
 
 // Import CSS
 import '@/css/app.css';
@@ -10,18 +10,18 @@ const init = () => {
   // JavaScript to be fired on all pages
 
   // Config for WebFontLoader
-  const fontConfig: WebFontInterface = {
-    classes: false,
-    events: false,
-    google: {
-      families: ['Roboto:300,400,500,700'],
-      display: 'swap',
-      version: 1.0,
-    },
-  };
+  // const fontConfig: WebFontInterface = {
+  //   classes: false,
+  //   events: false,
+  //   google: {
+  //     families: ['Roboto:300,400,500,700'],
+  //     display: 'swap',
+  //     version: 1.0,
+  //   },
+  // };
 
-  // Load Fonts
-  WebFont.load(fontConfig);
+  // // Load Fonts
+  // WebFont.load(fontConfig);
 
   // Define the selectors and src for dynamic imports
   const scripts: Scripts = [

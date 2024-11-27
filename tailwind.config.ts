@@ -22,7 +22,7 @@ export default {
       xl: '1366px',
     },
     fontFamily: {
-      roboto: ['Roboto'],
+      // roboto: ['Roboto'],
     },
   },
   plugins: [

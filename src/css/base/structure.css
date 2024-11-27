@@ -6,12 +6,8 @@ main {
   @apply flex-auto;
 }
 
-footer {
-  @apply bg-gray-100;
-}
-
 body {
-  @apply flex min-h-full flex-col font-roboto antialiased;
+  @apply flex min-h-full flex-col antialiased;
 
   &.no-fout {
     @apply invisible;

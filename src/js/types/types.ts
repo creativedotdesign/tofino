@@ -2,10 +2,13 @@
 export interface WebFontInterface {
   classes: boolean;
   events: boolean;
-  google: {
+  google?: {
     families: string[];
     display: string;
     version: number;
+  };
+  typekit?: {
+    id: string;
   };
 }
 
