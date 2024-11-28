@@ -19,8 +19,8 @@ namespace Tofino\Init;
 function php_version_check()
 {
   $php_version = phpversion();
-  if (version_compare($php_version, '8.1.0', '<')) {
-    wp_die('<div class="error notice"><p>' . __('PHP version >= 8.1.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
+  if (version_compare($php_version, '8.2.0', '<')) {
+    wp_die('<div class="error notice"><p>' . __('PHP version >= 8.2.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
   }
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
@@ -462,3 +462,11 @@ function failed_login_401()
   status_header(401);
 }
 add_action('wp_login_failed', __NAMESPACE__ . '\\failed_login_401');
+
+
+// Increase GraphQL query limit
+function increase_graphql_query_limit($limit)
+{
+  return 2000;
+}
+add_filter('graphql_connection_max_query_amount', __NAMESPACE__ . '\\increase_graphql_query_limit', 12, 5);
