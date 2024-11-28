@@ -22,7 +22,7 @@ class DisablePostType
       add_action('admin_menu', [$this, 'remove_post_menu']);
       add_action('admin_bar_menu', [$this, 'remove_new_post_admin_bar'], 999);
       add_action('init', [$this, 'disable_post_type_rewrite']);
-      add_action('wpml_current_language', [$this, 'disable_post_type_rewrite']);
+      // add_action('wpml_current_language', [$this, 'disable_post_type_rewrite']);
       add_action('template_redirect', [$this, 'redirect_single_post']);
     }
   }
