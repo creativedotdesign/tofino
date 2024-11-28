@@ -342,7 +342,7 @@ add_filter('login_errors', __NAMESPACE__ . '\\failed_login');
 // Disable RSS feeds
 function disable_rss_feeds()
 {
-  wp_die(__('No feeds available!'));
+  wp_die(__('No feeds available!', 'tofino'));
 }
 add_action('do_feed', __NAMESPACE__ . '\\disable_rss_feeds', 1);
 add_action('do_feed_rdf', __NAMESPACE__ . '\\disable_rss_feeds', 1);
