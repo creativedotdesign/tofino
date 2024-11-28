@@ -19,7 +19,7 @@
 
   <header<?php echo ($menu_sticky ? ' class="' . $menu_sticky . '"' : null); ?>>
     <nav class="flex justify-between w-full px-6 py-4 bg-gray-100">
-      <a href="<?php echo home_url(); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>">
+      <a href="<?php echo esc_url(home_url()); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>">
         <?php echo bloginfo('name'); ?>
       </a>
 
