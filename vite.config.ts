@@ -8,7 +8,7 @@ import path from 'path';
 import vue from '@vitejs/plugin-vue';
 import { onProxyRes } from './src/js/helpers/middleware';
 import { bold, lightMagenta } from 'kolorist';
-import getPostCSSConfig from './postcss.config.ts';
+// import getPostCSSConfig from './postcss.config.ts';
 
 export default ({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -95,9 +95,9 @@ export default ({ mode }: { mode: string }) => {
         },
       },
     ],
-    css: {
-      postcss: getPostCSSConfig(env.NODE_ENV || 'development') as any,
-    },
+    // css: {
+    //   postcss: getPostCSSConfig(env.NODE_ENV || 'development') as any,
+    // },
     define: { __VUE_PROD_DEVTOOLS__: false },
     server: {
       host: true,
