@@ -1,4 +1,4 @@
-import '@/css/base/admin.css'; // Import CSS
+// import '@/css/base/admin.css'; // Import CSS
 import { acfLayouts } from '@/js/modules/layouts';
 import { maintenanceMode } from '@/js/modules/maintenanceMode';
 

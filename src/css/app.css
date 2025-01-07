@@ -1,13 +1,14 @@
 @import 'tailwindcss';
 
+@source '../../*.php';
+@source '../../templates/**/*.php';
+
 @import './base/alerts.css' layer(components);
 @import './base/menu.css' layer(components);
 @import './base/social-icons.css' layer(components);
 @import './base/structure.css' layer(components);
 
 @import './components/iframe.css' layer(components);
-
-@config '../../tailwind.config.ts';
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -25,4 +26,13 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+}
+
+@theme {
+  --container-center: true;
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1366px;
 }
