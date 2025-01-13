@@ -83,8 +83,16 @@ test.describe('Tofino tests', () => {
       // Check header for sticky top class
       await expect(header).toHaveClass(/sticky-top/);
 
-      // Scroll down 250px, check if visible
-      await page.evaluate(() => window.scrollBy(0, 250));
+      // Scroll down 200px, check if visible
+      await page.evaluate(() => window.scrollBy(0, 200));
+      await expect(header).toBeVisible();
+
+      // Scroll to bottom, check if visible
+      page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      await expect(header).toBeVisible();
+
+      // Scroll back to top, check if visible
+      page.evaluate(() => window.scrollTo(0, -document.documentElement.scrollHeight));
       await expect(header).toBeVisible();
     }
   });
