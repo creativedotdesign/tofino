@@ -40,3 +40,6 @@ cypress/downloads/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Playwright
+/accessibility-reports

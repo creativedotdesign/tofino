@@ -53,7 +53,7 @@
     "@vue/test-utils": "^2.4.3",
     "autoprefixer": "^10.4.16",
     "axe-core": "^4.8.3",
-    "axe-html-reporter": "^2.2.3",
+    "axe-html-reporter": "^2.2.11",
     "cypress": "^13.6.2",
     "cypress-axe": "^1.5.0",
     "dotenv": "^16.3.1",
@@ -77,9 +77,11 @@
     "vite-plugin-chunk-split": "^0.5.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svg-icons": "^2.0.1",
-    "vitest": "^1.1.1"
+    "vitest": "^1.1.1",
+    "xml2js": "^0.6.2"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.10.1",
     "@iframe-resizer/parent": "^5.3.1",
     "body-scroll-lock": "^3.1.5",
     "iframe-resizer": "^5.3.1",
