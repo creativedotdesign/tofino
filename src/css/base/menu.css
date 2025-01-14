@@ -7,6 +7,16 @@
   @apply sticky top-0 z-20;
 }
 
+/* Scroll Reveal Classes */
+.scroll-down header {
+  @apply -translate-y-full;
+}
+
+.scroll-up header {
+  @apply transform-none;
+}
+
+/* Main Menu Styling */
 #menu-header-menu {
   @apply mt-10 lg:mt-0 lg:inline-flex;
 
