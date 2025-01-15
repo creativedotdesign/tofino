@@ -13,7 +13,7 @@ test.only('Validate HTML', async ({ page, baseURL }) => {
   // Validate the HTML
   const report = await htmlvalidate.validateString(html);
 
-  console.log('report:', report.results);
+  // console.log('report:', report.results);
 
   if (report.results.length > 0) {
     for (const item of report.results) {
@@ -21,7 +21,6 @@ test.only('Validate HTML', async ({ page, baseURL }) => {
     }
   }
 
-  // json file attachment
   if (!report.valid) {
     await test.info().attach('html-validate-report.json', {
       contentType: 'application/json',
