@@ -6,14 +6,14 @@ import fs from 'fs';
 import mustache from 'mustache';
 
 class HTMLReporter implements Reporter {
-  // private errors: any[] = [];
-  // public errors = [];
   public errors: Array<{
     testTitle: string;
     errors: any[];
   }> = [];
 
-  constructor() {
+  constructor(options) {
+    this.validationResults = [];
+
     console.log(`Using Custom reporter`);
   }
 
@@ -27,7 +27,23 @@ class HTMLReporter implements Reporter {
   onTestEnd(test: TestCase, result: TestResult) {
     console.log(`Finished test ${test.title}: ${result.status}`);
 
-    console.log('[DEBUG] Attachments:', result.attachments);
+    const validationAnnotations = test.annotations.filter(
+      (annotation) => annotation.type === 'html-validation'
+    );
+
+    validationAnnotations.forEach((annotation) => {
+      const parsed = JSON.parse(annotation.description);
+
+      this.validationResults.push({
+        testName: test.title,
+        url: parsed.url,
+        errorCount: parsed.results.results[0].errorCount,
+        warningCount: parsed.results.results[0].warningCount,
+        messages: parsed.results.results[0].messages
+      });
+    });
+
+    // console.log('[DEBUG] Annotations:', this.validationResults);
 
     for (const attachment of result.attachments) {
       // Check for attachment "html-validate-report.json"
@@ -53,14 +69,22 @@ class HTMLReporter implements Reporter {
     console.log('End of all tests!');
     console.log('Final status:', result.status);
 
+
+
+    // console.log(this.validationResults);
+
     // Load the template
     const template = this.getTemplate();
 
-    const mustacheData = {
-      errors: this.errors,
-    };
+    // const mustacheData = {
+    //   errors: this.errors,
+    // };
 
-    const htmlContent = mustache.render(template, mustacheData);
+    // const mustacheData = this.validationResults;
+
+    const htmlContent = mustache.render(template, {
+      data: this.validationResults
+    });
 
     fs.writeFileSync('./test-results/custom-html-report.html', htmlContent);
 

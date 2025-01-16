@@ -7,13 +7,14 @@
   <body>
     <h1>HTML Validation Report</h1>
 
-    {{#errors}}
-    <h2>{{testTitle}}</h2>
+    {{#data}}
+    <h2>{{testName}}</h2>
+    {{url}}
     <ul>
-      {{#errors}}
+      {{#messages}}
       <li>{{ruleId}}: {{message}} (line {{line}}, col {{column}})</li>
-      {{/errors}}
+      {{/messages}}
     </ul>
-    {{/errors}}
+    {{/data}}
   </body>
 </html>
