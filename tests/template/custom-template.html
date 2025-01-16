@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <title>Results</title>
+    <title>HTML Validation Report</title>
   </head>
-  <main role="main">
-    <div style="padding: 2rem">
-      <h1>Custom Report</h1>
+  <body>
+    <h1>HTML Validation Report</h1>
 
-      <p>Reports!</p>
-
-      {{ errors }}
-    </div>
-  </main>
+    {{#errors}}
+    <h2>{{testTitle}}</h2>
+    <ul>
+      {{#errors}}
+      <li>{{ruleId}}: {{message}} (line {{line}}, col {{column}})</li>
+      {{/errors}}
+    </ul>
+    {{/errors}}
+  </body>
 </html>

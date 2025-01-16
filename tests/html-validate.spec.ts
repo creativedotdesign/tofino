@@ -24,7 +24,7 @@ test.only('Validate HTML', async ({ page, baseURL }) => {
   if (!report.valid) {
     await test.info().attach('html-validate-report.json', {
       contentType: 'application/json',
-      body: Buffer.from(JSON.stringify(report.results))
+      body: Buffer.from(JSON.stringify(report.results, null, 2)),
     });
   }
 
