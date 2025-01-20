@@ -1,43 +1,81 @@
 import { test, expect } from '@playwright/test';
 import { HtmlValidate } from 'html-validate';
+import { parseStringPromise } from 'xml2js';
 
-test('Validate HTML', async ({ page, baseURL }) => {
-  await page.goto(baseURL);
+test.describe('HTML Validation Tests', () => {
+  let urls: string[] = [];
+  const validationErrors: Array<{ url: string; messages: any[] }> = [];
 
-  // Get the HTML content
-  const html = await page.content();
+  test.beforeAll(async ({ baseURL }) => {
+    const sitemapUrl = `${baseURL}/page-sitemap.xml`;
 
-  // Create an html-validate instance
-  const htmlvalidate = new HtmlValidate();
+    // Fetch the sitemap content
+    const response = await fetch(sitemapUrl);
 
-  // Validate the HTML
-  const report = await htmlvalidate.validateString(html);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch sitemap: ${response.status}`);
+    }
 
-  // Attach the results to the test metadata for the reporter
-  if (!report.valid) {
-    test.info().annotations.push({
-      type: 'html-validation',
-      description: JSON.stringify({
-        url: baseURL,
-        results: report,
-      }),
-    });
-  }
+    // Read the text content of the sitemap
+    const xmlContent = await response.text();
 
-  // console.log('report:', report.results);
+    // Parse the XML content to extract URLs
+    const parsedSitemap = await parseStringPromise(xmlContent);
+    urls = parsedSitemap.urlset.url.map((entry: any) => entry.loc[0]);
 
-  // if (report.results.length > 0) {
-  //   for (const item of report.results) {
-  //     console.log(item.messages);
-  //   }
-  // }
+    if (!urls.length) {
+      throw new Error('No URLs found in the sitemap.');
+    }
 
-  // if (!report.valid) {
-  //   await test.info().attach('html-validate-report.json', {
-  //     contentType: 'application/json',
-  //     body: Buffer.from(JSON.stringify(report.results, null, 2)),
-  //   });
-  // }
+    console.log(`Found ${urls.length} URLs in the sitemap.`);
+  });
 
-  expect(report.valid, 'HTML did not pass validation').toBeTruthy();
+  test('Validate HTML for all sitemap URLs', async ({ page, baseURL }) => {
+    // Create an html-validate instance
+    const htmlvalidate = new HtmlValidate();
+
+    for (const url of urls) {
+      try {
+        await page.goto(url, { waitUntil: 'networkidle' });
+
+        console.log("Pizaaaa!");
+        console.log(`Validating URL: ${url}`);
+
+        // Get the HTML content
+        const html = await page.content();
+
+        // Validate the HTML
+        const report = await htmlvalidate.validateString(html);
+
+        // Attach the results to the test metadata for the reporter
+        if (!report.valid) {
+          test.info().annotations.push({
+            type: 'html-validation',
+            description: JSON.stringify({
+              url,
+              results: report,
+            }),
+          });
+
+          // Collect validation errors for reporting
+          validationErrors.push({
+            url,
+            messages: report.results[0].messages,
+          });
+
+          console.warn(`HTML validation failed for ${url}`);
+        } else {
+          console.log(`HTML validation passed for ${url}`);
+        }
+      } catch (error) {
+        console.error(`Error validating ${url}:`, error);
+        validationErrors.push({
+          url,
+          messages: [{ message: error.message }],
+        });
+      }
+    }
+
+    expect(validationErrors.length, 'Some pages failed HTML validation').toBe(0);
+  });
 });
