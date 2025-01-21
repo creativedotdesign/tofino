@@ -3,18 +3,121 @@
   <head>
     <meta charset="utf-8" />
     <title>HTML Validation Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .summary {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-bottom: 30px;
+      }
+
+      .summary p {
+        font-size: 1.1em;
+        margin: 5px 0;
+      }
+
+      .summary .badge {
+        background-color: #ffc107;
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      .violationCard {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .violationCard .url {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .violationCard .messages {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .violationCard .messages li {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 3px;
+      }
+
+      .violationCard .messages li a {
+        color: #337ab7;
+        text-decoration: none;
+      }
+
+      .violationCard .screenshot {
+        margin-top: 15px;
+      }
+
+      .violationCard .screenshot img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+    </style>
   </head>
   <body>
     <h1>HTML Validation Report</h1>
 
+    <div class="summary">
+      <p><strong>Website:</strong> {{websiteName}}</p>
+      <p><strong>Tested On:</strong> {{timestamp}}</p>
+      <p>
+        <strong>Total Violations:</strong>
+        <span class="badge">{{totalViolations}}</span>
+      </p>
+    </div>
+
     {{#data}}
-    <h2>{{testName}}</h2>
-    {{url}}
-    <ul>
-      {{#messages}}
-      <li>{{ruleId}}: {{message}} (line {{line}}, col {{column}})</li>
-      {{/messages}}
-    </ul>
+    <div class="violationCard">
+      <p class="url">URL:<a href="{{url}}" target="_blank">{{url}}</a></p>
+      <p><strong>Number of Issues:</strong> {{messages.length}}</p>
+      <ul class="messages">
+        {{#messages}}
+        <li>
+          <p><strong>Validation issue:</strong> {{message}}</p>
+          <p>
+            <strong>Rule: </strong>{{ruleId}}
+            <a href="{{ruleUrl}}" target="_blank"><strong>View rule details</strong></a>
+          </p>
+          <p><strong>Selector:</strong> {{selector}}</p>
+          <p><strong>Selector:</strong> {{selector}}</p>
+          <p><strong>Location:</strong> Line {{line}}, Column {{column}}</p>
+        </li>
+        {{/messages}}
+      </ul>
+      {{#screenshot}}
+      <div class="screenshot">
+        <p><strong>Screenshot:</strong></p>
+        <a href="{{url}}" target="_blank">
+          <img src="{{screenshot}}" alt="Screenshot of violation" />
+        </a>
+      </div>
+      {{/screenshot}}
+    </div>
     {{/data}}
   </body>
 </html>
