@@ -1,3 +1,10 @@
+<?php
+//  if (get_field('enable_cookie_notice', 'options')) {
+//   \Tofino\Helpers\hm_get_template_part('../../plugins/tofino-cookie-notice/templates/tofino-cookie-notice');
+//  } 
+ 
+ ?>
+
 <footer>
   <div class="container">
     <div class="w-full text-center"><?php
@@ -26,6 +33,8 @@
 <?php wp_footer(); ?>
 
 <?php Tofino\Init\alerts('bottom'); ?>
+
+<?php do_action('tofino_after_footer'); ?>
 
 </body>
 </html>

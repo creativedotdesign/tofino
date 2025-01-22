@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 import { defineConfig, loadEnv } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import { svgSpritemap } from 'vite-plugin-svg-spritemap';
 import VitePluginBrowserSync from 'vite-plugin-browser-sync';
@@ -8,7 +9,7 @@ import path from 'path';
 import vue from '@vitejs/plugin-vue';
 import { onProxyRes } from './src/js/helpers/middleware';
 import { bold, lightMagenta } from 'kolorist';
-import getPostCSSConfig from './postcss.config.ts';
+// import getPostCSSConfig from './postcss.config.ts';
 
 export default ({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -21,7 +22,7 @@ export default ({ mode }: { mode: string }) => {
       outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
       manifest: true,
-      // minify: false,
+      minify: false,
       sourcemap: env.NODE_ENV === 'production' ? false : 'inline',
       target: 'es2021',
       rollupOptions: {
@@ -41,6 +42,7 @@ export default ({ mode }: { mode: string }) => {
       include: ['vue', 'pinia', 'webfontloader', 'body-scroll-lock'],
     },
     plugins: [
+      tailwindcss(),
       vue(),
       eslintPlugin(),
       chunkSplitPlugin({
@@ -95,9 +97,9 @@ export default ({ mode }: { mode: string }) => {
         },
       },
     ],
-    css: {
-      postcss: getPostCSSConfig(env.NODE_ENV || 'development') as any,
-    },
+    // css: {
+    //   postcss: getPostCSSConfig(env.NODE_ENV || 'development') as any,
+    // },
     define: { __VUE_PROD_DEVTOOLS__: false },
     server: {
       host: true,
