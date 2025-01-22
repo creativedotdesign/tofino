@@ -37,10 +37,10 @@ test.describe('HTML Validation Tests', () => {
     urls = parsedSitemap.urlset.url.map((entry: any) => entry.loc[0]);
 
     if (!urls.length) {
-      throw new Error('No URLs found in the sitemap.');
+      throw new Error('No URLs found in the sitemap for html validation tests.');
     }
 
-    console.log(`Found ${urls.length} URLs in the sitemap.`);
+    console.log(`Found ${urls.length} URLs in the sitemap for html validation tests.`);
   });
 
   test('Validate HTML for all sitemap URLs', async ({ page }) => {
@@ -62,7 +62,7 @@ test.describe('HTML Validation Tests', () => {
           // Capture screenshot
           const screenshotPath = path.resolve(
             './test-results/screenshots',
-            `screenshot-${Date.now()}.png`
+            `html-validation-screenshot-${Date.now()}.png`
           );
 
           await page.screenshot({ path: screenshotPath, fullPage: true });
@@ -89,7 +89,7 @@ test.describe('HTML Validation Tests', () => {
           console.log(`HTML validation passed for ${url}`);
         }
       } catch (error) {
-        console.error(`Error validating ${url}:`, error);
+        console.error(`Error validating html on ${url}:`, error);
         validationErrors.push({
           url,
           messages: [{ message: error.message }],

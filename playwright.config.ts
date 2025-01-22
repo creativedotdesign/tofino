@@ -29,7 +29,8 @@ export default defineConfig({
 
   reporter: [
     ['html', { open: 'never' }],
-    ['./tests/custom-reporter.ts'],
+    ['./tests/reporters/html-validation-reporter.ts'],
+    ['./tests/reporters/overflow-detection-reporter.ts'],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

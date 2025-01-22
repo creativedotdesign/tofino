@@ -27,5 +27,7 @@
 
 <?php Tofino\Init\alerts('bottom'); ?>
 
+<div class="h-20 w-[110vw] bg-red-100"></div>
+
 </body>
 </html>

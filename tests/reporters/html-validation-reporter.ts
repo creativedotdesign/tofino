@@ -14,14 +14,7 @@ class HTMLReporter implements Reporter {
     screenshot?: string;
   }> = [];
   public timestamp: string = new Date().toLocaleString();
-  public websiteName: string;
-
-  constructor() {
-    const websiteNameEnv = process.env.VITE_ASSET_URL;
-    if (websiteNameEnv) {
-      this.websiteName = websiteNameEnv;
-    }
-  }
+  private websiteName: string = process.env.VITE_ASSET_URL ?? '';
 
   onTestEnd(test: TestCase) {
     const validationAnnotations = test.annotations.filter(
@@ -34,8 +27,6 @@ class HTMLReporter implements Reporter {
       this.validationResults.push({
         testName: test.title,
         url: parsed.url,
-        // errorCount: parsed.results.results[0].errorCount,
-        // warningCount: parsed.results.results[0].warningCount,
         messages: parsed.results.results[0].messages,
         screenshot: parsed.screenshot,
       });
@@ -76,11 +67,11 @@ class HTMLReporter implements Reporter {
       totalViolations,
     });
 
-    fs.writeFileSync('./test-results/custom-html-report.html', htmlContent);
+    fs.writeFileSync('./test-results/html-validation-report.html', htmlContent);
   }
 
   getTemplate() {
-    return fs.readFileSync('./tests/template/custom-template.html', 'utf8');
+    return fs.readFileSync('./tests/templates/html-validation-template.html', 'utf8');
   }
 }
 

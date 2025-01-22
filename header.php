@@ -28,6 +28,8 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'general-options'); ?>
         <?php echo bloginfo('name'); ?>
       </a>
 
+      <div class="w-[400px] h-10 bg-blue-200">LOGO</div>
+
       <button class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation" data-playwright="open-mobile-menu">
         <!-- Hamburger Icon -->
         <span class="w-6 h-6">
@@ -44,6 +46,22 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'general-options'); ?>
         >
           <?php echo svg(['sprite' => 'icon-close', 'class' => 'w-full h-full']); ?>
         </button>
+
+        <ul class="flex *:max-w-10">
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! ItemLOngish A</li>
+          <li>SuperMenu! Item A</li>
+          <li>SuperMenu! Item A</li>
+          <li>SuperMenu! Item A</li>
+          <li>SuperMenu! Item A</li>
+          <li>SuperMenu! Item A</li>
+        </ul>
 
         <?php if (has_nav_menu('header_navigation')):
           wp_nav_menu([
