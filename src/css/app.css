@@ -1,14 +1,13 @@
 @import 'tailwindcss';
 
-@source '../../*.php';
-@source '../../templates/**/*.php';
-
 @import './base/alerts.css' layer(components);
 @import './base/menu.css' layer(components);
 @import './base/social-icons.css' layer(components);
 @import './base/structure.css' layer(components);
 
 @import './components/iframe.css' layer(components);
+
+@source '../../**/*.php';
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,

@@ -120,7 +120,7 @@ export default ({ mode }: { mode: string }) => {
           changeOrigin: true,
         },
         '/wp-admin': {
-          target: process.env.VITE_LOCAL_URL,
+          target: env.VITE_ASSET_URL,
           changeOrigin: true,
         },
       },
