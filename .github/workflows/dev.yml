@@ -16,11 +16,11 @@ jobs:
         with:
           fetch-depth: 2
 
-      # Set up Node.js version 20
-      - name: Set up Node.js 20
+      # Set up Node.js version 22
+      - name: Set up Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Get Composer Cache Directory
