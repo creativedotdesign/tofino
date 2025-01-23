@@ -47,22 +47,6 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'general-options'); ?>
           <?php echo svg(['sprite' => 'icon-close', 'class' => 'w-full h-full']); ?>
         </button>
 
-        <ul class="flex *:max-w-10">
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! ItemLOngish A</li>
-          <li>SuperMenu! Item A</li>
-          <li>SuperMenu! Item A</li>
-          <li>SuperMenu! Item A</li>
-          <li>SuperMenu! Item A</li>
-          <li>SuperMenu! Item A</li>
-        </ul>
-
         <?php if (has_nav_menu('header_navigation')):
           wp_nav_menu([
             'menu' => 'nav_menu',

@@ -10,7 +10,6 @@ class OverflowReporter implements Reporter {
   private overflowResults: Array<{
     testName: string;
     url: string;
-    // overflowingCount: number;
     selectors: string[];
     screenshot?: string;
   }> = [];
@@ -28,7 +27,6 @@ class OverflowReporter implements Reporter {
       this.overflowResults.push({
         testName: test.title,
         url: parsed.url,
-        // overflowingCount: parsed.overflowingCount,
         selectors: parsed.selectors,
         screenshot: parsed.screenshot,
       });
@@ -52,11 +50,6 @@ class OverflowReporter implements Reporter {
         : undefined,
     }));
 
-    // const totalOverflowingElements = adjustedResults.reduce(
-    //   (acc, curr) => acc + (curr.overflowingCount > 0 ? curr.overflowingCount : 0),
-    //   0
-    // );
-
     // Combine all selectors
     const totalElements = adjustedResults.reduce(
       (acc, curr) => acc + curr.selectors.length,
@@ -71,6 +64,7 @@ class OverflowReporter implements Reporter {
       totalElements,
     });
 
+    // Generate report
     fs.writeFileSync('./test-results/overflow-detection-report.html', htmlContent);
   }
 
