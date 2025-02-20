@@ -40,6 +40,11 @@ const init = () => {
       src: 'iframe',
       type: 'ts',
     },
+    {
+      selector: '[data-scroll-reveal]', // Menu scroll reveal
+      src: 'menu-scroll-reveal',
+      type: 'ts',
+    },
   ];
 
   // Load the scripts
