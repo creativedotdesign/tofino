@@ -1,5 +1,5 @@
 // Scroll lock
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import { lock, unlock, clearBodyLocks } from 'tua-body-scroll-lock';
 
 export default () => {
   const buttons = document.querySelectorAll<HTMLElement>('.js-menu-toggle');
@@ -10,10 +10,10 @@ export default () => {
       menu.classList.toggle('inactive');
 
       if (menu.classList.contains('inactive')) {
-        enableBodyScroll(menu);
+        lock(menu);
         document.body.classList.remove('menu-open');
       } else {
-        disableBodyScroll(menu);
+        unlock(menu);
         document.body.classList.add('menu-open');
       }
     }
@@ -23,7 +23,7 @@ export default () => {
     if (e.key === 'Escape' && menu && !menu.classList.contains('inactive')) {
       menu.classList.add('inactive');
       document.body.classList.remove('menu-open');
-      clearAllBodyScrollLocks();
+      clearBodyLocks();
     }
   };
 

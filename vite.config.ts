@@ -39,7 +39,7 @@ export default ({ mode }: { mode: string }) => {
       },
     },
     optimizeDeps: {
-      include: ['vue', 'pinia', 'webfontloader', 'body-scroll-lock'],
+      include: ['vue', 'pinia', 'webfontloader', 'tua-body-scroll-lock'],
     },
     plugins: [
       tailwindcss(),

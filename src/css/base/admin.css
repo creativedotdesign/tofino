@@ -1,3 +1,6 @@
+@layer theme, base, components;
+@import 'tailwindcss/theme.css' layer(theme);
+
 .maintenance-mode-alert {
   @apply fixed z-[99999] flex justify-center bg-red-600 p-5 text-center text-white;
 
@@ -112,7 +115,7 @@ body.login.custom-login-screen {
     }
 
     .input {
-      @apply focus:ring-opacity-50 m-0 w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-base leading-tight text-neutral-800 focus:ring-2 focus:ring-blue-500 focus:outline-none;
+      @apply m-0 w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-base leading-tight text-neutral-800 focus:ring-2 focus:ring-blue-500/50 focus:outline-none;
     }
 
     .input-password {
@@ -126,7 +129,7 @@ body.login.custom-login-screen {
     }
 
     .button-primary {
-      @apply focus:ring-opacity-50 block w-full rounded-none border-none bg-[var(--button-color)] px-4 py-1.5 font-bold text-[#f0f0f1] focus:ring-2 focus:ring-blue-500 focus:outline-none;
+      @apply block w-full rounded-none border-none bg-[var(--button-color)] px-4 py-1.5 font-bold text-[#f0f0f1] focus:ring-2 focus:ring-blue-500/50 focus:outline-none;
     }
 
     .forgetmenot {
