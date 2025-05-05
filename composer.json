@@ -23,7 +23,8 @@
   ],
   "require": {
     "php": ">=8.2.0",
-    "composer/installers": "~v2.2.0"
+    "composer/installers": "~v2.2.0",
+    "monolog/monolog": "^3.9"
   },
   "autoload": {
     "psr-4": {

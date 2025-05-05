@@ -22,6 +22,7 @@ $tofino_includes = [
   "inc/lib/layouts.php",
   "inc/lib/class/DisablePostType.php",
   "inc/lib/class/CustomLoginForm.php",
+  "inc/lib/class/AuditLogger.php",
 ];
 
 foreach ($tofino_includes as $file) {
