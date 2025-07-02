@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { parseStringPromise } from 'xml2js';
 import path from 'path';
 import fs from 'fs';
 import { detectOverflow } from './utils/overflow-check';
+import { processSitemap } from './utils/process-sitemap';
 
 test.describe('Overflow Detection Tests', () => {
   let urls: string[] = [];
@@ -14,30 +14,18 @@ test.describe('Overflow Detection Tests', () => {
   }> = [];
 
   test.beforeAll(async ({ baseURL }) => {
-    const sitemapUrl = `${baseURL}/page-sitemap.xml`;
-
     // Check for screenshots directory
     const screenshotsDir = path.resolve('./test-results/screenshots');
     if (!fs.existsSync(screenshotsDir)) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
     }
 
-    // Fetch the sitemap content
-    const response = await fetch(sitemapUrl);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch sitemap: ${response.status}`);
-    }
-
-    // Read the text content of the sitemap
-    const xmlContent = await response.text();
-
-    // Parse the XML content to extract URLs
-    const parsedSitemap = await parseStringPromise(xmlContent);
-    urls = parsedSitemap.urlset.url.map((entry: any) => entry.loc[0]);
+    // Get all URLs from sitemap
+    const sitemapUrl = `${baseURL}/sitemap_index.xml`;
+    urls = await processSitemap(sitemapUrl);
 
     if (!urls.length) {
-      throw new Error('No URLs found in the sitemap for overflow detection tests.');
+      throw new Error('No URLs found in the sitemap.');
     }
 
     console.log(`Found ${urls.length} URLs in the sitemap for overflow detection tests.`);
@@ -46,10 +34,8 @@ test.describe('Overflow Detection Tests', () => {
   test('Check for overflowing elements on all sitemap URLs', async ({ page }) => {
     for (const url of urls) {
       try {
-
         // @TODO Mobile overflow
         // await page.setViewportSize({ width: 375, height: 812 });
-
         await page.goto(url, { waitUntil: 'networkidle' });
 
         // Call detectOverflow in the browser

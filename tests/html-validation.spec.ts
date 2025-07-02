@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { HtmlValidate } from 'html-validate';
-import { parseStringPromise } from 'xml2js';
 import path from 'path';
 import fs from 'fs';
+import { processSitemap } from './utils/process-sitemap';
 
 test.describe('HTML Validation Tests', () => {
   let urls: string[] = [];
@@ -14,30 +14,19 @@ test.describe('HTML Validation Tests', () => {
   }> = [];
 
   test.beforeAll(async ({ baseURL }) => {
-    const sitemapUrl = `${baseURL}/page-sitemap.xml`;
-
     // Check for screenshots directory
     const screenshotsDir = path.resolve('./test-results/screenshots');
     if (!fs.existsSync(screenshotsDir)) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
     }
 
-    // Fetch the sitemap content
-    const response = await fetch(sitemapUrl);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch sitemap: ${response.status}`);
-    }
-
-    // Read the text content of the sitemap
-    const xmlContent = await response.text();
-
-    // Parse the XML content to extract URLs
-    const parsedSitemap = await parseStringPromise(xmlContent);
-    urls = parsedSitemap.urlset.url.map((entry: any) => entry.loc[0]);
+    // Get all URLs from sitemap
+    // const sitemapUrl = `${baseURL}/sitemap_index.xml`;
+    const sitemapUrl = `${baseURL}/page-sitemap.xml`;
+    urls = await processSitemap(sitemapUrl);
 
     if (!urls.length) {
-      throw new Error('No URLs found in the sitemap for html validation tests.');
+      throw new Error('No URLs found in the sitemap.');
     }
 
     console.log(`Found ${urls.length} URLs in the sitemap for html validation tests.`);
@@ -45,7 +34,14 @@ test.describe('HTML Validation Tests', () => {
 
   test('Validate HTML for all sitemap URLs', async ({ page }) => {
     // Create an html-validate instance
-    const htmlvalidate = new HtmlValidate();
+    const htmlvalidate = new HtmlValidate({
+      extends: ['html-validate:recommended'],
+      // Exclude
+      rules: {
+        'no-inline-style': 'off',
+        // 'attribute-boolean-style': 'off',
+      }
+    });
 
     for (const url of urls) {
       try {
@@ -56,6 +52,24 @@ test.describe('HTML Validation Tests', () => {
 
         // Validate the HTML
         const report = await htmlvalidate.validateString(html);
+
+        // If errors add a code snippet
+        if (!report.valid && report.results?.[0]?.messages) {
+          const lines = html.split('\n');
+
+          // Map over messages to add a snippet
+          report.results[0].messages = report.results[0].messages.map((msg: any) => {
+            if (msg.line && lines[msg.line - 1]) {
+              // Get multiple lines
+              const start = Math.max(0, msg.line - 2); // one line before
+              const end = Math.min(lines.length, msg.line + 1); // one line after
+              const snippet = lines.slice(start, end).join('\n');
+
+              return { ...msg, snippet };
+            }
+            return msg;
+          });
+        }
 
         // Attach the results to the test metadata for the reporter
         if (!report.valid) {
