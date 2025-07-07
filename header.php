@@ -1,5 +1,5 @@
 <?php
-$scroll_reveal = get_field('menu_scroll_reveal', 'general-options'); ?>
+$scroll_reveal = get_field('menu_scroll_reveal', 'options'); ?>
 
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -21,7 +21,7 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'general-options'); ?>
   $menu_sticky = Tofino\Init\menu_sticky(); ?>
 
   <header <?php echo ($scroll_reveal ? 'data-scroll-reveal' : ''); ?>
-    class="duration-500 transition-transform transform-gpu <?php echo Tofino\Init\menu_sticky(); ?>"
+    class="duration-500 transition-transform transform-gpu <?php echo ($menu_sticky ? $menu_sticky : ''); ?>"
   >
     <nav class="flex justify-between w-full px-6 py-4 bg-gray-100">
       <a href="<?php echo esc_url(home_url()); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>">

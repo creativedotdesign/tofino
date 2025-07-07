@@ -22,7 +22,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_66e86caf93f4e",
@@ -44,7 +45,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_66ea0a44efa94",
@@ -66,7 +68,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_66ead4240eb46",
@@ -88,7 +91,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_62582eb26d922",
@@ -110,7 +114,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_62582f156d924",
@@ -132,7 +137,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_62582f2c6d925",
@@ -155,7 +161,8 @@
             "rows": 3,
             "placeholder": "",
             "new_lines": "",
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_62582f536d926",
@@ -177,7 +184,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_6258359c5a86d",
@@ -199,7 +207,34 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_67b784bf56a4c",
+            "label": "Menu Scroll Reveal",
+            "name": "menu_scroll_reveal",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "message": "Hide the sticky menu while scrolling down, reveal it when scrolling up.",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "menuScrollReveal",
+            "graphql_non_null": 0
         },
         {
             "key": "field_62583945a5b17",
@@ -219,6 +254,10 @@
             "acfe_seamless_style": 0,
             "acfe_group_modal": 0,
             "show_in_graphql": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
+            "wpml_cf_preferences": 1,
             "sub_fields": [
                 {
                     "key": "field_6258394fa5b18",
@@ -264,7 +303,8 @@
                     "show_in_graphql": 1,
                     "graphql_description": "",
                     "graphql_field_name": "text",
-                    "graphql_non_null": 0
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 2
                 },
                 {
                     "key": "field_62586874293b0",
@@ -291,10 +331,7 @@
                     "graphql_field_name": "enabled",
                     "graphql_non_null": 0
                 }
-            ],
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
+            ]
         },
         {
             "key": "field_671a51c202047",
@@ -316,7 +353,8 @@
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1,
-            "show_in_graphql": 0
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_671a51ef02048",
@@ -343,6 +381,11 @@
             "layout": "block",
             "acfe_seamless_style": 1,
             "show_in_graphql": 0,
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
+            "wpml_cf_preferences": 1,
             "sub_fields": [
                 {
                     "key": "field_62582ee46d923",
@@ -373,7 +416,8 @@
                     "preview_size": "medium",
                     "show_in_graphql": 1,
                     "graphql_description": "",
-                    "graphql_field_name": "loginLogo"
+                    "graphql_field_name": "loginLogo",
+                    "wpml_cf_preferences": 1
                 },
                 {
                     "key": "field_671a7ca0e9739",
@@ -407,7 +451,8 @@
                     "show_in_graphql": 1,
                     "graphql_description": "",
                     "graphql_field_name": "logoMaxHeight",
-                    "graphql_non_null": 0
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 1
                 },
                 {
                     "key": "field_671a522a02049",
@@ -432,7 +477,8 @@
                     "show_in_graphql": 1,
                     "graphql_description": "",
                     "graphql_field_name": "text",
-                    "graphql_non_null": 0
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 2
                 },
                 {
                     "key": "field_671a52370204a",
@@ -455,13 +501,10 @@
                     "show_in_graphql": 1,
                     "graphql_description": "",
                     "graphql_field_name": "buttonColor",
-                    "graphql_non_null": 0
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 1
                 }
-            ],
-            "acfe_group_modal": 0,
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
+            ]
         },
         {
             "key": "field_671c0c73e5f41",
@@ -486,7 +529,8 @@
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "iframeResizerLicenseKey",
-            "graphql_non_null": 0
+            "graphql_non_null": 0,
+            "wpml_cf_preferences": 2
         }
     ],
     "location": [
@@ -511,7 +555,7 @@
     "acfe_autosync": [
         "json"
     ],
-    "acfml_field_group_mode": "translation",
+    "acfml_field_group_mode": "advanced",
     "acfe_form": 0,
     "show_in_graphql": 0,
     "graphql_field_name": "admin",
@@ -519,7 +563,7 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1731604985,
+    "modified": 1740080411,
     "acfe_categories": {
         "options": "Options"
     }

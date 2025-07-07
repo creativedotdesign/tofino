@@ -1,5 +1,8 @@
+@layer theme, base, components;
+@import 'tailwindcss/theme.css' layer(theme);
+
 .maintenance-mode-alert {
-  @apply fixed inset-0 z-[99999] flex justify-center bg-red-600 p-5 text-center text-white;
+  @apply fixed z-[99999] flex justify-center bg-red-600 p-5 text-center text-white;
 
   div {
     @apply self-center;
@@ -97,7 +100,7 @@ body.login.custom-login-screen {
 
   #loginform,
   #lostpasswordform {
-    @apply mx-auto my-0 max-w-sm rounded-none border-none bg-white px-0 pb-0 pt-6 shadow-none;
+    @apply mx-auto my-0 max-w-sm rounded-none border-none bg-white px-0 pt-6 pb-0 shadow-none;
 
     &.shake {
       @apply animate-none;
@@ -112,7 +115,7 @@ body.login.custom-login-screen {
     }
 
     .input {
-      @apply m-0 w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-base leading-tight text-neutral-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+      @apply m-0 w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-base leading-tight text-neutral-800 focus:ring-2 focus:ring-blue-500/50 focus:outline-none;
     }
 
     .input-password {
@@ -126,7 +129,7 @@ body.login.custom-login-screen {
     }
 
     .button-primary {
-      @apply block w-full rounded-none border-none bg-[var(--button-color)] px-4 py-1.5 font-bold text-[#f0f0f1] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+      @apply block w-full rounded-none border-none bg-[var(--button-color)] px-4 py-1.5 font-bold text-[#f0f0f1] focus:ring-2 focus:ring-blue-500/50 focus:outline-none;
     }
 
     .forgetmenot {

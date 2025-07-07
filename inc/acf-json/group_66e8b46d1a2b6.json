@@ -25,7 +25,8 @@
             "show_in_graphql": 1,
             "graphql_description": "",
             "graphql_field_name": "customLayouts",
-            "graphql_non_null": 0
+            "graphql_non_null": 0,
+            "wpml_cf_preferences": 1
         },
         {
             "key": "field_66e8b46db4145",
@@ -57,6 +58,7 @@
             "collapsed": "field_66e8b484b4146",
             "button_label": "Add Row",
             "rows_per_page": 20,
+            "wpml_cf_preferences": 1,
             "sub_fields": [
                 {
                     "key": "field_66e8b484b4146",
@@ -175,6 +177,7 @@
     "acfe_autosync": [
         "json"
     ],
+    "acfml_field_group_mode": "translation",
     "acfe_form": 0,
     "show_in_graphql": 0,
     "graphql_field_name": "layouts",
@@ -182,7 +185,7 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1729551355,
+    "modified": 1733440352,
     "acfe_categories": {
         "options": "Options"
     }
