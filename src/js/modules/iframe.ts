@@ -54,7 +54,8 @@ export default () => {
               top: top,
               behavior: 'smooth',
             });
-            return true;
+
+            return false; // Stop iframe-resizer scrolling the page
           },
           license: tofinoJS.iframeResizerLicense,
         },
