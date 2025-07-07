@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Overflow Detection Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .summary {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-bottom: 30px;
+      }
+
+      .summary p {
+        font-size: 1.1em;
+        margin: 5px 0;
+      }
+
+      .summary .badge {
+        background-color: #ffc107;
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      .overflowCard {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .overflowCard .url {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .overflowCard .screenshot {
+        margin-top: 15px;
+      }
+
+      .overflowCard .screenshot img {
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Overflow Detection Report</h1>
+
+    <div class="summary">
+      <p><strong>Website:</strong> {{websiteName}}</p>
+      <p><strong>Tested On:</strong> {{timestamp}}</p>
+      <p>
+        <strong>Total Overflowing Elements:</strong>
+        <span class="badge">{{totalElements}}</span>
+      </p>
+    </div>
+
+    {{#data}}
+    <div class="overflowCard">
+      <p class="url">URL: <a href="{{url}}" target="_blank">{{url}}</a></p>
+      <p><strong>Number of Issues:</strong> {{selectors.length}}</p>
+      <ul>
+        {{#selectors}}
+        <li>{{.}}</li>
+        {{/selectors}}
+      </ul>
+
+      {{#screenshot}}
+      <div class="screenshot">
+        <p><strong>Screenshot:</strong></p>
+        <a href="{{url}}" target="_blank">
+          <img src="{{screenshot}}" alt="Overflow screenshot" />
+        </a>
+      </div>
+      {{/screenshot}}
+    </div>
+    {{/data}}
+  </body>
+</html>

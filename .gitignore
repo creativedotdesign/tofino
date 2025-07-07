@@ -26,3 +26,10 @@ yarn-debug.log
 
 # vitest
 *.ts.snap
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Playwright
+/accessibility-reports

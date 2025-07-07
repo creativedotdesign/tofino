@@ -1,0 +1,116 @@
+import { test, expect } from '@playwright/test';
+import { HtmlValidate } from 'html-validate';
+import path from 'path';
+import fs from 'fs';
+import { processSitemap } from './utils/process-sitemap';
+
+test.describe('HTML Validation Tests', () => {
+  let urls: string[] = [];
+
+  const validationErrors: Array<{
+    url: string;
+    messages: any[];
+    screenshot?: string;
+  }> = [];
+
+  test.beforeAll(async ({ baseURL }) => {
+    // Check for screenshots directory
+    const screenshotsDir = path.resolve('./test-results/screenshots');
+    if (!fs.existsSync(screenshotsDir)) {
+      fs.mkdirSync(screenshotsDir, { recursive: true });
+    }
+
+    // Get all URLs from sitemap
+    // const sitemapUrl = `${baseURL}/sitemap_index.xml`;
+    const sitemapUrl = `${baseURL}/page-sitemap.xml`;
+    urls = await processSitemap(sitemapUrl);
+
+    if (!urls.length) {
+      throw new Error('No URLs found in the sitemap.');
+    }
+
+    console.log(`Found ${urls.length} URLs in the sitemap for html validation tests.`);
+  });
+
+  test('Validate HTML for all sitemap URLs', async ({ page }) => {
+    // Create an html-validate instance
+    const htmlvalidate = new HtmlValidate({
+      extends: ['html-validate:recommended'],
+      // Exclude
+      rules: {
+        'no-inline-style': 'off',
+        // 'attribute-boolean-style': 'off',
+      }
+    });
+
+    for (const url of urls) {
+      try {
+        await page.goto(url, { waitUntil: 'networkidle' });
+
+        // Get the HTML content
+        const html = await page.content();
+
+        // Validate the HTML
+        const report = await htmlvalidate.validateString(html);
+
+        // If errors add a code snippet
+        if (!report.valid && report.results?.[0]?.messages) {
+          const lines = html.split('\n');
+
+          // Map over messages to add a snippet
+          report.results[0].messages = report.results[0].messages.map((msg: any) => {
+            if (msg.line && lines[msg.line - 1]) {
+              // Get multiple lines
+              const start = Math.max(0, msg.line - 2); // one line before
+              const end = Math.min(lines.length, msg.line + 1); // one line after
+              const snippet = lines.slice(start, end).join('\n');
+
+              return { ...msg, snippet };
+            }
+            return msg;
+          });
+        }
+
+        // Attach the results to the test metadata for the reporter
+        if (!report.valid) {
+          // Capture screenshot
+          const screenshotPath = path.resolve(
+            './test-results/screenshots',
+            `html-validation-screenshot-${Date.now()}.png`
+          );
+
+          await page.screenshot({ path: screenshotPath, fullPage: true });
+
+          // Push results to annotations meta data
+          test.info().annotations.push({
+            type: 'html-validation',
+            description: JSON.stringify({
+              url,
+              results: report,
+              screenshot: screenshotPath,
+            }),
+          });
+
+          // Collect validation errors for reporting
+          validationErrors.push({
+            url,
+            messages: report.results[0].messages,
+            screenshot: screenshotPath,
+          });
+
+          console.warn(`HTML validation failed for ${url}`);
+        } else {
+          console.log(`HTML validation passed for ${url}`);
+        }
+      } catch (error) {
+        console.error(`Error validating html on ${url}:`, error);
+        validationErrors.push({
+          url,
+          messages: [{ message: error.message }],
+        });
+      }
+    }
+
+    expect(validationErrors.length, 'Some pages failed HTML validation').toBe(0);
+  });
+});
