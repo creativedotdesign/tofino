@@ -8,7 +8,9 @@ import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import path from 'path';
 import vue from '@vitejs/plugin-vue';
 import { onProxyRes } from './src/js/helpers/middleware';
+import devAssetRewriter from './src/js/helpers/assetRewriter';
 import { bold, lightMagenta } from 'kolorist';
+import graphqlLoader from 'vite-plugin-graphql-loader';
 // import getPostCSSConfig from './postcss.config.ts';
 
 export default ({ mode }: { mode: string }) => {
@@ -22,7 +24,7 @@ export default ({ mode }: { mode: string }) => {
       outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
       manifest: true,
-      minify: false,
+      minify: true,
       sourcemap: env.NODE_ENV === 'production' ? false : 'inline',
       target: 'es2021',
       rollupOptions: {
@@ -80,6 +82,8 @@ export default ({ mode }: { mode: string }) => {
         filename: 'sprite.svg',
         prefix: 'icon',
       }),
+      devAssetRewriter(),
+      graphqlLoader(),
       {
         // Log the proxy server address in the console
         name: 'log-proxy-address',

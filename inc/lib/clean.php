@@ -368,27 +368,27 @@ add_action('admin_menu', __NAMESPACE__ . '\\remove_wp_block_menu', 100);
 // Remove Extensions from GraphQL response
 function remove_graphql_extensions($response)
 {
-// If it's an ExecutionResult object, we need to handle it differently
-if ($response instanceof \GraphQL\Executor\ExecutionResult) {
-// Convert to array and remove extensions if they exist
-$array = $response->toArray();
-if (isset($array['extensions'])) {
-unset($array['extensions']);
-}
-return $array;
-}
+  // If it's an ExecutionResult object, we need to handle it differently
+  if ($response instanceof \GraphQL\Executor\ExecutionResult) {
+    // Convert to array and remove extensions if they exist
+    $array = $response->toArray();
+    if (isset($array['extensions'])) {
+      unset($array['extensions']);
+    }
+    return $array;
+  }
 
-// Handle array responses
-if (is_array($response) && isset($response['extensions'])) {
-unset($response['extensions']);
-}
+  // Handle array responses
+  if (is_array($response) && isset($response['extensions'])) {
+    unset($response['extensions']);
+  }
 
-// Handle object responses
-if (is_object($response) && isset($response->extensions)) {
-unset($response->extensions);
-}
+  // Handle object responses
+  if (is_object($response) && isset($response->extensions)) {
+    unset($response->extensions);
+  }
 
-return $response;
+  return $response;
 }
 add_filter('graphql_request_results', __NAMESPACE__ . '\remove_graphql_extensions', 99, 1);
 
