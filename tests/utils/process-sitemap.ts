@@ -1,5 +1,10 @@
 import { parseStringPromise } from 'xml2js';
-export const processSitemap = async (sitemapUrl: string): Promise<string[]> => {
+
+export const processSitemap = async (
+  sitemapUrl: string,
+  counts: Record<string, number> = {}
+): Promise<{ urls: string[]; counts: Record<string, number> }> => {
+
   // Get the sitemap content
   const response = await fetch(sitemapUrl);
 
@@ -19,15 +24,16 @@ export const processSitemap = async (sitemapUrl: string): Promise<string[]> => {
   if (parsedXml.sitemapindex && parsedXml.sitemapindex.sitemap) {
     const subSitemaps = parsedXml.sitemapindex.sitemap.map((entry: any) => entry.loc[0]);
     for (const subSitemap of subSitemaps) {
-      const subUrls = await processSitemap(subSitemap);
-      allUrls.push(...subUrls);
+      const { urls, counts: _ } = await processSitemap(subSitemap, counts);
+      allUrls.push(...urls);
     }
   }
 
   // If URL set
   else if (parsedXml.urlset && parsedXml.urlset.url) {
     allUrls = parsedXml.urlset.url.map((entry: any) => entry.loc[0]);
+    counts[sitemapUrl] = allUrls.length;
   }
 
-  return allUrls;
+  return { urls: allUrls, counts };
 };

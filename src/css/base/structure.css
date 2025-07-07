@@ -26,3 +26,8 @@ body {
 svg:has(symbol) {
   @apply absolute h-0 w-0;
 }
+
+/* ADA testing */
+.ada-violation {
+  @apply outline-3 outline-dashed outline-red-500;
+}
