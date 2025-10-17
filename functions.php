@@ -18,8 +18,9 @@ $tofino_includes = [
   "inc/lib/helpers.php",
   "inc/lib/clean.php",
   "inc/lib/shortcodes.php",
-  "inc/lib/class/ACFAutosize.php",
   "inc/lib/layouts.php",
+  // Autoloaded classes (included to trigger instantiation)
+  "inc/lib/class/ACFAutosize.php",
   "inc/lib/class/DisablePostType.php",
   "inc/lib/class/CustomLoginForm.php",
   "inc/lib/class/GraphQL.php",

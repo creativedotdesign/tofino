@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * Disable Post Type
+ *
+ * @package Tofino
+ * @since 5.0.0
+ */
+
+namespace Tofino;
+
 class DisablePostType
 {
 

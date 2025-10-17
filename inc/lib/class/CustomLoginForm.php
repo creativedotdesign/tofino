@@ -7,7 +7,7 @@
  * @since 5.0.0
  */
 
-namespace Tofino\Login;
+namespace Tofino;
 
 class CustomLoginForm {
   public $options = [];

@@ -7,7 +7,7 @@
  * @since 5.0.0
  */
 
-namespace Tofino\GraphQL;
+namespace Tofino;
 
 class GraphQL
 {
