@@ -1,10 +1,3 @@
-<?php
-//  if (get_field('enable_cookie_notice', 'options')) {
-//   \Tofino\Helpers\hm_get_template_part('../../plugins/tofino-cookie-notice/templates/tofino-cookie-notice');
-//  } 
- 
- ?>
-
 <footer>
   <div class="container">
     <div class="w-full text-center"><?php
