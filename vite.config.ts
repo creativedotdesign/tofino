@@ -4,14 +4,12 @@ import tailwindcss from '@tailwindcss/vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import { svgSpritemap } from 'vite-plugin-svg-spritemap';
 import VitePluginBrowserSync from 'vite-plugin-browser-sync';
-import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import path from 'path';
 import vue from '@vitejs/plugin-vue';
 import { onProxyRes } from './src/js/helpers/middleware';
 import devAssetRewriter from './src/js/helpers/assetRewriter';
 import { bold, lightMagenta } from 'kolorist';
 import graphqlLoader from 'vite-plugin-graphql-loader';
-// import getPostCSSConfig from './postcss.config.ts';
 
 export default ({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -37,6 +35,12 @@ export default ({ mode }: { mode: string }) => {
           globals: {
             jquery: 'jQuery',
           },
+          manualChunks: (id) => {
+            // Split vendor chunks by package name
+            if (id.includes('node_modules')) {
+              return id.split('node_modules/')[1].split('/')[0];
+            }
+          },
         },
       },
     },
@@ -47,18 +51,6 @@ export default ({ mode }: { mode: string }) => {
       tailwindcss(),
       vue(),
       eslintPlugin(),
-      chunkSplitPlugin({
-        strategy: 'default',
-        customChunk: (args) => {
-          const { id } = args;
-
-          if (id.includes('node_modules')) {
-            return id.split('node_modules/')[1].split('/')[0];
-          }
-
-          return null;
-        },
-      }),
       VitePluginBrowserSync({
         dev: {
           bs: {
@@ -101,9 +93,6 @@ export default ({ mode }: { mode: string }) => {
         },
       },
     ],
-    // css: {
-    //   postcss: getPostCSSConfig(env.NODE_ENV || 'development') as any,
-    // },
     define: { __VUE_PROD_DEVTOOLS__: false },
     server: {
       host: true,
