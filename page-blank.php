@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template: Blank page
+ * Template Name: Blank page
  *
  *
  * @package Tofino
