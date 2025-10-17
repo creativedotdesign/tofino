@@ -28,6 +28,7 @@
             "graphql_field_name": "alerts",
             "graphql_non_null": 0,
             "rows_per_page": 20,
+            "acfe_repeater_stylised_button": 0,
             "sub_fields": [
                 {
                     "key": "field_653fdeacdf150",
@@ -79,7 +80,9 @@
                     "ajax": 0,
                     "placeholder": "",
                     "parent_repeater": "field_653fde8fdf14f",
-                    "wpml_cf_preferences": 1
+                    "wpml_cf_preferences": 1,
+                    "create_options": 0,
+                    "save_options": 0
                 },
                 {
                     "key": "field_653fdf15df152",
@@ -124,13 +127,13 @@
                     "toolbar": "basic",
                     "media_upload": 0,
                     "delay": 0,
-                    "parent_repeater": "field_653fde8fdf14f"
+                    "parent_repeater": "field_653fde8fdf14f",
                     "wpml_cf_preferences": 2
                 },
                 {
-                    "key": "field_6696d6a25a6c1",
+                    "key": "field_68f26a5ae6bf3",
                     "label": "Hide Alert on Specific Pages",
-                    "name": "",
+                    "name": "hide_alert_on_specific_pages",
                     "aria-label": "",
                     "type": "relationship",
                     "instructions": "",
@@ -141,14 +144,11 @@
                         "class": "",
                         "id": ""
                     },
+                    "wpml_cf_preferences": 2,
                     "post_type": [
-                        "post",
                         "page"
                     ],
-                    "post_status": [
-                        "publish",
-                        "future"
-                    ],
+                    "post_status": "",
                     "taxonomy": "",
                     "filters": [
                         "search",
@@ -156,16 +156,20 @@
                         "taxonomy"
                     ],
                     "return_format": "id",
+                    "acfe_bidirectional": {
+                        "acfe_bidirectional_enabled": "0"
+                    },
                     "min": "",
                     "max": "",
+                    "allow_in_bindings": 0,
                     "elements": "",
                     "bidirectional": 0,
+                    "show_in_graphql": 0,
+                    "graphql_connection_type": "one_to_many",
                     "bidirectional_target": [],
                     "parent_repeater": "field_653fde8fdf14f"
-                    "wpml_cf_preferences": 2
                 }
-            ],
-            "acfe_repeater_stylised_button": 0
+            ]
         }
     ],
     "location": [
@@ -186,10 +190,12 @@
     "active": true,
     "description": "",
     "show_in_rest": false,
+    "display_title": "",
     "acfe_display_title": "",
     "acfe_autosync": [
         "json"
     ],
+    "acfml_field_group_mode": "advanced",
     "acfe_form": 0,
     "show_in_graphql": 0,
     "graphql_field_name": "alerts",
@@ -197,7 +203,8 @@
     "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1733434442,
-    "local_file": "\/Users\/malcolm\/Websites\/tofino\/app\/public\/wp-content\/themes\/tofino\/inc\/acf-json\/group_653fde8f6b970.json",
-    "acfml_field_group_mode": "advanced"
+    "modified": 1760717474,
+    "acfe_categories": {
+        "options": "Options"
+    }
 }
