@@ -203,17 +203,24 @@ function alerts($position)
 
     foreach ($alerts as $alert) {
       if ($alert['enabled']) {
-        $alert_position = strtolower($alert['position']);
+		$excludepages = [];
 
-        if ($alert['message'] && !isset($_COOKIE['tofino-alert-' . $i . '-closed']) && $position === $alert_position) {
-          \Tofino\Helpers\hm_get_template_part('templates/partials/alert', [
-            'position' => $alert_position,
-            'message' => $alert['message'],
-            'id' => $i
-          ]);
+        // Check if alerts are hidden on specific pages
+        if (is_array($alert['hide_alert_on_specific_pages'])) {
+          $excludepages = $alert['hide_alert_on_specific_pages'];
+        }
+
+        if (!in_array(get_the_ID(), $excludepages)) {
+          $alert_position = strtolower($alert['position']);
+          if ($alert['message'] && !isset($_COOKIE['tofino-alert-' . $i . '-closed']) && $position === $alert_position) {
+            \Tofino\Helpers\hm_get_template_part('templates/partials/alert', [
+              'position' => $alert_position,
+              'message' => $alert['message'],
+              'id' => $i
+            ]);
+          }
         }
       }
-
       $i++;
     }
   }
