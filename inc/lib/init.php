@@ -203,12 +203,11 @@ function alerts($position)
 
     foreach ($alerts as $alert) {
       if ($alert['enabled']) {
-        // now check if alerts are hidden on specific pages
+		$excludepages = [];
 
+        // Check if alerts are hidden on specific pages
         if (is_array($alert['hide_alert_on_specific_pages'])) {
           $excludepages = $alert['hide_alert_on_specific_pages'];
-        } else {
-          $excludepages = array();
         }
 
         if (!in_array(get_the_ID(), $excludepages)) {
@@ -220,8 +219,6 @@ function alerts($position)
               'id' => $i
             ]);
           }
-        } else {
-          // alert excluded from current page
         }
       }
       $i++;
