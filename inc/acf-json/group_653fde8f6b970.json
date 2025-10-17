@@ -125,6 +125,7 @@
                     "media_upload": 0,
                     "delay": 0,
                     "parent_repeater": "field_653fde8fdf14f"
+                    "wpml_cf_preferences": 2
                 },
                 {
                     "key": "field_6696d6a25a6c1",
@@ -161,6 +162,7 @@
                     "bidirectional": 0,
                     "bidirectional_target": [],
                     "parent_repeater": "field_653fde8fdf14f"
+                    "wpml_cf_preferences": 2
                 }
             ],
             "acfe_repeater_stylised_button": 0
