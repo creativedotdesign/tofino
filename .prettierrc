@@ -1,9 +1,14 @@
 {
   "printWidth": 100,
-  "singleQuote": true,
+  "tabWidth": 2,
+  "useTabs": false,
   "semi": true,
+  "singleQuote": true,
+  "quoteProps": "as-needed",
   "trailingComma": "es5",
-  "tailwindConfig": "./tailwind.config.ts",
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "ignore": ["**/node_modules/**"]
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

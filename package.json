@@ -57,6 +57,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-vue": "^10.5.1",
+    "globals": "^16.4.0",
     "html-validate": "^10.1.2",
     "kolorist": "^1.8.0",
     "prettier": "^3.4.2",

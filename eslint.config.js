@@ -1,30 +1,55 @@
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import pluginVue from 'eslint-plugin-vue';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import globals from 'globals';
+
 export default [
+  // Ignore patterns
   {
-    ignores: ['dist/**'], // Example: ignore dist folder
+    ignores: ['dist/**', 'node_modules/**', 'vendor/**'],
   },
+
+  // Base JavaScript config
+  js.configs.recommended,
+
+  // TypeScript configs
+  ...tseslint.configs.recommended,
+
+  // Vue configs
+  ...pluginVue.configs['flat/recommended'],
+
+  // Custom rules
   {
-    extends: [
-      'eslint:recommended',
-      'plugin:@typescript-eslint/eslint-recommended',
-      'plugin:@typescript-eslint/recommended',
-      'plugin:vue/vue3-recommended',
-      'plugin:prettier/recommended',
-    ],
-    globals: {
-      browser: 'readonly',
-      tofinoJS: 'readonly',
-    },
-    plugins: ['@typescript-eslint'],
+    files: ['**/*.{js,ts,vue}'],
     languageOptions: {
-      ecmaVersion: '2021',
-      parser: '@typescript-eslint/parser',
+      ecmaVersion: 2021,
       sourceType: 'module',
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.es2021,
+        tofinoJS: 'readonly',
+      },
+      parserOptions: {
+        parser: tseslint.parser,
+      },
     },
-    env: {
-      'vue/setup-compiler-macros': true,
-      node: true,
-      es2021: true,
-      es6: true,
+    rules: {
+      // Add your custom rules here
     },
   },
+
+  // Vue-specific overrides
+  {
+    files: ['**/*.vue'],
+    languageOptions: {
+      parserOptions: {
+        parser: tseslint.parser,
+      },
+    },
+  },
+
+  // Prettier config (must be last)
+  eslintPluginPrettierRecommended,
 ];
