@@ -2,11 +2,13 @@
 Theme Name:        Tofino
 Theme URI:         https://github.com/creativedotdesign/tofino
 Description:       Tofino is a WordPress starter theme. <a href="https://github.com/creativedotdesign/tofino">Contribute on GitHub</a>
-Version:           4.2.0
+Version:           5.0.0
 Author:            Creative Dot
 Author URI:        https://creativedotdesign.com
 Text Domain:       tofino
-
+Requires PHP:      8.2.0
+Tested up to:      6.7.1
+Tags:              opensoruce, starter, theme, wordpress, tofino
 License:           MIT License
 License URI:       http://opensource.org/licenses/MIT
 */

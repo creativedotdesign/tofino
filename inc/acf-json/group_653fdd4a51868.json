@@ -7,7 +7,7 @@
             "label": "Text",
             "name": "footer_text",
             "aria-label": "",
-            "type": "textarea",
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,20 +16,25 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "[copyright]",
-            "acfe_textarea_code": 0,
-            "maxlength": "",
-            "rows": 4,
-            "placeholder": "",
-            "new_lines": ""
+            "wpml_cf_preferences": 0,
+            "default_value": "",
+            "allow_in_bindings": 1,
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "footerText",
+            "graphql_non_null": 0
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "options_page",
                 "operator": "==",
-                "value": "post"
+                "value": "footer"
             }
         ]
     ],
@@ -39,15 +44,23 @@
     "label_placement": "left",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": true,
     "description": "",
-    "show_in_rest": 0,
+    "show_in_rest": false,
     "acfe_display_title": "",
     "acfe_autosync": [
         "json"
     ],
+    "acfml_field_group_mode": "advanced",
     "acfe_form": 0,
+    "show_in_graphql": 1,
+    "graphql_field_name": "footer",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1698684435
+    "modified": 1750864816,
+    "acfe_categories": {
+        "options": "Options"
+    }
 }

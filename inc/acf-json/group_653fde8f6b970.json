@@ -16,13 +16,17 @@
                 "class": "",
                 "id": ""
             },
-            "acfe_repeater_stylised_button": 0,
-            "layout": "block",
+            "wpml_cf_preferences": 1,
+            "layout": "row",
             "pagination": 0,
             "min": 0,
             "max": 0,
             "collapsed": "",
             "button_label": "Add Alert",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "alerts",
+            "graphql_non_null": 0,
             "rows_per_page": 20,
             "sub_fields": [
                 {
@@ -44,7 +48,8 @@
                     "ui_on_text": "",
                     "ui_off_text": "",
                     "ui": 1,
-                    "parent_repeater": "field_653fde8fdf14f"
+                    "parent_repeater": "field_653fde8fdf14f",
+                    "wpml_cf_preferences": 1
                 },
                 {
                     "key": "field_653fded0df151",
@@ -73,7 +78,8 @@
                     "ui": 0,
                     "ajax": 0,
                     "placeholder": "",
-                    "parent_repeater": "field_653fde8fdf14f"
+                    "parent_repeater": "field_653fde8fdf14f",
+                    "wpml_cf_preferences": 1
                 },
                 {
                     "key": "field_653fdf15df152",
@@ -96,7 +102,8 @@
                     "step": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": "field_653fde8fdf14f"
+                    "parent_repeater": "field_653fde8fdf14f",
+                    "wpml_cf_preferences": 1
                 },
                 {
                     "key": "field_653fdf4adf153",
@@ -155,33 +162,40 @@
                     "bidirectional_target": [],
                     "parent_repeater": "field_653fde8fdf14f"
                 }
-            ]
+            ],
+            "acfe_repeater_stylised_button": 0
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "options_page",
                 "operator": "==",
-                "value": "post"
+                "value": "alerts"
             }
         ]
     ],
     "menu_order": 0,
     "position": "normal",
-    "style": "default",
-    "label_placement": "left",
+    "style": "seamless",
+    "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": true,
     "description": "",
-    "show_in_rest": 0,
+    "show_in_rest": false,
     "acfe_display_title": "",
     "acfe_autosync": [
         "json"
     ],
     "acfe_form": 0,
+    "show_in_graphql": 0,
+    "graphql_field_name": "alerts",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1698685001
+    "modified": 1733434442,
+    "local_file": "\/Users\/malcolm\/Websites\/tofino\/app\/public\/wp-content\/themes\/tofino\/inc\/acf-json\/group_653fde8f6b970.json",
+    "acfml_field_group_mode": "advanced"
 }

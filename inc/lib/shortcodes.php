@@ -16,7 +16,7 @@ function social_icons($atts = [])
     'platforms' => ''
   ], $atts, 'social_icons');
 
-  $social_links = get_field('social_media_links', 'general-options');
+  $social_links = get_field('social_media_links', 'option');
 
   if (!empty($social_links) && (array_filter($social_links))) {
     $output .= '<ul class="social-icons' . ($atts['class'] ? ' ' . $atts['class'] : null) . '">';

@@ -20,7 +20,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_653fdc00ceac3",
@@ -40,7 +41,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_653fdc0aceac4",
@@ -60,7 +62,8 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_653fdc17ceac5",
@@ -81,7 +84,8 @@
             "maxlength": "",
             "rows": 4,
             "placeholder": "",
-            "new_lines": ""
+            "new_lines": "",
+            "wpml_cf_preferences": 2
         },
         {
             "key": "field_653fdc3dceac6",
@@ -101,33 +105,40 @@
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": ""
+            "append": "",
+            "wpml_cf_preferences": 2
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "options_page",
                 "operator": "==",
-                "value": "post"
+                "value": "client-data"
             }
         ]
     ],
     "menu_order": 0,
     "position": "normal",
-    "style": "default",
+    "style": "seamless",
     "label_placement": "left",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": true,
     "description": "",
-    "show_in_rest": 0,
+    "show_in_rest": false,
     "acfe_display_title": "",
     "acfe_autosync": [
         "json"
     ],
     "acfe_form": 0,
+    "show_in_graphql": 0,
+    "graphql_field_name": "clientData",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1698683988
+    "modified": 1733434442,
+    "local_file": "\/Users\/malcolm\/Websites\/tofino\/app\/public\/wp-content\/themes\/tofino\/inc\/acf-json\/group_653fdbc6d93b5.json",
+    "acfml_field_group_mode": "advanced"
 }

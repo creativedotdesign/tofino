@@ -1,31 +1,64 @@
+# Source files (not needed in production)
+
 /src/
-node_modules
-.vscode
+
+# Dependencies
+
+node_modules/
+vendor/
+
+# IDE & Editor configs
+
+.vscode/
 .editorconfig
+
+# Environment files
+
 .env
-.eslintrc.cjs
-.git
-.github
+.env.\*
+
+# Git files
+
+.git/
+.github/
 .gitignore
 .gitkeep
 .git-ftp-ignore
-.git-ftp-include
 .gitattributes
-.gitignore
-.prettierignore
-.npmrc
+
+# Config files
+
+eslint.config.js
+tsconfig.json
+vite.config.ts
+playwright.config.ts
+phpcs.xml
+.prettierrc
 composer.json
 composer.lock
+
+# NPM/Node files
+
 package.json
 package-lock.json
-postcss.config.cts
-tsconfig.json
-phpcs.xml
-**/*.md
-/cypress/
-cypress.config.ts
-prettier.config.cjs
-stylelint.config.ts
-tailwind.config.ts
-vite.config.ts
-vite-env.d.ts
+
+# Test files
+
+/tests/
+
+# Documentation
+
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE.md
+README.md
+readme.txt
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Markdown files
+
+\*_/_.md

@@ -1,0 +1,570 @@
+{
+    "key": "group_65a167568ac34",
+    "title": "Admin",
+    "fields": [
+        {
+            "key": "field_66eadfd454ff0",
+            "label": "Disable Post Type",
+            "name": "disable_post_type",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Removes the default post type.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_66e86caf93f4e",
+            "label": "Hide Preview Button",
+            "name": "hide_preview_button",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Hide the preview button in the editor.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_66ea0a44efa94",
+            "label": "Auto Generate Page Modules",
+            "name": "auto_generate_page_modules",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Auto generate content modules using field groups added to the Page Modules category.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Experimental, use at your own risk.",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_66ead4240eb46",
+            "label": "Show ACF Admin",
+            "name": "show_acf_admin",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Turn on access to ACF in the admin area.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_62582eb26d922",
+            "label": "Admin Bar",
+            "name": "admin_bar",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Show the admin bar on the front-end.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_62582f156d924",
+            "label": "Maintenance Mode",
+            "name": "maintenance_mode",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Enabling maintenance mode shows a message on each page in the admin area.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_62582f2c6d925",
+            "label": "Maintenance Mode Text",
+            "name": "maintenance_mode_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Notification is shown until dismissed (at which point a cookie is set).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "This site is currently in maintenance mode. Any changes you make may be overwritten or removed.",
+            "acfe_textarea_code": 0,
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "",
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 2
+        },
+        {
+            "key": "field_62582f536d926",
+            "label": "No FOUT",
+            "name": "no_fout",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Enable the body class to remove the FOUT (Flash of unstyled text).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_6258359c5a86d",
+            "label": "Sticky Menu",
+            "name": "sticky_menu",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_67b784bf56a4c",
+            "label": "Menu Scroll Reveal",
+            "name": "menu_scroll_reveal",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "wpml_cf_preferences": 0,
+            "message": "Hide the sticky menu while scrolling down, reveal it when scrolling up.",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "menuScrollReveal",
+            "graphql_non_null": 0
+        },
+        {
+            "key": "field_62583945a5b17",
+            "label": "Dashboard Widget",
+            "name": "dashboard_widget",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "acfe_seamless_style": 0,
+            "acfe_group_modal": 0,
+            "show_in_graphql": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
+            "wpml_cf_preferences": 1,
+            "sub_fields": [
+                {
+                    "key": "field_6258394fa5b18",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Website Support",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": "",
+                    "wpml_cf_preferences": 2
+                },
+                {
+                    "key": "field_62583958a5b19",
+                    "label": "Text",
+                    "name": "text",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "<a href=\"https:\/\/github.com\/creativedotdesign\/tofino\">Tofino<\/a> theme by <a href =\"https:\/\/creativedotdesign.com\/\">Creative Dot<\/a>.",
+                    "allow_in_bindings": 1,
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "text",
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 2
+                },
+                {
+                    "key": "field_62586874293b0",
+                    "label": "Enabled",
+                    "name": "enabled",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "wpml_cf_preferences": 1,
+                    "message": "",
+                    "default_value": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "enabled",
+                    "graphql_non_null": 0
+                }
+            ]
+        },
+        {
+            "key": "field_671a51c202047",
+            "label": "Custom Login Screen",
+            "name": "custom_login_screen",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
+            "key": "field_671a51ef02048",
+            "label": "Login Screen",
+            "name": "login_screen",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_671a51c202047",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "acfe_seamless_style": 1,
+            "show_in_graphql": 0,
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
+            "wpml_cf_preferences": 1,
+            "sub_fields": [
+                {
+                    "key": "field_62582ee46d923",
+                    "label": "Logo",
+                    "name": "logo",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "You might need to add some additional css to tweak the logo size \/ position. Add your CSS in to the file admin.css.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "uploader": "",
+                    "return_format": "id",
+                    "library": "all",
+                    "acfe_thumbnail": 0,
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "allow_in_bindings": 0,
+                    "preview_size": "medium",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "loginLogo",
+                    "wpml_cf_preferences": 1
+                },
+                {
+                    "key": "field_671a7ca0e9739",
+                    "label": "Logo Max Height",
+                    "name": "logo_max_height",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_62582ee46d923",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 80,
+                    "min": "",
+                    "max": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "px",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "logoMaxHeight",
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 1
+                },
+                {
+                    "key": "field_671a522a02049",
+                    "label": "Text",
+                    "name": "text",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Admin CMS",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "text",
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 2
+                },
+                {
+                    "key": "field_671a52370204a",
+                    "label": "Button Color",
+                    "name": "button_color",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "#000000",
+                    "enable_opacity": 0,
+                    "return_format": "string",
+                    "allow_in_bindings": 0,
+                    "show_in_graphql": 1,
+                    "graphql_description": "",
+                    "graphql_field_name": "buttonColor",
+                    "graphql_non_null": 0,
+                    "wpml_cf_preferences": 1
+                }
+            ]
+        },
+        {
+            "key": "field_671c0c73e5f41",
+            "label": "iFrame Resizer License Key",
+            "name": "iframe_resizer_license_key",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "See https:\/\/iframe-resizer.com\/ for more details.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "GPLv3",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "show_in_graphql": 1,
+            "graphql_description": "",
+            "graphql_field_name": "iframeResizerLicenseKey",
+            "graphql_non_null": 0,
+            "wpml_cf_preferences": 2
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "general-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "acfe_display_title": "",
+    "acfe_autosync": [
+        "json"
+    ],
+    "acfml_field_group_mode": "advanced",
+    "acfe_form": 0,
+    "show_in_graphql": 0,
+    "graphql_field_name": "admin",
+    "map_graphql_types_from_location_rules": 0,
+    "graphql_types": "",
+    "acfe_meta": "",
+    "acfe_note": "",
+    "modified": 1740080411,
+    "acfe_categories": {
+        "options": "Options"
+    }
+}

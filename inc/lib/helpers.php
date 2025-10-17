@@ -156,28 +156,43 @@ function get_complete_meta($post_id, $meta_key)
 
 
 /**
- * Fix text orphan
- *
- * Make last space in a sentence a non breaking space to prevent typographic widows.
- *
+ * Fix text orphans by adding a non-breaking space before the last word,
+ * while ignoring HTML tags such as <a>, <strong>, etc.
+ * 
  * @since 3.2.0
- * @param type $str
- * @param type $min_word_count
- * @return string
+ * @param string $str The input string which may contain HTML.
+ * @param int $min_word_count The minimum word count required to apply the fix.
+ * @return string The processed string with a non-breaking space before the last word in plain text.
  */
 function fix_text_orphan($str = '', $min_word_count = 3)
 {
-  $str   = trim($str); // Strip spaces.
-  $space = strrpos($str, ' '); // Find the last space.
-  $word_count = str_word_count($str);
+	// Trim the input string to remove excess spaces.
+	$str = trim($str);
 
-  // If there's a space then replace the last on with a non breaking space.
-  if ((false !== $space) && $word_count > $min_word_count) {
-    $str = substr($str, 0, $space) . '&nbsp;' . substr($str, $space + 1);
-  }
+	// Regex to match all words, ignoring anything inside HTML tags
+	$pattern = '/>([^<]+)</'; // Matches the text between HTML tags
 
-  // Return the string.
-  return $str;
+	// Callback function to apply the non-breaking space logic to text content
+	$str = preg_replace_callback($pattern, function ($matches) use ($min_word_count) {
+		// Get the text between HTML tags
+		$text = $matches[1];
+
+		// Find the last space
+		$space = strrpos($text, ' ');
+
+		// Count words in the text
+		$word_count = str_word_count($text);
+
+		// Apply the non-breaking space if word count is above the threshold and a space exists
+		if ($space !== false && $word_count > $min_word_count) {
+			$text = substr($text, 0, $space) . '&nbsp;' . substr($text, $space + 1);
+		}
+
+		// Return the processed text between the original HTML tags
+		return '>' . $text . '<';
+	}, $str);
+
+	return $str;
 }
 
 
@@ -263,4 +278,42 @@ function is_single_module_page($module_name, $page_id) {
   }
 
   return false; // The page does not contain only the specified module
+}
+
+
+// Check acf link target
+function check_target($target)
+{
+  if ($target === '_blank') {
+    return $target;
+  } else {
+    return '_self';
+  }
+}
+
+
+/**
+ * Function to render the module layout file
+ * 
+ * @param string $layout Name of the layout file
+ */
+function render_module($layout)
+{
+  // Get paths where modules exist
+  $paths = apply_filters('tofino_custom_module_paths', [get_template_directory() . '/templates/modules/']);
+
+  foreach ($paths as $path) {
+    $file_path = $path . $layout . '.php';
+
+    if (file_exists($file_path)) { 
+      include $file_path;
+
+      // Set plugin flag if loaded from plugin directory
+      $is_from_plugin = strpos($path, get_template_directory()) === false;
+
+      if ($is_from_plugin) {
+        echo "<!-- Module loaded from plugin -->";
+      }
+    }
+  }
 }

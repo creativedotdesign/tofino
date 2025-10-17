@@ -6,12 +6,8 @@ main {
   @apply flex-auto;
 }
 
-footer {
-  @apply bg-gray-100;
-}
-
 body {
-  @apply flex min-h-full flex-col font-roboto antialiased;
+  @apply flex min-h-full flex-col antialiased;
 
   &.no-fout {
     @apply invisible;
@@ -25,4 +21,13 @@ body {
 
 .highlight-violation {
   @apply outline-1 outline-red-500;
+}
+
+svg:has(symbol) {
+  @apply absolute h-0 w-0;
+}
+
+/* ADA testing */
+.ada-violation {
+  @apply outline-3 outline-dashed outline-red-500;
 }

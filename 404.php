@@ -10,7 +10,7 @@
       <?php _e('Sorry, but the page you were trying to view does not exist.', 'tofino'); ?>
     </p>
 
-    <a href="<?php echo home_url(); ?>">
+    <a href="<?php echo esc_url(home_url()); ?>">
       Back to home
     </a>
   </div>

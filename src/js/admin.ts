@@ -1,27 +1,8 @@
-// Import CSS
-import '@/css/base/admin.css';
+import '@/css/base/admin.css'; // Import CSS
+import { acfLayouts } from '@/js/modules/layouts';
+import { maintenanceMode } from '@/js/modules/maintenanceMode';
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.querySelector('.maintenance-mode-alert')) {
-    const button: HTMLElement | null = document.querySelector('.maintenance-mode-alert button');
-
-    if (button) {
-      button.addEventListener('click', () => {
-        const date = new Date();
-
-        date.setTime(date.getTime() + 1 * 24 * 60 * 60 * 1000);
-
-        const expires = 'expires=' + date.toUTCString();
-
-        document.cookie = 'tofino_maintenance_alert_dismissed=true;' + expires + '; path=/';
-
-        const alert: HTMLElement | null = document.querySelector('.maintenance-mode-alert');
-
-        if (alert) {
-          // Hide the alert
-          alert.style.display = 'none';
-        }
-      });
-    }
-  }
+  acfLayouts(); // Run ACF Layouts
+  maintenanceMode(); // Run Maintenance Mode
 });

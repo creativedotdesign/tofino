@@ -2,7 +2,6 @@
 
 Custom php code (that doesn't come from composer) goes here. The following files are base tofino code which you _probably_ don't want to edit:
 
-- `AjaxForm.php`
 - `assets.php`
 - `FragmentCache.php`
 - `helpers.php`
@@ -86,7 +85,7 @@ HTML output:
 
 ```
 <svg class="icon-facebook" title="Facebook" id="fb">
-  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://example.com/wp-content/themes/tofino/dist/svg/sprite.svg#facebook"></use>
+  <use href="#facebook"></use>
 </svg>
 ```
 
@@ -113,7 +112,7 @@ HTML output:
 
 ```
 <ul class="social-icons social-icons-footer">
-  <li><a href="http://facebook.com"><svg><use xlink:href="http://example.com/wp-content/themes/tofino/dist/svg/stripe.symbol.svg#facebook"></svg></a></li>
+  <li><a href="http://facebook.com"><svg><use href="#facebook"></svg></a></li>
 </ul>
 ```
 
@@ -127,7 +126,7 @@ Upload a custom admin logo to be displayed on the login screen.
 
 This logo is also used in the email templates for branding.
 
-You might need to add some additional css to tweak the logo size / position. Add your CSS in to the file `src/css/base/admin.scss`.
+You might need to add some additional css to tweak the logo size / position. Add your CSS in to the file `src/css/base/admin.css`.
 
 ## No FOUT
 

@@ -9,30 +9,11 @@
 
 namespace Tofino\Assets;
 
-/**
- * Load admin styles
- *
- * Register and enqueue the stylesheet used in the admin area.
- * Filemtime added as a querystring to ensure correct version is sent to the client.
- * Function added to both the login_head (Login page) and admin_head (Admin pages)
- *
- * @since 1.0.0
- * @return void
- */
-function admin_styles()
-{
-  wp_register_style('tofino/css/admin', get_stylesheet_directory_uri() . '/dist/admin.css', [], false);
-  wp_enqueue_style('tofino/css/admin');
-}
-add_action('login_head', __NAMESPACE__ . '\\admin_styles');
-add_action('admin_head', __NAMESPACE__ . '\\admin_styles');
-
 
 /**
  * Main JS script
  *
  * Register and enqueue the mains js used in front end.
- * Filemtime added as a querystring to ensure correct version is sent to the client.
  *
  * @since 1.1.0
  * @return void
@@ -58,7 +39,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
 function localize_scripts()
 {
   if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
-    $alerts = get_field('alerts', 'general-options');
+    $alerts = get_field('alerts', 'option');
 
     if ($alerts) {
       $expires = [];
@@ -71,13 +52,30 @@ function localize_scripts()
       }
     }
 
-    wp_localize_script('tofino', 'tofinoJS', [
+    $data = [
       'ajaxUrl' => admin_url('admin-ajax.php'),
       'nextNonce' => wp_create_nonce('next_nonce'),
       'cookieExpires' => isset($expires) ? $expires : null,
       'themeUrl' => get_template_directory_uri(),
       'siteURL' => site_url(),
-    ]);
+    ];
+
+    // Add WPML language code to JS
+    if (function_exists('icl_object_id')) {
+      $data['language'] = apply_filters('wpml_current_language', null);
+    }
+
+    if (function_exists('graphql_get_endpoint')) {
+      $data['graphqlEndpoint'] = graphql_get_endpoint();
+    }
+
+    $iframe_resizer_license = get_field('iframe_resizer_license_key', 'option');
+
+    if ($iframe_resizer_license) {
+      $data['iframeResizerLicense'] = $iframe_resizer_license;
+    }
+
+    wp_localize_script('tofino', 'tofinoJS', $data);
   }
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
@@ -86,18 +84,17 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
 /**
  * Load admin scripts
  *
- * Register and enqueue the scripts used in the admin area.
- * Filemtime added as a querystring to ensure correct version is sent to the client.
+ * Register and enqueue the scripts and css used in the admin area.
  *
  * @since 1.0.0
  * @return void
  */
 function admin_scripts()
 {
-  wp_register_script('tofino/js/admin',  get_stylesheet_directory_uri() . '/dist/admin.js', [], null);
-  wp_enqueue_script('tofino/js/admin');
+  \Tofino\Vite::useVite('js/admin.ts');
 }
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
+add_action('login_head', __NAMESPACE__ . '\\admin_scripts');
 
 
 /**
@@ -138,19 +135,8 @@ add_action('init', __NAMESPACE__ . '\\correct_image_sizes');
 // Automatically populate image attachment metadata
 function populate_img_meta($post_id) {
   // Only run if the attachment is an image
-  if (strpos(get_post_mime_type($post_id), 'image') === false) {
+  if (get_post_mime_type($post_id) !== 'image/jpeg') {
     return;
-  }
-
-  // Get EXIF data from the attachment file
-  $exif = exif_read_data(get_attached_file($post_id));
-
-  if (array_key_exists('Copyright', $exif)) {
-    $exif_credit = wp_slash(wp_strip_all_tags($exif['Copyright']));
-  }
-
-  if (array_key_exists('ImageDescription', $exif)) {
-    $exif_img_alt = wp_slash(wp_strip_all_tags($exif['ImageDescription']));
   }
 
   // set post title to be the file name
@@ -167,14 +153,39 @@ function populate_img_meta($post_id) {
  
   wp_update_post($attachment_post);
 
-  // Update the Media Credit
-  if (!empty($exif_credit)) {
-    update_field('media_credit', $exif_credit, $post_id);
-  }
+  // Get EXIF data from the attachment file
+  $exif = exif_read_data(get_attached_file($post_id));
 
-  // Update the alternative text, which is stored in post meta table
-  if (!empty($exif_img_alt)) {
-    update_post_meta($post_id, '_wp_attachment_image_alt', $exif_img_alt);
+  if ($exif) {
+    if (array_key_exists('Copyright', $exif)) {
+      $exif_credit = wp_slash(wp_strip_all_tags($exif['Copyright']));
+  
+      // Update the Media Credit
+      if (!empty($exif_credit)) {
+        update_field('media_credit', $exif_credit, $post_id);
+      }
+    }
+  
+    if (array_key_exists('ImageDescription', $exif)) {
+      $exif_img_alt = wp_slash(wp_strip_all_tags($exif['ImageDescription']));
+  
+      // Update the alternative text, which is stored in post meta table
+      if (!empty($exif_img_alt)) {
+        update_post_meta($post_id, '_wp_attachment_image_alt', $exif_img_alt);
+      }
+    }
   }
 }
 add_filter('add_attachment', __NAMESPACE__ . '\\populate_img_meta');
+
+
+// Add SVG sprite to footer
+function add_svg_sprite_to_footer()
+{
+  $svg_sprite = get_template_directory() . '/dist/sprite.svg';
+
+  if (file_exists($svg_sprite)) {
+    echo file_get_contents($svg_sprite);
+  }
+}
+add_action('wp_footer', __NAMESPACE__ . '\\add_svg_sprite_to_footer');
