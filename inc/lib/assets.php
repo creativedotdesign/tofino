@@ -24,7 +24,7 @@ function main_script()
     \Tofino\Vite::useVite();
   }
 }
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script');
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script', 10);
 
 
 /**
@@ -78,7 +78,7 @@ function localize_scripts()
     wp_localize_script('tofino', 'tofinoJS', $data);
   }
 }
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts');
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts', 10);
 
 
 /**
