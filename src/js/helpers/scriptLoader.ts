@@ -2,11 +2,15 @@ import { createApp, defineAsyncComponent } from 'vue';
 import { createPinia } from 'pinia';
 import { Scripts } from '@/js/types/types';
 
-const createVueApp = async (src: string, el: HTMLElement) => {
+const createVueApp = (src: string, el: HTMLElement) => {
   try {
-    const Component = defineAsyncComponent(() => import(`@/js/vue/${src}.vue`));
-
-    createApp(Component).use(createPinia()).mount(el);
+    createApp({
+      components: {
+        [src]: defineAsyncComponent(() => import(`@/js/vue/${src}.vue`)),
+      },
+    })
+      .use(createPinia())
+      .mount(el);
   } catch (error) {
     console.error(`Failed to create Vue app for component ${src}:`, error);
   }
@@ -23,17 +27,15 @@ const loadTypeScriptModule = async (src: string) => {
 };
 
 export const loadScripts = async (scripts: Scripts) => {
-  const promises = scripts.map(async ({ selector, src, type }) => {
-    const el: HTMLElement | null = document.querySelector(selector);
+  scripts.forEach(({ selector, src, type }) => {
+    const elements: NodeListOf<HTMLElement> = document.querySelectorAll(selector);
 
-    if (el) {
+    elements.forEach((el) => {
       if (type === 'vue') {
-        await createVueApp(src, el);
+        createVueApp(src, el);
       } else if (type === 'ts') {
-        await loadTypeScriptModule(src);
+        loadTypeScriptModule(src);
       }
-    }
+    });
   });
-
-  await Promise.all(promises);
 };
