@@ -1,0 +1,85 @@
+name: Create Release Asset
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version/tag'
+        required: true
+        default: 'release-v1.0.0'
+
+jobs:
+  build-release:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Set up Node.js version 22
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer Dependencies
+        run: composer install -o
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install NPM Dependencies
+        run: npm install
+
+      - name: Build Scripts
+        run: npm run build
+
+      - name: Create Release ZIP
+        run: |
+          # Create a temporary directory for the release
+          mkdir -p release-temp
+
+          # Copy all files except those in .git-ftp-ignore
+          rsync -av \
+            --exclude-from='.git-ftp-ignore' \
+            ./ release-temp/
+
+          # Create ZIP file
+          zip -r tofino-${{ github.event.inputs.version }}.zip release-temp/
+
+          # Clean up temp directory
+          rm -rf release-temp
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          files: tofino-${{ github.event.inputs.version }}.zip
+          draft: false
+          prerelease: false
+          overwrite: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
