@@ -21,8 +21,8 @@ test.describe('HTML Validation Tests', () => {
     }
 
     // Get all URLs from sitemap
-    // const sitemapUrl = `${baseURL}/sitemap_index.xml`;
-    const sitemapUrl = `${baseURL}/page-sitemap.xml`;
+    const sitemapUrl = `${baseURL}/sitemap_index.xml`;
+    // const sitemapUrl = `${baseURL}/page-sitemap.xml`;
     urls = await processSitemap(sitemapUrl);
 
     if (!urls.length) {
@@ -40,12 +40,14 @@ test.describe('HTML Validation Tests', () => {
       rules: {
         'no-inline-style': 'off',
         // 'attribute-boolean-style': 'off',
-      }
+      },
     });
 
     for (const url of urls) {
       try {
-        await page.goto(url, { waitUntil: 'networkidle' });
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        // Wait a bit for dynamic content to load
+        await page.waitForTimeout(1000);
 
         // Get the HTML content
         const html = await page.content();

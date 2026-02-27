@@ -1,7 +1,7 @@
 {
   "name": "tofino",
   "private": true,
-  "version": "5.0.0",
+  "version": "v5.0.0-alpha.2",
   "description": "A WordPress starter theme for jumpstarting custom theme development.",
   "keywords": [
     "WordPress",
@@ -10,7 +10,12 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report"
   },
   "author": "Daniel Hewes <daniel@creativedotdesign.com>",
   "repository": {

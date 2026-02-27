@@ -36,7 +36,9 @@ test.describe('Overflow Detection Tests', () => {
       try {
         // @TODO Mobile overflow
         // await page.setViewportSize({ width: 375, height: 812 });
-        await page.goto(url, { waitUntil: 'networkidle' });
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        // Wait a bit for dynamic content to load
+        await page.waitForTimeout(1000);
 
         // Call detectOverflow in the browser
         const result = await page.evaluate(detectOverflow);
@@ -67,7 +69,6 @@ test.describe('Overflow Detection Tests', () => {
             screenshot: screenshotPath,
           });
           console.log(`Overflow issues on: ${url}`, result);
-
         } else {
           console.log(`No overflow issues on: ${url}`);
         }

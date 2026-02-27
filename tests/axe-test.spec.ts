@@ -24,9 +24,7 @@ test.describe('Accessibility tests', () => {
 
   test.beforeAll(async ({ baseURL }) => {
     // Get sitemap index
-    const { urls: allUrls, counts } = await processSitemap(
-      `${baseURL}/sitemap_index.xml`
-    );
+    const { urls: allUrls, counts } = await processSitemap(`${baseURL}/sitemap_index.xml`);
     urls = allUrls;
     sitemapCounts = counts;
 
@@ -43,7 +41,9 @@ test.describe('Accessibility tests', () => {
 
         for (const url of urls) {
           await test.step(`${viewport.name} - ${url}`, async () => {
-            await page.goto(url, { waitUntil: 'networkidle' });
+            await page.goto(url, { waitUntil: 'domcontentloaded' });
+            // Wait a bit for dynamic content to load
+            await page.waitForTimeout(1000);
 
             const results = await new AxeBuilder({ page })
               // Level A, and Level AA
@@ -60,7 +60,9 @@ test.describe('Accessibility tests', () => {
               for (const violation of results.violations) {
                 for (const node of violation.nodes) {
                   const selector = node.target.join(' ');
-                  await page.$eval(selector, el => el.classList.add('ada-violation')).catch(() => { });
+                  await page
+                    .$eval(selector, (el) => el.classList.add('ada-violation'))
+                    .catch(() => {});
                 }
               }
 
@@ -75,7 +77,9 @@ test.describe('Accessibility tests', () => {
               for (const violation of results.violations) {
                 for (const node of violation.nodes) {
                   const selector = node.target.join(' ');
-                  await page.$eval(selector, el => el.classList.remove('ada-violation')).catch(() => { });
+                  await page
+                    .$eval(selector, (el) => el.classList.remove('ada-violation'))
+                    .catch(() => {});
                 }
               }
 
@@ -95,10 +99,10 @@ test.describe('Accessibility tests', () => {
               // Find hoverable elements
               const hoverSelectors = await page.$$eval(
                 'button, a, [role="button"], [role="link"], [tabindex]',
-                elements =>
+                (elements) =>
                   elements
-                    .filter(el => el.offsetParent !== null && !el.disabled)
-                    .map(el => {
+                    .filter((el) => el.offsetParent !== null && !el.disabled)
+                    .map((el) => {
                       if (el.id) return `#${CSS.escape(el.id)}`;
                       if (el.className) {
                         return (
@@ -106,7 +110,7 @@ test.describe('Accessibility tests', () => {
                           el.className
                             .trim()
                             .split(/\s+/)
-                            .map(cls => CSS.escape(cls))
+                            .map((cls) => CSS.escape(cls))
                             .join('.')
                         );
                       }
@@ -142,7 +146,7 @@ test.describe('Accessibility tests', () => {
 
                   if (hoverResults.violations.length > 0) {
                     // Add ada-violation highlight class to element
-                    await el.evaluate(node => node.classList.add('ada-violation'));
+                    await el.evaluate((node) => node.classList.add('ada-violation'));
 
                     const screenshotPath = path.resolve(
                       './test-results/screenshots',
@@ -151,9 +155,9 @@ test.describe('Accessibility tests', () => {
                     await page.screenshot({ path: screenshotPath, fullPage: true });
 
                     // Remove ada-violation highlight class
-                    await el.evaluate(node => node.classList.remove('ada-violation'));
+                    await el.evaluate((node) => node.classList.remove('ada-violation'));
 
-                    hoverResults.violations.forEach(v => {
+                    hoverResults.violations.forEach((v) => {
                       v.reportId = nextId++;
                       v.state = 'hover';
                       v.viewport = viewport.name;
