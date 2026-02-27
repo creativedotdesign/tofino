@@ -22,8 +22,8 @@ jobs:
       - name: Set up Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: "22"
-          cache: "npm"
+          node-version: '22'
+          cache: 'npm'
 
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -61,15 +61,15 @@ jobs:
         run: |
           # Create a temporary directory for the release
           mkdir -p release-temp
-          
+
           # Copy all files except those in .git-ftp-ignore
           rsync -av \
             --exclude-from='.git-ftp-ignore' \
             ./ release-temp/
-          
+
           # Create ZIP file
           zip -r tofino-${{ github.event.inputs.version }}.zip release-temp/
-          
+
           # Clean up temp directory
           rm -rf release-temp
 
