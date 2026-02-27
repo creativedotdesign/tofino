@@ -60,18 +60,18 @@ jobs:
       - name: Create Release ZIP
         run: |
           # Create a temporary directory for the release
-          mkdir -p release-temp
+          mkdir -p tofino
 
           # Copy all files except those in .git-ftp-ignore
           rsync -av \
             --exclude-from='.git-ftp-ignore' \
-            ./ release-temp/
+            ./ tofino/
 
           # Create ZIP file
-          zip -r tofino-${{ github.event.inputs.version }}.zip release-temp/
+          zip -r tofino-${{ github.event.inputs.version }}.zip tofino/
 
           # Clean up temp directory
-          rm -rf release-temp
+          rm -rf tofino
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -79,7 +79,7 @@ jobs:
           tag_name: ${{ github.event.inputs.version }}
           files: tofino-${{ github.event.inputs.version }}.zip
           draft: false
-          prerelease: false
+          prerelease: true
           overwrite: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
