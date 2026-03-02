@@ -68,7 +68,9 @@ jobs:
             ./ tofino/
 
           # Create ZIP file
-          zip -r tofino-${{ github.event.inputs.version }}.zip tofino/
+          cd tofino
+          zip -r ../tofino-${{ github.event.inputs.version }}.zip .
+          cd ..
 
           # Clean up temp directory
           rm -rf tofino
