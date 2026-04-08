@@ -1,46 +1,68 @@
-export default () => {
-  const getCookie = (cookieName: string) => {
-    const value = `; ${document.cookie}`;
-    const parts: string[] = value.split(`; ${cookieName}=`);
+/**
+ * Reads a cookie value by name from the current document.
+ *
+ * @param name - The name of the cookie to retrieve.
+ * @returns The cookie value, or undefined if the cookie is not set.
+ */
+const getCookie = (name: string): string | undefined => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
 
-    if (parts.length === 2) {
-      return parts.pop()?.split(';').shift();
-    }
-  };
-
-  const alerts: NodeListOf<HTMLElement> = document.querySelectorAll('.alert');
-
-  if (alerts) {
-    const expires = tofinoJS.cookieExpires;
-
-    alerts.forEach((element) => {
-      const alertId = element.dataset.alertId;
-
-      if (!getCookie('tofino-alert-' + alertId + '-closed')) {
-        // Show the alert using JS based on the cookie (fixes html caching issue)
-        element.style.display = 'block';
-      }
-
-      const closeIcon: HTMLElement | null = element.querySelector('.js-close');
-
-      if (closeIcon) {
-        closeIcon.addEventListener('click', () => {
-          const expiresValue: string = expires[alertId];
-
-          if (expiresValue) {
-            const date: Date = new Date();
-            date.setTime(
-              date.getTime() + parseInt(tofinoJS.cookieExpires, 10) * 24 * 60 * 60 * 1000
-            );
-            const expires: string = 'expires=' + date.toUTCString();
-            document.cookie = 'tofino-alert-' + alertId + '-closed=yes;' + expires + '; path=/';
-          } else {
-            document.cookie = 'tofino-alert-' + alertId + '-closed=yes;max=age=0; path=/';
-          }
-
-          element.remove();
-        });
-      }
-    });
+  if (parts.length === 2) {
+    return parts.pop()?.split(';').shift();
   }
 };
+
+/**
+ * Writes a cookie to the current document.
+ *
+ * @param name - The name of the cookie.
+ * @param value - The value to store in the cookie.
+ * @param days - Optional number of days until the cookie expires. Omitting this sets max-age=0.
+ * @returns void
+ */
+const setCookie = (name: string, value: string, days?: number): void => {
+  const expiry = days
+    ? `expires=${new Date(Date.now() + days * 86400000).toUTCString()}`
+    : 'max-age=0';
+
+  document.cookie = `${name}=${value};${expiry};path=/`;
+};
+
+/**
+ * Initialises dismissible alert banners on the page.
+ * Reads per-alert cookies to suppress previously closed alerts, and sets
+ * a cookie when the close button is clicked to persist the dismissed state.
+ *
+ * @returns void
+ */
+export const alerts = (): void => {
+  const elements = document.querySelectorAll<HTMLElement>('.alert');
+
+  if (!elements.length) return;
+
+  const cookieExpires = tofinoJS.cookieExpires;
+
+  elements.forEach((element) => {
+    const alertId = element.dataset.alertId;
+
+    if (!alertId) return;
+
+    const cookieName = `tofino-alert-${alertId}-closed`;
+
+    if (!getCookie(cookieName)) {
+      element.style.display = 'block';
+    }
+
+    const closeButton = element.querySelector<HTMLElement>('.js-close');
+
+    closeButton?.addEventListener('click', () => {
+      const days = cookieExpires ? parseInt(cookieExpires[parseInt(alertId) - 1], 10) : 0;
+
+      setCookie(cookieName, 'yes', days || undefined);
+      element.remove();
+    });
+  });
+};
+
+export default alerts;

@@ -1,66 +1,57 @@
 import iframeResize from '@iframe-resizer/parent';
 
-export default () => {
-  const options: IntersectionObserverInit = {
-    root: null,
-    rootMargin: '100px 0px',
-    threshold: 1,
-  };
+/**
+ * Initialises iframe modules on the page.
+ * Uses an IntersectionObserver to lazily activate iframes as they scroll into view,
+ * hides the loading indicator once the iframe has loaded, and applies iframe-resizer
+ * so the iframe height tracks its content.
+ *
+ * @returns void
+ */
+export const iframe = (): void => {
+  const modules = document.querySelectorAll<HTMLElement>('.module-iframe [data-iframe]');
 
-  const iFrameModules = document.querySelectorAll<HTMLElement>('.module-iframe [data-iframe]');
+  if (!modules.length) return;
 
-  const handleIntersection = (
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver
-  ) => {
-    entries.forEach((entry) => {
-      const isIntersecting = entry.isIntersecting || entry.intersectionRatio > 0;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
 
-      if (isIntersecting) {
         const iframe = entry.target.querySelector<HTMLIFrameElement>('iframe');
-
-        if (iframe) {
-          iframe.classList.add('active');
-        }
+        iframe?.classList.add('active');
         observer.unobserve(entry.target);
-      }
+      });
+    },
+    { rootMargin: '100px 0px', threshold: 0 }
+  );
+
+  modules.forEach((module) => {
+    const iframeEl = module.querySelector<HTMLIFrameElement>('iframe');
+
+    if (!iframeEl) return;
+
+    observer.observe(module);
+
+    const loading = module.querySelector<HTMLElement>('.js-loading');
+
+    iframeEl.addEventListener('load', () => {
+      iframeEl.classList.add('loaded');
+      if (loading) loading.style.display = 'none';
     });
-  };
 
-  const handleIframeLoad = (iframe: HTMLIFrameElement, loading: HTMLElement | null) => {
-    iframe.classList.add('loaded');
-
-    if (loading) {
-      loading.style.display = 'none';
-    }
-  };
-
-  iFrameModules.forEach((iFrameModule) => {
-    const iframe = iFrameModule.querySelector<HTMLIFrameElement>('iframe');
-    const loading = iFrameModule.querySelector<HTMLElement>('.js-loading');
-
-    if (iframe) {
-      const observer = new IntersectionObserver(handleIntersection, options);
-
-      observer.observe(iFrameModule);
-
-      iframe.addEventListener('load', () => handleIframeLoad(iframe, loading));
-
-      iframeResize(
-        {
-          checkOrigin: false,
-          onScroll: ({ top }) => {
-            window.scrollTo({
-              top: top,
-              behavior: 'smooth',
-            });
-
-            return false; // Stop iframe-resizer scrolling the page
-          },
-          license: tofinoJS.iframeResizerLicense,
+    iframeResize(
+      {
+        checkOrigin: false,
+        onScroll: ({ y }) => {
+          window.scrollTo({ top: y, behavior: 'smooth' });
+          return false;
         },
-        iframe
-      );
-    }
+        license: tofinoJS.iframeResizerLicense ?? '',
+      },
+      iframeEl
+    );
   });
 };
+
+export default iframe;

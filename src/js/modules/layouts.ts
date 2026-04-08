@@ -1,3 +1,11 @@
+/**
+ * Initialises ACF layout utilities on the WordPress admin post edit screen.
+ * Wires up a page-template selector field to an "Update Layout" button that
+ * bulk-replaces content module rows with the chosen pre-defined layout.
+ * Also hides internal __Page Modules rows from the ACF field group list screen.
+ *
+ * @returns void
+ */
 export const acfLayouts = () => {
   // Check if we are on a post edit screen
   if (document.querySelector('.wp-admin form#post')) {
@@ -5,7 +13,7 @@ export const acfLayouts = () => {
       name: 'page_template',
     });
 
-    let selectedLayout = [];
+    let selectedLayout: string[] = [];
 
     if (layouts.length > 0) {
       const layoutField = layouts[0];
@@ -13,11 +21,48 @@ export const acfLayouts = () => {
       layoutField.on('change', () => {
         const selected = layoutField.val();
 
-        if (selected) {
-          selectedLayout = JSON.parse(selected); // Convert to string array to JS array
-        }
+        // Reset when the empty option is chosen; otherwise parse the JSON array
+        selectedLayout = selected ? JSON.parse(selected) : [];
       });
     }
+
+    /**
+     * Replaces all existing content module rows with a new set of ACF layouts.
+     *
+     * @param layouts - An array of ACF layout names to add to the content modules field.
+     * @returns void
+     */
+    const addLayoutsToContentModules = (layouts: string[]) => {
+      const fieldKey = document.querySelector('.auto-generate-page-modules')
+        ? 'field_content_modules'
+        : 'field_62586c9af1a1a';
+
+      const field = acf.getField(fieldKey);
+
+      if (!field) {
+        return;
+      }
+
+      // Remove all current layout rows
+      field.$layouts().each((_index: number, layoutElement: HTMLElement) => {
+        layoutElement.remove();
+      });
+
+      layouts.forEach((layout) => {
+        field.add({ layout });
+      });
+
+      field.showNotice({
+        text: 'Pre-defined modules successfully added to the content area.',
+        type: 'success',
+        dismiss: true,
+      });
+
+      // Dismiss the notice after 4 seconds
+      setTimeout(() => {
+        field.removeNotice();
+      }, 4000);
+    };
 
     const addLayoutbtn = document.querySelector(
       '.acf-field-acfe-button[data-name="update_layout"]'
@@ -31,47 +76,6 @@ export const acfLayouts = () => {
         addLayoutsToContentModules(selectedLayout);
       });
     }
-
-    const addLayoutsToContentModules = (layouts: string[]) => {
-      const autoPageModules = document.getElementsByClassName('.auto-generate-page-modules');
-
-      let fieldKey = 'field_62586c9af1a1a';
-
-      if (autoPageModules.length > 0) {
-        fieldKey = 'field_content_modules';
-      }
-
-      const field = acf.getField(fieldKey);
-
-      // Get all current layouts
-      const currentLayouts = field.$layouts();
-
-      if (currentLayouts.length > 0) {
-        // Remove all current layouts (jQuery each)
-        currentLayouts.each((index: number, layoutElement: HTMLElement) => {
-          layoutElement.remove();
-        });
-      }
-
-      if (field) {
-        layouts.forEach((layout) => {
-          field.add({
-            layout: layout,
-          });
-        });
-
-        field.showNotice({
-          text: 'Pre-defined modules successfully added to the content area.',
-          type: 'success',
-          dismiss: true,
-        });
-
-        // Hide the notice after 5 seconds
-        setTimeout(() => {
-          field.removeNotice();
-        }, 4000);
-      }
-    };
   }
 
   if (
@@ -79,19 +83,10 @@ export const acfLayouts = () => {
       '.wp-admin.acf-admin-page.acf-admin-field-groups.auto-generate-page-modules'
     )
   ) {
-    const rows = document.querySelectorAll('#posts-filter #the-list .row-title');
-
-    if (rows) {
-      rows.forEach((elem) => {
-        if (elem.textContent && elem.textContent.includes('__Page Modules')) {
-          // Find the parent row
-          const parentRow = elem.closest('tr');
-
-          (parentRow as HTMLElement).style.display = 'none';
-
-          return;
-        }
-      });
-    }
+    document.querySelectorAll('#posts-filter #the-list .row-title').forEach((elem) => {
+      if (elem.textContent?.includes('__Page Modules')) {
+        elem.closest('tr')?.setAttribute('style', 'display: none');
+      }
+    });
   }
 };

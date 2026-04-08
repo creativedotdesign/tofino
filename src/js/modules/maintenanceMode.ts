@@ -1,3 +1,10 @@
+/**
+ * Initialises the maintenance mode alert banner.
+ * Wires up the dismiss button to hide the alert and set a cookie that
+ * suppresses the banner for 24 hours on subsequent page loads.
+ *
+ * @returns void
+ */
 export const maintenanceMode = () => {
   if (document.querySelector('.maintenance-mode-alert')) {
     const button: HTMLElement | null = document.querySelector('.maintenance-mode-alert button');

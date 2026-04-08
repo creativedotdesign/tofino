@@ -1,17 +1,26 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 
-// HTTP connection to the API
-const httpLink = createHttpLink({
-  uri: '/' + tofinoJS.graphqlEndpoint,
-});
+let client: ApolloClient<unknown> | null = null;
 
-// Cache implementation
-const cache = new InMemoryCache();
+/**
+ * Returns the shared Apollo Client instance, creating it on first call.
+ * Throws if WPGraphQL is not active (graphqlEndpoint not set in tofinoJS).
+ *
+ * @returns The Apollo Client instance.
+ */
+export const getApolloClient = (): ApolloClient<unknown> => {
+  if (client) {
+    return client;
+  }
 
-// Create the apollo client
-export const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-});
+  if (!tofinoJS.graphqlEndpoint) {
+    throw new Error('tofinoJS.graphqlEndpoint is not defined. Is WPGraphQL active?');
+  }
 
-export default apolloClient;
+  client = new ApolloClient({
+    link: createHttpLink({ uri: '/' + tofinoJS.graphqlEndpoint }),
+    cache: new InMemoryCache(),
+  });
+
+  return client;
+};

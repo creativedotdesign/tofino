@@ -1,4 +1,4 @@
-import { Scripts } from '@/js/types/types';
+import type { Script } from '@/js/types/types';
 import { loadScripts } from '@/js/helpers/scriptLoader';
 // import * as WebFont from 'webfontloader';
 // import { WebFontInterface } from '@/js/types/types';
@@ -6,6 +6,12 @@ import { loadScripts } from '@/js/helpers/scriptLoader';
 // Import CSS
 import '@/css/app.css';
 
+/**
+ * Runs on DOMContentLoaded. Registers dynamic script configurations and
+ * delegates loading to {@link loadScripts}. Calls {@link finalize} when complete.
+ *
+ * @returns void
+ */
 const init = () => {
   // JavaScript to be fired on all pages
 
@@ -24,7 +30,7 @@ const init = () => {
   // WebFont.load(fontConfig);
 
   // Define the selectors and src for dynamic imports
-  const scripts: Scripts = [
+  const scripts: Script[] = [
     {
       selector: '.alert', // Alert
       src: 'alerts',
@@ -42,8 +48,13 @@ const init = () => {
     },
     {
       selector: '[data-scroll-reveal]', // Menu scroll reveal
-      src: 'menu-scroll-reveal',
+      src: 'menuScrollReveal',
       type: 'ts',
+    },
+    {
+      selector: '[data-test-vue]', // Vue test
+      src: 'TestComponent',
+      type: 'vue',
     },
   ];
 
@@ -53,10 +64,22 @@ const init = () => {
   finalize();
 };
 
+/**
+ * Runs after {@link init} completes. Intended for any JavaScript that must
+ * execute after the initial scripts have been loaded.
+ *
+ * @returns void
+ */
 const finalize = () => {
   // JavaScript to be fired after init
 };
 
+/**
+ * Runs on the window `load` event, after all resources (images, stylesheets,
+ * sub-frames) have finished loading.
+ *
+ * @returns void
+ */
 const loaded = () => {
   // Javascript to be fired once fully loaded
 };
