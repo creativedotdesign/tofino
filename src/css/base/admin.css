@@ -71,7 +71,7 @@ body.acf-autosize-enabled
 }
 
 body.login.custom-login-screen {
-  @apply block h-auto bg-gray-100 text-neutral-800;
+  @apply block! h-auto bg-gray-100 text-neutral-800;
 
   h1 {
     @apply text-2xl font-semibold;
