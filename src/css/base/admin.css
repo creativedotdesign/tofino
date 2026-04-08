@@ -2,7 +2,7 @@
 @import 'tailwindcss/theme.css' layer(theme);
 
 .maintenance-mode-alert {
-  @apply fixed z-[99999] flex justify-center bg-red-600 p-5 text-center text-white;
+  @apply fixed z-99999 flex justify-center bg-red-600 p-5 text-center text-white;
 
   div {
     @apply self-center;
@@ -19,6 +19,22 @@
   button {
     @apply border-none bg-white px-4 py-2 font-medium uppercase;
   }
+}
+
+/* ACF Autosize: sticky WYSIWYG toolbar */
+body.acf-autosize-enabled
+  .acf-field:not(.no-autosize)
+  .mce-tinymce:not(.mce-fullscreen)
+  .mce-top-part {
+  @apply sticky top-11.5 min-[783px]:top-7.5;
+}
+
+body.acf-autosize-enabled
+  .block-editor
+  .acf-field:not(.no-autosize)
+  .mce-tinymce:not(.mce-fullscreen)
+  .mce-top-part {
+  @apply top-0;
 }
 
 .wp-admin.hide-preview-button #submitpost #preview-action {
@@ -129,7 +145,7 @@ body.login.custom-login-screen {
     }
 
     .button-primary {
-      @apply block w-full rounded-none border-none bg-[var(--button-color)] px-4 py-1.5 font-bold text-[#f0f0f1] focus:ring-2 focus:ring-blue-500/50 focus:outline-none;
+      @apply block w-full rounded-none border-none bg-(--button-color) px-4 py-1.5 font-bold text-[#f0f0f1] focus:ring-2 focus:ring-blue-500/50 focus:outline-none;
     }
 
     .forgetmenot {

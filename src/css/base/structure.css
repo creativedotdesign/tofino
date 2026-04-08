@@ -8,19 +8,6 @@ main {
 
 body {
   @apply flex min-h-full flex-col antialiased;
-
-  &.no-fout {
-    @apply invisible;
-
-    .wf-inactive &,
-    .wf-active & {
-      @apply visible;
-    }
-  }
-}
-
-.highlight-violation {
-  @apply outline-1 outline-red-500;
 }
 
 svg:has(symbol) {
@@ -29,5 +16,5 @@ svg:has(symbol) {
 
 /* ADA testing */
 .ada-violation {
-  @apply outline-3 outline-dashed outline-red-500;
+  @apply outline-3 outline-red-500 outline-dashed;
 }

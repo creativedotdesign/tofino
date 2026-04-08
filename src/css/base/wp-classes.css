@@ -36,5 +36,5 @@ img {
 }
 
 .wp-caption .wp-caption-text {
-  @apply !text-base !font-normal;
+  @apply text-base! font-normal!;
 }
