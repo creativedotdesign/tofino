@@ -1,14 +1,13 @@
+import { defineConfig, globalIgnores } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginVue from 'eslint-plugin-vue';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 
-export default [
+export default defineConfig([
   // Ignore patterns
-  {
-    ignores: ['dist/**', 'node_modules/**', 'vendor/**'],
-  },
+  globalIgnores(['dist/**', 'node_modules/**', 'vendor/**']),
 
   // Base JavaScript config
   js.configs.recommended,
@@ -23,13 +22,14 @@ export default [
   {
     files: ['**/*.{js,ts,vue}'],
     languageOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
         ...globals.browser,
         ...globals.node,
         ...globals.es2021,
         tofinoJS: 'readonly',
+        acf: 'readonly',
       },
       parserOptions: {
         parser: tseslint.parser,
@@ -40,7 +40,8 @@ export default [
     },
   },
 
-  // Vue-specific overrides
+  // Vue-specific overrides — required so vue-eslint-parser delegates
+  // <script lang="ts"> blocks to the TypeScript parser
   {
     files: ['**/*.vue'],
     languageOptions: {
@@ -52,4 +53,4 @@ export default [
 
   // Prettier config (must be last)
   eslintPluginPrettierRecommended,
-];
+]);

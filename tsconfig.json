@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "es2022",
-    "importHelpers": true,
-    "isolatedModules": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler", // Vite-recommended; respects package.json `exports` fields
+    "verbatimModuleSyntax": true, // Modern replacement for isolatedModules; enforces `import type` for type-only imports
+    "useDefineForClassFields": true, // Ensures Vue 3 reactive class fields use ES define semantics
+    "esModuleInterop": true, // Better CommonJS interop; implies allowSyntheticDefaultImports
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true, // Catches cross-platform casing bugs
     "jsx": "preserve",
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": [
-      "node" // if using node
-    ],
-    "strict": true, // Enable strict type-checking options
-    "skipLibCheck": true, // Skip type checking of declaration files
-    "noImplicitAny": false // Bypass raising errors on `any` type
+    "types": ["node"],
+    "strict": true,
+    "noImplicitAny": false, // Intentionally overrides strict; allows gradual typing
+    "skipLibCheck": true
   },
-  "include": ["src/types/vite-env.d.ts", "src/**/*.ts", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.vue"]
 }

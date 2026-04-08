@@ -27,7 +27,7 @@ node_modules/
 
 # Config files
 
-eslint.config.js
+eslint.config.ts
 tsconfig.json
 vite.config.ts
 playwright.config.ts

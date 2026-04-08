@@ -22,6 +22,7 @@ test.describe('Tofino tests', () => {
     const pageBody = await page.locator('body');
     const menu = await page.locator('#main-menu');
     const openBtn = await page.locator('[data-playwright="open-mobile-menu"]');
+    const header = await page.locator('header');
 
     // Set mobile viewport
     await page.setViewportSize({ width: 500, height: 900 });
@@ -34,9 +35,14 @@ test.describe('Tofino tests', () => {
 
     // Make sure scroll lock class on body
     await expect(pageBody).toHaveClass(/menu-open/);
+    await expect(openBtn).toHaveAttribute('aria-expanded', 'true');
 
-    // Check if open menu is viewport height
-    await expect(menu).toBeInViewport({ ratio: 1 });
+    // Check if open menu opens from the header area, below any top alert
+    const menuBox = await menu.boundingBox();
+    const headerBox = await header.boundingBox();
+    expect(menuBox).not.toBeNull();
+    expect(headerBox).not.toBeNull();
+    expect(menuBox!.y).toBeCloseTo(headerBox!.y, 0);
   });
 
   test('Tablet navigation tests', async ({ page }) => {
@@ -44,6 +50,7 @@ test.describe('Tofino tests', () => {
     const menu = await page.locator('#main-menu');
     const openBtn = await page.locator('[data-playwright="open-mobile-menu"]');
     const closeBtn = await page.locator('[data-playwright="close-mobile-menu"]');
+    const header = await page.locator('header');
 
     // Set tablet viewport
     await page.setViewportSize({ width: 834, height: 1112 });
@@ -51,8 +58,12 @@ test.describe('Tofino tests', () => {
     // Open Menu
     await openBtn.click();
 
-    // Check if open menu is viewport height
-    await expect(menu).toBeInViewport({ ratio: 1 });
+    // Check if open menu opens from the header area, below any top alert
+    const menuBox = await menu.boundingBox();
+    const headerBox = await header.boundingBox();
+    expect(menuBox).not.toBeNull();
+    expect(headerBox).not.toBeNull();
+    expect(menuBox!.y).toBeCloseTo(headerBox!.y, 0);
 
     // Close Menu
     await closeBtn.click();
@@ -62,6 +73,7 @@ test.describe('Tofino tests', () => {
 
     // Make sure no scroll lock class on body
     await expect(pageBody).not.toHaveClass(/menu-open/);
+    await expect(openBtn).toHaveAttribute('aria-expanded', 'false');
 
     // Check escape closes menu
     await openBtn.click();
@@ -72,6 +84,7 @@ test.describe('Tofino tests', () => {
 
     // Make sure no scroll lock class on body
     await expect(pageBody).not.toHaveClass(/menu-open/);
+    await expect(openBtn).toHaveAttribute('aria-expanded', 'false');
   });
 
   // Desktop Tests
