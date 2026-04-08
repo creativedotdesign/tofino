@@ -72,6 +72,29 @@
             "wpml_cf_preferences": 1
         },
         {
+            "key": "field_67f7f9e7e7d01",
+            "label": "Show Module Names",
+            "name": "show_module_names",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Display the current module name label on the front-end for editors.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1,
+            "show_in_graphql": 0,
+            "wpml_cf_preferences": 1
+        },
+        {
             "key": "field_66ead4240eb46",
             "label": "Show ACF Admin",
             "name": "show_acf_admin",

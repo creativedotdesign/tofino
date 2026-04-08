@@ -1,5 +1,5 @@
 <?php
-$scroll_reveal = get_field('menu_scroll_reveal', 'options'); ?>
+$scroll_reveal = get_field('menu_scroll_reveal', 'option'); ?>
 
 <!doctype html>
 <html <?php language_attributes(); ?>>

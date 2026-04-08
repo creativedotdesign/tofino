@@ -223,3 +223,32 @@ function render_module(string $layout): void
     }
   }
 }
+
+
+/**
+ * Gets the display label for an ACF flexible content module layout.
+ *
+ * @since 5.0.0
+ *
+ * @param string $row_layout The raw ACF layout name (for example: general_content).
+ * @param string $field_name Optional. Flexible content field name. Default 'content_modules'.
+ * @return string The layout label, or a humanized fallback when no label is found.
+ */
+function get_module_name(string $row_layout, string $field_name = 'content_modules'): string
+{
+  static $layout_labels_cache = [];
+
+  if (!isset($layout_labels_cache[$field_name])) {
+    $field_object = get_field_object($field_name);
+    $layouts = is_array($field_object['layouts'] ?? null) ? $field_object['layouts'] : [];
+    $layout_labels_cache[$field_name] = [];
+
+    foreach ($layouts as $layout) {
+      if (!empty($layout['name']) && !empty($layout['label'])) {
+        $layout_labels_cache[$field_name][$layout['name']] = $layout['label'];
+      }
+    }
+  }
+
+  return $layout_labels_cache[$field_name][$row_layout] ?? ucwords(str_replace('_', ' ', $row_layout));
+}
