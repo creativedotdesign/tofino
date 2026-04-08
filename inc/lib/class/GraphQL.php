@@ -11,9 +11,14 @@ namespace Tofino;
 
 class GraphQL
 {
+  /**
+   * Constructor. Registers WPGraphQL filters when the plugin is active.
+   *
+   * Bails silently if WPGraphQL is not installed, so the theme does not
+   * hard-depend on the plugin being present.
+   */
   public function __construct()
   {
-    // Check plugin is active
     if (!class_exists('WPGraphQL')) {
       return;
     }
@@ -23,37 +28,51 @@ class GraphQL
     add_filter('graphql_input_fields', [$this, 'add_offset_pagination'], 10, 2);
     add_filter('graphql_post_object_connection_query_args', [$this, 'add_query_args'], 10, 5);
     add_filter('graphql_post_object_connection_query_args', [$this, 'filter_post_by_term_ids'], 10, 5);
-    add_filter('graphql_connection_page_info', [$this, 'update_page_info'], 10, 2); // Hook for page info
+    add_filter('graphql_connection_page_info', [$this, 'update_page_info'], 10, 2);
   }
 
-  public function register()
+  /**
+   * Registers custom GraphQL types and fields.
+   *
+   * - Registers the `OffsetPagination` object type.
+   * - Adds a `total` field to `WPPageInfo`.
+   * - Adds a `termIds` where argument to `RootQueryToContentNodeConnectionWhereArgs`.
+   *
+   * @return void
+   */
+  public function register(): void
   {
     register_graphql_object_type('OffsetPagination', [
       'fields' => [
         'total' => [
-          'type' => 'Int',
-          'description' => 'Total number of items'
-        ]
-      ]
+          'type'        => 'Int',
+          'description' => 'Total number of items',
+        ],
+      ],
     ]);
 
-    // Register for posts
     register_graphql_field('WPPageInfo', 'total', [
-      'type' => 'Int',
+      'type'        => 'Int',
       'description' => 'Total number of posts',
     ]);
 
     register_graphql_field('RootQueryToContentNodeConnectionWhereArgs', 'termIds', [
-      'type' => ['list_of' => 'Int'], // Accept an array of integers
+      'type'        => ['list_of' => 'Int'],
       'description' => __('Filter by post objects that have specific term IDs across multiple taxonomies', 'tofino'),
     ]);
   }
 
-  public function add_offset_ordering($values)
+  /**
+   * Adds an OFFSET enum value to the GraphQL post ordering enum.
+   *
+   * @param array<string, mixed> $values Existing enum values.
+   * @return array<string, mixed> Updated enum values including OFFSET.
+   */
+  public function add_offset_ordering(array $values): array
   {
     if (!isset($values['OFFSET'])) {
       $values['OFFSET'] = [
-        'value' => 'offset',
+        'value'       => 'offset',
         'description' => __('Order by offset', 'tofino'),
       ];
     }
@@ -61,11 +80,18 @@ class GraphQL
     return $values;
   }
 
-  public function add_offset_pagination($fields, $typename)
+  /**
+   * Adds an `offsetPagination` input field to content node connection where args.
+   *
+   * @param array<string, mixed> $fields   Existing input fields.
+   * @param string               $typename The GraphQL type name being processed.
+   * @return array<string, mixed> Updated input fields.
+   */
+  public function add_offset_pagination(array $fields, string $typename): array
   {
     if ($typename === 'RootQueryToContentNodeConnectionWhereArgs') {
       $fields['offsetPagination'] = [
-        'type' => ['list_of' => 'Int'],
+        'type'        => ['list_of' => 'Int'],
         'description' => __('Offset pagination for posts', 'tofino'),
       ];
     }
@@ -73,97 +99,121 @@ class GraphQL
     return $fields;
   }
 
-  public function add_query_args($query_args, $source, $args)
-  {
-    $offsetPagination = $args['where']['offsetPagination'] ?? null;
+  /**
+   * Applies offset pagination to the WP_Query args when `offsetPagination`
+   * is passed in the GraphQL where clause as a [offset, perPage] tuple.
+   *
+   * @param array<string, mixed> $query_args WP_Query arguments to modify.
+   * @param mixed                $_source    The source object being queried (unused).
+   * @param array<string, mixed> $args       GraphQL query arguments, including `where`.
+   * @param mixed                $_context   The GraphQL app context (unused).
+   * @param mixed                $_info      The GraphQL resolve info (unused).
+   * @return array<string, mixed> Modified WP_Query arguments.
+   */
+  public function add_query_args(
+    array $query_args,
+    mixed $_source,
+    array $args,
+    mixed $_context,
+    mixed $_info
+  ): array {
+    $offset_pagination = $args['where']['offsetPagination'] ?? null;
 
-    if (is_array($offsetPagination) && count($offsetPagination) === 2) {
-      [$offset, $per_page] = $offsetPagination;
+    if (is_array($offset_pagination) && count($offset_pagination) === 2) {
+      [$offset, $per_page] = $offset_pagination;
 
-      $query_args['offset'] = (int) $offset;
+      $query_args['offset']         = (int) $offset;
       $query_args['posts_per_page'] = (int) $per_page;
     }
 
     return $query_args;
   }
 
-  function filter_post_by_term_ids($args, $source, $query_args, $context, $info)
-  {
-    // Log the query arguments for debugging
-    // error_log('GraphQL Query Args Before: ' . print_r($args, true));
+  /**
+   * Adds a `tax_query` to the WP_Query args when `termIds` are passed in the
+   * GraphQL where clause. Term IDs are grouped by taxonomy, and an AND relation
+   * is applied when multiple taxonomies are involved.
+   *
+   * Also ensures `no_found_rows` is false so WP_Query calculates totals.
+   *
+   * @param array<string, mixed> $query_args WP_Query arguments to modify.
+   * @param mixed                $_source    The source object being queried (unused).
+   * @param array<string, mixed> $args       GraphQL query arguments, including `where`.
+   * @param mixed                $_context   The GraphQL app context (unused).
+   * @param mixed                $_info      The GraphQL resolve info (unused).
+   * @return array<string, mixed> Modified WP_Query arguments.
+   */
+  public function filter_post_by_term_ids(
+    array $query_args,
+    mixed $_source,
+    array $args,
+    mixed $_context,
+    mixed $_info
+  ): array {
+    $query_args['no_found_rows'] = false;
 
-    // Ensure WP_Query calculates the total number of posts
-    $args['no_found_rows'] = false;
+    $term_ids = $args['where']['termIds'] ?? null;
 
-    // Check if 'termIds' exists in the 'where' argument
-    if (array_key_exists('where', $query_args) && array_key_exists('termIds', $query_args['where'])) {
-      $term_ids = $query_args['where']['termIds'];
+    if (empty($term_ids) || !is_array($term_ids)) {
+      return $query_args;
+    }
 
-      if (!empty($term_ids) && is_array($term_ids)) {
-        $taxonomy_terms = [];
+    $taxonomy_terms = [];
 
-        foreach ($term_ids as $term_id) {
-          // Get the taxonomy for the term ID
-          $term = get_term($term_id);
+    foreach ($term_ids as $term_id) {
+      $term = get_term($term_id);
 
-          if ($term && !is_wp_error($term)) {
-            $taxonomy = $term->taxonomy;
-
-            // Group term IDs by taxonomy
-            if (!isset($taxonomy_terms[$taxonomy])) {
-              $taxonomy_terms[$taxonomy] = [];
-            }
-
-            $taxonomy_terms[$taxonomy][] = $term_id;
-          }
-        }
-
-        // Build the tax_query
-        $tax_query = [];
-
-        foreach ($taxonomy_terms as $taxonomy => $terms) {
-          $tax_query[] = [
-            'taxonomy' => $taxonomy,
-            'field' => 'term_id',
-            'terms' => $terms,
-            'operator' => 'IN',
-          ];
-        }
-
-        if (!empty($tax_query)) {
-          // If there are multiple taxonomies, set the relation to 'AND'
-          $args['tax_query'] = [
-            'relation' => 'AND',
-            ...$tax_query,
-          ];
-        }
+      if ($term instanceof \WP_Term) {
+        $taxonomy_terms[$term->taxonomy][] = $term_id;
       }
     }
 
-    // Log the final query arguments for debugging
-    // error_log('GraphQL Query Args After: ' . print_r($args, true));
+    if (empty($taxonomy_terms)) {
+      return $query_args;
+    }
 
-    return $args;
+    $tax_query = [];
+
+    foreach ($taxonomy_terms as $taxonomy => $terms) {
+      $tax_query[] = [
+        'taxonomy' => $taxonomy,
+        'field'    => 'term_id',
+        'terms'    => $terms,
+        'operator' => 'IN',
+      ];
+    }
+
+    $query_args['tax_query'] = count($tax_query) > 1
+      ? ['relation' => 'AND', ...$tax_query]
+      : $tax_query;
+
+    return $query_args;
   }
 
-  public function update_page_info($page_info, $connection)
+  /**
+   * Updates the GraphQL page info with the total post count and recalculates
+   * `hasNextPage` and `hasPreviousPage` when offset pagination is in use.
+   *
+   * @param array<string, mixed> $page_info  The current page info array.
+   * @param mixed                $connection The GraphQL connection instance.
+   * @return array<string, mixed> Updated page info.
+   */
+  public function update_page_info(array $page_info, mixed $connection): array
   {
-    // Ensure the query is an instance of WP_Query
-    if ($connection->get_query() instanceof \WP_Query) {
-      $query = $connection->get_query();
+    if (!($connection->get_query() instanceof \WP_Query)) {
+      return $page_info;
+    }
 
-      // Check if the query is using offsetPagination
-      $offset = $query->query_vars['offset'] ?? null;
-      $posts_per_page = $query->query_vars['posts_per_page'] ?? null;
-      $total_posts = $query->found_posts;
-      $page_info['total'] = $total_posts;
+    $query       = $connection->get_query();
+    $total_posts = $query->found_posts;
+    $offset      = $query->query_vars['offset'] ?? null;
+    $per_page    = $query->query_vars['posts_per_page'] ?? null;
 
-      if ($offset !== null && $posts_per_page !== null) {
-        // Calculate hasNextPage and hasPreviousPage
-        $page_info['hasNextPage'] = ($offset + $posts_per_page) < $total_posts;
-        $page_info['hasPreviousPage'] = $offset > 0;
-      } else {
-      }
+    $page_info['total'] = $total_posts;
+
+    if ($offset !== null && $per_page !== null) {
+      $page_info['hasNextPage']     = ($offset + $per_page) < $total_posts;
+      $page_info['hasPreviousPage'] = $offset > 0;
     }
 
     return $page_info;

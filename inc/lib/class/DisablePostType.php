@@ -11,89 +11,116 @@ namespace Tofino;
 
 class DisablePostType
 {
+  private bool $is_disabled = false;
 
-  private $is_disabled;
-
-  // Constructor to initialize hooks
+  /**
+   * Constructor. Defers the ACF option check until ACF has fully initialised.
+   */
   public function __construct()
   {
-    // Delay the ACF option check until ACF is initialized
     add_action('acf/init', [$this, 'initialize']);
   }
 
-  // Initialize method to be called after ACF has fully loaded
-  public function initialize()
+  /**
+   * Reads the ACF option and registers the relevant hooks when the post type
+   * is disabled. Called on the `acf/init` action.
+   *
+   * @return void
+   */
+  public function initialize(): void
   {
-    // Check the ACF option and store the result
-    $this->is_disabled = get_field('disable_post_type', 'option');
+    $this->is_disabled = (bool) get_field('disable_post_type', 'option');
 
-    // If the post type is disabled, run the appropriate actions
-    if ($this->is_disabled) {
-      add_action('admin_menu', [$this, 'remove_post_menu']);
-      add_action('admin_bar_menu', [$this, 'remove_new_post_admin_bar'], 999);
-      add_action('init', [$this, 'disable_post_type_rewrite']);
-      // add_action('wpml_current_language', [$this, 'disable_post_type_rewrite']);
-      add_action('template_redirect', [$this, 'redirect_single_post']);
+    if (!$this->is_disabled) {
+      return;
     }
+
+    add_action('admin_menu', [$this, 'remove_post_menu']);
+    add_action('admin_bar_menu', [$this, 'remove_new_post_admin_bar'], 999);
+    add_action('init', [$this, 'disable_post_type_rewrite']);
+    add_action('template_redirect', [$this, 'redirect_single_post']);
   }
 
-  // Remove the "Posts" menu item from the admin dashboard
-  public function remove_post_menu()
+  /**
+   * Removes the "Posts" menu item from the WordPress admin sidebar.
+   *
+   * @return void
+   */
+  public function remove_post_menu(): void
   {
     remove_menu_page('edit.php');
   }
 
-  // Remove "New Post" link from the admin bar
-  public function remove_new_post_admin_bar($wp_admin_bar)
+  /**
+   * Removes the "New Post" link from the admin toolbar.
+   *
+   * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
+   * @return void
+   */
+  public function remove_new_post_admin_bar(\WP_Admin_Bar $wp_admin_bar): void
   {
     $wp_admin_bar->remove_node('new-post');
   }
 
-  // Disable the "post" post type on the front end and remove its rewrite rules
-  public function disable_post_type_rewrite()
+  /**
+   * Sets the post type properties that mark it as private and removes its
+   * rewrite rules. Extracted to avoid duplication in the WPML language loop.
+   *
+   * @return void
+   */
+  private function disable_post_type_props(): void
   {
     global $wp_post_types;
 
-    // var_dump($wp_post_types);
-
-    if (isset($wp_post_types['post'])) {
-      $wp_post_types['post']->public = false;
-      $wp_post_types['post']->publicly_queryable = false;
-      $wp_post_types['post']->query_var = false;
-      $wp_post_types['post']->rewrite = false;
+    if (!isset($wp_post_types['post'])) {
+      return;
     }
 
-    // Additional logic for WPML to apply the settings for all languages
-		if (defined('ICL_SITEPRESS_VERSION')) {
-			global $sitepress;
-  
-			$languages = $sitepress->get_active_languages();
-
-			foreach ($languages as $lang) {
-				$sitepress->switch_lang($lang['code']);
-
-				if (isset($wp_post_types['post'])) {
-					$wp_post_types['post']->public = false;
-					$wp_post_types['post']->publicly_queryable = false;
-					$wp_post_types['post']->query_var = false;
-					$wp_post_types['post']->rewrite = false;
-				}
-			}
-
-			// Switch back to the original language
-			$sitepress->switch_lang($sitepress->get_default_language());
-		}
+    $wp_post_types['post']->public            = false;
+    $wp_post_types['post']->publicly_queryable = false;
+    $wp_post_types['post']->query_var         = false;
+    $wp_post_types['post']->rewrite           = false;
   }
 
-  // Redirect any attempt to access a single post
-  public function redirect_single_post()
+  /**
+   * Disables the built-in "post" post type on the front end and removes its
+   * rewrite rules. When WPML is active, applies the settings for every active
+   * language so WPML does not restore the rewrite rules on a language switch.
+   *
+   * @return void
+   */
+  public function disable_post_type_rewrite(): void
+  {
+    $this->disable_post_type_props();
+
+    if (!defined('ICL_SITEPRESS_VERSION')) {
+      return;
+    }
+
+    global $sitepress;
+
+    $default_language = $sitepress->get_default_language();
+
+    foreach ($sitepress->get_active_languages() as $lang) {
+      $sitepress->switch_lang($lang['code']);
+      $this->disable_post_type_props();
+    }
+
+    $sitepress->switch_lang($default_language);
+  }
+
+  /**
+   * Redirects any front-end request for a single post to the home page.
+   *
+   * @return void
+   */
+  public function redirect_single_post(): void
   {
     if (is_single() && get_post_type() === 'post') {
-      wp_redirect(home_url(), 301);
+      wp_safe_redirect(home_url(), 301);
       exit;
     }
   }
 }
 
-// Initialize the class
 new DisablePostType();
