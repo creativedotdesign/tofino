@@ -92,11 +92,6 @@ function add_post_name_body_class(array $classes)
     $classes[] = $post->post_type . '-' . $post->post_name;
   }
 
-  // Add no-fount class if theme option set to true
-  if (get_field('no_fout', 'option')) {
-    $classes[] = 'no-fout';
-  }
-
   // Add page slug if it doesn't exist
   if (is_single() || is_page() && !is_front_page()) {
     if (!in_array($post->post_name, $classes)) {
@@ -213,10 +208,10 @@ function alerts($position)
         if (!in_array(get_the_ID(), $excludepages)) {
           $alert_position = strtolower($alert['position']);
           if ($alert['message'] && !isset($_COOKIE['tofino-alert-' . $i . '-closed']) && $position === $alert_position) {
-            \Tofino\Helpers\hm_get_template_part('templates/partials/alert', [
+            get_template_part('templates/partials/alert', null, [
               'position' => $alert_position,
               'message' => $alert['message'],
-              'id' => $i
+              'id' => $i,
             ]);
           }
         }
@@ -395,7 +390,7 @@ function acf_update_settings()
   acf_update_setting('enqueue_google_maps', false);
   acf_update_setting('preload_blocks', false);
   acf_update_setting('enable_shortcode', false);
-  acf_update_setting('acfe/php', false);
+  // acf_update_setting('acfe/php', false);
   acf_update_setting('acfe/modules/block_types', false);
   acf_update_setting('acfe/modules/forms', false);
   acf_update_setting('acfe/modules/post_types', false);

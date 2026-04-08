@@ -1,44 +1,58 @@
 <?php
 
 /**
- * Social icons shortcode
+ * Shortcodes
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
+
+
+/**
+ * Renders a list of social media icon links from ACF options.
+ *
+ * Usage: [social_icons class="my-class" platforms="facebook,twitter"]
  *
  * @since 1.0.0
- * @param array $atts class value to include on the UL element.
- * @return string HTML output of unordered list with social icons as SVGS with links.
+ *
+ * @param array|string $atts {
+ *   Optional. Shortcode attributes.
+ *   @type string $class     CSS class to add to the UL element.
+ *   @type string $platforms Comma-separated list of platforms to display.
+ * }
+ * @return string HTML output of unordered list with social icons.
  */
-function social_icons($atts = [])
+function social_icons(array|string $atts = []): string
 {
-  $output = '';
-
   $atts = shortcode_atts([
     'class'     => '',
-    'platforms' => ''
+    'platforms' => '',
   ], $atts, 'social_icons');
 
   $social_links = get_field('social_media_links', 'option');
 
-  if (!empty($social_links) && (array_filter($social_links))) {
-    $output .= '<ul class="social-icons' . ($atts['class'] ? ' ' . $atts['class'] : null) . '">';
-
-    // Filter the social networks based on platform param
-    if (!empty($atts['platforms'])) {
-      $platforms    = array_map('trim', explode(',', $atts['platforms']));
-      $social_links = array_intersect_key($social_links, array_flip($platforms));
-      $social_links = array_replace(array_flip($platforms), $social_links);
-    }
-
-    // Build the links and icons
-    foreach ($social_links as $key => $value) {
-      if (!empty($value)) {
-        $output .= '<li><a href="' . esc_url($value) . '" target="_blank" rel="nofollow noreferrer"><span class="sr-only">' . $key . '</span>' . svg(sanitize_title($key)) . '</a></li>';
-      }
-    }
-
-    $output .= '</ul>';
-  } else {
-    $output .= 'Social links not found.';
+  if (empty($social_links) || !array_filter($social_links)) {
+    return 'Social links not found.';
   }
+
+  $class = 'social-icons' . ($atts['class'] ? ' ' . esc_attr($atts['class']) : '');
+
+  // Filter the social networks based on platform param
+  if (!empty($atts['platforms'])) {
+    $platforms    = array_map('trim', explode(',', $atts['platforms']));
+    $social_links = array_intersect_key($social_links, array_flip($platforms));
+    $social_links = array_replace(array_flip($platforms), $social_links);
+  }
+
+  $output = '<ul class="' . $class . '">';
+
+  foreach ($social_links as $key => $value) {
+    if (!empty($value)) {
+      $output .= '<li><a href="' . esc_url($value) . '" target="_blank"><span class="sr-only">' . esc_html($key) . '</span>' . svg(sanitize_title($key)) . '</a></li>';
+    }
+  }
+
+  $output .= '</ul>';
 
   return $output;
 }
@@ -46,31 +60,48 @@ add_shortcode('social_icons', 'social_icons');
 
 
 /**
- * Copyright Shortcode
+ * Renders a copyright symbol with the current year.
+ *
+ * Usage: [copyright]
  *
  * @since 1.0.0
- * @return string HTML output copyright string.
+ *
+ * @return string HTML copyright string.
  */
-function copyright()
+function copyright(): string
 {
-  return '&copy; ' . date('Y');
+  return '&copy; ' . wp_date('Y');
 }
 add_shortcode('copyright', 'copyright');
 
 
 /**
- * SVG Shortcode
+ * Renders an SVG, either inline from a file or as a sprite reference.
+ *
+ * Can be called as a shortcode [svg sprite="icon-name"] or directly as a
+ * function with a string argument: svg('icon-name').
+ *
+ * Usage: [svg sprite="arrow" class="icon" title="Arrow icon"]
+ *        [svg file="logo"]
+ *        [svg file="123"] (attachment ID)
  *
  * @since 1.0.0
- * @param mixed $atts options attributes array or string with sprite reference
- * @return string HTML SVG sprite code populated with parameters.
+ *
+ * @param array|string $atts {
+ *   Shortcode attributes or a sprite name string.
+ *   @type string     $class               CSS class for the SVG element.
+ *   @type string     $title               Accessible title for the SVG.
+ *   @type string     $id                  ID attribute for the SVG.
+ *   @type string     $sprite              Sprite name from the spritemap.
+ *   @type string     $preserveAspectRatio SVG preserveAspectRatio attribute.
+ *   @type string|int $file                SVG filename (without extension) or attachment ID.
+ * }
+ * @return string SVG markup, or empty string if not found.
  */
-function svg($atts)
+function svg(array|string $atts): string
 {
-  if (gettype($atts) === 'string') {
-    $atts = [
-      'sprite' => $atts
-    ];
+  if (is_string($atts)) {
+    $atts = ['sprite' => $atts];
   }
 
   $atts = shortcode_atts([
@@ -79,76 +110,141 @@ function svg($atts)
     'id'                  => '',
     'sprite'              => '',
     'preserveAspectRatio' => '',
-    'file'                => ''
+    'file'                => '',
   ], $atts, 'svg');
 
   if ($atts['file']) {
-    if (is_int($atts['file'])) {
-      $file = get_attached_file($atts['file']);
-    } else {
-      $file = get_template_directory() . '/dist/svgs/' . $atts['file'] . '.svg';
-    }
-
-    if (file_exists($file)) {
-      $file_contents = file_get_contents($file);
-
-      if ($file_contents) {
-        if ($atts['class']) {
-          // Check if class already exists on the svg tag, if found merge the classes
-          if (preg_match('/<svg[^>]*class="([^"]*)"/', $file_contents, $matches)) {
-            $classes = array_filter(array_map('trim', explode(' ', $matches[1])));
-
-            if (!in_array($atts['class'], $classes)) {
-              $classes[] = $atts['class'];
-            }
-
-            // Keep any existing attributes on the svg tag
-            $file_contents = str_replace($matches[0], '<svg class="' . implode(' ', $classes) . '"', $file_contents);
-
-            // $file_contents = str_replace($matches[0], '<svg class="' . implode(' ', $classes) . '"', $file_contents);
-          } else {
-            // Class doesn't exist, add it to the svg tag after the existing attributes
-            if (preg_match('/<svg([^>]*)>/', $file_contents, $matches)) {
-              $file_contents = str_replace($matches[0], '<svg' . $matches[1] . ' class="' . $atts['class'] . '">', $file_contents);
-            }
-          }
-        }
-
-        if ($atts['title']) {
-          // Check if a title tag already exists, if found replace the title
-          if (preg_match('/<title[^>]*>([^<]*)<\/title>/', $file_contents, $matches)) {
-            $file_contents = str_replace($matches[0], '<title>' . $atts['title'] . '</title>', $file_contents);
-          } else {
-            // Title doesn't exist, add it inside the svg tag after the existing attributes
-            if (preg_match('/<svg([^>]*)>/', $file_contents, $matches)) {
-              $file_contents = str_replace($matches[0], '<svg' . $matches[1] . '><title>' . $atts['title'] . '</title>', $file_contents);
-            }
-          }
-        }
-
-        return $file_contents;
-      }
-    }
+    return render_svg_file($atts);
   }
 
   if (!$atts['sprite']) {
-    return false;
+    return '';
   }
 
-  $sprite = $atts['sprite'];
-  unset($atts['sprite']);
-
-  $title = $atts['title'];
-  unset($atts['title']);
-
-  $atts = array_filter($atts);
-
-  $atr_str = '';
-
-  foreach ($atts as $key => $value) {
-    $atr_str .= ' ' . $key . '="' . esc_attr($value) . '"';
-  }
-
-  return '<svg' . $atr_str . '>' . (!empty($title) ? '<title>' . $title . '</title>' : '') . '<use href="#icon-' . $sprite . '" /></svg>';
+  return render_svg_sprite($atts);
 }
 add_shortcode('svg', 'svg');
+
+
+/**
+ * Renders an inline SVG from a file path or attachment ID.
+ *
+ * @since 4.0.0
+ *
+ * @param array $atts The parsed shortcode attributes.
+ * @return string The SVG file contents with attributes applied, or empty string.
+ */
+function render_svg_file(array $atts): string
+{
+  if (is_numeric($atts['file'])) {
+    $file = get_attached_file((int) $atts['file']);
+  } else {
+    $file = get_template_directory() . '/dist/svgs/' . $atts['file'] . '.svg';
+  }
+
+  if (!$file || !file_exists($file)) {
+    return '';
+  }
+
+  $contents = file_get_contents($file);
+
+  if (!$contents) {
+    return '';
+  }
+
+  if ($atts['class']) {
+    $contents = apply_svg_class($contents, $atts['class']);
+  }
+
+  if ($atts['title']) {
+    $contents = apply_svg_title($contents, $atts['title']);
+  }
+
+  return $contents;
+}
+
+
+/**
+ * Adds or merges a CSS class onto an SVG element.
+ *
+ * @since 4.0.0
+ *
+ * @param string $svg   The SVG markup.
+ * @param string $class The CSS class to add.
+ * @return string The modified SVG markup.
+ */
+function apply_svg_class(string $svg, string $class): string
+{
+  // Check if class already exists on the svg tag, if found merge the classes
+  if (preg_match('/<svg[^>]*class="([^"]*)"/', $svg, $matches)) {
+    $classes = array_filter(array_map('trim', explode(' ', $matches[1])));
+
+    if (!in_array($class, $classes, true)) {
+      $classes[] = $class;
+    }
+
+    return str_replace($matches[0], '<svg class="' . esc_attr(implode(' ', $classes)) . '"', $svg);
+  }
+
+  // Class doesn't exist, add it to the svg tag
+  if (preg_match('/<svg([^>]*)>/', $svg, $matches)) {
+    return str_replace($matches[0], '<svg' . $matches[1] . ' class="' . esc_attr($class) . '">', $svg);
+  }
+
+  return $svg;
+}
+
+
+/**
+ * Adds or replaces a title element inside an SVG.
+ *
+ * @since 4.0.0
+ *
+ * @param string $svg   The SVG markup.
+ * @param string $title The title text.
+ * @return string The modified SVG markup.
+ */
+function apply_svg_title(string $svg, string $title): string
+{
+  $title_tag = '<title>' . esc_html($title) . '</title>';
+
+  // Check if a title tag already exists, if found replace it
+  if (preg_match('/<title[^>]*>[^<]*<\/title>/', $svg, $matches)) {
+    return str_replace($matches[0], $title_tag, $svg);
+  }
+
+  // Title doesn't exist, add it inside the svg tag
+  if (preg_match('/<svg([^>]*)>/', $svg, $matches)) {
+    return str_replace($matches[0], '<svg' . $matches[1] . '>' . $title_tag, $svg);
+  }
+
+  return $svg;
+}
+
+
+/**
+ * Renders an SVG element using a sprite reference.
+ *
+ * @since 4.0.0
+ *
+ * @param array $atts The parsed shortcode attributes.
+ * @return string SVG markup with a use element referencing the sprite.
+ */
+function render_svg_sprite(array $atts): string
+{
+  $sprite = $atts['sprite'];
+  $title  = $atts['title'];
+
+  unset($atts['sprite'], $atts['title'], $atts['file']);
+
+  $atts    = array_filter($atts);
+  $attr_str = '';
+
+  foreach ($atts as $key => $value) {
+    $attr_str .= ' ' . $key . '="' . esc_attr($value) . '"';
+  }
+
+  $title_tag = $title ? '<title>' . esc_html($title) . '</title>' : '';
+
+  return '<svg' . $attr_str . '>' . $title_tag . '<use href="#icon-' . esc_attr($sprite) . '" /></svg>';
+}
