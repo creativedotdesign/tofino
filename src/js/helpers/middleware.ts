@@ -1,65 +1,45 @@
-import zlib from 'zlib';
-import { IncomingMessage, ServerResponse } from 'http';
+import { gunzipSync, gzipSync } from 'zlib';
+import type { IncomingMessage, ServerResponse } from 'http';
 
-// Function to convert absolute URLs to relative URLs
-const convertToRelativeUrl = (url: string): string => {
-  const siteUrl = process.env.VITE_LOCAL_URL;
-  if (!siteUrl) {
-    throw new Error('VITE_LOCAL_URL is not defined');
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
+/**
+ * Recursively replaces absolute site URLs with relative paths in a JSON structure.
+ *
+ * @param obj - The JSON value to process.
+ * @param siteUrl - The absolute site URL to strip.
+ * @returns The JSON value with URLs rewritten.
+ */
+const rewriteUrls = (obj: JsonValue, siteUrl: string): JsonValue => {
+  if (typeof obj === 'string') {
+    return obj.replaceAll(siteUrl, '');
   }
-  return url.replace(siteUrl, '');
-};
 
-// Function to recursively rewrite URLs in the JSON response
-const rewriteUrls = (obj: any): any => {
-  if (typeof obj === 'string' && obj.includes(process.env.VITE_LOCAL_URL!)) {
-    return convertToRelativeUrl(obj);
-  } else if (typeof obj === 'object' && obj !== null) {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => rewriteUrls(item, siteUrl));
+  }
+
+  if (typeof obj === 'object' && obj !== null) {
     for (const key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        obj[key] = rewriteUrls(obj[key]);
-      }
+      obj[key] = rewriteUrls(obj[key], siteUrl);
     }
   }
+
   return obj;
 };
 
-// Function to modify the response body and send it
-const modifyResponseBody = async (
-  body: string,
-  proxyRes: IncomingMessage,
-  res: ServerResponse,
-  encoding: string | undefined
-) => {
-  try {
-    let json = JSON.parse(body);
-    json = rewriteUrls(json);
-    const modifiedBody = JSON.stringify(json);
-
-    if (encoding === 'gzip') {
-      zlib.gzip(modifiedBody, (err, compressed) => {
-        if (err) {
-          console.error('Error compressing response:', err);
-          sendOriginalResponse(res, proxyRes, body);
-          return;
-        }
-        sendModifiedResponse(res, proxyRes, compressed);
-      });
-    } else {
-      sendModifiedResponse(res, proxyRes, modifiedBody);
-    }
-  } catch (err) {
-    console.error('Error parsing JSON response:', err);
-    sendOriginalResponse(res, proxyRes, body);
-  }
-};
-
-// Function to send the modified response
-const sendModifiedResponse = (
+/**
+ * Sends a response with updated content-length header.
+ *
+ * @param res - The outgoing server response.
+ * @param proxyRes - The incoming proxy response (used for status code and headers).
+ * @param body - The response body to send.
+ */
+const sendResponse = (
   res: ServerResponse,
   proxyRes: IncomingMessage,
   body: string | Buffer
-) => {
+): void => {
   res.writeHead(proxyRes.statusCode!, {
     ...proxyRes.headers,
     'content-length': Buffer.byteLength(body),
@@ -67,42 +47,32 @@ const sendModifiedResponse = (
   res.end(body);
 };
 
-// Function to send the original response in case of an error
-const sendOriginalResponse = (
-  res: ServerResponse,
-  proxyRes: IncomingMessage,
-  body: string | Buffer
-) => {
-  res.writeHead(proxyRes.statusCode!, proxyRes.headers);
-  res.end(body);
-};
+/**
+ * Creates a proxy response handler that rewrites absolute WordPress URLs
+ * to relative URLs in GraphQL JSON responses. Handles gzip-encoded responses.
+ *
+ * @param siteUrl - The absolute WordPress site URL to rewrite.
+ * @returns A proxy response event handler.
+ */
+export const createProxyHandler =
+  (siteUrl: string) =>
+  (proxyRes: IncomingMessage, _req: IncomingMessage, res: ServerResponse): void => {
+    const chunks: Buffer[] = [];
 
-// Middleware to intercept and modify GraphQL responses
-export const onProxyRes = (
-  proxyRes: IncomingMessage,
-  req: IncomingMessage,
-  res: ServerResponse
-) => {
-  let bodyChunks: Buffer[] = [];
+    proxyRes.on('data', (chunk: Buffer) => chunks.push(chunk));
+    proxyRes.on('end', () => {
+      const raw = Buffer.concat(chunks);
+      const isGzip = proxyRes.headers['content-encoding'] === 'gzip';
 
-  proxyRes.on('data', (chunk) => bodyChunks.push(chunk));
-  proxyRes.on('end', () => {
-    const body = Buffer.concat(bodyChunks);
+      try {
+        const body = isGzip ? gunzipSync(raw).toString() : raw.toString();
+        const json = rewriteUrls(JSON.parse(body), siteUrl);
+        const modified = JSON.stringify(json);
 
-    const encoding = proxyRes.headers['content-encoding'];
-    if (encoding === 'gzip') {
-      zlib.gunzip(body, (err, decoded) => {
-        if (err) {
-          console.error('Error decompressing response:', err);
-          sendOriginalResponse(res, proxyRes, body);
-          return;
-        }
-        modifyResponseBody(decoded.toString(), proxyRes, res, encoding);
-      });
-    } else {
-      modifyResponseBody(body.toString(), proxyRes, res, encoding);
-    }
-  });
-};
-
-export default onProxyRes;
+        sendResponse(res, proxyRes, isGzip ? gzipSync(modified) : modified);
+      } catch (err) {
+        console.error('Error processing proxy response:', err);
+        sendResponse(res, proxyRes, raw);
+      }
+    });
+  };

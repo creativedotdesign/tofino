@@ -1,164 +1,218 @@
 <?php
-// Adapted from https://github.com/andrefelipe/vite-php-setup/blob/master/public/helpers.php
+
+/**
+ * Vite asset loader for WordPress.
+ *
+ * Handles enqueuing of Vite-built assets in both development and production,
+ * including HMR support and BrowserSync integration.
+ *
+ * Adapted from https://github.com/andrefelipe/vite-php-setup
+ *
+ * @package Tofino
+ * @since 4.0.0
+ */
+
 namespace Tofino;
 
 class Vite
 {
-  public static $serverUrl = 'http://localhost:3000';
+  private static string $handle = 'tofino';
 
-  public static $handle = 'tofino';
+  /** @var array<string, mixed>|null Cached manifest to avoid repeated file reads. */
+  private static ?array $manifest_cache = null;
 
-  public static function getBrowserSyncUrl($port = 3002)
+
+  /**
+   * Enqueues all assets for a given entry point.
+   *
+   * @since 4.0.0
+   *
+   * @param string $script The entry point path relative to the src directory.
+   * @return void
+   */
+  public static function use_vite(string $script = 'js/app.ts'): void
   {
-    $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-
-    socket_connect($sock, "8.8.8.8", 53);
-    socket_getsockname($sock, $addr); // $name passed by reference
-    socket_shutdown($sock);
-    socket_close($sock);
-
-    return 'http://' . $addr . ':' . $port;
+    self::enqueue_css($script);
+    self::enqueue_script($script);
   }
 
-  public static function isBrowserSyncRunning() {
-    // Get the header
-    if (isset($_SERVER['HTTP_BROWSER_SYNC'])) {
-      return true;
-    }
-  }
 
-  public static function isDevServerRunning()
+  /**
+   * Returns the dev server URL from the hot file, or null if not running.
+   *
+   * The hot file is written by a Vite plugin on dev server start
+   * and removed on shutdown.
+   *
+   * @since 5.0.0
+   *
+   * @return string|null The dev server URL, or null in production.
+   */
+  private static function get_dev_server_url(): ?string
   {
-    if (in_array(wp_get_environment_type(), ['local', 'development']) && is_array(wp_remote_get(self::$serverUrl))) {
-      return true;
-    } else {
-      return false;
+    // Cache the result so the file check only happens once per request.
+    static $dev_url = false;
+
+    if ($dev_url === false) {
+      $hot_path = get_theme_file_path('dist/hot');
+
+      if (file_exists($hot_path)) {
+        $dev_url = rtrim(file_get_contents($hot_path), " \t\n\r/");
+      } else {
+        $dev_url = null;
+      }
     }
+
+    return $dev_url;
   }
 
-  public static function base_path()
+
+  /**
+   * Returns the base URL for production assets.
+   *
+   * @since 4.0.0
+   *
+   * @return string The dist directory URL.
+   */
+  private static function dist_url(): string
   {
     return get_stylesheet_directory_uri() . '/dist/';
   }
 
-  public static function useVite(string $script = 'js/app.ts')
+
+  /**
+   * Resolves the URL for a given entry point.
+   *
+   * In dev mode, points to the Vite dev server.
+   * In production, resolves from the manifest.
+   *
+   * @since 5.0.0
+   *
+   * @param string $entry The entry point path.
+   * @return string|null The resolved URL, or null if unavailable.
+   */
+  private static function resolve_entry_url(string $entry): ?string
   {
-    self::jsPreloadImports($script);
-    self::cssTag($script);
-    self::register($script);
+    $dev_url = self::get_dev_server_url();
+
+    if ($dev_url) {
+      return $dev_url . '/' . $entry;
+    }
+
+    return self::asset_url($entry);
   }
 
-  public static function register($entry)
+
+  /**
+   * Enqueues the script module for the entry point.
+   *
+   * Uses wp_enqueue_script_module for native ES module support
+   * with automatic import map generation.
+   *
+   * @since 5.0.0
+   *
+   * @param string $entry The entry point path.
+   * @return void
+   */
+  private static function enqueue_script(string $entry): void
   {
-    if (self::isDevServerRunning()) {
-      $browserSyncUrl = self::getBrowserSyncUrl();
-      $browserSyncUrl = str_replace(['http://', 'https://'], '', $browserSyncUrl);
-      $browserSyncUrl = explode(':', $browserSyncUrl)[0];
-
-      // The header Sec-Fetch-User only exists when browser-sync is running via localhost.
-      $is_browser_sync_on_localhost = isset($_SERVER['HTTP_SEC_FETCH_USER']);
-
-      if (self::isBrowserSyncRunning() && !$is_browser_sync_on_localhost) {
-        $url = self::getBrowserSyncUrl(3000) . '/' . $entry;
-      } else {
-        $url = self::$serverUrl . '/' . $entry;
-      }
-    } else {
-      $url = self::assetUrl($entry);
-    }
+    $url = self::resolve_entry_url($entry);
 
     if (!$url) {
-      return '';
-    }
-
-    wp_register_script(self::$handle, $url, false, true, true);
-    wp_enqueue_script(self::$handle);
-  }
-
-  private static function jsPreloadImports($entry)
-  {
-    if (self::isDevServerRunning() || self::isBrowserSyncRunning()) {
       return;
     }
 
-    $res = '';
-    foreach (self::importsUrls($entry) as $url) {
-      $res .= '<link rel="modulepreload" href="' . $url . '">';
-    }
+    $handle = self::$handle . '-' . sanitize_title($entry);
 
-    add_action('wp_head', function () use (&$res) {
-      echo $res;
-    });
+    wp_enqueue_script_module($handle, $url, [], null);
   }
 
-  private static function cssTag(string $entry): string
+
+  /**
+   * Enqueues CSS files extracted from the manifest for the entry point.
+   *
+   * In dev mode, CSS is injected by Vite via HMR.
+   *
+   * @since 5.0.0
+   *
+   * @param string $entry The entry point path.
+   * @return void
+   */
+  private static function enqueue_css(string $entry): void
   {
-    // not needed on dev, it's inject by Vite
-    if (self::isDevServerRunning() || self::isBrowserSyncRunning()) {
-      return '';
+    if (self::get_dev_server_url() !== null) {
+      return;
     }
 
-    $tags = '';
-
-    foreach (self::cssUrls($entry) as $url) {
-      wp_register_style(self::$handle . "-" . sanitize_title($entry), $url);
-      wp_enqueue_style(self::$handle . "-" . sanitize_title($entry), $url);
+    foreach (self::get_css_urls($entry) as $url) {
+      wp_enqueue_style(self::$handle . '-' . sanitize_title($entry), $url);
     }
-
-    return $tags;
   }
 
-  // Helpers to locate files
-  private static function getManifest(): array
+
+  /**
+   * Reads and caches the Vite manifest file.
+   *
+   * @since 4.0.0
+   *
+   * @return array<string, array<string, mixed>> The decoded manifest data.
+   */
+  private static function get_manifest(): array
   {
-    $file = get_stylesheet_directory() . '/dist/.vite/manifest.json';
+    if (self::$manifest_cache !== null) {
+      return self::$manifest_cache;
+    }
+
+    $file = get_theme_file_path('dist/.vite/manifest.json');
 
     if (!file_exists($file)) {
-      return [];
+      self::$manifest_cache = [];
+      return self::$manifest_cache;
     }
 
-    $content = @file_get_contents(get_stylesheet_directory() . '/dist/.vite/manifest.json');
+    $content = file_get_contents($file);
+    self::$manifest_cache = $content ? json_decode($content, true) : [];
 
-    return json_decode($content, true);
+    return self::$manifest_cache;
   }
 
-  private static function assetUrl(string $entry): string
+
+  /**
+   * Resolves a production asset URL from the manifest.
+   *
+   * @since 4.0.0
+   *
+   * @param string $entry The entry point path.
+   * @return string The full asset URL.
+   */
+  private static function asset_url(string $entry): string
   {
-    $manifest = self::getManifest();
+    $manifest = self::get_manifest();
 
     return isset($manifest[$entry])
-      ? self::base_path() . $manifest[$entry]['file']
-      : self::base_path() . $entry;
+      ? self::dist_url() . $manifest[$entry]['file']
+      : self::dist_url() . $entry;
   }
 
-  private static function getPublicURLBase()
-  {
-    return self::isDevServerRunning() ? '/dist/' : self::base_path();
-  }
 
-  private static function importsUrls(string $entry): array
+  /**
+   * Gets CSS file URLs from the manifest for an entry point.
+   *
+   * @since 4.0.0
+   *
+   * @param string $entry The entry point path.
+   * @return string[] Array of CSS URLs.
+   */
+  private static function get_css_urls(string $entry): array
   {
+    $manifest = self::get_manifest();
     $urls = [];
-    $manifest = self::getManifest();
-
-    if (!empty($manifest[$entry]['imports'])) {
-      foreach ($manifest[$entry]['imports'] as $imports) {
-        $urls[] = self::getPublicURLBase() . $manifest[$imports]['file'];
-      }
-    }
-    return $urls;
-  }
-
-  private static function cssUrls(string $entry): array
-  {
-    $urls = [];
-    $manifest = self::getManifest();
 
     if (!empty($manifest[$entry]['css'])) {
       foreach ($manifest[$entry]['css'] as $file) {
-        $urls[] = self::getPublicURLBase() . $file;
+        $urls[] = self::dist_url() . $file;
       }
     }
+
     return $urls;
   }
 }

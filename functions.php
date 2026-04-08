@@ -13,6 +13,7 @@ require_once "inc/lib/dependencies.php";
  */
 $tofino_includes = [
   "inc/lib/class/Vite.php",
+  "inc/lib/class/CloudflareTunnel.php",
   "inc/lib/init.php",
   "inc/lib/assets.php",
   "inc/lib/helpers.php",
