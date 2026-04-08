@@ -1,22 +1,42 @@
-<?php get_header(); ?>
-
 <?php
-$slug      = isset(get_queried_object()->slug) ? get_queried_object()->slug : null;
-$taxonomy  = isset(get_queried_object()->taxonomy) ? get_queried_object()->taxonomy : null;
-$post_type = isset(get_queried_object()->name) ? get_queried_object()->name : null;
 
-if (locate_template('templates/archive-' . $slug . '.php') != '') { // archive-{category-slug}
-  get_template_part('templates/archive', $slug); // e.g. templates/archive-category-slug.php
-} elseif (locate_template('templates/archive-' . $taxonomy . '-' . $slug . '.php') != '') { // archive-{taxonomy}-{term}
-  get_template_part('templates/archive', $taxonomy . '-' . $slug);
-} elseif (locate_template('templates/archive-' . $post_type . '-' . $taxonomy . '-' . $slug . '.php') != '') { // archive-{posttype}-{taxonomy}-{term}
-  get_template_part('templates/archive', $post_type . '-' . $taxonomy . '-' . $slug);
-} elseif (locate_template('templates/archive-' . $taxonomy . '.php') != '') { // archive-{taxonomy}
-  get_template_part('templates/archive', $taxonomy);
-} elseif ($post_type && (locate_template('templates/archive-' . $post_type . '.php') != '')) { // archive-{posttype}
-  get_template_part('templates/archive', $post_type);
-} else {
-  echo ('<div class="error notice"><p>' . __('Error: Unable to locate an archive template. Did you create the file in /templates?.', 'tofino') . '</p></div>');
-} ?>
+/**
+ * Archive template
+ *
+ * Resolves the most specific archive template from the templates/ directory.
+ * Checks in order: slug, taxonomy-term, posttype-taxonomy-term, taxonomy, posttype.
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
 
-<?php get_footer(); ?>
+get_header();
+
+$queried  = get_queried_object();
+$slug     = $queried->slug ?? null;
+$taxonomy = $queried->taxonomy ?? null;
+$post_type = $queried->name ?? null;
+
+$candidates = array_filter([
+  $slug,                                          // archive-{slug}
+  $taxonomy && $slug ? "$taxonomy-$slug" : null,  // archive-{taxonomy}-{term}
+  $post_type && $taxonomy && $slug ? "$post_type-$taxonomy-$slug" : null, // archive-{posttype}-{taxonomy}-{term}
+  $taxonomy,                                      // archive-{taxonomy}
+  $post_type,                                     // archive-{posttype}
+]);
+
+$template_found = false;
+
+foreach ($candidates as $candidate) {
+  if (locate_template("templates/archive-$candidate.php")) {
+    get_template_part('templates/archive', $candidate);
+    $template_found = true;
+    break;
+  }
+}
+
+if (!$template_found) {
+  echo '<div class="error notice"><p>' . esc_html__('Error: Unable to locate an archive template. Did you create the file in /templates?', 'tofino') . '</p></div>';
+}
+
+get_footer();

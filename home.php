@@ -1,17 +1,27 @@
 <?php
+
+/**
+ * Blog page template
+ *
+ * Overrides the global $post to the "Posts page" set in Settings > Reading,
+ * so ACF content modules load from the correct page.
+ *
+ * @package Tofino
+ * @since 1.0.0
+ */
+
 get_header();
 
-// Override the post ID if we are on the main Blog page.
-// This is to ensure that the content modules can be called
-// with the correct post ID
-if (is_home()) {
-  $post_id = get_option('page_for_posts');
+$post_id = get_option('page_for_posts');
 
+if ($post_id) {
   global $post;
-  $post = get_post($post_id, OBJECT);
+  $post = get_post($post_id);
   setup_postdata($post);
 }
 
 get_template_part('templates/content', 'page');
+
+wp_reset_postdata();
 
 get_footer();

@@ -20,26 +20,28 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'options'); ?>
   // Check if sticky menu
   $menu_sticky = Tofino\Init\menu_sticky(); ?>
 
-  <header <?php echo ($scroll_reveal ? 'data-scroll-reveal' : ''); ?>
-    class="duration-500 transition-transform transform-gpu <?php echo ($menu_sticky ? $menu_sticky : ''); ?>"
+  <header <?php echo $scroll_reveal ? 'data-scroll-reveal' : ''; ?>
+    class="duration-500 transition-transform lg:transform-gpu <?php echo esc_attr($menu_sticky ?? ''); ?>"
   >
-    <nav class="flex justify-between w-full px-6 py-4 bg-gray-100">
-      <a href="<?php echo esc_url(home_url()); ?>" title="<?php echo esc_attr(bloginfo('name')); ?>">
-        <?php echo bloginfo('name'); ?>
+    <nav class="relative flex justify-between w-full px-6 py-4 bg-gray-100">
+      <a href="<?php echo esc_url(home_url()); ?>" title="<?php echo esc_attr(get_bloginfo('name')); ?>">
+        <?php echo esc_html(get_bloginfo('name')); ?>
       </a>
 
-      <button class="flex lg:hidden js-menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation" data-playwright="open-mobile-menu">
+      <button type="button" class="flex lg:hidden" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation" data-menu-open="main-menu" data-playwright="open-mobile-menu">
         <!-- Hamburger Icon -->
         <span class="w-6 h-6">
           <?php echo svg(['sprite' => 'hamburger', 'title' => 'Open Menu', 'class' => 'w-full h-full']); ?>
         </span>
 
-        <span class="sr-only"><?php _e('Toggle Navigation Button', 'tofino'); ?></span>
+        <span class="sr-only"><?php esc_html_e('Toggle Navigation Button', 'tofino'); ?></span>
       </button>
 
-      <div class="inactive absolute inset-0 bg-white lg:bg-transparent w-full h-screen lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
+      <div class="hidden absolute inset-0 overflow-y-auto bg-white w-full h-screen lg:bg-transparent lg:h-auto lg:relative lg:w-auto lg:flex lg:items-center" id="main-menu">
         <!-- Close Icon -->
-        <button class="absolute z-10 w-4 h-4 top-5 right-7 lg:hidden js-menu-toggle"
+        <button type="button" class="absolute z-10 w-4 h-4 top-5 right-7 lg:hidden"
+          aria-label="Close navigation"
+          data-menu-close="main-menu"
           data-playwright="close-mobile-menu"
         >
           <?php echo svg(['sprite' => 'close', 'class' => 'w-full h-full']); ?>

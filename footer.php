@@ -16,16 +16,16 @@
 
       $footer_text = get_field('footer_text', 'option');
       if ($footer_text) :
-        echo do_shortcode($footer_text); // Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
+        echo wp_kses_post(do_shortcode($footer_text)); // Shortcode wrapper function added to allow render of shortcodes added to theme theme options text field.
       endif; ?>
 
     </div>
   </div>
 </footer>
 
-<?php wp_footer(); ?>
-
 <?php Tofino\Init\alerts('bottom'); ?>
+
+<?php wp_footer(); ?>
 
 <?php do_action('tofino_after_footer'); ?>
 
