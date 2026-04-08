@@ -31,6 +31,8 @@ export default ({ mode }: { mode: string }) => {
     proxy: env.VITE_ASSET_URL,
   } as const;
 
+  const phpWatchPatterns = ['templates/**/*.php', 'inc/**/*.php', '*.php'];
+
   return defineConfig({
     publicDir: path.resolve(__dirname, './src/public'),
     root: path.resolve(__dirname, './src'),
@@ -79,7 +81,7 @@ export default ({ mode }: { mode: string }) => {
             online: true,
             notify: false,
             port: 3002,
-            files: ['templates/**/*.php', 'inc/**/*.php', '*.php'],
+            files: phpWatchPatterns,
             proxy: {
               target: env.VITE_ASSET_URL,
               ws: true,
@@ -112,6 +114,7 @@ export default ({ mode }: { mode: string }) => {
         tunnelPublicUrl: tunnel?.publicUrl,
         siteOrigin: env.VITE_ASSET_URL,
         vitePort: Number(env.VITE_TUNNEL_PORT || 5173),
+        phpWatchPatterns,
       }),
       hotFile({
         preferNetworkUrl: enableBrowserSync,

@@ -13,6 +13,7 @@ type CloudflareTunnelOptions = {
   tunnelPublicUrl?: string;
   siteOrigin?: string;
   vitePort?: number;
+  phpWatchPatterns?: string[];
 };
 
 type GlobalState = {
@@ -184,6 +185,21 @@ const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
           }
         });
       });
+
+      // Watch PHP files for full-reload (replaces BrowserSync in tunnel mode)
+      if (options.phpWatchPatterns?.length) {
+        const themeRoot = path.resolve(server.config.root, '..');
+
+        for (const pattern of options.phpWatchPatterns) {
+          server.watcher.add(path.join(themeRoot, pattern));
+        }
+
+        server.watcher.on('change', (file) => {
+          if (file.endsWith('.php')) {
+            server.ws.send({ type: 'full-reload', path: '*' });
+          }
+        });
+      }
 
       const closeServer = server.close.bind(server);
       server.close = async () => {
