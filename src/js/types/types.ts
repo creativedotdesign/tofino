@@ -1,5 +1,4 @@
-// Interface for WebFontLoader
-export interface WebFontInterface {
+export interface WebFontConfig {
   classes: boolean;
   events: boolean;
   google?: {
@@ -12,9 +11,6 @@ export interface WebFontInterface {
   };
 }
 
-export interface Scripts extends Array<Script> {}
-
-// Define Script interface
 export interface Script {
   selector: string;
   src: string;
