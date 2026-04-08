@@ -31,5 +31,3 @@ SVGs added to `sprite` will be processed by the main build task and output as a 
 ### Font Loader
 
 All fonts should be loaded using the [Web Font Loader](https://github.com/typekit/webfontloader).
-
-A theme option has been added to disable FOUT (Flash of un-styled text).

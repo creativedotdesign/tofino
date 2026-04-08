@@ -165,29 +165,6 @@
             "wpml_cf_preferences": 2
         },
         {
-            "key": "field_62582f536d926",
-            "label": "No FOUT",
-            "name": "no_fout",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "Enable the body class to remove the FOUT (Flash of unstyled text).",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "allow_in_bindings": 1,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1,
-            "show_in_graphql": 0,
-            "wpml_cf_preferences": 1
-        },
-        {
             "key": "field_6258359c5a86d",
             "label": "Sticky Menu",
             "name": "sticky_menu",
@@ -502,7 +479,10 @@
                     "graphql_description": "",
                     "graphql_field_name": "buttonColor",
                     "graphql_non_null": 0,
-                    "wpml_cf_preferences": 1
+                    "wpml_cf_preferences": 1,
+                    "custom_palette_source": "",
+                    "palette_colors": "",
+                    "show_color_wheel": true
                 }
             ]
         },
@@ -551,19 +531,16 @@
     "active": true,
     "description": "",
     "show_in_rest": false,
-    "acfe_display_title": "",
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "acfe_autosync": [
         "json"
     ],
-    "acfml_field_group_mode": "advanced",
     "acfe_form": 0,
-    "show_in_graphql": 0,
-    "graphql_field_name": "admin",
-    "map_graphql_types_from_location_rules": 0,
-    "graphql_types": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1740080411,
+    "modified": 1775167900,
     "acfe_categories": {
         "options": "Options"
     }
