@@ -1,23 +1,17 @@
-# Source files (not needed in production)
-
-/src/
-
-# Dependencies
-
-node_modules/
-
-# IDE & Editor configs
-
+# Local/dev files
+.claude/
 .vscode/
 .editorconfig
+.eslintcache
+.DS_Store
+Thumbs.db
+deploy_key
 
 # Environment files
-
 .env
-.env.\*
+.env.*
 
 # Git files
-
 .git/
 .github/
 .gitignore
@@ -25,39 +19,44 @@ node_modules/
 .git-ftp-ignore
 .gitattributes
 
-# Config files
-
+# Build/test tool config
 eslint.config.ts
-tsconfig.json
-vite.config.ts
 playwright.config.ts
 phpcs.xml
 .prettierrc
+tsconfig.json
+vite.config.ts
+
+# Package manager manifests (not needed at runtime)
+package.json
+package-lock.json
 composer.json
 composer.lock
 
-# NPM/Node files
+# Dependencies
+node_modules/
 
-package.json
-package-lock.json
+# Source and tests (compiled assets are deployed from dist/)
+src/
+tests/
+test-results/
+playwright-report/
+blob-report/
+accessibility-reports/
 
-# Test files
+# Co-located front-end source (compiled into dist/assets)
+features/**/*.ts
+features/**/*.css
+features/**/*.svg
+features/*/icons/
+modules/**/*.ts
+modules/**/*.css
+modules/**/*.vue
+modules/*/vue/
 
-/tests/
+# Dev-only Vite artifact
+dist/hot
 
 # Documentation
-
-CHANGELOG.md
-CONTRIBUTING.md
-LICENSE.md
-README.md
+*.md
 readme.txt
-
-# OS files
-
-.DS_Store
-Thumbs.db
-
-# Markdown files
-
-\*_/_.md

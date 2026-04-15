@@ -1,6 +1,12 @@
 <?php
 // Check for dependencies
-require_once "inc/lib/dependencies.php";
+require_once "theme/core/dependencies.php";
+
+$tofino_autoload = __DIR__ . '/vendor/autoload.php';
+if (file_exists($tofino_autoload)) {
+  require_once $tofino_autoload;
+}
+unset($tofino_autoload);
 
 /**
  * Tofino includes
@@ -12,18 +18,23 @@ require_once "inc/lib/dependencies.php";
  *
  */
 $tofino_includes = [
-  "inc/lib/class/Vite.php",
-  "inc/lib/class/CloudflareTunnel.php",
-  "inc/lib/init.php",
-  "inc/lib/assets.php",
-  "inc/lib/helpers.php",
-  "inc/lib/clean.php",
-  "inc/lib/shortcodes.php",
-  "inc/lib/layouts.php",
-  // Autoloaded classes (included to trigger instantiation)
-  "inc/lib/class/DisablePostType.php",
-  "inc/lib/class/CustomLoginForm.php",
-  "inc/lib/class/GraphQL.php",
+  "theme/integrations/Vite.php",
+  "theme/integrations/CloudflareTunnel.php",
+  "theme/registry/FolderManifest.php",
+  "theme/registry/FeatureRegistry.php",
+  "theme/core/init.php",
+  "theme/core/assets.php",
+  "theme/utils/helpers.php",
+  "theme/utils/clean.php",
+  "theme/utils/shortcodes.php",
+  "theme/registry/ModuleRegistry.php",
+  "theme/integrations/MarkdownExport.php",
+  // Options pages and field groups
+  "settings/admin.php",
+  "settings/footer.php",
+  "settings/client-data.php",
+  "settings/media.php",
+  "theme/integrations/GraphQL.php",
 ];
 
 foreach ($tofino_includes as $file) {

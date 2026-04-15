@@ -1,0 +1,7 @@
+{
+  "title": "Social Icons",
+  "scope": "frontend",
+  "css": "style.css",
+  "acf": "fields.php",
+  "render": "render.php"
+}

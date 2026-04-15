@@ -1,0 +1,6 @@
+{
+  "title": "Disable Post Type",
+  "scope": "admin",
+  "acf": "fields.php",
+  "render": "render.php"
+}

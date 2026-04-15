@@ -1,0 +1,19 @@
+/* ACF Autosize: sticky WYSIWYG toolbar */
+body.acf-autosize-enabled
+  .acf-field:not(.no-autosize)
+  .mce-tinymce:not(.mce-fullscreen)
+  .mce-top-part {
+  @apply sticky top-11.5 min-[783px]:top-7.5;
+}
+
+body.acf-autosize-enabled
+  .block-editor
+  .acf-field:not(.no-autosize)
+  .mce-tinymce:not(.mce-fullscreen)
+  .mce-top-part {
+  @apply top-0;
+}
+
+#post-body-content #acf_after_title-sortables:has(#acf-group_66e8b2aebe427) {
+  @apply mt-0;
+}

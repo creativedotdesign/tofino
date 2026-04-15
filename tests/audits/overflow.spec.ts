@@ -1,0 +1,84 @@
+import { test, expect } from '@playwright/test';
+import path from 'path';
+import fs from 'fs';
+import { detectOverflow } from '../support/utils/overflow-check';
+import { processSitemap } from '../support/utils/process-sitemap';
+
+test.describe('Overflow Detection Tests', () => {
+  const outputDir = path.resolve('./tests/output');
+  const screenshotsDir = path.join(outputDir, 'screenshots');
+  let urls: string[] = [];
+
+  const overflowIssues: Array<{
+    url: string;
+    selectors: string[];
+    screenshot?: string;
+  }> = [];
+
+  test.beforeAll(async ({ baseURL }) => {
+    // Check for screenshots directory
+    if (!fs.existsSync(screenshotsDir)) {
+      fs.mkdirSync(screenshotsDir, { recursive: true });
+    }
+
+    // Get all URLs from sitemap
+    const sitemapUrl = `${baseURL}/sitemap_index.xml`;
+    const { urls: sitemapUrls } = await processSitemap(sitemapUrl);
+    urls = sitemapUrls;
+
+    if (!urls.length) {
+      throw new Error('No URLs found in the sitemap.');
+    }
+
+    console.log(`Found ${urls.length} URLs in the sitemap for overflow detection tests.`);
+  });
+
+  test('Check for overflowing elements on all sitemap URLs', async ({ page }) => {
+    for (const url of urls) {
+      try {
+        // @TODO Mobile overflow
+        // await page.setViewportSize({ width: 375, height: 812 });
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        // Wait a bit for dynamic content to load
+        await page.waitForTimeout(1000);
+
+        // Call detectOverflow in the browser
+        const result = await page.evaluate(detectOverflow);
+
+        if (result.length > 0) {
+          // Capture screenshot
+          const screenshotPath = path.join(
+            screenshotsDir,
+            `overflow-detection-screenshot-${Date.now()}.png`
+          );
+
+          await page.screenshot({ path: screenshotPath, fullPage: true });
+
+          // Push results to annotations meta data
+          test.info().annotations.push({
+            type: 'overflow-detection',
+            description: JSON.stringify({
+              url,
+              selectors: result,
+              screenshot: screenshotPath,
+            }),
+          });
+
+          // Collect errors for reporting
+          overflowIssues.push({
+            url,
+            selectors: result,
+            screenshot: screenshotPath,
+          });
+          console.log(`Overflow issues on: ${url}`, result);
+        } else {
+          console.log(`No overflow issues on: ${url}`);
+        }
+      } catch (err) {
+        console.error(`Error detecting overflow on ${url}: `, err);
+      }
+    }
+
+    expect(overflowIssues.length, 'Some pages have overflowing elements').toBe(0);
+  });
+});

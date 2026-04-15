@@ -11,12 +11,14 @@
     "forceConsistentCasingInFileNames": true, // Catches cross-platform casing bugs
     "jsx": "preserve",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@features/*": ["./features/*"],
+      "@modules/*": ["./modules/*"]
     },
     "types": ["node"],
     "strict": true,
     "noImplicitAny": false, // Intentionally overrides strict; allows gradual typing
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.vue", "modules/**/*.ts", "modules/**/*.vue", "features/**/*.ts"]
 }

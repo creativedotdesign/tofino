@@ -1,0 +1,7 @@
+{
+  "title": "Custom Login",
+  "scope": "admin",
+  "css": "style.css",
+  "acf": "fields.php",
+  "render": "render.php"
+}

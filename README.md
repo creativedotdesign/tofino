@@ -14,65 +14,59 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 
 | Prerequisite      | How to check  | How to install                                  |
 | ----------------- | ------------- | ----------------------------------------------- |
-| PHP >= 8.2.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| PHP >= 8.4.0      | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
 | Node.js >= 22.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | Composer >= 2.0.0 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
-## Installation
+## Quick Start
 
 - Download the latest [tagged release](https://github.com/creativedotdesign/tofino/releases).
 - Clone the git repo and run the following commands:
 
-```
+```bash
 composer install
 npm install
 npm run dev
 ```
 
-Note that the Vite Dev Server runs on port 3000. You access the website via the hostname and Vite will HMR or refresh automatically. If the Vite Dev Server is not running the website will pull it's assets from the /dist directory.
+Vite runs with HMR in development and serves built assets from `dist/` in production.
 
-Important: You MUST set `WP_ENVIRONMENT_TYPE` to `development` or `local` in your wp-config.php file for the Vite Dev Server to work. Local by Flywheel does this automatically.
+For profile and tunnel setup details, see [`docs/dev-profiles.md`](docs/dev-profiles.md).
 
 ## Features
 
-- [TailwindCSS](http://tailwindcss.com/) (v3.4)
-- Multilingual ready (WPML)
-- Responsive
-- General Options via ACF
-  - Admin login screen logo
-  - Custom Dashboard Widget
-  - Social links
-  - Sticky header menu
-  - Client Data (Address, Telephone number, Email address, Company number)
-  - Footer text
-  - Alert Bar with top/bottom positions
-  - Maintenance mode popup
-  - Custom 404 page
-- [Advanced Custom Fields](https://www.advancedcustomfields.com/resources/getting-started/)
-- ACF JSON Folder
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/guide/) build script
-- [Vitest](https://vitest.dev/) for testing Vue components
-- [Composer](https://getcomposer.org/) for PHP package management
-- Namespaced functions
-- Auto post type / slug based template routing
-- Shortcodes
-- SVG Sprite
-- [Web Font Loader](https://github.com/typekit/webfontloader) load Google, Typekit and custom fonts
-- VueJS v3.x with Composition API
-- Pinia State Management
-- Form support via Tofino Form Builder plugin
-- Fragment Cache PHP Class
+- Folder-based feature architecture via `features/*/feature.json`.
+- Folder-based module architecture via `modules/*/module.json`.
+- Automatic ACF module layout registration for `content_modules`.
+- Admin feature toggles with persisted enabled/disabled state.
+- Automatic feature/module asset discovery and compilation to `dist/assets`.
+- Vite-powered dev + production asset loading (hot file + manifest).
+- Cloudflare tunnel dev profile for public HTTPS QA against local work.
+- Tailwind CSS v4, TypeScript, Vue 3, and Pinia support.
+- SVG spritemap generation from `src/sprite` and feature icon folders.
+- ACF-powered settings and field-group driven page building.
+- Optional GraphQL integration hooks for headless/data workflows.
+- Markdown export integration for module-based page content.
+- Fragment cache integration and utility helpers.
+- Playwright QA suite (smoke, accessibility, HTML, and overflow audits).
+- WPML-ready and responsive baseline templates.
+- Composer + npm build pipeline with GitHub Actions release/deploy workflow.
 
 ## Documentation
 
-Docs are provided by README.md files in each directory.
+- Docs index: [`docs/README.md`](docs/README.md)
+- Dev profiles: [`docs/dev-profiles.md`](docs/dev-profiles.md)
+- Features: [`docs/features.md`](docs/features.md)
+- Modules: [`docs/modules.md`](docs/modules.md)
+- Theme internals: [`docs/theme.md`](docs/theme.md)
+- Front-end source: [`docs/source.md`](docs/source.md)
+- Templates: [`docs/templates.md`](docs/templates.md)
 
 ## Deployment
 
-We use [GitHub Actions](https://github.com/features/actions). The deployment script is issued the following commands:
+We use [GitHub Actions](https://github.com/features/actions). Build and deploy workflows run:
 
-```
+```bash
 composer install
 npm install
 npm run build

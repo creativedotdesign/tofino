@@ -1,9 +1,8 @@
 @import 'tailwindcss';
-@import './base/alerts.css';
-@import './base/menu.css' layer(components);
-@import './base/social-icons.css';
-@import './base/structure.css';
-@import './components/iframe.css';
+
+@import './core/menu.css' layer(components);
+@import './core/structure.css';
+@import './core/wordpress.css';
 
 @source '../../**/*.php';
 

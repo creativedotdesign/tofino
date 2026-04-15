@@ -1,0 +1,7 @@
+{
+  "title": "Test Vue",
+  "script": "script.ts",
+  "acf": "fields.php",
+  "template": "template.php",
+  "markdown": "markdown.php"
+}

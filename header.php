@@ -15,7 +15,7 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'option'); ?>
   wp_body_open();
 
   // Alerts
-  Tofino\Init\alerts('top');
+  Tofino\Alerts\render('top');
 
   // Check if sticky menu
   $menu_sticky = Tofino\Init\menu_sticky(); ?>

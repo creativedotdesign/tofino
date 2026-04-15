@@ -1,0 +1,6 @@
+{
+  "title": "General Content",
+  "acf": "fields.php",
+  "template": "template.php",
+  "markdown": "markdown.php"
+}

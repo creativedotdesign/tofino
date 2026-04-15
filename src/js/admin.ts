@@ -1,10 +1,12 @@
-import '@/css/base/admin.css';
-import { acfLayouts } from '@/js/modules/layouts';
-import { maintenanceMode } from '@/js/modules/maintenanceMode';
-import { acfAutosize } from '@/js/modules/acfAutosize';
+import '@/css/admin.css';
+import.meta.glob('../../features/*/admin.css', { eager: true });
+import { acfAutosize } from '@/js/admin/acfAutosize';
+import { adminFeatureScripts } from '@/js/core/themeAssets';
 
 document.addEventListener('DOMContentLoaded', () => {
-  acfLayouts();
-  maintenanceMode();
   acfAutosize();
+
+  Object.values(adminFeatureScripts).forEach((load) => {
+    load().then((mod) => mod.default?.());
+  });
 });

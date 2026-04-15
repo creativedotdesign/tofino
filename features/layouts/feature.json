@@ -1,0 +1,7 @@
+{
+  "title": "Layouts",
+  "scope": "admin",
+  "script": "admin.ts",
+  "acf": "fields.php",
+  "render": "render.php"
+}

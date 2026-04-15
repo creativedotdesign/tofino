@@ -1,0 +1,8 @@
+{
+  "title": "Alerts",
+  "scope": "frontend",
+  "css": "style.css",
+  "script": "script.ts",
+  "acf": "fields.php",
+  "render": "render.php"
+}

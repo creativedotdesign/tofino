@@ -16,6 +16,7 @@ dotenv.config();
  */
 export default defineConfig({
   testDir: './tests',
+  outputDir: './tests/output/artifacts',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -30,9 +31,9 @@ export default defineConfig({
   // reporter: 'html',
 
   reporter: [
-    ['html', { open: 'never' }],
-    ['./tests/reporters/html-validation-reporter.ts'],
-    ['./tests/reporters/overflow-detection-reporter.ts'],
+    ['html', { open: 'never', outputFolder: './tests/output/playwright' }],
+    ['./tests/support/reporters/html-validation-reporter.ts'],
+    ['./tests/support/reporters/overflow-detection-reporter.ts'],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

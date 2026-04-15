@@ -1,0 +1,28 @@
+.wp-admin.hide-preview-button #submitpost #preview-action {
+  @apply hidden;
+}
+
+#wpadminbar #wp-admin-bar-site-name > .ab-item {
+  @apply cursor-default text-inherit before:text-inherit hover:bg-inherit hover:text-inherit;
+}
+
+#dashboard-widgets-wrap .empty-container {
+  @apply hidden;
+}
+
+#wp-admin-bar-user-info .avatar,
+#wpadminbar #wp-admin-bar-my-account.with-avatar > a img {
+  @apply hidden;
+}
+
+#wpadminbar #wp-admin-bar-my-account.with-avatar #wp-admin-bar-user-actions > li {
+  @apply ml-4;
+}
+
+#wpadminbar .quicklinks .menupop.hover #wp-admin-bar-user-actions li .ab-item {
+  @apply min-w-0;
+
+  span {
+    @apply first:hidden;
+  }
+}

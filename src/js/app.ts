@@ -1,22 +1,24 @@
-import type { Script } from '@/js/types/types';
-import { loadScripts } from '@/js/helpers/scriptLoader';
+import type { ThemeScript } from '@/js/shared/types/types';
+import { loadManifestScripts, loadThemeScripts } from '@/js/core/frontendLoader';
+import { frontendFeatureScripts, moduleScripts } from '@/js/core/themeAssets';
 // import * as WebFont from 'webfontloader';
-// import { WebFontInterface } from '@/js/types/types';
+// import { WebFontConfig } from '@/js/shared/types/types';
 
 // Import CSS
 import '@/css/app.css';
+import.meta.glob('../../features/*/style.css', { eager: true });
+import.meta.glob('../../modules/*/style.css', { eager: true });
 
 /**
- * Runs on DOMContentLoaded. Registers dynamic script configurations and
- * delegates loading to {@link loadScripts}. Calls {@link finalize} when complete.
+ * Runs on DOMContentLoaded and boots front-end scripts.
  *
  * @returns void
  */
-const init = () => {
+const init = async (): Promise<void> => {
   // JavaScript to be fired on all pages
 
   // Config for WebFontLoader
-  // const fontConfig: WebFontInterface = {
+  // const fontConfig: WebFontConfig = {
   //   classes: false,
   //   events: false,
   //   google: {
@@ -29,49 +31,20 @@ const init = () => {
   // // Load Fonts
   // WebFont.load(fontConfig);
 
-  // Define the selectors and src for dynamic imports
-  const scripts: Script[] = [
+  const scripts: ThemeScript[] = [
     {
-      selector: '.alert', // Alert
-      src: 'alerts',
-      type: 'ts',
-    },
-    {
-      selector: '#main-menu', // Main menu
+      selector: '#main-menu',
       src: 'menu',
-      type: 'ts',
     },
     {
-      selector: '[data-iframe]', // iFrame
-      src: 'iframe',
-      type: 'ts',
-    },
-    {
-      selector: '[data-scroll-reveal]', // Menu scroll reveal
+      selector: '[data-scroll-reveal]',
       src: 'menuScrollReveal',
-      type: 'ts',
-    },
-    {
-      selector: '[data-test-vue]', // Vue test
-      src: 'TestComponent',
-      type: 'vue',
     },
   ];
 
-  // Load the scripts
-  loadScripts(scripts);
-
-  finalize();
-};
-
-/**
- * Runs after {@link init} completes. Intended for any JavaScript that must
- * execute after the initial scripts have been loaded.
- *
- * @returns void
- */
-const finalize = () => {
-  // JavaScript to be fired after init
+  await loadThemeScripts(scripts);
+  await loadManifestScripts(frontendFeatureScripts, 'feature');
+  await loadManifestScripts(moduleScripts, 'module');
 };
 
 /**
@@ -86,7 +59,7 @@ const loaded = () => {
 
 // DOM Ready
 window.addEventListener('DOMContentLoaded', () => {
-  init();
+  void init();
 });
 
 // Fully loaded

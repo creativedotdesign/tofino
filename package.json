@@ -10,16 +10,15 @@
   ],
   "scripts": {
     "dev": "vite",
-    "dev:lan": "VITE_DEV_PROFILE=lan vite",
     "dev:tunnel": "VITE_DEV_PROFILE=tunnel vite",
     "build": "vite build",
-    "build:watch": "VITE_DEV_PROFILE=lan vite build --watch",
-    "preview:lan": "VITE_DEV_PROFILE=lan vite preview",
+    "build:watch": "vite build --watch",
+    "preview": "vite preview",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:headed": "playwright test --headed",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report tests/output/playwright"
   },
   "author": "Daniel Hewes <daniel@creativedotdesign.com>",
   "repository": {
@@ -47,8 +46,7 @@
     "@nabla/vite-plugin-eslint": "^3.0.1",
     "@playwright/test": "^1.59.1",
     "@spiriit/vite-plugin-svg-spritemap": "^7.0.0",
-    "@tailwindcss/postcss": "^4.2.2",
-    "@types/browser-sync": "^2.29.1",
+    "@tailwindcss/vite": "^4.2.2",
     "@types/node": "^22.19.17",
     "@types/webfontloader": "^1.6.38",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
@@ -71,8 +69,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "typescript-eslint": "^8.58.0",
-    "vite": "^7.3.1",
-    "vite-plugin-browser-sync": "^6.0.0",
+    "vite": "^8.0.8",
     "vite-plugin-graphql-loader": "^5.0.1",
     "vitest": "^4.1.2",
     "xml2js": "^0.6.2"

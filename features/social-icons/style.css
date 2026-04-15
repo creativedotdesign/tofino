@@ -1,0 +1,17 @@
+@reference "tailwindcss";
+
+.social-icons {
+  @apply list-none pl-0;
+
+  li {
+    @apply inline-block;
+  }
+
+  svg {
+    @apply h-6 w-6;
+  }
+
+  a {
+    @apply block;
+  }
+}

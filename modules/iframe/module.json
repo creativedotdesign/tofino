@@ -1,0 +1,8 @@
+{
+  "title": "iFrame",
+  "css": "style.css",
+  "script": "script.ts",
+  "acf": "fields.php",
+  "template": "template.php",
+  "markdown": "markdown.php"
+}
