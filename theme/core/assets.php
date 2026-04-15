@@ -52,15 +52,7 @@ function localize_scripts(): void
     $data['language'] = apply_filters('wpml_current_language', null);
   }
 
-  if (function_exists('graphql_get_endpoint')) {
-    $data['graphqlEndpoint'] = graphql_get_endpoint();
-  }
-
-  $iframe_resizer_license = get_field('iframe_resizer_license_key', 'option');
-
-  if ($iframe_resizer_license) {
-    $data['iframeResizerLicense'] = $iframe_resizer_license;
-  }
+  $data = apply_filters('tofino/localize_data', $data);
 
   wp_register_script('tofino-data', false);
   wp_enqueue_script('tofino-data');
@@ -88,102 +80,26 @@ add_action('login_head', __NAMESPACE__ . '\\admin_scripts');
 
 
 /**
- * Removes unused default image sizes.
+ * Tag theme/module scripts with `type="module"` and defer every other
+ * front-end script. Admin and login scripts are left untouched.
  *
- * @since 3.2.0
- *
- * @return void
+ * @param string $tag    Script HTML tag.
+ * @param string $handle Script handle.
+ * @return string Updated script tag.
  */
-function remove_unused_image_sizes(): void
+function add_defer_attribute(string $tag, string $handle): string
 {
-  remove_image_size('1536x1536');
+  if (str_starts_with($handle, 'tofino') || $handle === 'form-builder' || $handle === 'data-viz') {
+    return str_replace('script src', 'script type="module" src', $tag);
+  }
+
+  if (!is_admin() && $GLOBALS['pagenow'] !== 'wp-login.php') {
+    return str_replace(' src', ' defer src', $tag);
+  }
+
+  return $tag;
 }
-add_action('init', __NAMESPACE__ . '\\remove_unused_image_sizes');
-
-
-/**
- * Sets custom image size dimensions on theme activation.
- *
- * @since 3.2.0
- *
- * @return void
- */
-function set_image_sizes(): void
-{
-  update_option('thumbnail_size_w', 250);
-  update_option('thumbnail_size_h', 0);
-
-  update_option('medium_size_w', 565);
-  update_option('medium_size_h', 0);
-
-  update_option('medium_large_size_w', 0);
-  update_option('medium_large_size_h', 0);
-
-  update_option('large_size_w', 1152);
-  update_option('large_size_h', 0);
-
-  update_option('2048x2048_size_w', 2048);
-  update_option('2048x2048_size_h', 0);
-}
-add_action('after_switch_theme', __NAMESPACE__ . '\\set_image_sizes');
-
-
-/**
- * Populates image attachment metadata from the filename and EXIF data on upload.
- *
- * Sets the post title from the filename, and extracts the copyright
- * and image description from EXIF data if available.
- *
- * @since 3.2.0
- *
- * @param int $post_id The attachment post ID.
- * @return void
- */
-function populate_img_meta(int $post_id): void
-{
-  if (!str_starts_with((string) get_post_mime_type($post_id), 'image/')) {
-    return;
-  }
-
-  $file_path = get_attached_file($post_id);
-
-  if (!$file_path) {
-    return;
-  }
-
-  $post_title = pathinfo($file_path, PATHINFO_FILENAME);
-
-  wp_update_post([
-    'ID' => $post_id,
-    'post_excerpt' => '',
-    'post_title' => $post_title,
-  ]);
-
-  if (!function_exists('exif_read_data') || !in_array(mime_content_type($file_path), ['image/jpeg', 'image/tiff'], true)) {
-    return;
-  }
-
-  $exif = @exif_read_data($file_path);
-
-  if (!$exif) {
-    return;
-  }
-
-  if (!empty($exif['Copyright'])) {
-    $credit = wp_slash(wp_strip_all_tags($exif['Copyright']));
-    if ($credit) {
-      update_field('media_credit', $credit, $post_id);
-    }
-  }
-
-  if (!empty($exif['ImageDescription'])) {
-    $alt = wp_slash(wp_strip_all_tags($exif['ImageDescription']));
-    if ($alt) {
-      update_post_meta($post_id, '_wp_attachment_image_alt', $alt);
-    }
-  }
-}
-add_filter('add_attachment', __NAMESPACE__ . '\\populate_img_meta');
+add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
 
 
 /**

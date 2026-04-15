@@ -10,11 +10,6 @@
   @apply hidden;
 }
 
-#wp-admin-bar-user-info .avatar,
-#wpadminbar #wp-admin-bar-my-account.with-avatar > a img {
-  @apply hidden;
-}
-
 #wpadminbar #wp-admin-bar-my-account.with-avatar #wp-admin-bar-user-actions > li {
   @apply ml-4;
 }

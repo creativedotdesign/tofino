@@ -18,7 +18,7 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'option'); ?>
   Tofino\Alerts\render('top');
 
   // Check if sticky menu
-  $menu_sticky = Tofino\Init\menu_sticky(); ?>
+  $menu_sticky = Tofino\Nav\menu_sticky(); ?>
 
   <header <?php echo $scroll_reveal ? 'data-scroll-reveal' : ''; ?>
     class="duration-500 transition-transform lg:transform-gpu <?php echo esc_attr($menu_sticky ?? ''); ?>"

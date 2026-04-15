@@ -24,8 +24,8 @@ $tofino_includes = [
   "theme/registry/FeatureRegistry.php",
   "theme/core/init.php",
   "theme/core/assets.php",
+  "theme/core/nav.php",
   "theme/utils/helpers.php",
-  "theme/utils/clean.php",
   "theme/utils/shortcodes.php",
   "theme/registry/ModuleRegistry.php",
   "theme/integrations/MarkdownExport.php",
@@ -33,7 +33,6 @@ $tofino_includes = [
   "settings/admin.php",
   "settings/footer.php",
   "settings/client-data.php",
-  "settings/media.php",
   "theme/integrations/GraphQL.php",
 ];
 
@@ -47,6 +46,3 @@ foreach ($tofino_includes as $file) {
   }
 }
 unset($file, $filepath);
-
-// Disable Gutenberg (only works on functions.php)
-add_filter('use_block_editor_for_post', '__return_false');

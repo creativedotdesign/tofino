@@ -29,6 +29,60 @@ class GraphQL
     add_filter('graphql_post_object_connection_query_args', [$this, 'add_query_args'], 10, 5);
     add_filter('graphql_post_object_connection_query_args', [$this, 'filter_post_by_term_ids'], 10, 5);
     add_filter('graphql_connection_page_info', [$this, 'update_page_info'], 10, 2);
+    add_filter('graphql_connection_max_query_amount', [$this, 'increase_query_limit'], 12, 5);
+    add_filter('graphql_request_results', [$this, 'remove_extensions'], 99, 1);
+    add_filter('tofino/localize_data', [$this, 'add_endpoint_to_localize_data']);
+  }
+
+  /**
+   * Inject the GraphQL endpoint into the tofinoJS localize payload.
+   *
+   * @param array<string, mixed> $data
+   * @return array<string, mixed>
+   */
+  public function add_endpoint_to_localize_data(array $data): array
+  {
+    $data['graphqlEndpoint'] = graphql_get_endpoint();
+
+    return $data;
+  }
+
+  /**
+   * Raises the cap on the number of items a single connection query may return.
+   *
+   * @param int $limit Existing query limit.
+   * @return int
+   */
+  public function increase_query_limit(int $limit): int
+  {
+    return 2000;
+  }
+
+  /**
+   * Strips the `extensions` payload from GraphQL responses to reduce payload
+   * size and avoid leaking debug metadata to clients.
+   *
+   * @param mixed $response GraphQL response in array or object form.
+   * @return mixed
+   */
+  public function remove_extensions(mixed $response): mixed
+  {
+    if ($response instanceof \GraphQL\Executor\ExecutionResult) {
+      $array = $response->toArray();
+      unset($array['extensions']);
+      return $array;
+    }
+
+    if (is_array($response)) {
+      unset($response['extensions']);
+      return $response;
+    }
+
+    if (is_object($response) && isset($response->extensions)) {
+      unset($response->extensions);
+    }
+
+    return $response;
   }
 
   /**
