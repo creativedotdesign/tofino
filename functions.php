@@ -18,22 +18,22 @@ unset($tofino_autoload);
  *
  */
 $tofino_includes = [
-  "theme/integrations/Vite.php",
-  "theme/integrations/CloudflareTunnel.php",
-  "theme/registry/FolderManifest.php",
-  "theme/registry/FeatureRegistry.php",
+  "theme/Integrations/Vite.php",
+  "theme/Integrations/CloudflareTunnel.php",
+  "theme/Registry/FolderManifest.php",
+  "theme/Registry/FeatureRegistry.php",
   "theme/core/init.php",
   "theme/core/assets.php",
   "theme/core/nav.php",
   "theme/utils/helpers.php",
   "theme/utils/shortcodes.php",
-  "theme/registry/ModuleRegistry.php",
-  "theme/integrations/MarkdownExport.php",
+  "theme/Registry/ModuleRegistry.php",
+  "theme/Integrations/MarkdownExport.php",
   // Options pages and field groups
   "settings/admin.php",
   "settings/footer.php",
   "settings/client-data.php",
-  "theme/integrations/GraphQL.php",
+  "theme/Integrations/GraphQL.php",
 ];
 
 foreach ($tofino_includes as $file) {

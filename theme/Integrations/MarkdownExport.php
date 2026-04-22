@@ -10,7 +10,7 @@
  * @since 5.0.0
  */
 
-namespace Tofino;
+namespace Tofino\Integrations;
 
 use function Tofino\Helpers\convert_html_to_markdown;
 use function Tofino\Helpers\escape_markdown_text;

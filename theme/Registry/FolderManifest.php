@@ -10,7 +10,7 @@
  * @since 5.0.0
  */
 
-namespace Tofino;
+namespace Tofino\Registry;
 
 final class FolderManifest
 {

@@ -23,7 +23,7 @@ function main_script(): void
     return;
   }
 
-  \Tofino\Vite::use_vite();
+  \Tofino\Integrations\Vite::use_vite();
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script', 10);
 
@@ -73,7 +73,7 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts', 10);
  */
 function admin_scripts(): void
 {
-  \Tofino\Vite::use_vite('js/admin.ts');
+  \Tofino\Integrations\Vite::use_vite('js/admin.ts');
 }
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
 add_action('login_head', __NAMESPACE__ . '\\admin_scripts');

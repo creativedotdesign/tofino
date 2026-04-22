@@ -12,7 +12,7 @@
  * @since 4.0.0
  */
 
-namespace Tofino;
+namespace Tofino\Integrations;
 
 class Vite
 {

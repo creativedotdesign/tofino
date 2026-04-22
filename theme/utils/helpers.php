@@ -282,7 +282,7 @@ function convert_html_to_markdown(string $content): string
 function get_module_markdown_file(string $layout): ?string
 {
   $paths = apply_filters('tofino_custom_module_paths', [get_template_directory() . '/modules/']);
-  $manifest = \Tofino\FolderManifest::get('modules', $layout);
+  $manifest = \Tofino\Registry\FolderManifest::get('modules', $layout);
   $declared_markdown = $manifest['markdown'] ?? null;
 
   foreach ($paths as $path) {
@@ -352,7 +352,7 @@ function render_module_markdown(string $layout): string
 function render_module(string $layout): void
 {
   $paths = apply_filters('tofino_custom_module_paths', [get_template_directory() . '/modules/']);
-  $manifest = \Tofino\FolderManifest::get('modules', $layout);
+  $manifest = \Tofino\Registry\FolderManifest::get('modules', $layout);
   $declared_template = $manifest['template'] ?? null;
 
   foreach ($paths as $path) {

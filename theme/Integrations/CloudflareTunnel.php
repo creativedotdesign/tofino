@@ -12,7 +12,7 @@
  * @since 5.0.0
  */
 
-namespace Tofino;
+namespace Tofino\Integrations;
 
 class CloudflareTunnel
 {
