@@ -22,7 +22,7 @@
     "tofino"
   ],
   "require": {
-    "php": ">=8.4",
+    "php": ">=8.3",
     "composer/installers": "~v2.2.0",
     "enshrined/svg-sanitize": "^0.22.0",
     "league/html-to-markdown": "^5.1"
