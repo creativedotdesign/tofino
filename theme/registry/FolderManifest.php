@@ -37,6 +37,10 @@ final class FolderManifest
   /**
    * Discovers folders, reads manifest JSON, and validates referenced files exist.
    *
+   * For modules, additional base paths can be registered via the
+   * 'tofino_custom_module_paths' filter, letting plugins ship modules. On slug
+   * collision the theme wins — a plugin cannot override a theme module folder.
+   *
    * @return array<string, array<string, string>>
    */
   private static function discover(string $type, string $manifest_file): array
@@ -45,39 +49,66 @@ final class FolderManifest
       return self::$cache[$type];
     }
 
+    $theme_base = get_template_directory() . '/' . $type;
+    $bases = [$theme_base];
+
+    if ($type === 'modules') {
+      $filtered = apply_filters('tofino_custom_module_paths', [trailingslashit($theme_base)]);
+      foreach (is_array($filtered) ? $filtered : [] as $path) {
+        $path = is_string($path) ? untrailingslashit($path) : '';
+        if ($path !== '' && !in_array($path, $bases, true)) {
+          $bases[] = $path;
+        }
+      }
+    }
+
     $items = [];
-    $base = get_template_directory() . '/' . $type;
 
-    foreach (glob($base . '/*', GLOB_ONLYDIR) ?: [] as $dir) {
-      $slug = basename($dir);
-      $manifest = self::read_json($dir . '/' . $manifest_file);
+    foreach ($bases as $base) {
+      foreach (glob($base . '/*', GLOB_ONLYDIR) ?: [] as $dir) {
+        $slug = basename($dir);
 
-      if (!$manifest || empty($manifest['title']) || !is_string($manifest['title'])) {
-        continue;
-      }
-
-      $resolved = ['title' => $manifest['title']];
-      $dir_real = realpath($dir);
-
-      foreach ($manifest as $key => $value) {
-        if ($key === 'title' || !is_string($value) || $value === '') {
+        // Theme wins on slug collision.
+        if (isset($items[$slug])) {
           continue;
         }
 
-        if ($key === 'scope') {
-          $resolved['scope'] = in_array($value, ['frontend', 'admin', 'both'], true) ? $value : 'frontend';
+        $manifest = self::read_json($dir . '/' . $manifest_file);
+
+        if (!$manifest || empty($manifest['title']) || !is_string($manifest['title'])) {
           continue;
         }
 
-        // Only accept paths that resolve inside the module/feature folder —
-        // blocks "../../wp-config.php" style escapes from a hostile manifest.
-        $target = realpath($dir . '/' . $value);
-        if ($target && $dir_real && str_starts_with($target, $dir_real . DIRECTORY_SEPARATOR)) {
-          $resolved[$key] = $value;
+        $dir_real = realpath($dir);
+        if (!$dir_real) {
+          continue;
         }
-      }
 
-      $items[$slug] = $resolved;
+        $resolved = [
+          'title' => $manifest['title'],
+          '_dir'  => $dir_real,
+        ];
+
+        foreach ($manifest as $key => $value) {
+          if ($key === 'title' || !is_string($value) || $value === '') {
+            continue;
+          }
+
+          if ($key === 'scope') {
+            $resolved['scope'] = in_array($value, ['frontend', 'admin', 'both'], true) ? $value : 'frontend';
+            continue;
+          }
+
+          // Only accept paths that resolve inside the module/feature folder —
+          // blocks "../../wp-config.php" style escapes from a hostile manifest.
+          $target = realpath($dir . '/' . $value);
+          if ($target && str_starts_with($target, $dir_real . DIRECTORY_SEPARATOR)) {
+            $resolved[$key] = $value;
+          }
+        }
+
+        $items[$slug] = $resolved;
+      }
     }
 
     ksort($items);

@@ -42,12 +42,13 @@ final class ModuleRegistry
   {
     foreach (FolderManifest::all('modules') as $slug => $manifest) {
       $acf = $manifest['acf'] ?? null;
+      $dir = $manifest['_dir'] ?? null;
 
-      if (!$acf) {
+      if (!$acf || !$dir) {
         continue;
       }
 
-      require_once get_template_directory() . '/modules/' . $slug . '/' . $acf;
+      require_once $dir . '/' . $acf;
       $this->modules[$slug] = [
         'group_key' => 'group_module_' . str_replace('-', '_', $slug),
         'manifest' => $manifest,
