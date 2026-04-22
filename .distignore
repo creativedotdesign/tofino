@@ -16,7 +16,7 @@ deploy_key
 .github/
 .gitignore
 .gitkeep
-.git-ftp-ignore
+.distignore
 .gitattributes
 
 # Build/test tool config

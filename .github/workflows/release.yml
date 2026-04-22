@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (e.g. v5.0.0-alpha.3)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      # Build order matters: npm build produces dist/; composer install
+      # produces vendor/. Both must exist BEFORE the zip step because
+      # .distignore controls what is excluded, not what is included.
+      - uses: actions/setup-node@v4
+        if: hashFiles('package.json') != ''
+        with:
+          node-version: '22'
+          cache: npm
+      - if: hashFiles('package.json') != ''
+        run: npm ci && npm run build
+
+      - uses: shivammathur/setup-php@v2
+        if: hashFiles('composer.lock') != ''
+        with:
+          php-version: '8.3'
+          tools: composer
+      - if: hashFiles('composer.lock') != ''
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      # Build the theme zip ourselves, honouring .distignore.
+      - name: Build theme zip
+        run: |
+          set -euo pipefail
+          SLUG="${{ github.event.repository.name }}"
+          mkdir -p build dist-release
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude-from='.distignore' \
+            ./ "build/${SLUG}/"
+          (cd build && zip -rq "../dist-release/${SLUG}.zip" "${SLUG}")
+          ls -la dist-release/
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          files: dist-release/*.zip
+          prerelease: ${{ contains(github.event.inputs.tag || github.ref_name, '-') }}
