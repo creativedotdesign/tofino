@@ -1,0 +1,33 @@
+/**
+ * Hide Admin Notices — CSS hide rules.
+ *
+ * Mirrors the exclusion pattern used by Admin and Site Enhancements
+ * (wpase.com) so core-critical messages (settings-saved, plugin
+ * activation, update prompts) remain visible while plugin/marketing
+ * nag notices are visually removed.
+ *
+ * Preserved classes:
+ *   .system-notice        — WordPress core critical messages
+ *   .update-message       — plugin/theme row update prompts
+ *   .inline               — contextual, field-level notices
+ *   .hidden               — notices already dismissed
+ *   .settings-error       — WP Settings API save confirmations/errors
+ *                           (rendered as a direct child of #wpbody-content
+ *                           by admin-header.php → options-head.php, BEFORE
+ *                           the page template opens its .wrap)
+ *   .acf-admin-notice     — ACF save confirmations ("Options Updated")
+ *   #message              — legacy "settings updated" / post save container
+ *
+ * Uses position:absolute + visibility:hidden rather than display:none
+ * so plugins that measure notice dimensions on load don't misbehave.
+ */
+
+body.tofino-hide-admin-notices #wpbody-content > .wrap > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices #wpbody-content > .wrap > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices #wpbody-content > .wrap > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices #wpbody-content > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices #wpbody-content > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices #wpbody-content > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message) {
+  position: absolute !important;
+  visibility: hidden !important;
+}

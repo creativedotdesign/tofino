@@ -1,0 +1,6 @@
+{
+  "title": "Hide Admin Notices",
+  "scope": "admin",
+  "acf": "fields.php",
+  "render": "render.php"
+}
