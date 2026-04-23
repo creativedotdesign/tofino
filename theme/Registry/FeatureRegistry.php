@@ -33,8 +33,13 @@ final class FeatureRegistry
     $instance = new self();
     $instance->discover();
     $instance->load_runtime();
-    add_action('acf/include_fields', [$instance, 'load_fields']);
-    add_action('acf/include_fields', [$instance, 'register_toggle_fields']);
+    // Run after settings/admin.php registers the 'general-options' parent
+    // page (acf/init priority 10). Otherwise sub-pages register while the
+    // parent is still absent from $admin_page_hooks, producing bare-slug
+    // menu hrefs instead of admin.php?page=… URLs (WP menu-header.php hook
+    // name mismatches between registration and render time).
+    add_action('acf/init', [$instance, 'load_fields'], 20);
+    add_action('acf/init', [$instance, 'register_toggle_fields'], 20);
     add_action('acf/save_post', [$instance, 'sync_disabled_features'], 20);
     add_action('admin_menu', [$instance, 'remove_disabled_menus'], 999);
   }
