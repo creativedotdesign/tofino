@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Disable Post Type runtime.
+ * Disables the built-in "post" post type.
+ *
+ * Loaded by FeatureRegistry only when the "Posts" feature is toggled off in
+ * the Features admin screen. Hides the Posts admin UI, strips the rewrite
+ * rules, and redirects any front-end single-post request to the home page.
  *
  * @package Tofino
  * @since 5.0.0
@@ -9,58 +13,28 @@
 
 namespace Tofino;
 
-class DisablePostType
+class PostsDisabler
 {
-  private bool $is_disabled = false;
-
-  /**
-   * Constructor. Defers the ACF option check until ACF has fully initialised.
-   */
   public function __construct()
   {
-    add_action('acf/init', [$this, 'initialize']);
-  }
-
-  /**
-   * Reads the ACF option and registers the relevant hooks when the post type
-   * is disabled. Called on the `acf/init` action.
-   */
-  public function initialize(): void
-  {
-    $this->is_disabled = (bool) get_field('disable_post_type', 'option');
-
-    if (!$this->is_disabled) {
-      return;
-    }
-
+    // Priority 11 runs after WP's create_initial_post_types() (init priority 0)
+    // so $wp_post_types['post'] is populated.
+    add_action('init', [$this, 'disable_post_type_rewrite'], 11);
     add_action('admin_menu', [$this, 'remove_post_menu']);
     add_action('admin_bar_menu', [$this, 'remove_new_post_admin_bar'], 999);
-    $this->disable_post_type_rewrite();
     add_action('template_redirect', [$this, 'redirect_single_post']);
   }
 
-  /**
-   * Removes the "Posts" menu item from the WordPress admin sidebar.
-   */
   public function remove_post_menu(): void
   {
     remove_menu_page('edit.php');
   }
 
-  /**
-   * Removes the "New Post" link from the admin toolbar.
-   *
-   * @param \WP_Admin_Bar $wp_admin_bar The admin bar instance.
-   */
   public function remove_new_post_admin_bar(\WP_Admin_Bar $wp_admin_bar): void
   {
     $wp_admin_bar->remove_node('new-post');
   }
 
-  /**
-   * Sets the post type properties that mark it as private and removes its
-   * rewrite rules. Extracted to avoid duplication in the WPML language loop.
-   */
   private function disable_post_type_props(): void
   {
     global $wp_post_types;
@@ -75,11 +49,6 @@ class DisablePostType
     $wp_post_types['post']->rewrite = false;
   }
 
-  /**
-   * Disables the built-in "post" post type on the front end and removes its
-   * rewrite rules. When WPML is active, applies the settings for every active
-   * language so WPML does not restore the rewrite rules on a language switch.
-   */
   public function disable_post_type_rewrite(): void
   {
     $this->disable_post_type_props();
@@ -100,9 +69,6 @@ class DisablePostType
     $sitepress->switch_lang($default_language);
   }
 
-  /**
-   * Redirects any front-end request for a single post to the home page.
-   */
   public function redirect_single_post(): void
   {
     if (is_single() && get_post_type() === 'post') {
@@ -112,4 +78,4 @@ class DisablePostType
   }
 }
 
-new DisablePostType();
+new PostsDisabler();

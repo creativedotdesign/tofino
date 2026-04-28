@@ -23,7 +23,9 @@
   </div>
 </footer>
 
-<?php Tofino\Alerts\render('bottom'); ?>
+<?php if (function_exists('Tofino\Alerts\render')) {
+  Tofino\Alerts\render('bottom');
+} ?>
 
 <?php wp_footer(); ?>
 

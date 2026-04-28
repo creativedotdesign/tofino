@@ -60,20 +60,20 @@ final class FeatureRegistry
   }
 
   /**
-   * Require every enabled feature's render.php immediately so runtime
-   * functions, hooks, and shortcodes are available during the request.
+   * Require each feature's runtime file immediately so its functions, hooks,
+   * and shortcodes are available during the request. Enabled features load
+   * the `render` file; disabled features load the `disabled` file (if any),
+   * which lets a feature ship "off-mode" behaviour such as removing a default
+   * WordPress post type.
    */
   public function load_runtime(): void
   {
     foreach ($this->features as $slug => $manifest) {
-      if (!$this->is_enabled($slug)) {
-        continue;
-      }
+      $key = $this->is_enabled($slug) ? 'render' : 'disabled';
+      $file = $manifest[$key] ?? null;
 
-      $render = $manifest['render'] ?? null;
-
-      if ($render) {
-        require_once get_template_directory() . '/features/' . $slug . '/' . $render;
+      if ($file) {
+        require_once get_template_directory() . '/features/' . $slug . '/' . $file;
       }
     }
   }
