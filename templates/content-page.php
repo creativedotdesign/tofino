@@ -12,9 +12,10 @@
       <!-- Start <?php echo $row_layout; ?> -->
       <div class="module relative module-<?php echo $row_layout; ?> module-<?php echo $i; ?>"><?php
         if ($show_module_names) :
-          $row_label = \Tofino\Helpers\get_module_name($row_layout_raw); ?>
+          $row_label = \Tofino\Helpers\get_module_name($row_layout_raw);
+          $row_label = apply_filters('tofino/module_name_label', $row_label, $row_layout_raw); ?>
           <div class="p-2 hidden md:block text-sm font-bold absolute top-4 left-4 z-10 bg-gray-50">
-            <span>Module: <?php echo esc_html($row_label); ?></span>
+            <span>Module: <?php echo wp_kses_post($row_label); ?></span>
           </div><?php
         endif; ?>
         <?php \Tofino\Helpers\render_module($row_layout); ?>
