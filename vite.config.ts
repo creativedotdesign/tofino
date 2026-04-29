@@ -42,11 +42,20 @@ export default ({ mode }: { mode: string }) => {
       sourcemap: env.NODE_ENV === 'production' ? false : 'inline',
       target: 'es2022',
       rollupOptions: {
+        preserveEntrySignatures: 'exports-only',
         input: {
           app: '/js/app.ts',
           admin: '/js/admin.ts',
+          vue: '/js/vendor/vue.ts',
+          pinia: '/js/vendor/pinia.ts',
         },
-        external: ['jquery'],
+        external: (id, importer) => {
+          if (id === 'jquery') {
+            return true;
+          }
+
+          return id === 'vue' && Boolean(importer?.includes('/node_modules/pinia/'));
+        },
         output: {
           entryFileNames: 'assets/[name]-[hash].js',
           chunkFileNames: 'assets/[name]-[hash].js',
@@ -56,6 +65,17 @@ export default ({ mode }: { mode: string }) => {
           manualChunks: (id) => {
             // Split vendor chunks by package name
             if (id.includes('node_modules')) {
+              if (id.includes('node_modules/vue/') || id.includes('node_modules/@vue/')) {
+                return 'vendor-vue';
+              }
+
+              if (
+                id.includes('node_modules/pinia/') ||
+                id.includes('node_modules/@vue/devtools-api/')
+              ) {
+                return 'vendor-pinia';
+              }
+
               return id.split('node_modules/')[1].split('/')[0];
             }
           },

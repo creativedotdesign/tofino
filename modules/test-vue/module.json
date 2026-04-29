@@ -1,5 +1,6 @@
 {
   "title": "Test Vue",
+  "name": "test_vue",
   "script": "script.ts",
   "acf": "fields.php",
   "template": "template.php",

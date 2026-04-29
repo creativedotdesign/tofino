@@ -166,8 +166,7 @@ class MarkdownExport
         continue;
       }
 
-      $layout = str_replace('_', '-', $layout_raw);
-      $module_markdown = render_module_markdown($layout);
+      $module_markdown = render_module_markdown($layout_raw);
 
       if ($module_markdown === '') {
         continue;

@@ -1,5 +1,6 @@
 {
   "title": "iFrame",
+  "name": "iframe",
   "css": "style.css",
   "script": "script.ts",
   "acf": "fields.php",

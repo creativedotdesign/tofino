@@ -9,10 +9,10 @@ Think of a module as a reusable section you can add to a page, such as:
 
 ## How Modules Work
 
-- Each module lives in `modules/<slug>/`.
-- `module.json` is the source of truth for module files.
-- `fields.php` registers the ACF sub-fields for that module.
-- `template.php` renders the module on the front end.
+- Theme modules live in `modules/<slug>/`; plugin modules register their own `module.json` files with `tofino/register_modules`.
+- `module.json` is the source of truth for the module name and files.
+- The declared `acf` file registers the ACF sub-fields for that module.
+- The declared `template` file renders the module on the front end.
 - Optional `script.ts` and `style.css` are automatically discovered and compiled by Vite into `dist/assets` during build.
 - Optional `markdown.php` supports markdown export.
 
@@ -35,6 +35,7 @@ modules/my-module/
 ```json
 {
   "title": "Promo Card",
+  "name": "promo_card",
   "acf": "fields.php",
   "template": "template.php",
   "css": "style.css",
@@ -46,6 +47,7 @@ modules/my-module/
 
 ## Notes
 
-- The module folder name becomes the layout name (`promo_card` for `promo-card`).
+- `module.json` must include a valid snake_case `name`; that value becomes the ACF layout name.
+- The ACF field group key must be `group_module_{name}`.
 - Keep module UI, fields, and rendering together in one folder.
 - Prefer small, composable modules over large multi-purpose ones.

@@ -21,6 +21,7 @@ $tofino_includes = [
   "theme/Integrations/Vite.php",
   "theme/Integrations/CloudflareTunnel.php",
   "theme/Registry/FolderManifest.php",
+  "theme/Registry/ModuleManifest.php",
   "theme/Registry/FeatureRegistry.php",
   "theme/core/init.php",
   "theme/core/assets.php",

@@ -272,45 +272,21 @@ function convert_html_to_markdown(string $content): string
 
 
 /**
- * Resolves a module-local markdown renderer file.
+ * Resolves a module-local markdown renderer file declared in module.json.
  *
  * @since 5.0.0
  *
- * @param string $layout The module folder slug.
+ * @param string $layout The ACF module layout name.
  * @return string|null Absolute path to the markdown renderer file.
  */
 function get_module_markdown_file(string $layout): ?string
 {
-  $paths = apply_filters('tofino_custom_module_paths', [get_template_directory() . '/modules/']);
-  $manifest = \Tofino\Registry\FolderManifest::get('modules', $layout);
-  $declared_markdown = $manifest['markdown'] ?? null;
-
-  foreach ($paths as $path) {
-    $path = trailingslashit((string) $path);
-    $path_real = realpath($path);
-    if (!$path_real) {
-      continue;
-    }
-
-    $declared_file = $declared_markdown ? $path . $layout . '/' . $declared_markdown : null;
-    $default_file  = $path . $layout . '/markdown.php';
-    $file_path     =
-      ($declared_file && file_exists($declared_file)) ? $declared_file
-      : (file_exists($default_file) ? $default_file : null);
-
-    if (!$file_path) {
-      continue;
-    }
-
-    $file_real = realpath($file_path);
-    if (!$file_real || !str_starts_with($file_real, $path_real . DIRECTORY_SEPARATOR)) {
-      continue;
-    }
-
-    return $file_real;
+  $module = \Tofino\Registry\ModuleManifest::get($layout);
+  if (!$module) {
+    return null;
   }
 
-  return null;
+  return \Tofino\Registry\ModuleManifest::file($module, 'markdown');
 }
 
 
@@ -319,7 +295,7 @@ function get_module_markdown_file(string $layout): ?string
  *
  * @since 5.0.0
  *
- * @param string $layout The module folder slug.
+ * @param string $layout The ACF module layout name.
  * @return string Markdown output for the current module row.
  */
 function render_module_markdown(string $layout): string
@@ -341,51 +317,36 @@ function render_module_markdown(string $layout): string
 /**
  * Renders an ACF flexible content module template file.
  *
- * Searches through registered module paths (filterable via 'tofino_custom_module_paths')
- * and includes the first matching template file.
+ * Resolves the module by its registered module.json and includes its declared
+ * template file.
  *
  * @since 5.0.0
  *
- * @param string $layout The module layout filename (without .php extension).
+ * @param string $layout The ACF module layout name.
  * @return void
  */
 function render_module(string $layout): void
 {
-  $paths = apply_filters('tofino_custom_module_paths', [get_template_directory() . '/modules/']);
-  $manifest = \Tofino\Registry\FolderManifest::get('modules', $layout);
-  $declared_template = $manifest['template'] ?? null;
-
-  foreach ($paths as $path) {
-    $path_real = realpath($path);
-    if (!$path_real) {
-      continue;
-    }
-
-    $declared_folder_file = $declared_template ? $path . $layout . '/' . $declared_template : null;
-    $folder_file = $path . $layout . '/template.php';
-    $flat_file   = $path . $layout . '.php';
-    $file_path   =
-      ($declared_folder_file && file_exists($declared_folder_file)) ? $declared_folder_file
-      : (file_exists($folder_file) ? $folder_file : (file_exists($flat_file) ? $flat_file : null));
-
-    if (!$file_path) {
-      continue;
-    }
-
-    // Ensure the resolved template lives inside the registered module root —
-    // belt-and-braces against any bad path that slipped past FolderManifest.
-    $file_real = realpath($file_path);
-    if (!$file_real || !str_starts_with($file_real, $path_real . DIRECTORY_SEPARATOR)) {
-      continue;
-    }
-
-    include $file_real;
-
-    if (!str_contains($path, get_template_directory())) {
-      echo "<!-- Module loaded from plugin -->";
-    }
-
+  $module = \Tofino\Registry\ModuleManifest::get($layout);
+  if (!$module) {
     return;
+  }
+
+  $file_path = \Tofino\Registry\ModuleManifest::file($module, 'template');
+  if (!$file_path) {
+    return;
+  }
+
+  // Scope a documented set of named variables for templates — mirrors the API
+  // that native WP dynamic blocks ($attributes/$content/$block) and ACF blocks
+  // ($block/$is_preview/...) expose to their render files. Templates may also
+  // read ACF values directly via get_sub_field(). Because this include runs
+  // inside render_module()'s scope, any file-scope variables in the template
+  // are scoped to this function, not truly global.
+  include $file_path;
+
+  if (!str_contains($file_path, get_template_directory())) {
+    echo "<!-- Module loaded from plugin -->";
   }
 }
 

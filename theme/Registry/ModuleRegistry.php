@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Module folder registry.
+ * Module registry.
  *
- * Auto-loads fields.php from every modules/{slug}/ folder, tracks
- * which ACF field groups belong to which module folder, and injects matching
+ * Auto-loads ACF files from registered module manifests, tracks
+ * which ACF field groups belong to which module, and injects matching
  * flexible-content layouts into the content_modules field.
  *
- * Folder-based PHP layouts take precedence over any DB/GUI layout of the same
+ * Manifest-based PHP layouts take precedence over any DB/GUI layout of the same
  * name; overridden layouts are reported via an admin notice.
  *
  * @package Tofino
@@ -21,7 +21,7 @@ final class ModuleRegistry
   /** @var array<string, array{group_key: string, manifest: array<string, string>}> */
   private array $modules = [];
 
-  /** @var string[] layout names overridden by folder-based PHP layouts */
+  /** @var string[] layout names overridden by manifest-based PHP layouts */
   private array $overridden = [];
 
   public static function boot(): void
@@ -32,15 +32,15 @@ final class ModuleRegistry
   }
 
   /**
-   * Require every module folder's fields.php, record which group key each
-   * folder registered, then register the parent __Page Modules group that
+   * Require every module's ACF file, record which group key each
+   * module registered, then register the parent __Page Modules group that
    * holds the content_modules flexible-content field. Runs on
    * acf/include_fields so every local group is available before
    * inject_layouts fires on the flex field.
    */
   public function load_module_fields(): void
   {
-    foreach (FolderManifest::all('modules') as $slug => $manifest) {
+    foreach (ModuleManifest::all() as $name => $manifest) {
       $acf = $manifest['acf'] ?? null;
       $dir = $manifest['_dir'] ?? null;
 
@@ -49,8 +49,8 @@ final class ModuleRegistry
       }
 
       require_once $dir . '/' . $acf;
-      $this->modules[$slug] = [
-        'group_key' => 'group_module_' . str_replace('-', '_', $slug),
+      $this->modules[$name] = [
+        'group_key' => 'group_module_' . $name,
         'manifest' => $manifest,
       ];
     }
@@ -114,17 +114,15 @@ final class ModuleRegistry
   }
 
   /**
-   * Merge folder-sourced and filter-sourced layouts into content_modules,
-   * replacing any existing layout whose name collides.
+   * Merge manifest-sourced layouts into content_modules, replacing any existing
+   * layout whose name collides.
    *
    * @param array<string, mixed> $field
    * @return array<string, mixed>
    */
   public function inject_layouts(array $field): array
   {
-    $auto   = $this->build_auto_layouts();
-    $custom = apply_filters('tofino/module_layouts', []);
-    $layouts = array_merge($auto, is_array($custom) ? $custom : []);
+    $layouts = $this->build_auto_layouts();
 
     if (!$layouts) {
       return $field;
@@ -147,8 +145,7 @@ final class ModuleRegistry
 
   /**
    * Build flexible-content layouts from the field groups registered by each
-   * module folder. Slug and group key come from the load_module_fields map —
-   * no marker fields required on the group itself.
+   * module manifest.
    *
    * @return array<string, array<string, mixed>>
    */
@@ -160,7 +157,7 @@ final class ModuleRegistry
 
     $out = [];
 
-    foreach ($this->modules as $slug => $module) {
+    foreach ($this->modules as $name => $module) {
       $group_key = $module['group_key'];
       $manifest = $module['manifest'];
       $group = acf_get_field_group($group_key);
@@ -170,12 +167,10 @@ final class ModuleRegistry
         continue;
       }
 
-      $name = str_replace('-', '_', $slug);
-
       $out["layout_$name"] = [
         'key'        => "layout_$name",
         'name'       => $name,
-        'label'      => (string) ($manifest['title'] ?? $group['title'] ?? ucwords(str_replace('-', ' ', $slug))),
+        'label'      => (string) ($manifest['title'] ?? $group['title']),
         'display'    => 'block',
         'sub_fields' => $fields,
       ];

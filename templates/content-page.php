@@ -7,10 +7,10 @@
     // Loop ACF layouts and display the matching partial
     while (have_rows('content_modules')) : the_row();
       $row_layout_raw = get_row_layout();
-      $row_layout = str_replace('_', '-', $row_layout_raw); // Replace _ with - for the filename ?>
+      $row_layout_slug = str_replace('_', '-', $row_layout_raw); ?>
 
-      <!-- Start <?php echo $row_layout; ?> -->
-      <div class="module relative module-<?php echo $row_layout; ?> module-<?php echo $i; ?>"><?php
+      <!-- Start <?php echo $row_layout_slug; ?> -->
+      <div class="module relative module-<?php echo $row_layout_slug; ?> module-<?php echo $i; ?>"><?php
         if ($show_module_names) :
           $row_label = \Tofino\Helpers\get_module_name($row_layout_raw);
           $row_label = apply_filters('tofino/module_name_label', $row_label, $row_layout_raw); ?>
@@ -18,9 +18,9 @@
             <span>Module: <?php echo wp_kses_post($row_label); ?></span>
           </div><?php
         endif; ?>
-        <?php \Tofino\Helpers\render_module($row_layout); ?>
+        <?php \Tofino\Helpers\render_module($row_layout_raw); ?>
       </div>
-      <!-- End <?php echo $row_layout; ?> --><?php
+      <!-- End <?php echo $row_layout_slug; ?> --><?php
       $i++;
     endwhile;
   else :

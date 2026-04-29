@@ -11,6 +11,21 @@ namespace Tofino\Assets;
 
 
 /**
+ * Registers shared JavaScript module runtimes that Tofino-only plugins can consume.
+ *
+ * @since 5.0.0
+ *
+ * @return void
+ */
+function shared_script_modules(): void
+{
+  \Tofino\Integrations\Vite::register_shared_script_modules();
+}
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\shared_script_modules', 1);
+add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\shared_script_modules', 1);
+
+
+/**
  * Enqueues the main front-end Vite assets.
  *
  * @since 1.1.0

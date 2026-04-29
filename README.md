@@ -36,7 +36,7 @@ For profile and tunnel setup details, see [`docs/dev-profiles.md`](docs/dev-prof
 ## Features
 
 - Folder-based feature architecture via `features/*/feature.json`.
-- Folder-based module architecture via `modules/*/module.json`.
+- Manifest-based module architecture via `module.json`.
 - Automatic ACF module layout registration for `content_modules`.
 - Admin feature toggles with persisted enabled/disabled state.
 - Automatic feature/module asset discovery and compilation to `dist/assets`.

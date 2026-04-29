@@ -38,6 +38,34 @@ class Vite
 
 
   /**
+   * Registers shared browser module IDs provided by Tofino for Tofino-only plugins.
+   *
+   * Plugins can mark these IDs as script module dependencies and externalize the
+   * matching packages from their own Vite builds to avoid shipping duplicate
+   * Vue/Pinia runtimes.
+   *
+   * @since 5.0.0
+   *
+   * @return void
+   */
+  public static function register_shared_script_modules(): void
+  {
+    $vue_url = self::resolve_entry_url('js/vendor/vue.ts');
+    $pinia_url = self::resolve_entry_url('js/vendor/pinia.ts');
+
+    if ($vue_url) {
+      wp_register_script_module('vue', $vue_url, [], null);
+    }
+
+    if ($pinia_url) {
+      wp_register_script_module('pinia', $pinia_url, [
+        ['id' => 'vue', 'import' => 'dynamic'],
+      ], null);
+    }
+  }
+
+
+  /**
    * Returns the dev server URL from the hot file, or null if not running.
    *
    * The hot file is written by a Vite plugin on dev server start
