@@ -173,6 +173,8 @@ final class ModuleRegistry
         'label'      => (string) ($manifest['title'] ?? $group['title']),
         'display'    => 'block',
         'sub_fields' => $fields,
+        'min'        => '',
+        'max'        => '',
       ];
     }
 
