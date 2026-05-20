@@ -15,7 +15,7 @@ const MIN_WYSIWYG_HEIGHT = 150;
  */
 const initTextareas = (): void => {
   const textareas = document.querySelectorAll<HTMLTextAreaElement>(
-    '.acf-field:not(.no-autosize) textarea'
+    '.acf-field:not(.no-autosize) textarea',
   );
 
   autosize(textareas);
@@ -30,7 +30,7 @@ const initTextareas = (): void => {
         return;
       }
       const newTextareas = container.querySelectorAll<HTMLTextAreaElement>(
-        '.acf-field:not(.no-autosize) textarea'
+        '.acf-field:not(.no-autosize) textarea',
       );
       if (newTextareas.length > 0) {
         autosize(newTextareas);

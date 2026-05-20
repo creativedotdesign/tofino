@@ -10,6 +10,9 @@ import devAssetRewriter from './src/js/build/assetRewriter';
 import hotFile from './src/js/build/hotFile';
 import cloudflareTunnel from './src/js/build/cloudflareTunnel';
 import phpFullReload from './src/js/build/phpFullReload';
+import injectPluginSources from './src/js/build/injectPluginSources';
+import pluginAtAlias from './src/js/build/pluginAtAlias';
+import { findTofinoPluginDirs } from './src/js/build/tofinoPlugins';
 import { resolveTunnelConfig } from './src/js/build/tunnelConfig';
 import { bold, lightMagenta } from 'kolorist';
 import graphqlLoader from 'vite-plugin-graphql-loader';
@@ -21,6 +24,13 @@ export default ({ mode }: { mode: string }) => {
   // Derive feature flags from the active profile — single source of truth.
   const tunnel = devProfile === 'tunnel' ? resolveTunnelConfig(env) : undefined;
 
+  // Tofino-aligned plugins are discovered by their `module.json` manifests —
+  // the same convention the PHP side uses via `tofino/register_modules`. A
+  // plugin without one is left untouched: not watched, not scanned by
+  // Tailwind, not served through the dev server's HMR pipeline.
+  const pluginsDir = path.resolve(__dirname, '../../plugins');
+  const tofinoPluginDirs = findTofinoPluginDirs(pluginsDir);
+
   const phpWatchPatterns = [
     'templates/**/*.php',
     'modules/**/*.php',
@@ -28,7 +38,25 @@ export default ({ mode }: { mode: string }) => {
     'settings/**/*.php',
     'theme/**/*.php',
     '*.php',
+    // Per-plugin patterns derived from the discovered set. The phpFullReload
+    // handler triggers full-reload on `.php` changes; non-PHP extensions are
+    // tracked here purely so Vite's HMR sees changes to plugin source files
+    // served through this dev server via /@fs/.
+    ...tofinoPluginDirs.flatMap((dir) => [
+      `${dir}/modules/**/*.php`,
+      `${dir}/modules/**/*.{ts,vue,css}`,
+      `${dir}/app.{ts,css}`,
+    ]),
   ];
+
+  // Tailwind `@source` globs (absolute paths) injected into app.css in dev
+  // only — see injectPluginSources. Production builds never see these, so
+  // the theme's dist CSS stays free of plugin-only utilities (each plugin
+  // emits its own CSS from its own Vite build).
+  const pluginTailwindSources = tofinoPluginDirs.flatMap((dir) => [
+    `${dir}/modules/**/*.{php,vue,ts,js}`,
+    `${dir}/app.ts`,
+  ]);
 
   return defineConfig({
     publicDir: path.resolve(__dirname, './src/public'),
@@ -86,6 +114,8 @@ export default ({ mode }: { mode: string }) => {
       include: ['vue', 'pinia', 'tua-body-scroll-lock'],
     },
     plugins: [
+      pluginAtAlias({ themeSrcDir: path.resolve(__dirname, './src') }),
+      injectPluginSources({ sources: pluginTailwindSources }),
       tailwindcss(),
       vue(),
       eslintPlugin(),
@@ -93,6 +123,10 @@ export default ({ mode }: { mode: string }) => {
         [
           path.resolve(__dirname, 'src/sprite/*.svg'),
           path.resolve(__dirname, 'features/*/icons/*.svg'),
+          // Tofino-aligned plugins: any icons under modules/<slug>/icons get
+          // sprited alongside theme/feature icons. Plugins reference symbols
+          // via <use href="#icon-<name>"> the same way the theme does.
+          ...tofinoPluginDirs.map((dir) => `${dir}/modules/*/icons/*.svg`),
         ],
         {
           prefix: 'icon-',
@@ -144,7 +178,9 @@ export default ({ mode }: { mode: string }) => {
       cors: true,
       strictPort: true,
       fs: {
-        allow: [path.resolve(__dirname)],
+        // Allow the theme and the sibling plugins directory so Tofino-aligned
+        // plugins can be served (and HMR'd) from this dev server via /@fs/.
+        allow: [path.resolve(__dirname), path.resolve(__dirname, '../../plugins')],
       },
       // port: 3000,
       proxy: {
@@ -169,10 +205,17 @@ export default ({ mode }: { mode: string }) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
+        // `@` is handled by the `pluginAtAlias` plugin above so it can
+        // resolve relative to the importer (theme src vs plugin module dir).
+        // Vite's built-in alias plugin runs before user plugins with
+        // `enforce: 'pre'`, so a static `@` entry here would steal plugin
+        // imports before they could be redirected.
         '@features': path.resolve(__dirname, './features'),
         '@modules': path.resolve(__dirname, './modules'),
         vue: 'vue/dist/vue.esm-bundler.js',
+        // Full vue-i18n build with compiler — plugin code loads locale JSON
+        // as plain objects and needs runtime message compilation.
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.esm-bundler.js',
       },
     },
   });

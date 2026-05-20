@@ -47,3 +47,5 @@ foreach ($tofino_includes as $file) {
   }
 }
 unset($file, $filepath);
+
+add_filter('acf/settings/enable_acf_ai', '__return_true');

@@ -75,7 +75,7 @@ class Vite
    *
    * @return string|null The dev server URL, or null in production.
    */
-  private static function get_dev_server_url(): ?string
+  public static function get_dev_server_url(): ?string
   {
     // Cache the result so the file check only happens once per request.
     static $dev_url = false;
