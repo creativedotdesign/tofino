@@ -26,6 +26,7 @@ modules/my-module/
   markdown.php   (optional)
   style.css      (optional)
   script.ts      (optional)
+  cpt.php        (optional)
 ```
 
 ## Simple Example
@@ -51,3 +52,8 @@ modules/my-module/
 - The ACF field group key must be `group_module_{name}`.
 - Keep module UI, fields, and rendering together in one folder.
 - Prefer small, composable modules over large multi-purpose ones.
+- A module that owns a custom post type declares it with `"cpt": "cpt.php"`.
+  The file is required on `after_setup_theme` and registers the post type the
+  usual way (`register_post_type` on `init`, field groups on `acf/init`).
+  One module is the CPT's canonical owner; other modules may query it but
+  must not re-register it.

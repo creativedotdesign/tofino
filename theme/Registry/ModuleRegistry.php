@@ -27,8 +27,29 @@ final class ModuleRegistry
   public static function boot(): void
   {
     $instance = new self();
+    add_action('after_setup_theme', [$instance, 'load_module_cpts']);
     add_action('acf/include_fields', [$instance, 'load_module_fields']);
     add_action('admin_notices',      [$instance, 'render_override_notice']);
+  }
+
+  /**
+   * Require every module's optional `cpt` file. A module that owns a custom
+   * post type declares it in module.json ("cpt": "cpt.php") and the file
+   * registers it the usual way (register_post_type on init, field groups on
+   * acf/init). Runs on after_setup_theme so those hooks are registered in
+   * time regardless of whether the module ships in a theme or a plugin.
+   */
+  public function load_module_cpts(): void
+  {
+    foreach (ModuleManifest::all() as $manifest) {
+      if (!empty($manifest['cpt'])) {
+        $file = ModuleManifest::file($manifest, 'cpt');
+
+        if ($file) {
+          require_once $file;
+        }
+      }
+    }
   }
 
   /**
