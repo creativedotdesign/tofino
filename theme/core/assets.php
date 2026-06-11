@@ -114,7 +114,7 @@ function add_defer_attribute(string $tag, string $handle): string
 
   return $tag;
 }
-add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
+// add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
 
 
 /**
@@ -126,7 +126,9 @@ add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
  */
 function add_svg_sprite_to_footer(): void
 {
-  $svg_sprite = get_template_directory() . '/dist/sprite.svg';
+  // Child theme's sprite wins when present (a child owning the site build
+  // generates one complete sprite); falls back to the parent's.
+  $svg_sprite = get_theme_file_path('dist/sprite.svg');
 
   if (file_exists($svg_sprite)) {
     echo file_get_contents($svg_sprite);

@@ -52,7 +52,16 @@ final class FolderManifest
 
     $items = [];
 
-    foreach (glob(get_template_directory() . '/' . $type . '/*', GLOB_ONLYDIR) ?: [] as $dir) {
+    // Child theme first: a child theme folder wins over a parent folder with
+    // the same slug, matching the child-first convention used by ModuleManifest.
+    $base_dirs = array_unique([get_stylesheet_directory(), get_template_directory()]);
+
+    $dirs = [];
+    foreach ($base_dirs as $base) {
+      $dirs = array_merge($dirs, glob($base . '/' . $type . '/*', GLOB_ONLYDIR) ?: []);
+    }
+
+    foreach ($dirs as $dir) {
       if (!file_exists($dir . '/' . $manifest_file)) {
         continue;
       }
@@ -69,6 +78,10 @@ final class FolderManifest
       }
 
       $slug = basename($dir);
+
+      if (isset($items[$slug])) {
+        continue;
+      }
 
       $resolved = [
         'title' => $manifest['title'],

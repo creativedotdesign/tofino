@@ -26,6 +26,27 @@ export const findTofinoPluginDirs = (pluginsDir: string): string[] => {
 };
 
 /**
+ * Discover sibling child themes in `wp-content/themes/` by the same
+ * `modules/<slug>/module.json` convention, excluding the theme itself.
+ * A child theme opts in to dev-server participation (served via /@fs/,
+ * full-reload on PHP changes) by shipping at least one manifest.
+ *
+ * @param themesDir Absolute path to `wp-content/themes/`.
+ * @param selfDir   Absolute path of this theme (excluded from results).
+ * @returns Absolute paths of Tofino-aligned sibling theme directories.
+ */
+export const findSiblingThemeDirs = (themesDir: string, selfDir: string): string[] => {
+  if (!fs.existsSync(themesDir)) return [];
+
+  return fs
+    .readdirSync(themesDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+    .map((entry) => path.join(themesDir, entry.name))
+    .filter((dir) => path.resolve(dir) !== path.resolve(selfDir))
+    .filter(hasTofinoManifest);
+};
+
+/**
  * Returns true when a plugin directory contains at least one
  * `modules/<slug>/module.json`.
  */

@@ -116,7 +116,7 @@ class CloudflareTunnel
       return null;
     }
 
-    $hot_path = get_theme_file_path('dist/hot');
+    $hot_path = get_template_directory() . '/dist/hot';
     if (!file_exists($hot_path)) {
       return null;
     }

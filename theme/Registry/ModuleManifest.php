@@ -149,6 +149,15 @@ final class ModuleManifest
   /** @return array<int, string> */
   private static function theme_manifest_paths(): array
   {
-    return glob(get_template_directory() . '/modules/*/module.json') ?: [];
+    // Child theme first: all() is first-wins on module name, so a child theme
+    // can override a parent module by shipping the same module name.
+    $dirs = array_unique([get_stylesheet_directory(), get_template_directory()]);
+
+    $paths = [];
+    foreach ($dirs as $dir) {
+      $paths = array_merge($paths, glob($dir . '/modules/*/module.json') ?: []);
+    }
+
+    return $paths;
   }
 }

@@ -88,7 +88,7 @@ function render_svg_file(array $atts): string
   if (is_numeric($atts['file'])) {
     $file = get_attached_file((int) $atts['file']);
   } else {
-    $file = get_template_directory() . '/dist/svgs/' . $atts['file'] . '.svg';
+    $file = get_theme_file_path('dist/svgs/' . $atts['file'] . '.svg');
   }
 
   if (!$file || !file_exists($file)) {

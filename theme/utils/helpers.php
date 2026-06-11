@@ -345,7 +345,10 @@ function render_module(string $layout): void
   // are scoped to this function, not truly global.
   include $file_path;
 
-  if (!str_contains($file_path, get_template_directory())) {
+  if (
+    !str_contains($file_path, get_template_directory()) &&
+    !str_contains($file_path, get_stylesheet_directory())
+  ) {
     echo "<!-- Module loaded from plugin -->";
   }
 }

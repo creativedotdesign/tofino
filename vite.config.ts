@@ -12,7 +12,7 @@ import cloudflareTunnel from './src/js/build/cloudflareTunnel';
 import phpFullReload from './src/js/build/phpFullReload';
 import injectPluginSources from './src/js/build/injectPluginSources';
 import pluginAtAlias from './src/js/build/pluginAtAlias';
-import { findTofinoPluginDirs } from './src/js/build/tofinoPlugins';
+import { findTofinoPluginDirs, findSiblingThemeDirs } from './src/js/build/tofinoPlugins';
 import { resolveTunnelConfig } from './src/js/build/tunnelConfig';
 import { bold, lightMagenta } from 'kolorist';
 import graphqlLoader from 'vite-plugin-graphql-loader';
@@ -31,6 +31,13 @@ export default ({ mode }: { mode: string }) => {
   const pluginsDir = path.resolve(__dirname, '../../plugins');
   const tofinoPluginDirs = findTofinoPluginDirs(pluginsDir);
 
+  // Sibling child themes (e.g. compose-theme) are discovered the same way —
+  // by `modules/<slug>/module.json` manifests. They run their own builds but
+  // are served via /@fs/ and watched for full-reload when this dev server is
+  // the active one.
+  const themesDir = path.resolve(__dirname, '..');
+  const siblingThemeDirs = findSiblingThemeDirs(themesDir, __dirname);
+
   const phpWatchPatterns = [
     'templates/**/*.php',
     'modules/**/*.php',
@@ -44,6 +51,14 @@ export default ({ mode }: { mode: string }) => {
     // served through this dev server via /@fs/.
     ...tofinoPluginDirs.flatMap((dir) => [
       `${dir}/modules/**/*.php`,
+      `${dir}/modules/**/*.{ts,vue,css}`,
+      `${dir}/app.{ts,css}`,
+    ]),
+    ...siblingThemeDirs.flatMap((dir) => [
+      `${dir}/modules/**/*.php`,
+      `${dir}/partials/**/*.php`,
+      `${dir}/templates/**/*.php`,
+      `${dir}/*.php`,
       `${dir}/modules/**/*.{ts,vue,css}`,
       `${dir}/app.{ts,css}`,
     ]),
@@ -178,9 +193,14 @@ export default ({ mode }: { mode: string }) => {
       cors: true,
       strictPort: true,
       fs: {
-        // Allow the theme and the sibling plugins directory so Tofino-aligned
-        // plugins can be served (and HMR'd) from this dev server via /@fs/.
-        allow: [path.resolve(__dirname), path.resolve(__dirname, '../../plugins')],
+        // Allow the theme, the sibling plugins directory, and the themes
+        // directory so Tofino-aligned plugins and child themes can be served
+        // (and HMR'd) from this dev server via /@fs/.
+        allow: [
+          path.resolve(__dirname),
+          path.resolve(__dirname, '../../plugins'),
+          path.resolve(__dirname, '..'),
+        ],
       },
       // port: 3000,
       proxy: {

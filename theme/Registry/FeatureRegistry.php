@@ -73,7 +73,7 @@ final class FeatureRegistry
       $file = $manifest[$key] ?? null;
 
       if ($file) {
-        require_once get_template_directory() . '/features/' . $slug . '/' . $file;
+        require_once $manifest['_dir'] . '/' . $file;
       }
     }
   }
@@ -92,7 +92,7 @@ final class FeatureRegistry
       $acf = $manifest['acf'] ?? null;
 
       if ($acf) {
-        require_once get_template_directory() . '/features/' . $slug . '/' . $acf;
+        require_once $manifest['_dir'] . '/' . $acf;
       }
     }
   }

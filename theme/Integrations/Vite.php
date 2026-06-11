@@ -32,7 +32,18 @@ class Vite
    */
   public static function use_vite(string $script = 'js/app.ts'): void
   {
-    self::enqueue_css($script);
+    /**
+     * Whether to enqueue the CSS extracted for this entry. A child theme that
+     * owns the site-wide stylesheet build can return false for 'js/app.ts'
+     * while keeping the parent's JS (and admin/login CSS) intact.
+     *
+     * @param bool   $use    Whether to enqueue the entry's CSS.
+     * @param string $script The entry point path.
+     */
+    if (apply_filters('tofino/use_vite_css', true, $script)) {
+      self::enqueue_css($script);
+    }
+
     self::enqueue_script($script);
   }
 
@@ -81,7 +92,9 @@ class Vite
     static $dev_url = false;
 
     if ($dev_url === false) {
-      $hot_path = get_theme_file_path('dist/hot');
+      // This loader serves the parent theme's build — resolve against the
+      // template directory so an active child theme's dist/ can't shadow it.
+      $hot_path = get_template_directory() . '/dist/hot';
 
       if (file_exists($hot_path)) {
         $dev_url = rtrim(file_get_contents($hot_path), " \t\n\r/");
@@ -103,7 +116,7 @@ class Vite
    */
   private static function dist_url(): string
   {
-    return get_stylesheet_directory_uri() . '/dist/';
+    return get_template_directory_uri() . '/dist/';
   }
 
 
@@ -190,7 +203,7 @@ class Vite
       return self::$manifest_cache;
     }
 
-    $file = get_theme_file_path('dist/.vite/manifest.json');
+    $file = get_template_directory() . '/dist/.vite/manifest.json';
 
     if (!file_exists($file)) {
       self::$manifest_cache = [];
