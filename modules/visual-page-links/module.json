@@ -1,7 +1,0 @@
-{
-  "title": "Visual Page Links",
-  "name": "visual_page_links",
-  "acf": "fields.php",
-  "template": "template.php",
-  "markdown": "markdown.php"
-}

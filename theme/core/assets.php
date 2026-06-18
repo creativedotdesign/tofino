@@ -56,11 +56,22 @@ function localize_scripts(): void
     return;
   }
 
+  // Module slugs whose manifest resolves outside this theme (child theme or
+  // plugin override) — the front-end loader skips this theme's script for
+  // them so the overriding source's script isn't double-bound.
+  $overridden = [];
+  foreach (\Tofino\Registry\ModuleManifest::all() as $module) {
+    if (!str_starts_with($module['_dir'], get_template_directory())) {
+      $overridden[] = basename($module['_dir']);
+    }
+  }
+
   $data = [
     'ajaxUrl' => admin_url('admin-ajax.php'),
     'nextNonce' => wp_create_nonce('next_nonce'),
     'themeUrl' => get_template_directory_uri(),
     'siteURL' => home_url(),
+    'overriddenModules' => $overridden,
   ];
 
   if (function_exists('wpml_object_id_filter')) {

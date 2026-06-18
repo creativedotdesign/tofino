@@ -1,13 +1,15 @@
 import type { ThemeScript } from '@/js/shared/types/types';
 import { loadManifestScripts, loadThemeScripts } from '@/js/core/frontendLoader';
 import { frontendFeatureScripts, moduleScripts } from '@/js/core/themeAssets';
+
+// Inline data from localize_scripts() — a global `const`, not a window prop.
+declare const tofinoJS: { overriddenModules?: string[] } | undefined;
 // import * as WebFont from 'webfontloader';
 // import { WebFontConfig } from '@/js/shared/types/types';
 
-// Import CSS
-import '@/css/app.css';
-import.meta.glob('../../features/*/style.css', { eager: true });
-import.meta.glob('../../modules/*/style.css', { eager: true });
+// Front-end CSS lives in its own entry (js/styles.ts) so it can be enqueued or
+// suppressed independently of this JS — see Vite::use_vite() and the
+// tofino/use_vite_css filter. Don't import stylesheets here.
 
 /**
  * Runs on DOMContentLoaded and boots front-end scripts.
@@ -44,7 +46,11 @@ const init = async (): Promise<void> => {
 
   await loadThemeScripts(scripts);
   await loadManifestScripts(frontendFeatureScripts, 'feature');
-  await loadManifestScripts(moduleScripts, 'module');
+
+  // Modules overridden by a child theme/plugin ship their own script — skip
+  // this theme's copy so handlers aren't double-bound.
+  const overridden = typeof tofinoJS !== 'undefined' ? (tofinoJS?.overriddenModules ?? []) : [];
+  await loadManifestScripts(moduleScripts, 'module', overridden);
 };
 
 /**

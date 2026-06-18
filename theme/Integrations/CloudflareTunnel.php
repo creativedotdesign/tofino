@@ -41,6 +41,26 @@ class CloudflareTunnel
     add_filter('plugins_url', [self::class, 'rewrite_url'], 20);
     add_filter('content_url', [self::class, 'rewrite_url'], 20);
     add_filter('includes_url', [self::class, 'rewrite_url'], 20);
+    add_filter('upload_dir', [self::class, 'rewrite_upload_dir'], 20);
+  }
+
+  /**
+   * Filter callback for upload_dir.
+   *
+   * wp_upload_dir() builds its URLs from the WP_CONTENT_URL constant, which is
+   * defined before theme filters load, so attachment URLs bypass the
+   * option_siteurl and content_url filters and need rewriting here.
+   *
+   * @since 5.0.0
+   *
+   * @param array $uploads The upload directory data array.
+   * @return array The array with url and baseurl rewritten to the tunnel host.
+   */
+  public static function rewrite_upload_dir(array $uploads): array
+  {
+    $uploads['url'] = self::rewrite_url((string) $uploads['url']);
+    $uploads['baseurl'] = self::rewrite_url((string) $uploads['baseurl']);
+    return $uploads;
   }
 
   /**

@@ -88,6 +88,7 @@ export default ({ mode }: { mode: string }) => {
         preserveEntrySignatures: 'exports-only',
         input: {
           app: '/js/app.ts',
+          styles: '/js/styles.ts',
           admin: '/js/admin.ts',
           vue: '/js/vendor/vue.ts',
           pinia: '/js/vendor/pinia.ts',

@@ -32,19 +32,57 @@ class Vite
    */
   public static function use_vite(string $script = 'js/app.ts'): void
   {
+    self::enqueue_script($script);
+
     /**
-     * Whether to enqueue the CSS extracted for this entry. A child theme that
-     * owns the site-wide stylesheet build can return false for 'js/app.ts'
-     * while keeping the parent's JS (and admin/login CSS) intact.
+     * Whether to load this entry's CSS. A child theme that owns the site-wide
+     * stylesheet build can return false for 'js/app.ts' while keeping the
+     * parent's JS (and admin/login CSS) intact.
      *
-     * @param bool   $use    Whether to enqueue the entry's CSS.
+     * @param bool   $use    Whether to load the entry's CSS.
      * @param string $script The entry point path.
      */
-    if (apply_filters('tofino/use_vite_css', true, $script)) {
-      self::enqueue_css($script);
+    if (!apply_filters('tofino/use_vite_css', true, $script)) {
+      return;
     }
 
-    self::enqueue_script($script);
+    // The front-end stylesheet lives in its own entry (js/styles.ts) so it can
+    // be suppressed independently of the JS in BOTH dev and production. In dev
+    // that's the only way to honour the filter — Vite injects a JS-imported
+    // stylesheet over HMR no matter what the PHP side enqueues, so the gate has
+    // to be "don't load the CSS module at all". Other entries (e.g. admin) keep
+    // their CSS bundled with their own JS.
+    if ($script === 'js/app.ts') {
+      self::enqueue_styles_entry();
+      return;
+    }
+
+    self::enqueue_css($script);
+  }
+
+
+  /**
+   * Loads the dedicated front-end stylesheet entry (js/styles.ts).
+   *
+   * In dev the CSS rides inside the JS module, so we enqueue the module itself
+   * and let Vite inject the styles over HMR. In production the entry's JS is
+   * empty (side-effect CSS imports only), so we enqueue just the extracted
+   * stylesheet as a <link>.
+   *
+   * @since 5.0.0
+   *
+   * @return void
+   */
+  private static function enqueue_styles_entry(): void
+  {
+    $entry = 'js/styles.ts';
+
+    if (self::get_dev_server_url() !== null) {
+      self::enqueue_script($entry);
+      return;
+    }
+
+    self::enqueue_css($entry);
   }
 
 

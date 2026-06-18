@@ -57,13 +57,20 @@ export const loadThemeScripts = async (scripts: ThemeScript[]): Promise<void> =>
  *
  * @param scripts - Slug-keyed lazy loaders (see `@/js/core/themeAssets`).
  * @param dataAttr - The data attribute name to match (e.g. 'feature' or 'module').
+ * @param skip - Slugs to skip (e.g. modules overridden by a child theme/plugin,
+ *               whose own build ships the script instead).
  */
 export const loadManifestScripts = async (
   scripts: Record<string, ModuleLoader>,
   dataAttr: string,
+  skip: string[] = [],
 ): Promise<void> => {
   await Promise.all(
     Object.entries(scripts).map(async ([slug, load]) => {
+      if (skip.includes(slug)) {
+        return;
+      }
+
       if (!document.querySelector(`[data-${dataAttr}="${slug}"]`)) {
         return;
       }
