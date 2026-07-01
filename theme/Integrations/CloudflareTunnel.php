@@ -36,6 +36,7 @@ class CloudflareTunnel
   {
     add_filter('option_home', [self::class, 'override_base_url'], 1);
     add_filter('option_siteurl', [self::class, 'override_base_url'], 1);
+    add_filter('redirect_canonical', [self::class, 'prevent_canonical_redirect'], 10, 2);
     add_filter('script_loader_src', [self::class, 'rewrite_url'], 20);
     add_filter('style_loader_src', [self::class, 'rewrite_url'], 20);
     add_filter('plugins_url', [self::class, 'rewrite_url'], 20);
@@ -77,6 +78,33 @@ class CloudflareTunnel
   public static function override_base_url(string $url): string
   {
     return self::get_public_base_url() ?: $url;
+  }
+
+  /**
+   * Cancels WordPress canonical redirects for tunnel requests.
+   *
+   * The Cloudflare ingress rewrites the Host header to the local vhost
+   * (e.g. tofino.test) so Local's router can resolve the site, while this
+   * integration overrides home/siteurl to the public tunnel host. WordPress
+   * then sees the request host (tofino.test) differ from the canonical home
+   * host (tofino.lambda.host) and 301-redirects every request to the tunnel
+   * host, which Cloudflare forwards straight back — an infinite loop
+   * (ERR_TOO_MANY_REDIRECTS). Skipping the canonical redirect for tunnel
+   * requests breaks it; the override already emits correct absolute URLs.
+   *
+   * @since 5.0.0
+   *
+   * @param string $redirect_url  The canonical URL WordPress wants to redirect to.
+   * @param string $requested_url The originally requested URL.
+   * @return string|false The original redirect URL, or false to cancel the redirect.
+   */
+  public static function prevent_canonical_redirect(string $redirect_url, string $requested_url)
+  {
+    if (self::get_public_base_url()) {
+      return false;
+    }
+
+    return $redirect_url;
   }
 
   /**

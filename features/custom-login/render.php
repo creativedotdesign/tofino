@@ -116,6 +116,9 @@ class CustomLoginForm
   }
 }
 
-add_action('acf/init', static function () {
+// The custom login screen only ever applies to wp-login.php, and `acf/init`
+// does NOT fire there — bootstrap on `login_init`, which does. ACF's get_field
+// resolves the saved options fine at this point.
+add_action('login_init', static function () {
   new CustomLoginForm();
 });
