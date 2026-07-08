@@ -1,7 +1,27 @@
 @reference "tailwindcss";
 
 .alert {
-  @apply hidden bg-green-400 p-2;
+  @apply hidden p-2;
+
+  /* Alert 1 (first alert) — the inverse solid button colours: the brand's
+     accent fill with its paired dark label (Figma "Button Inverse"). Referenced
+     as runtime vars (emitted on :root by the Compose brand feature) with the
+     Vanilla defaults as standalone fallbacks. */
+  background-color: var(--brand-primary-inverse, #e5e5e5);
+  color: var(--brand-primary-inverse-text, #262626);
+
+  /* Alert 2 (second alert) — brand primary, 10% darker, with near-white inverse
+     text, so the two alerts stay distinct without any alert-specific colours. */
+  &[data-variant='2'] {
+    background-color: color-mix(in srgb, var(--brand-primary, #525252) 90%, #000);
+    color: var(--brand-title-inverse, #fff);
+  }
+
+  /* Links in the message inherit the bar's text colour, underlined (Figma). */
+  & a {
+    color: inherit;
+    @apply underline;
+  }
 
   &.bottom {
     @apply fixed right-0 bottom-0 left-0 z-10;

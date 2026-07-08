@@ -29,7 +29,6 @@ $tofino_includes = [
   "theme/utils/helpers.php",
   "theme/utils/shortcodes.php",
   "theme/Registry/ModuleRegistry.php",
-  "theme/Integrations/MarkdownExport.php",
   // Options pages and field groups
   "settings/admin.php",
   "settings/footer.php",

@@ -56,10 +56,13 @@ export default ({ mode }: { mode: string }) => {
     ]),
     ...siblingThemeDirs.flatMap((dir) => [
       `${dir}/modules/**/*.php`,
-      `${dir}/partials/**/*.php`,
+      `${dir}/components/**/*.php`,
+      `${dir}/features/**/*.php`,
       `${dir}/templates/**/*.php`,
       `${dir}/*.php`,
       `${dir}/modules/**/*.{ts,vue,css}`,
+      `${dir}/components/**/*.css`,
+      `${dir}/features/**/*.{ts,vue,css}`,
       `${dir}/app.{ts,css}`,
     ]),
   ];
@@ -81,7 +84,6 @@ export default ({ mode }: { mode: string }) => {
       outDir: path.resolve(__dirname, 'dist'),
       emptyOutDir: true,
       manifest: true,
-      minify: false,
       sourcemap: env.NODE_ENV === 'production' ? false : 'inline',
       target: 'es2022',
       rollupOptions: {

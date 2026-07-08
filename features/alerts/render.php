@@ -50,6 +50,8 @@ function render(string $position): void
         'position' => $alert_position,
         'message' => $alert['message'],
         'id' => $index,
+        // First alert = Alert 1 colour, second = darker Alert 2 (see Figma).
+        'variant' => $index === 1 ? 1 : 2,
         'expires' => $alert['expires'] ?? '',
       ]);
     }

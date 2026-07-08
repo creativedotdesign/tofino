@@ -11,6 +11,38 @@ namespace Tofino\Assets;
 
 
 /**
+ * Prints the page-wide CSS cascade-layer order, inline, before any stylesheet.
+ *
+ * Layer order is fixed by the FIRST mention of each name in document order, so
+ * this single statement is authoritative no matter what enqueues after it.
+ * It is a PLATFORM guarantee: Tofino-family plugins scope their Tailwind
+ * builds into the lowest `plugins` layer (per-part `layer(plugins)` imports)
+ * and rely on that layer sitting below the theme's — on every Tofino site,
+ * child-themed or not. Without this, plugin sheets that enqueue first would
+ * establish their own order (empirically `plugins` can land ABOVE utilities,
+ * letting plugin preflight/utilities beat theme CSS).
+ *
+ *   properties  Tailwind's @property fallback layer (leaks unscoped from every
+ *               TW v4 build — tailwindcss#15005 — so it's pinned lowest)
+ *   plugins     every plugin's generated Tailwind (theme/preflight/utilities)
+ *   theme/base/components/utilities  the standard Tailwind layers
+ *   brand       highest — per-brand overrides of plugin CSS (Compose)
+ *
+ * A child theme printing the same statement is a harmless duplicate (first
+ * mention wins). Do NOT reorder without auditing every plugin's app.css.
+ *
+ * @since 5.0.0
+ *
+ * @return void
+ */
+function cascade_layer_order(): void
+{
+  echo '<style>@layer properties, plugins, theme, base, components, utilities, brand;</style>' . "\n";
+}
+add_action('wp_head', __NAMESPACE__ . '\\cascade_layer_order', 0);
+
+
+/**
  * Registers shared JavaScript module runtimes that Tofino-only plugins can consume.
  *
  * @since 5.0.0
@@ -104,28 +136,6 @@ function admin_scripts(): void
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
 add_action('login_head', __NAMESPACE__ . '\\admin_scripts');
 
-
-/**
- * Tag theme/module scripts with `type="module"` and defer every other
- * front-end script. Admin and login scripts are left untouched.
- *
- * @param string $tag    Script HTML tag.
- * @param string $handle Script handle.
- * @return string Updated script tag.
- */
-function add_defer_attribute(string $tag, string $handle): string
-{
-  if (str_starts_with($handle, 'tofino') || $handle === 'form-builder' || $handle === 'data-viz') {
-    return str_replace('script src', 'script type="module" src', $tag);
-  }
-
-  if (!is_admin() && $GLOBALS['pagenow'] !== 'wp-login.php') {
-    return str_replace(' src', ' defer src', $tag);
-  }
-
-  return $tag;
-}
-// add_filter('script_loader_tag', __NAMESPACE__ . '\\add_defer_attribute', 10, 2);
 
 
 /**

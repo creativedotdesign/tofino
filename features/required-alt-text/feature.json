@@ -1,0 +1,6 @@
+{
+  "title": "Required Alt Text",
+  "scope": "admin",
+  "script": "admin.ts",
+  "render": "render.php"
+}

@@ -33,17 +33,25 @@ final class ModuleRegistry
   }
 
   /**
-   * Require every module's optional `cpt` file. A module that owns a custom
-   * post type declares it in module.json ("cpt": "cpt.php") and the file
-   * registers it the usual way (register_post_type on init, field groups on
-   * acf/init). Runs on after_setup_theme so those hooks are registered in
+   * Require every module's optional `cpt` and `bootstrap` files. A module
+   * that owns a custom post type declares it in module.json
+   * ("cpt": "cpt.php") and the file registers it the usual way
+   * (register_post_type on init, field groups on acf/init). A module with
+   * always-on runtime that is NOT a post type — REST routes, cross-plugin
+   * hooks — declares "bootstrap": "bootstrap.php" instead; it loads
+   * identically, the two keys just keep the manifest honest about what the
+   * file does. Runs on after_setup_theme so those hooks are registered in
    * time regardless of whether the module ships in a theme or a plugin.
    */
   public function load_module_cpts(): void
   {
     foreach (ModuleManifest::all() as $manifest) {
-      if (!empty($manifest['cpt'])) {
-        $file = ModuleManifest::file($manifest, 'cpt');
+      foreach (['cpt', 'bootstrap'] as $key) {
+        if (empty($manifest[$key])) {
+          continue;
+        }
+
+        $file = ModuleManifest::file($manifest, $key);
 
         if ($file) {
           require_once $file;

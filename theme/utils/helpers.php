@@ -293,12 +293,18 @@ function get_module_markdown_file(string $layout): ?string
 /**
  * Renders a module's Markdown serializer and returns the output string.
  *
+ * Serializers normally read ACF sub-fields from the current the_row() context.
+ * Passing $template_args instead lets callers render a module outside a
+ * flexible-content loop (e.g. a field attached directly to a post) — the
+ * array is visible inside the included file via include scope.
+ *
  * @since 5.0.0
  *
- * @param string $layout The ACF module layout name.
+ * @param string     $layout        The ACF module layout name.
+ * @param array|null $template_args Optional data for loop-less rendering.
  * @return string Markdown output for the current module row.
  */
-function render_module_markdown(string $layout): string
+function render_module_markdown(string $layout, ?array $template_args = null): string
 {
   $file_path = get_module_markdown_file($layout);
 

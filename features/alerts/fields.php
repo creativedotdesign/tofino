@@ -33,6 +33,8 @@ acf_add_local_field_group([
       'type' => 'repeater',
       'layout' => 'row',
       'min' => 0,
+      'max' => 2,
+      'instructions' => 'Up to two alerts. The first uses the Alert 1 brand colour, the second uses the darker Alert 2 colour.',
       'button_label' => 'Add Alert',
       'show_in_graphql' => 1,
       'graphql_field_name' => 'alerts',

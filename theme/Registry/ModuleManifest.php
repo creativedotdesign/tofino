@@ -132,10 +132,9 @@ final class ModuleManifest
         continue;
       }
 
-      if ($key === 'scope') {
-        $module['scope'] = in_array($value, ['frontend', 'admin', 'both'], true) ? $value : 'frontend';
-        continue;
-      }
+      // Note: module manifests have no `scope` key — nothing ever gated on it
+      // (a stray one is treated like any unknown key and dropped below).
+      // Features' feature.json scope is separate (FolderManifest).
 
       $target = realpath(trailingslashit($dir) . $value);
       if ($target && str_starts_with($target, $dir . DIRECTORY_SEPARATOR)) {

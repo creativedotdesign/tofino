@@ -1,0 +1,24 @@
+/**
+ * Required Alt Text — admin styling.
+ * Globbed into the admin bundle by src/js/admin.ts; @reference gives @apply the
+ * theme context without emitting the referenced CSS. The red is wp-admin's
+ * notice colour (#d63638). Toggled by admin.ts.
+ */
+@reference '../../src/css/admin.css';
+
+/* `!` (important) so the red wins over WordPress's own modal/label colours,
+   which out-specify a single utility class. */
+.req-alt-star {
+  @apply font-semibold text-[#d63638]!;
+}
+
+.req-alt-msg {
+  @apply mt-1 block text-xs leading-snug text-[#d63638]! not-italic;
+}
+
+.req-alt-invalid input,
+.req-alt-invalid textarea,
+input.req-alt-invalid,
+textarea.req-alt-invalid {
+  @apply border-[#d63638] shadow-[0_0_0_1px_#d63638];
+}

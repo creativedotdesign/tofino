@@ -1,0 +1,5 @@
+{
+  "title": "Machine Readable",
+  "scope": "frontend",
+  "render": "render.php"
+}
