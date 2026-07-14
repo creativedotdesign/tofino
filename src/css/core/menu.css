@@ -8,11 +8,11 @@
 }
 
 /* Scroll Reveal Classes */
-.scroll-down header {
+.scroll-down .site-header {
   @apply -translate-y-full!;
 }
 
-.scroll-up header {
+.scroll-up .site-header {
   @apply transform-none;
 }
 

@@ -1,0 +1,5 @@
+{
+  "title": "Alphabetical Admin Menu",
+  "scope": "admin",
+  "render": "render.php"
+}
