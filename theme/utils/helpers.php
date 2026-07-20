@@ -82,36 +82,6 @@ function fix_text_orphan(string $str = '', int $min_word_count = 3): string
 
 
 /**
- * Returns responsive image attribute values for use in an img tag.
- *
- * @since 3.2.1
- *
- * @param int|null $image_id Optional. The attachment ID. Defaults to the post featured image.
- * @param string   $size     Optional. The registered image size for the src attribute. Default 'full'.
- * @return array{srcset: string|false, sizes: string|false, src: string|null, alt: string} Image attribute values.
- */
-function responsive_image_attribute_values(?int $image_id = null, string $size = 'full'): array
-{
-  if (!$image_id) {
-    $image_id = (int) get_post_thumbnail_id();
-  }
-
-  $meta = wp_get_attachment_metadata($image_id);
-  $url = wp_get_attachment_image_src($image_id, $size);
-  $sizes = wp_calculate_image_sizes($size, $url, $meta, $image_id);
-  $srcset = wp_get_attachment_image_srcset($image_id, $size);
-  $alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
-
-  return [
-    'srcset' => $srcset,
-    'sizes' => $sizes,
-    'src' => ($url ? $url[0] : null),
-    'alt' => esc_attr((string) $alt)
-  ];
-}
-
-
-/**
  * Wraps the last word of a string in a span element with a given class.
  *
  * @since 4.0.0

@@ -26,6 +26,10 @@ function render(string $position): void
 
   $index = 1;
 
+  if ($position === 'top') {
+    echo '<div data-alert-region>';
+  }
+
   foreach ($alerts as $alert) {
     if (!$alert['enabled']) {
       $index++;
@@ -45,7 +49,11 @@ function render(string $position): void
 
     $alert_position = strtolower($alert['position']);
 
-    if ($alert['message'] && !isset($_COOKIE['tofino-alert-' . $index . '-closed']) && $position === $alert_position) {
+    // Always include eligible alerts in the cached HTML. Dismissal is a
+    // visitor-specific preference and is resolved in the browser; checking the
+    // cookie here could let one visitor prime a shared full-page cache with the
+    // alert omitted for everyone.
+    if ($alert['message'] && $position === $alert_position) {
       get_template_part('features/alerts/template', null, [
         'position' => $alert_position,
         'message' => $alert['message'],
@@ -57,5 +65,45 @@ function render(string $position): void
     }
 
     $index++;
+  }
+
+  if ($position === 'top') {
+    ?>
+    </div>
+    <script data-cfasync="false">
+      (() => {
+        const region = document.querySelector('[data-alert-region]');
+
+        if (!region) {
+          return;
+        }
+
+        const cookieNames = new Set(
+          document.cookie
+            .split(';')
+            .map((cookie) => cookie.trim().split('=', 1)[0])
+            .filter(Boolean)
+        );
+
+        region.querySelectorAll('[data-alert-id]').forEach((alert) => {
+          const alertId = alert.dataset.alertId;
+          const dismissed = alertId
+            ? cookieNames.has(`tofino-alert-${alertId}-closed`)
+            : false;
+
+          alert.hidden = dismissed;
+
+          if (!dismissed) {
+            alert.style.display = 'block';
+          }
+        });
+
+        document.documentElement.style.setProperty(
+          '--alert-height',
+          `${region.offsetHeight}px`
+        );
+      })();
+    </script>
+    <?php
   }
 }
