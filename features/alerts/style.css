@@ -13,7 +13,7 @@
   /* Alert 2 (second alert) — brand primary, 10% darker, with near-white inverse
      text, so the two alerts stay distinct without any alert-specific colours. */
   &[data-variant='2'] {
-    background-color: color-mix(in srgb, var(--brand-primary, #525252) 90%, #000);
+    background-color: color-mix(in srgb, var(--brand-primary, #525252) 85%, #000);
     color: var(--brand-title-inverse, #fff);
   }
 
