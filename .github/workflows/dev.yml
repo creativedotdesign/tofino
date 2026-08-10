@@ -57,13 +57,14 @@ jobs:
 
       - name: Get .env Variables
         id: dotenv
+        if: ${{ hashFiles('.env') != '' }}
         uses: falti/dotenv-action@v1.0.4
 
       - name: Sync Files to Server
         env:
           dest: "${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.VITE_THEME_PATH }}"
           deploy: "${{ steps.dotenv.outputs.DEPLOY }}"
-        if: ${{ env.deploy == 'TRUE' }}
+        if: ${{ steps.dotenv.outcome == 'success' && env.deploy == 'TRUE' }}
         run: |
           echo "${{ secrets.DEPLOY_KEY }}" > deploy_key
           chmod 600 ./deploy_key
