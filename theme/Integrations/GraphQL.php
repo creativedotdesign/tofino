@@ -42,7 +42,14 @@ class GraphQL
    */
   public function add_endpoint_to_localize_data(array $data): array
   {
-    $data['graphqlEndpoint'] = graphql_get_endpoint();
+    $endpoint_url = function_exists('graphql_get_endpoint_url')
+      ? graphql_get_endpoint_url()
+      : site_url(graphql_get_endpoint());
+    $endpoint_path = wp_parse_url($endpoint_url, PHP_URL_PATH);
+
+    $data['graphqlEndpoint'] = is_string($endpoint_path)
+      ? ltrim($endpoint_path, '/')
+      : graphql_get_endpoint();
 
     return $data;
   }
