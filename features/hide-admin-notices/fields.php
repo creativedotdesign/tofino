@@ -36,6 +36,7 @@ acf_add_local_field_group([
       'multiple' => 1,
       'ui' => 1,
       'return_format' => 'value',
+      'default_value' => ['administrator'],
     ],
     [
       'key' => 'field_notices_panel_roles',
@@ -47,6 +48,7 @@ acf_add_local_field_group([
       'multiple' => 1,
       'ui' => 1,
       'return_format' => 'value',
+      'default_value' => ['administrator'],
     ],
   ],
   'location' => [

@@ -24,17 +24,17 @@ class HideAdminNotices
   private array $panel_roles = [];
 
   /**
-   * Constructor. Defers initialisation until ACF has loaded so
-   * get_field() can safely read the role settings.
+   * Constructor. Defers initialisation until after the feature registry has
+   * registered its local ACF fields so unsaved defaults are available.
    */
   public function __construct()
   {
-    add_action('acf/init', [$this, 'initialize']);
+    add_action('acf/init', [$this, 'initialize'], 30);
   }
 
   /**
    * Reads the role settings and registers the admin hooks that power the
-   * feature (hidden admin page, admin bar node, body class, stylesheet).
+   * feature (hidden admin page, admin bar node, and body class).
    */
   public function initialize(): void
   {
@@ -43,7 +43,6 @@ class HideAdminNotices
 
     add_action('admin_menu', [$this, 'register_page']);
     add_action('admin_bar_menu', [$this, 'add_admin_bar_node'], 100);
-    add_action('admin_enqueue_scripts', [$this, 'enqueue_style']);
     add_filter('admin_body_class', [$this, 'add_body_class']);
   }
 
@@ -189,31 +188,6 @@ class HideAdminNotices
     }
 
     return trim($classes . ' tofino-hide-admin-notices');
-  }
-
-  /**
-   * Enqueues the stylesheet that visually hides admin notices. Gated
-   * identically to add_body_class() — skipped on the Notices page itself
-   * and for users outside hide_notices_roles.
-   *
-   * @return void
-   */
-  public function enqueue_style(): void
-  {
-    if ($this->is_notices_page()) {
-      return;
-    }
-
-    if (!$this->user_has_role($this->hide_roles)) {
-      return;
-    }
-
-    wp_enqueue_style(
-      'tofino-hide-admin-notices',
-      get_template_directory_uri() . '/features/hide-admin-notices/style.css',
-      [],
-      wp_get_theme()->get('Version')
-    );
   }
 }
 

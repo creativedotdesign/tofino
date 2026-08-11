@@ -22,12 +22,31 @@
  * so plugins that measure notice dimensions on load don't misbehave.
  */
 
-body.tofino-hide-admin-notices #wpbody-content > .wrap > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices #wpbody-content > .wrap > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices #wpbody-content > .wrap > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices #wpbody-content > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices #wpbody-content > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices #wpbody-content > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message) {
+body.tofino-hide-admin-notices
+  #wpbody-content
+  > .wrap
+  > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(
+    .settings-error
+  ):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices
+  #wpbody-content
+  > .wrap
+  > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices
+  #wpbody-content
+  > .wrap
+  > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices
+  #wpbody-content
+  > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(
+    .settings-error
+  ):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices
+  #wpbody-content
+  > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
+body.tofino-hide-admin-notices
+  #wpbody-content
+  > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message) {
   position: absolute !important;
   visibility: hidden !important;
 }
