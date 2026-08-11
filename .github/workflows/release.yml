@@ -52,6 +52,19 @@ jobs:
           (cd build && zip -rq "../dist-release/${SLUG}.zip" "${SLUG}")
           ls -la dist-release/
 
+      - name: Verify theme zip
+        run: |
+          set -euo pipefail
+          SLUG="${{ github.event.repository.name }}"
+          ZIP="dist-release/${SLUG}.zip"
+          EXTRACT_DIR="$(mktemp -d)"
+          unzip -t "${ZIP}"
+          unzip -q "${ZIP}" -d "${EXTRACT_DIR}"
+          test -f "${EXTRACT_DIR}/${SLUG}/dist/.vite/manifest.json"
+          grep -R -q --include='*.css' \
+            'body.tofino-hide-admin-notices' \
+            "${EXTRACT_DIR}/${SLUG}/dist/assets"
+
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
