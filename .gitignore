@@ -19,6 +19,8 @@ node_modules/
 # ignore dist directories
 dist/
 dist/hot
+/build/
+/dist-release/
 
 # ignore npm debug log file
 npm-debug.log

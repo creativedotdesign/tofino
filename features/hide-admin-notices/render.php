@@ -38,8 +38,9 @@ class HideAdminNotices
    */
   public function initialize(): void
   {
-    $this->hide_roles = $this->normalise_roles(get_field('hide_notices_roles', 'option'));
-    $this->panel_roles = $this->normalise_roles(get_field('notices_panel_roles', 'option'));
+    // Field keys let ACF resolve defaults before option meta references exist.
+    $this->hide_roles = $this->normalise_roles(get_field('field_hide_notices_roles', 'option'));
+    $this->panel_roles = $this->normalise_roles(get_field('field_notices_panel_roles', 'option'));
 
     add_action('admin_menu', [$this, 'register_page']);
     add_action('admin_bar_menu', [$this, 'add_admin_bar_node'], 100);
