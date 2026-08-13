@@ -8,7 +8,7 @@ body.login.custom-login-screen {
   }
 
   .login-logo {
-    @apply mx-auto block;
+    @apply mx-auto block h-auto max-w-full;
   }
 
   .login-logo + h1 {
@@ -19,7 +19,7 @@ body.login.custom-login-screen {
     @apply m-0 border-none p-0 shadow-none;
   }
 
-  h1:has(a) {
+  &.custom-login-screen-has-logo h1:has(a) {
     @apply hidden;
   }
 
