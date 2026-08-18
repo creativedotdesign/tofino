@@ -1,11 +1,12 @@
 <main><?php
+  $page_id = get_queried_object_id() ?: get_the_ID();
   $show_module_names = (bool) get_field('show_module_names', 'option');
 
   // Check if the flexible content field has rows of data
-  if (have_rows('content_modules')) :
+  if ($page_id && have_rows('content_modules', $page_id)) :
     $i = 1;
     // Loop ACF layouts and display the matching partial
-    while (have_rows('content_modules')) : the_row();
+    while (have_rows('content_modules', $page_id)) : the_row();
       $row_layout_raw = get_row_layout();
       $row_layout_slug = str_replace('_', '-', $row_layout_raw); ?>
 

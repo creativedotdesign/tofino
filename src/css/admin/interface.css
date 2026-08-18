@@ -2,6 +2,19 @@
   @apply hidden;
 }
 
+/* Reconcile ACF and ACF Extended WordPress 7 control sizing. */
+body.acf-admin-7-0.acfe-wp-7-0:not(.block-editor-page)
+  :is(.acf-input-prepend, .acf-input-append) {
+  @apply min-h-8 px-2 py-1;
+}
+
+body.acf-admin-7-0.acfe-wp-7-0:not(.block-editor-page)
+  .acf-field
+  .select2-container.-acf
+  .select2-selection--single {
+  @apply h-8;
+}
+
 #wpadminbar #wp-admin-bar-site-name > .ab-item {
   @apply cursor-default text-inherit before:text-inherit hover:bg-inherit hover:text-inherit;
 }
