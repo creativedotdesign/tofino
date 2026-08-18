@@ -5,17 +5,19 @@ import eslintPlugin from '@nabla/vite-plugin-eslint';
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap';
 import path from 'node:path';
 import vue from '@vitejs/plugin-vue';
-import { createProxyHandler } from './src/js/build/middleware';
-import devAssetRewriter from './src/js/build/assetRewriter';
-import hotFile from './src/js/build/hotFile';
-import cloudflareTunnel from './src/js/build/cloudflareTunnel';
-import phpFullReload from './src/js/build/phpFullReload';
-import injectPluginSources from './src/js/build/injectPluginSources';
-import pluginAtAlias from './src/js/build/pluginAtAlias';
-import { findTofinoPluginDirs, findSiblingThemeDirs } from './src/js/build/tofinoPlugins';
-import { resolveTunnelConfig } from './src/js/build/tunnelConfig';
+import { createProxyHandler } from './src/js/build/middleware.ts';
+import devAssetRewriter from './src/js/build/assetRewriter.ts';
+import hotFile from './src/js/build/hotFile.ts';
+import cloudflareTunnel from './src/js/build/cloudflareTunnel.ts';
+import phpFullReload from './src/js/build/phpFullReload.ts';
+import injectPluginSources from './src/js/build/injectPluginSources.ts';
+import pluginAtAlias from './src/js/build/pluginAtAlias.ts';
+import { findTofinoPluginDirs, findSiblingThemeDirs } from './src/js/build/tofinoPlugins.ts';
+import { resolveTunnelConfig } from './src/js/build/tunnelConfig.ts';
 import { bold, lightMagenta } from 'kolorist';
 import graphqlLoader from 'vite-plugin-graphql-loader';
+
+const themeDir = import.meta.dirname;
 
 export default ({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -28,15 +30,15 @@ export default ({ mode }: { mode: string }) => {
   // the same convention the PHP side uses via `tofino/register_modules`. A
   // plugin without one is left untouched: not watched, not scanned by
   // Tailwind, not served through the dev server's HMR pipeline.
-  const pluginsDir = path.resolve(__dirname, '../../plugins');
+  const pluginsDir = path.resolve(themeDir, '../../plugins');
   const tofinoPluginDirs = findTofinoPluginDirs(pluginsDir);
 
   // Sibling child themes (e.g. compose-theme) are discovered the same way —
   // by `modules/<slug>/module.json` manifests. They run their own builds but
   // are served via /@fs/ and watched for full-reload when this dev server is
   // the active one.
-  const themesDir = path.resolve(__dirname, '..');
-  const siblingThemeDirs = findSiblingThemeDirs(themesDir, __dirname);
+  const themesDir = path.resolve(themeDir, '..');
+  const siblingThemeDirs = findSiblingThemeDirs(themesDir, themeDir);
 
   const phpWatchPatterns = [
     'templates/**/*.php',
@@ -77,11 +79,11 @@ export default ({ mode }: { mode: string }) => {
   ]);
 
   return defineConfig({
-    publicDir: path.resolve(__dirname, './src/public'),
-    root: path.resolve(__dirname, './src'),
+    publicDir: path.resolve(themeDir, './src/public'),
+    root: path.resolve(themeDir, './src'),
     base: env.NODE_ENV === 'production' ? `${env.VITE_THEME_PATH}/dist/` : '/',
     build: {
-      outDir: path.resolve(__dirname, 'dist'),
+      outDir: path.resolve(themeDir, 'dist'),
       emptyOutDir: true,
       manifest: true,
       sourcemap: env.NODE_ENV === 'production' ? false : 'inline',
@@ -132,15 +134,15 @@ export default ({ mode }: { mode: string }) => {
       include: ['vue', 'pinia', 'tua-body-scroll-lock'],
     },
     plugins: [
-      pluginAtAlias({ themeSrcDir: path.resolve(__dirname, './src') }),
+      pluginAtAlias({ themeSrcDir: path.resolve(themeDir, './src') }),
       injectPluginSources({ sources: pluginTailwindSources }),
       tailwindcss(),
       vue(),
       eslintPlugin(),
       VitePluginSvgSpritemap(
         [
-          path.resolve(__dirname, 'src/sprite/*.svg'),
-          path.resolve(__dirname, 'features/*/icons/*.svg'),
+          path.resolve(themeDir, 'src/sprite/*.svg'),
+          path.resolve(themeDir, 'features/*/icons/*.svg'),
           // Tofino-aligned plugins: any icons under modules/<slug>/icons get
           // sprited alongside theme/feature icons. Plugins reference symbols
           // via <use href="#icon-<name>"> the same way the theme does.
@@ -200,9 +202,9 @@ export default ({ mode }: { mode: string }) => {
         // directory so Tofino-aligned plugins and child themes can be served
         // (and HMR'd) from this dev server via /@fs/.
         allow: [
-          path.resolve(__dirname),
-          path.resolve(__dirname, '../../plugins'),
-          path.resolve(__dirname, '..'),
+          path.resolve(themeDir),
+          path.resolve(themeDir, '../../plugins'),
+          path.resolve(themeDir, '..'),
         ],
       },
       // port: 3000,
@@ -233,8 +235,8 @@ export default ({ mode }: { mode: string }) => {
         // Vite's built-in alias plugin runs before user plugins with
         // `enforce: 'pre'`, so a static `@` entry here would steal plugin
         // imports before they could be redirected.
-        '@features': path.resolve(__dirname, './features'),
-        '@modules': path.resolve(__dirname, './modules'),
+        '@features': path.resolve(themeDir, './features'),
+        '@modules': path.resolve(themeDir, './modules'),
         vue: 'vue/dist/vue.esm-bundler.js',
         // Full vue-i18n build with compiler — plugin code loads locale JSON
         // as plain objects and needs runtime message compilation.

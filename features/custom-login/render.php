@@ -28,7 +28,7 @@ class CustomLoginForm
 
     $this->options = get_field('login_screen', 'option') ?: [];
 
-    add_action('login_head', [$this, 'add_custom_class_to_login_body']);
+    add_filter('login_body_class', [$this, 'login_body_classes']);
     add_action('login_head', [$this, 'custom_login_colors']);
     add_action('login_head', [$this, 'logo_max_height']);
     add_action('login_form', [$this, 'move_lost_password_link']);
@@ -37,13 +37,22 @@ class CustomLoginForm
   }
 
   /**
-   * Injects a small inline script and style to apply a custom body class and
-   * hide the default login layout until the class has been added.
+   * Add server-rendered state classes so the correct logo is present on first
+   * paint. The native logo remains visible when no custom upload is configured,
+   * allowing a child theme to provide a branded fallback.
+   *
+   * @param string[] $classes Existing login body classes.
+   * @return string[]
    */
-  public function add_custom_class_to_login_body(): void
+  public function login_body_classes(array $classes): array
   {
-    echo '<script>document.addEventListener("DOMContentLoaded",()=>{document.body.classList.add("custom-login-screen");});</script>';
-    // echo '<style>body.login{display:none}</style>';
+    $classes[] = 'custom-login-screen';
+
+    if (!empty($this->options['logo'])) {
+      $classes[] = 'custom-login-screen-has-logo';
+    }
+
+    return $classes;
   }
 
   /**
