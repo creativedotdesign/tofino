@@ -13,12 +13,16 @@ namespace Tofino\Layouts;
  * Hides the custom layout field group from ACF unless the custom_layouts option is enabled.
  * Bails early if the field has no parent, to avoid breaking unrelated fields.
  *
- * @param array<string, mixed> $field The ACF field array.
+ * Accepts false as well as an array: ACF dispatches its prepare_field
+ * type/name/key variations from within the generic filter chain, so a field
+ * another callback has already hidden arrives here as false.
+ *
+ * @param array<string, mixed>|false $field The ACF field array, or false when already hidden.
  * @return array<string, mixed>|false The field array, or false to hide the field.
  */
-function acf_show_custom_layout_fields(array $field): array|false
+function acf_show_custom_layout_fields(array|false $field): array|false
 {
-  if (!isset($field['parent']) || !$field['parent']) {
+  if (!$field || !isset($field['parent']) || !$field['parent']) {
     return $field;
   }
 
