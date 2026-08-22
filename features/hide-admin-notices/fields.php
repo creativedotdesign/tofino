@@ -54,8 +54,8 @@ acf_add_local_field_group([
   'location' => [
     [['param' => 'options_page', 'operator' => '==', 'value' => 'hide-admin-notices']],
   ],
-  'style' => 'seamless',
-  'label_placement' => 'top',
+  'style' => 'default',
+  'label_placement' => 'left',
   'instruction_placement' => 'label',
   'active' => true,
 ]);

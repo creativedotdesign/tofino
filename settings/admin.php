@@ -3,11 +3,34 @@
 /**
  * Admin options — ACF local field group registration.
  *
- * Organized into tabs: General, Menu, Developer.
+ * Registers the Options parent and its Menu settings sub-page.
  *
  * @package Tofino
  * @since 5.0.0
  */
+
+// Preserve bookmarks to the former field-bearing parent screen. ACF points
+// the visible Options menu at its first accessible child, so this hidden page
+// exists only to redirect the retired slug.
+add_action('admin_menu', function (): void {
+  $hook = add_submenu_page(
+    null,
+    'Options',
+    'Options',
+    'edit_posts',
+    'general-options',
+    static function (): void {}
+  );
+
+  if (!$hook) {
+    return;
+  }
+
+  add_action('load-' . $hook, static function (): void {
+      wp_safe_redirect(admin_url('admin.php?page=menu-options'));
+      exit;
+  });
+});
 
 add_action('acf/init', function () {
   if (function_exists('acf_add_options_page')) {
@@ -17,10 +40,19 @@ add_action('acf/init', function () {
       'menu_slug' => 'general-options',
       'capability' => 'edit_posts',
       'icon_url' => 'dashicons-admin-generic',
-      'redirect' => false,
+      'redirect' => true,
       'autoload' => false,
       'update_button' => 'Update',
       'updated_message' => 'Options Updated',
+    ]);
+
+    acf_add_options_sub_page([
+      'page_title' => 'Menu',
+      'menu_title' => 'Menu',
+      'menu_slug' => 'menu-options',
+      'parent_slug' => 'general-options',
+      'capability' => 'edit_posts',
+      'autoload' => false,
     ]);
   }
 
@@ -30,14 +62,8 @@ add_action('acf/init', function () {
 
   acf_add_local_field_group([
     'key' => 'group_65a167568ac34',
-    'title' => 'Admin',
+    'title' => 'Menu',
     'fields' => [
-      // ── Menu tab ──
-      [
-        'key' => 'field_tab_menu',
-        'label' => 'Menu',
-        'type' => 'tab',
-      ],
       [
         'key' => 'field_6258359c5a86d',
         'label' => 'Sticky Menu',
@@ -55,27 +81,12 @@ add_action('acf/init', function () {
         'default_value' => 0,
         'ui' => 1,
       ],
-      // ── Developer tab ──
-      [
-        'key' => 'field_tab_developer',
-        'label' => 'Developer',
-        'type' => 'tab',
-      ],
-      [
-        'key' => 'field_67f7f9e7e7d01',
-        'label' => 'Show Module Names',
-        'name' => 'show_module_names',
-        'type' => 'true_false',
-        'instructions' => 'Display the current module name label on the front-end for editors.',
-        'default_value' => 0,
-        'ui' => 1,
-      ],
     ],
     'location' => [
-      [['param' => 'options_page', 'operator' => '==', 'value' => 'general-options']],
+      [['param' => 'options_page', 'operator' => '==', 'value' => 'menu-options']],
     ],
-    'style' => 'seamless',
-    'label_placement' => 'top',
+    'style' => 'default',
+    'label_placement' => 'left',
     'instruction_placement' => 'label',
     'active' => true,
   ]);

@@ -38,7 +38,19 @@ export default ({ mode }: { mode: string }) => {
   // are served via /@fs/ and watched for full-reload when this dev server is
   // the active one.
   const themesDir = path.resolve(themeDir, '..');
-  const siblingThemeDirs = findSiblingThemeDirs(themesDir, themeDir);
+  // When this config is invoked from a child theme in another site checkout
+  // (per-site dev/tunnel pattern: `vite --config ../tofino/vite.config.ts`
+  // with this theme symlinked into that site), the invoking site's themes
+  // directory is the CWD's parent — scan it too so its child themes are
+  // discovered, served via /@fs/, and watched. readdir skips the symlink
+  // back to this theme, so we never rediscover ourselves.
+  const invokedThemesDir = path.resolve(process.cwd(), '..');
+  const siblingThemeDirs = [
+    ...new Set([
+      ...findSiblingThemeDirs(themesDir, themeDir),
+      ...(invokedThemesDir !== themesDir ? findSiblingThemeDirs(invokedThemesDir, themeDir) : []),
+    ]),
+  ];
 
   const phpWatchPatterns = [
     'templates/**/*.php',
@@ -138,7 +150,10 @@ export default ({ mode }: { mode: string }) => {
       injectPluginSources({ sources: pluginTailwindSources }),
       tailwindcss(),
       vue(),
-      eslintPlugin(),
+      // Pin ESLint's cwd to this theme: flat-config resolution starts from
+      // cwd, and per-site invocations run vite from the child theme dir,
+      // which has no eslint.config of its own.
+      eslintPlugin({ eslintOptions: { cwd: themeDir } }),
       VitePluginSvgSpritemap(
         [
           path.resolve(themeDir, 'src/sprite/*.svg'),
@@ -202,9 +217,13 @@ export default ({ mode }: { mode: string }) => {
         // directory so Tofino-aligned plugins and child themes can be served
         // (and HMR'd) from this dev server via /@fs/.
         allow: [
-          path.resolve(themeDir),
-          path.resolve(themeDir, '../../plugins'),
-          path.resolve(themeDir, '..'),
+          ...new Set([
+            path.resolve(themeDir),
+            path.resolve(themeDir, '../../plugins'),
+            path.resolve(themeDir, '..'),
+            invokedThemesDir,
+            path.resolve(invokedThemesDir, '../plugins'),
+          ]),
         ],
       },
       // port: 3000,

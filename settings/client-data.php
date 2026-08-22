@@ -62,7 +62,7 @@ add_action('acf/init', function () {
     'location' => [
       [['param' => 'options_page', 'operator' => '==', 'value' => 'client-data']],
     ],
-    'style' => 'seamless',
+    'style' => 'default',
     'label_placement' => 'left',
     'instruction_placement' => 'label',
     'active' => true,
