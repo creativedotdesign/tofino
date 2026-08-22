@@ -13,7 +13,7 @@ if (function_exists('acf_add_options_sub_page')) {
     'menu_title' => 'Login',
     'menu_slug' => 'custom-login',
     'parent_slug' => 'general-options',
-    'capability' => 'edit_posts',
+    'capability' => 'manage_options',
     'autoload' => false,
   ]);
 }
@@ -84,8 +84,8 @@ acf_add_local_field_group([
   'location' => [
     [['param' => 'options_page', 'operator' => '==', 'value' => 'custom-login']],
   ],
-  'style' => 'seamless',
-  'label_placement' => 'top',
+  'style' => 'default',
+  'label_placement' => 'left',
   'instruction_placement' => 'label',
   'active' => true,
 ]);

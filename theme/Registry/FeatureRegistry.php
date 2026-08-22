@@ -139,9 +139,9 @@ final class FeatureRegistry
       'location' => [
         [['param' => 'options_page', 'operator' => '==', 'value' => 'tofino-features']],
       ],
-      'style' => 'seamless',
+      'style' => 'default',
       'label_placement' => 'left',
-      'instruction_placement' => 'field',
+      'instruction_placement' => 'label',
       'active' => true,
     ]);
   }

@@ -16,7 +16,7 @@ if (function_exists('acf_add_options_sub_page')) {
     'menu_title' => 'Layouts',
     'menu_slug' => 'layouts',
     'parent_slug' => 'general-options',
-    'capability' => 'edit_posts',
+    'capability' => 'manage_options',
     'autoload' => false,
   ]);
 }
@@ -30,6 +30,15 @@ acf_add_local_field_group([
   'key' => 'group_66e8b46d1a2b6',
   'title' => 'Layouts',
   'fields' => [
+    [
+      'key' => 'field_67f7f9e7e7d01',
+      'label' => 'Show Module Names',
+      'name' => 'show_module_names',
+      'type' => 'true_false',
+      'instructions' => 'Display the current module name label on the front-end for editors.',
+      'default_value' => 0,
+      'ui' => 1,
+    ],
     [
       'key' => 'field_66e9ebadf559b',
       'label' => 'Custom Layouts',
@@ -80,8 +89,8 @@ acf_add_local_field_group([
   'location' => [
     [['param' => 'options_page', 'operator' => '==', 'value' => 'layouts']],
   ],
-  'style' => 'seamless',
-  'label_placement' => 'top',
+  'style' => 'default',
+  'label_placement' => 'left',
   'instruction_placement' => 'label',
   'active' => true,
 ]);

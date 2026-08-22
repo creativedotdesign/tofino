@@ -43,6 +43,47 @@ class CloudflareTunnel
     add_filter('content_url', [self::class, 'rewrite_url'], 20);
     add_filter('includes_url', [self::class, 'rewrite_url'], 20);
     add_filter('upload_dir', [self::class, 'rewrite_upload_dir'], 20);
+    add_action('template_redirect', [self::class, 'start_output_rewrite'], 0);
+  }
+
+  /**
+   * Rewrites database-stored local-vhost URLs in the final HTML output.
+   *
+   * The URL filters above only cover URLs WordPress generates at runtime.
+   * URLs stored verbatim in the database — nav menu custom links, ACF
+   * link/button fields, links inside post content — still carry the local
+   * vhost. For tunnel requests, buffer the front-end output and replace the
+   * request host's origin (plain and JSON-escaped) with the tunnel origin.
+   *
+   * @since 5.0.0
+   *
+   * @return void
+   */
+  public static function start_output_rewrite(): void
+  {
+    $public_base = self::get_public_base_url();
+    if (!$public_base) {
+      return;
+    }
+
+    $request_host = sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'] ?? ''));
+    if ($request_host === '') {
+      return;
+    }
+
+    ob_start(static function (string $html) use ($public_base, $request_host): string {
+      $escaped_base = str_replace('/', '\\/', $public_base);
+      return str_replace(
+        [
+          'http://' . $request_host,
+          'https://' . $request_host,
+          'http:\\/\\/' . $request_host,
+          'https:\\/\\/' . $request_host,
+        ],
+        [$public_base, $public_base, $escaped_base, $escaped_base],
+        $html,
+      );
+    });
   }
 
   /**
