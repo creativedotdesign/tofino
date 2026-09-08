@@ -86,7 +86,12 @@ function missing_acf_extended_plugin_notice(): string
  */
 function check_acf_extended_plugin(): void
 {
-  if (!is_plugin_active('acf-extended/acf-extended.php')) {
+  // Free or PRO — the PRO plugin lives in its own folder and fully replaces
+  // the free one, so either satisfies the dependency.
+  if (
+    !is_plugin_active('acf-extended/acf-extended.php')
+    && !is_plugin_active('acf-extended-pro/acf-extended.php')
+  ) {
     add_action('admin_notices', function () {
       echo missing_acf_extended_plugin_notice();
     });

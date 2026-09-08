@@ -16,37 +16,24 @@
  *                           by admin-header.php → options-head.php, BEFORE
  *                           the page template opens its .wrap)
  *   .acf-admin-notice     — ACF save confirmations ("Options Updated")
+ *   .tofino-keep-admin-notice — intentional first-party guidance notices
  *   #message              — legacy "settings updated" / post save container
  *
  * Uses position:absolute + visibility:hidden rather than display:none
  * so plugins that measure notice dimensions on load don't misbehave.
  */
 
+@reference "tailwindcss";
+
 body.tofino-hide-admin-notices
-  #wpbody-content
-  > .wrap
-  > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(
-    .settings-error
-  ):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices
-  #wpbody-content
-  > .wrap
-  > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices
-  #wpbody-content
-  > .wrap
-  > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices
-  #wpbody-content
-  > .notice:not(.system-notice):not(.update-message):not(.inline):not(.hidden):not(
-    .settings-error
-  ):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices
-  #wpbody-content
-  > div.updated:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message),
-body.tofino-hide-admin-notices
-  #wpbody-content
-  > div.error:not(.inline):not(.hidden):not(.settings-error):not(.acf-admin-notice):not(#message) {
-  position: absolute !important;
-  visibility: hidden !important;
+  :is(#wpbody-content, #wpbody-content > .wrap)
+  > :is(.notice:not(.system-notice, .update-message), div.updated, div.error):not(
+    .inline,
+    .hidden,
+    .settings-error,
+    .acf-admin-notice,
+    .tofino-keep-admin-notice,
+    #message
+  ) {
+  @apply invisible! absolute!;
 }

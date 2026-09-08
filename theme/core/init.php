@@ -157,3 +157,32 @@ function clear_cache_options_save($post_id)
 	}
 }
 add_action('acf/save_post', __NAMESPACE__ . '\\clear_cache_options_save', 20);
+
+/**
+ * Enforce maxlength on WYSIWYG fields.
+ *
+ * ACF's maxlength setting only exists for text/textarea, where the browser
+ * and ACF core both enforce it. WYSIWYG fields have no equivalent, so a
+ * `maxlength` key declared on a wysiwyg field would otherwise be cosmetic
+ * (counter plugins may display it, nothing enforces it). This validates the
+ * visible text — tags stripped, entities decoded — against that key with
+ * ACF core's own error message.
+ */
+function enforce_wysiwyg_maxlength(bool|string $valid, string $value, array $field): bool|string
+{
+  $max = (int) ($field['maxlength'] ?? 0);
+
+  if ($valid !== true || !$max || $value === '') {
+    return $valid;
+  }
+
+  $text = html_entity_decode(wp_strip_all_tags($value), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+  if (mb_strlen(trim($text)) > $max) {
+    /* translators: matches ACF core's maxlength message. */
+    return sprintf(__('Value must not exceed %d characters', 'acf'), $max);
+  }
+
+  return $valid;
+}
+add_filter('acf/validate_value/type=wysiwyg', __NAMESPACE__ . '\\enforce_wysiwyg_maxlength', 10, 3);
