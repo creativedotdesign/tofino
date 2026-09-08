@@ -111,11 +111,11 @@ acf_add_local_field_group([
     ],
     [
       'key' => 'field_66e8b39fc2148',
-      'label' => 'Update Layout',
+      'label' => 'Apply Layout',
       'name' => 'update_layout',
       'type' => 'acfe_button',
       'wrapper' => ['width' => '25'],
-      'button_value' => 'Update Layout',
+      'button_value' => 'Apply Layout',
       'button_type' => 'button',
       'button_class' => 'button button-secondary',
       'conditional_logic' => [
