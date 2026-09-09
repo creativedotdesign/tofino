@@ -69,6 +69,7 @@ acf_add_local_field_group([
           'label' => 'Message',
           'name' => 'message',
           'type' => 'wysiwyg',
+          'instructions' => '[maxchars:180]',
           'default_value' => '<p>This is a <a href="https://google.ca">test alert</a>.</p>',
           'toolbar' => 'basic',
           'media_upload' => 0,

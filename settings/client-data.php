@@ -38,18 +38,21 @@ add_action('acf/init', function () {
         'label' => 'Email Address',
         'name' => 'email_address',
         'type' => 'text',
+        'instructions' => '[maxchars:254]',
       ],
       [
         'key' => 'field_653fdc0aceac4',
         'label' => 'Company Name',
         'name' => 'company_name',
         'type' => 'text',
+        'instructions' => '[maxchars:100]',
       ],
       [
         'key' => 'field_653fdc17ceac5',
         'label' => 'Address',
         'name' => 'address',
         'type' => 'textarea',
+        'instructions' => '[maxchars:240]',
         'rows' => 4,
       ],
       [
@@ -57,6 +60,7 @@ add_action('acf/init', function () {
         'label' => 'Company Number',
         'name' => 'company_number',
         'type' => 'text',
+        'instructions' => '[maxchars:40]',
       ],
     ],
     'location' => [

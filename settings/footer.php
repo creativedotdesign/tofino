@@ -32,6 +32,7 @@ add_action('acf/init', function () {
         'label' => 'Text',
         'name' => 'footer_text',
         'type' => 'wysiwyg',
+        'instructions' => '[maxchars:250]',
         'toolbar' => 'full',
         'media_upload' => 0,
         'show_in_graphql' => 1,
