@@ -69,6 +69,7 @@ add_action('acf/init', function () {
         'label' => 'Sticky Menu',
         'name' => 'sticky_menu',
         'type' => 'true_false',
+        'message' => 'Keep the menu at the top of the screen as visitors scroll through the page.',
         'default_value' => 0,
         'ui' => 1,
       ],

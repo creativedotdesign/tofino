@@ -110,7 +110,7 @@ final class ModuleRegistry
           'name' => 'content_modules',
           'type' => 'flexible_content',
           'layouts' => [],
-          'button_label' => 'Add Row',
+          'button_label' => 'Add Module',
           'show_in_graphql' => 1,
           'graphql_field_name' => 'contentModules',
         ],

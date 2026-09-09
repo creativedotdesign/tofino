@@ -106,8 +106,8 @@ acf_add_local_field_group([
       'name' => 'page_template',
       'type' => 'select',
       'wrapper' => ['width' => '25'],
-      'choices' => ['' => 'Custom'],
-      'default_value' => 'custom',
+      'choices' => ['' => 'Build Your Own'],
+      'default_value' => '',
     ],
     [
       'key' => 'field_66e8b39fc2148',

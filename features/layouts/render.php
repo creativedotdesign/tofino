@@ -72,11 +72,10 @@ add_filter('acf/load_field/name=module_name', __NAMESPACE__ . '\\acf_load_layout
  */
 function acf_load_layout_names(array $field): array
 {
-  $field['choices'] = [];
+  // Keep the base choice and label defined in fields.php.
+  $field['choices'] ??= [];
 
   $layouts = get_field('layout', 'option');
-
-  $field['choices'][''] = 'Custom';
 
   if ($layouts) {
     foreach ($layouts as $layout) {
