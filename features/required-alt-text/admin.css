@@ -1,24 +1,52 @@
 /**
  * Required Alt Text — admin styling.
  * Globbed into the admin bundle by src/js/admin.ts; @reference gives @apply the
- * theme context without emitting the referenced CSS. The red is wp-admin's
- * notice colour (#d63638). Toggled by admin.ts.
+ * theme context without emitting the referenced CSS. Classes are toggled by
+ * the feature's admin scripts. red-600 is the closest Tailwind shade to
+ * wp-admin's notice red (#d63638). `!` where WordPress's own selectors
+ * out-specify a single utility class.
  */
 @reference '../../src/css/admin.css';
 
-/* `!` (important) so the red wins over WordPress's own modal/label colours,
-   which out-specify a single utility class. */
+/* WP floats spans inside the sidebar labels, which would push the star to the
+   far left — keep it inline after the label text. */
 .req-alt-star {
-  @apply font-semibold text-[#d63638]!;
+  @apply float-none! inline! font-semibold text-red-600!;
 }
 
 .req-alt-msg {
-  @apply mt-1 block text-xs leading-snug text-[#d63638]! not-italic;
+  @apply mt-0 block text-xs leading-snug text-red-600! not-italic;
 }
 
-.req-alt-invalid input,
-.req-alt-invalid textarea,
-input.req-alt-invalid,
-textarea.req-alt-invalid {
-  @apply border-[#d63638] shadow-[0_0_0_1px_#d63638];
+.req-alt-invalid :is(input, textarea),
+:is(input, textarea).req-alt-invalid {
+  @apply border-red-600 ring-1 ring-red-600;
+}
+
+/* Media modal sidebars float the field right beside a label column (WP: 30%
+   + 4% label, 65% field; ACF's expanded popups: 20% label, 77% field). The
+   message follows the field's column so it sits directly under the field. */
+.media-sidebar .setting,
+.attachment-details .setting {
+  .req-alt-msg {
+    @apply float-right clear-right m-0 box-border w-[65%] pt-0 text-left;
+  }
+
+  /* Below 900px WordPress stacks label and field full width. */
+  @media (max-width: 900px) {
+    .req-alt-msg {
+      @apply float-none w-auto;
+    }
+  }
+}
+
+.media-modal.acf-expanded .media-sidebar .setting .req-alt-msg {
+  @apply w-[77%];
+}
+
+/* Note beside the modal's primary button when a selected-but-not-shown image
+   is the one missing alt. The button floats left inside .media-toolbar-primary,
+   so float the note too and match the button's 32px line. */
+.req-alt-toolbar-msg {
+  @apply float-left mt-2.5 mr-4 max-w-sm leading-8 whitespace-nowrap;
 }

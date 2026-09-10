@@ -38,8 +38,9 @@ if (!is_admin()) {
 function mark_alt_required(array $fields, \WP_Post $post): array
 {
   if (isset($fields['image_alt']) && wp_attachment_is_image($post->ID)) {
+    // Non-breaking space so the star never wraps onto its own line.
     $fields['image_alt']['label'] = __('Alternative Text', 'tofino')
-      . ' <span class="req-alt-star" aria-hidden="true">*</span>';
+      . '<span class="req-alt-star" aria-hidden="true">&nbsp;*</span>';
     $fields['image_alt']['required'] = true;
   }
 
