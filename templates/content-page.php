@@ -3,7 +3,9 @@
   $show_module_names = (bool) get_field('show_module_names', 'option');
 
   // Check if the flexible content field has rows of data
-  if ($page_id && have_rows('content_modules', $page_id)) :
+  if (post_password_required($page_id)) :
+    echo '<div class="tofino-password-protection">' . get_the_password_form($page_id) . '</div>';
+  elseif ($page_id && have_rows('content_modules', $page_id)) :
     $i = 1;
     // Loop ACF layouts and display the matching partial
     while (have_rows('content_modules', $page_id)) : the_row();

@@ -85,13 +85,53 @@ add_shortcode('svg', 'svg');
  */
 function render_svg_file(array $atts): string
 {
-  if (is_numeric($atts['file'])) {
-    $file = get_attached_file((int) $atts['file']);
-  } else {
-    $file = get_theme_file_path('dist/svgs/' . $atts['file'] . '.svg');
+  $name = $atts['file'];
+
+  if (!is_string($name) && !is_int($name)) {
+    return '';
   }
 
-  if (!$file || !file_exists($file)) {
+  $name = (string) $name;
+  $is_attachment = ctype_digit($name);
+
+  if ($is_attachment) {
+    $attachment_id = (int) $name;
+
+    if (get_post_type($attachment_id) !== 'attachment' || get_post_mime_type($attachment_id) !== 'image/svg+xml') {
+      return '';
+    }
+    $file = get_attached_file($attachment_id);
+    $uploads = wp_get_upload_dir();
+    $allowed_dirs = empty($uploads['error']) ? [$uploads['basedir']] : [];
+  } else {
+    // Built assets may use subdirectories, but never relative traversal or URLs.
+    if (!preg_match('#^[a-zA-Z0-9_.-]+(?:/[a-zA-Z0-9_.-]+)*$#', $name)
+      || array_intersect(explode('/', $name), ['.', '..'])
+    ) {
+      return '';
+    }
+
+    $file = get_theme_file_path('dist/svgs/' . $name . '.svg');
+    $allowed_dirs = [get_stylesheet_directory() . '/dist/svgs', get_template_directory() . '/dist/svgs'];
+  }
+
+  $file = $file ? realpath($file) : false;
+
+  if (!$file || !is_file($file) || !is_readable($file) || strtolower(pathinfo($file, PATHINFO_EXTENSION)) !== 'svg') {
+    return '';
+  }
+
+  $contained = false;
+  foreach ($allowed_dirs as $dir) {
+    $base = realpath($dir);
+
+    if ($base && str_starts_with($file, $base . DIRECTORY_SEPARATOR)) {
+      $contained = true;
+      break;
+    }
+  }
+
+  if (!$contained) {
     return '';
   }
 
@@ -99,6 +139,17 @@ function render_svg_file(array $atts): string
 
   if (!$contents) {
     return '';
+  }
+
+  if ($is_attachment) {
+    if (!class_exists(\Tofino\Security\Svg::class)) {
+      return '';
+    }
+
+    $contents = \Tofino\Security\Svg::sanitize($contents);
+    if (is_wp_error($contents)) {
+      return '';
+    }
   }
 
   if ($atts['class']) {
@@ -132,7 +183,8 @@ function apply_svg_class(string $svg, string $class): string
       $classes[] = $class;
     }
 
-    return str_replace($matches[0], '<svg class="' . esc_attr(implode(' ', $classes)) . '"', $svg);
+    $opening = str_replace('class="' . $matches[1] . '"', 'class="' . esc_attr(implode(' ', $classes)) . '"', $matches[0]);
+    return str_replace($matches[0], $opening, $svg);
   }
 
   // Class doesn't exist, add it to the svg tag

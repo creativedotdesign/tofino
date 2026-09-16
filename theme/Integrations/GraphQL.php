@@ -180,11 +180,19 @@ class GraphQL
   ): array {
     $offset_pagination = $args['where']['offsetPagination'] ?? null;
 
-    if (is_array($offset_pagination) && count($offset_pagination) === 2) {
+    if ($offset_pagination !== null) {
+      if (!is_array($offset_pagination) || count($offset_pagination) !== 2) {
+        throw new \GraphQL\Error\UserError('offsetPagination must contain an offset and page size.');
+      }
       [$offset, $per_page] = $offset_pagination;
 
-      $query_args['offset']         = (int) $offset;
-      $query_args['posts_per_page'] = (int) $per_page;
+      $limit = max(1, (int) apply_filters('graphql_connection_max_query_amount', 100, $_source, $args, $_context, $_info));
+      if (!is_int($offset) || $offset < 0 || !is_int($per_page) || $per_page < 1 || $per_page > $limit) {
+        throw new \GraphQL\Error\UserError(sprintf('offsetPagination requires a non-negative offset and a page size between 1 and %d.', $limit));
+      }
+
+      $query_args['offset']         = $offset;
+      $query_args['posts_per_page'] = $per_page;
     }
 
     return $query_args;
