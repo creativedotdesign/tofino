@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/creativedotdesign/tofino/master/screenshot.png" alt="Tofino" width="500">
+<img src="https://raw.githubusercontent.com/creativedotdesign/tofino/master/screenshot.jpg" alt="Tofino" width="500">
 
 # Tofino
 
