@@ -84,6 +84,12 @@ test.describe('HTML Validation Tests', () => {
         'aria-label-misuse': 'error',
         'no-autoplay': 'warn',
         'text-content': 'error',
+        // Checkbox groups legitimately share a name (that is how a multi-value
+        // group submits); html-validate leaves checkbox out of `shared` by
+        // default because it assumes a forgotten `name[]`. Form-builder posts
+        // JSON, so the shared names are inert. Radio/button/reset/submit are
+        // the rule's defaults.
+        'form-dup-name': ['error', { shared: ['radio', 'checkbox', 'button', 'reset', 'submit'] }],
       },
     });
 
