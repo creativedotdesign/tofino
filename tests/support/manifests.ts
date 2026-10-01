@@ -87,9 +87,11 @@ export type ManifestContract = A11yContract & { source: string; title: string };
 
 /**
  * Reads every `modules/＊/module.json` and `features/＊/feature.json` under
- * `root` and returns the `a11y` contracts they declare. A manifest that is
- * not valid JSON throws, naming the file, so a typo fails loudly instead of
- * silently dropping coverage.
+ * `root`, plus `modules/＊/module.json` in each sibling plugin
+ * (`<wp-content>/plugins/＊/`, the modules plugins register through the
+ * `tofino/register_modules` filter), and returns the `a11y` contracts they
+ * declare. A manifest that is not valid JSON throws, naming the file, so a
+ * typo fails loudly instead of silently dropping coverage.
  *
  * @param root Theme directory to scan. Defaults to the working directory, so
  *             running the suite from a child theme picks up that theme's manifests.
@@ -97,8 +99,8 @@ export type ManifestContract = A11yContract & { source: string; title: string };
 export const readManifestContracts = (root: string = process.cwd()): ManifestContract[] => {
   const contracts: ManifestContract[] = [];
 
-  const scan = (folder: string, file: string): void => {
-    const base = path.join(root, folder);
+  const scan = (folder: string, file: string, from: string = root): void => {
+    const base = path.join(from, folder);
     if (!fs.existsSync(base)) return;
 
     for (const entry of fs.readdirSync(base, { withFileTypes: true })) {
@@ -106,7 +108,7 @@ export const readManifestContracts = (root: string = process.cwd()): ManifestCon
       const manifestPath = path.join(base, entry.name, file);
       if (!fs.existsSync(manifestPath)) continue;
 
-      const source = `${folder}/${entry.name}/${file}`;
+      const source = `${path.relative(root, base)}/${entry.name}/${file}`;
       let manifest: { title?: string; a11y?: A11yContract };
       try {
         manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
@@ -124,6 +126,15 @@ export const readManifestContracts = (root: string = process.cwd()): ManifestCon
 
   scan('modules', 'module.json');
   scan('features', 'feature.json');
+
+  // Plugin modules: wp-content/plugins/<plugin>/modules/<module>/module.json.
+  const plugins = path.resolve(root, '../../plugins');
+  if (fs.existsSync(plugins)) {
+    for (const plugin of fs.readdirSync(plugins, { withFileTypes: true })) {
+      if (!plugin.isDirectory()) continue;
+      scan('modules', 'module.json', path.join(plugins, plugin.name));
+    }
+  }
 
   return contracts;
 };

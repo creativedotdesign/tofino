@@ -1,10 +1,13 @@
 import { test, expect, type Page } from '@playwright/test';
 import { overlays, tabbableSelector } from '../support/config';
 import { dismissOverlays } from '../support/utils/page';
+import { getAuditUrls } from '../support/utils/urls';
 
 /**
- * Overlay / dialog behaviour. For each overlay in tests/support/config.ts that
- * exists on the page (header menus, search) plus any native <dialog> opener:
+ * Overlay / dialog behaviour. Walks the audit URL list (home first) and, for
+ * each overlay in tests/support/config.ts whose trigger is visible (header
+ * menus, search, a plugin's quiz launcher) plus any native <dialog> opener,
+ * checks once on the first page it appears:
  *
  *  1. opening moves focus inside the container;
  *  2. the container is a dialog (native <dialog> or role="dialog" + aria-modal);
@@ -28,106 +31,132 @@ const activeIsInside = (page: Page, container: string): Promise<boolean> =>
   }, container);
 
 test.describe('Overlays behave as modal dialogs', () => {
+  let urls: string[] = [];
+
+  test.beforeAll(async ({ baseURL }) => {
+    ({ urls } = await getAuditUrls(baseURL));
+  });
+
   for (const size of widths) {
     test(`at ${size.name} width`, async ({ page }) => {
+      test.setTimeout(urls.length * 30_000);
       await page.setViewportSize({ width: size.width, height: size.height });
-      await page.goto('/');
-      await page.waitForTimeout(500);
-      await dismissOverlays(page);
 
-      // Native <dialog> openers are self-describing; add them to the list.
-      const dialogOpeners = await page.$$eval(
-        'button[aria-haspopup="dialog"][aria-controls]',
-        (buttons) =>
-          buttons.map((b) => ({
-            name: `dialog #${b.getAttribute('aria-controls')}`,
-            trigger: `button[aria-controls="${b.getAttribute('aria-controls')}"]`,
-            container: `#${b.getAttribute('aria-controls')}`,
-          })),
-      );
-      const candidates = [
-        ...overlays,
-        ...dialogOpeners.filter((d) => !overlays.some((o) => o.container === d.container)),
-      ];
-
+      /** Overlays already exercised at this width, by container selector. */
+      const done = new Set<string>();
       let checked = 0;
 
-      for (const overlay of candidates) {
-        const trigger = page.locator(overlay.trigger).first();
-        if (!(await trigger.count()) || !(await trigger.isVisible())) continue;
+      for (const url of urls) {
+        await page.goto(url);
+        await page.waitForTimeout(500);
+        await dismissOverlays(page);
 
-        await test.step(overlay.name, async () => {
-          checked += 1;
-          const container = page.locator(overlay.container).first();
+        // Native <dialog> openers are self-describing; add them to the list.
+        const dialogOpeners = await page.$$eval(
+          'button[aria-haspopup="dialog"][aria-controls]',
+          (buttons) =>
+            buttons.map((b) => ({
+              name: `dialog #${b.getAttribute('aria-controls')}`,
+              trigger: `button[aria-controls="${b.getAttribute('aria-controls')}"]`,
+              container: `#${b.getAttribute('aria-controls')}`,
+            })),
+        );
+        const candidates = [
+          ...overlays,
+          ...dialogOpeners.filter((d) => !overlays.some((o) => o.container === d.container)),
+        ].filter((overlay) => !done.has(overlay.container));
 
-          // Open by keyboard: Safari does not focus a button on click, so a
-          // click would make "focus returns to the trigger" untestable there.
-          await trigger.focus();
-          await trigger.press('Enter');
-          await expect(container, `${overlay.name}: container visible after opening`).toBeVisible();
+        for (const overlay of candidates) {
+          const trigger = page.locator(overlay.trigger).first();
+          if (!(await trigger.count()) || !(await trigger.isVisible())) continue;
 
-          // 1. Focus moved in
-          expect
-            .soft(
-              await activeIsInside(page, overlay.container),
-              `${overlay.name}: focus moves into the overlay on open`,
-            )
-            .toBe(true);
+          await test.step(`${overlay.name} (${url})`, async () => {
+            checked += 1;
+            done.add(overlay.container);
+            const container = page.locator(overlay.container).first();
 
-          // 2. Dialog semantics
-          const semantics = await container.evaluate((el) => ({
-            tag: el.tagName.toLowerCase(),
-            role: el.getAttribute('role'),
-            modal: el.getAttribute('aria-modal'),
-            labelled: el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby'),
-          }));
-          const isDialog =
-            semantics.tag === 'dialog' ||
-            (semantics.role === 'dialog' && semantics.modal === 'true');
-          expect
-            .soft(
-              isDialog,
-              `${overlay.name}: container is a <dialog> or role="dialog" aria-modal="true" (got <${semantics.tag} role=${semantics.role}>)`,
-            )
-            .toBe(true);
-          expect
-            .soft(semantics.labelled, `${overlay.name}: dialog has aria-label or aria-labelledby`)
-            .toBe(true);
+            // Open by keyboard: Safari does not focus a button on click, so a
+            // click would make "focus returns to the trigger" untestable there.
+            await trigger.focus();
+            await trigger.press('Enter');
+            await expect(
+              container,
+              `${overlay.name}: container visible after opening`,
+            ).toBeVisible();
 
-          // 3. Focus containment
-          const tabbables = await container.locator(tabbableSelector).count();
-          for (let i = 0; i < tabbables + 2; i += 1) {
-            await page.keyboard.press('Tab');
-          }
-          expect
-            .soft(
-              await activeIsInside(page, overlay.container),
-              `${overlay.name}: focus stays inside after tabbing past the last control`,
-            )
-            .toBe(true);
+            // Overlays that fetch their content after opening (a quiz) flag it with
+            // aria-busy; count their controls once that clears, or a one-control
+            // dialog tabs out to the browser chrome and fails.
+            await container
+              .locator('[aria-busy="true"]')
+              .first()
+              .waitFor({ state: 'detached', timeout: 10_000 })
+              .catch(() => {});
+            await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => {});
 
-          // 4. Escape closes and returns focus
-          await page.keyboard.press('Escape');
-          await expect.soft(container, `${overlay.name}: Escape closes the overlay`).toBeHidden();
-          const returned = await page.evaluate(
-            (sel) => document.activeElement === document.querySelector(sel),
-            overlay.trigger,
-          );
-          expect
-            .soft(returned, `${overlay.name}: focus returns to the trigger on close`)
-            .toBe(true);
+            // 1. Focus moved in
+            expect
+              .soft(
+                await activeIsInside(page, overlay.container),
+                `${overlay.name}: focus moves into the overlay on open`,
+              )
+              .toBe(true);
 
-          // Leave the page clean for the next overlay.
-          if (await container.isVisible()) {
+            // 2. Dialog semantics
+            const semantics = await container.evaluate((el) => ({
+              tag: el.tagName.toLowerCase(),
+              role: el.getAttribute('role'),
+              modal: el.getAttribute('aria-modal'),
+              labelled: el.hasAttribute('aria-label') || el.hasAttribute('aria-labelledby'),
+            }));
+            const isDialog =
+              semantics.tag === 'dialog' ||
+              (semantics.role === 'dialog' && semantics.modal === 'true');
+            expect
+              .soft(
+                isDialog,
+                `${overlay.name}: container is a <dialog> or role="dialog" aria-modal="true" (got <${semantics.tag} role=${semantics.role}>)`,
+              )
+              .toBe(true);
+            expect
+              .soft(semantics.labelled, `${overlay.name}: dialog has aria-label or aria-labelledby`)
+              .toBe(true);
+
+            // 3. Focus containment
+            const tabbables = await container.locator(tabbableSelector).count();
+            for (let i = 0; i < tabbables + 2; i += 1) {
+              await page.keyboard.press('Tab');
+            }
+            expect
+              .soft(
+                await activeIsInside(page, overlay.container),
+                `${overlay.name}: focus stays inside after tabbing past the last control`,
+              )
+              .toBe(true);
+
+            // 4. Escape closes and returns focus
             await page.keyboard.press('Escape');
-            if (overlay.close)
-              await page
-                .locator(overlay.close)
-                .first()
-                .click({ force: true })
-                .catch(() => {});
-          }
-        });
+            await expect.soft(container, `${overlay.name}: Escape closes the overlay`).toBeHidden();
+            const returned = await page.evaluate(
+              (sel) => document.activeElement === document.querySelector(sel),
+              overlay.trigger,
+            );
+            expect
+              .soft(returned, `${overlay.name}: focus returns to the trigger on close`)
+              .toBe(true);
+
+            // Leave the page clean for the next overlay.
+            if (await container.isVisible()) {
+              await page.keyboard.press('Escape');
+              if (overlay.close)
+                await page
+                  .locator(overlay.close)
+                  .first()
+                  .click({ force: true })
+                  .catch(() => {});
+            }
+          });
+        }
       }
 
       test.info().annotations.push({

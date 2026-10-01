@@ -40,7 +40,7 @@ A11Y_MAX_URLS=1 A11Y_URLS=/communities/ npm run test:dom
 
 ## Declaring what a module or feature owns
 
-A module or feature with interactive UI describes it under an `a11y` key in its `module.json` or `feature.json`, next to the template and script it already declares. The generic specs read every manifest in the theme the suite runs from.
+A module or feature with interactive UI describes it under an `a11y` key in its `module.json` or `feature.json`, next to the template and script it already declares. The generic specs read every manifest in the theme the suite runs from, plus `modules/*/module.json` in every sibling plugin (`wp-content/plugins/*/`), which is where plugin modules such as the quiz launcher declare theirs.
 
 ```json
 "a11y": {
@@ -56,7 +56,7 @@ A module or feature with interactive UI describes it under an `a11y` key in its 
 - `carousel`: prev/next controls when a module does not use Swiper's own buttons.
 - `dismiss`: cookie banners and popups the behavioural specs click away first.
 
-Native `<dialog>` openers (`button[aria-haspopup="dialog"][aria-controls]`), Swiper's `.swiper-button-*` and controls labelled "Previous…" / "Next…" are found without a declaration. A menu that is not found at phone width fails the overlays spec rather than being skipped, so a renamed attribute shows up as a red test.
+Native `<dialog>` openers (`button[aria-haspopup="dialog"][aria-controls]`), Swiper's `.swiper-button-*` and controls labelled "Previous…" / "Next…" are found without a declaration. The overlays spec walks the audit URL list and checks each overlay once, on the first page where its trigger is visible, so an overlay that only exists on one page (a quiz launcher) still needs that page in `tests/a11y.config.json`. A menu that is not found at phone width fails the spec rather than being skipped, so a renamed attribute shows up as a red test.
 
 ### Third-party embeds
 

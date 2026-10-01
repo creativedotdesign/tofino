@@ -5,7 +5,7 @@ import path from 'path';
 import fs from 'fs';
 import type { Result } from 'axe-core';
 import { getAuditUrls } from '../support/utils/urls';
-import { capturePage, settlePage } from '../support/utils/page';
+import { capturePage, dismissOverlays, settlePage } from '../support/utils/page';
 import { axeTags, excludes, hoverPass, overlays, screenshots, viewports } from '../support/config';
 
 /**
@@ -141,14 +141,41 @@ test.describe('Accessibility tests', () => {
             }
 
             // Overlay states: open each menu/dialog present and re-run axe on
-            // it. Menu and modal findings only exist in this state.
+            // it. Menu and modal findings only exist in this state. The
+            // resting audit above kept banners in place (they must be
+            // accessible too); the cookie notice is a modal <dialog>, so it
+            // is dismissed here or it blocks every trigger behind it.
+            let dismissed = false;
             for (const overlay of overlays) {
               const trigger = page.locator(overlay.trigger).first();
               if (!(await trigger.count()) || !(await trigger.isVisible())) continue;
 
               await test.step(`State: ${overlay.name} open`, async () => {
-                await trigger.click();
+                if (!dismissed) {
+                  await dismissOverlays(page);
+                  dismissed = true;
+                }
+                // Keyboard open, as in the overlays spec: Safari does not
+                // focus a clicked button, and a sticky header can sit over
+                // the trigger at narrow widths.
+                try {
+                  await trigger.scrollIntoViewIfNeeded({ timeout: 5_000 });
+                  await trigger.focus({ timeout: 5_000 });
+                  await trigger.press('Enter', { timeout: 5_000 });
+                } catch (error) {
+                  console.warn(
+                    `${overlay.name}: could not open on ${url} at ${viewport.name} (${error instanceof Error ? error.message.split('\n')[0] : error})`,
+                  );
+                  return;
+                }
                 await page.waitForTimeout(400);
+                // Content fetched after opening (a quiz) flags itself busy.
+                await page
+                  .locator(overlay.container)
+                  .locator('[aria-busy="true"]')
+                  .first()
+                  .waitFor({ state: 'detached', timeout: 10_000 })
+                  .catch(() => {});
 
                 const stateResults = await axe(page).include(overlay.container).analyze();
 

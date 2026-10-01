@@ -122,6 +122,9 @@ add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');
  */
 function video_embed_wrapper($html)
 {
+  // Providers still send the deprecated frameborder attribute (HTML
+  // validators flag it); the border is reset in CSS anyway.
+  $html = preg_replace('/\s+frameborder="[^"]*"/i', '', $html);
   $html = '<div class="relative my-6 aspect-video">' . $html . '</div>';
 
   return $html;
