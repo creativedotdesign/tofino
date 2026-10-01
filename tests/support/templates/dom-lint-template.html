@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>DOM Lint Report</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+        color: #222;
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      h2 {
+        margin-top: 40px;
+      }
+      .summary,
+      .card {
+        background-color: #fff;
+        padding: 15px 20px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+      }
+      .badge {
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #fff;
+      }
+      .badge.error {
+        background-color: #c62828;
+      }
+      .badge.review {
+        background-color: #f9a825;
+        color: #222;
+      }
+      .rule {
+        display: flex;
+        gap: 12px;
+        align-items: baseline;
+        flex-wrap: wrap;
+      }
+      .rule code {
+        font-size: 1.05em;
+      }
+      details {
+        margin-top: 8px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 8px;
+        font-size: 0.9em;
+      }
+      th,
+      td {
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        padding: 6px 8px;
+        vertical-align: top;
+      }
+      td code {
+        word-break: break-all;
+      }
+      .screenshot img {
+        max-width: 100%;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>DOM Lint Report</h1>
+
+    <div class="summary">
+      <p><strong>Website:</strong> {{websiteName}}</p>
+      <p><strong>Tested On:</strong> {{timestamp}}</p>
+      <p>
+        <span class="badge error">{{totalErrors}} errors</span> &nbsp;
+        <span class="badge review">{{totalReview}} to review</span>
+      </p>
+    </div>
+
+    <h2>By rule</h2>
+    {{#rules}}
+    <div class="card">
+      <div class="rule">
+        <span class="badge {{level}}">{{level}}</span>
+        <code>{{rule}}</code>
+        <span>WCAG {{sc}}</span>
+        <span>{{count}} instances on {{pageCount}} page(s)</span>
+      </div>
+      <details>
+        <summary>Instances</summary>
+        <table>
+          <tr>
+            <th>Page</th>
+            <th>Element</th>
+            <th>Detail</th>
+          </tr>
+          {{#pages}}
+          <tr>
+            <td><a href="{{url}}" target="_blank">{{url}}</a></td>
+            <td><code>{{selector}}</code></td>
+            <td>{{detail}}</td>
+          </tr>
+          {{/pages}}
+        </table>
+      </details>
+    </div>
+    {{/rules}}
+
+    <h2>By page</h2>
+    {{#pages}}
+    <div class="card">
+      <p>
+        <a href="{{url}}" target="_blank">{{url}}</a> &nbsp;
+        <span class="badge error">{{errorCount}}</span>
+        <span class="badge review">{{reviewCount}}</span>
+      </p>
+      {{#screenshot}}
+      <details class="screenshot">
+        <summary>Screenshot</summary>
+        <img src="{{screenshot}}" alt="Flagged elements outlined" />
+      </details>
+      {{/screenshot}}
+    </div>
+    {{/pages}}
+  </body>
+</html>

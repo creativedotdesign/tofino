@@ -2,6 +2,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginVue from 'eslint-plugin-vue';
+import pluginVueA11y from 'eslint-plugin-vuejs-accessibility';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 
@@ -17,6 +18,11 @@ export default defineConfig([
 
   // Vue configs
   ...pluginVue.configs['flat/recommended'],
+
+  // Vue accessibility: alt text, labels, click handlers on non-interactive
+  // elements, ARIA roles/props. Catches modal and form defects in templates
+  // before they reach the browser audits.
+  ...pluginVueA11y.configs['flat/recommended'],
 
   // Custom rules
   {

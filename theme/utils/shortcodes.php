@@ -245,7 +245,19 @@ function render_svg_sprite(array $atts): string
     $attr_str .= ' ' . $key . '="' . esc_attr($value) . '"';
   }
 
-  $title_tag = $title ? '<title>' . esc_html($title) . '</title>' : '';
+  // Accessibility: an icon with a title is an image named by it; an icon
+  // without one is decorative and hidden from assistive technology (the
+  // control around it carries the name). Callers may still pass their own
+  // role / aria-hidden and keep control.
+  $title_tag = '';
+
+  if ($title) {
+    $title_id  = 'svg-title-' . wp_unique_id();
+    $title_tag = '<title id="' . esc_attr($title_id) . '">' . esc_html($title) . '</title>';
+    $attr_str .= ' role="img" aria-labelledby="' . esc_attr($title_id) . '"';
+  } elseif (!isset($atts['role']) && !isset($atts['aria-hidden'])) {
+    $attr_str .= ' aria-hidden="true" focusable="false"';
+  }
 
   return '<svg' . $attr_str . '>' . $title_tag . '<use href="#icon-' . esc_attr($sprite) . '" /></svg>';
 }

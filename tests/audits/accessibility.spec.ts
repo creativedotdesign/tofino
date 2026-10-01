@@ -1,15 +1,55 @@
-import { test } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { createHtmlReport } from 'axe-html-reporter';
 import path from 'path';
 import fs from 'fs';
-import { processSitemap } from '../support/utils/process-sitemap';
+import type { Result } from 'axe-core';
+import { getAuditUrls } from '../support/utils/urls';
+import { capturePage, settlePage } from '../support/utils/page';
+import { axeTags, excludes, hoverPass, overlays, screenshots, viewports } from '../support/config';
 
-const viewports = [
-  { name: 'mobile', width: 375, height: 667 },
-  { name: 'tablet', width: 768, height: 1024 },
-  { name: 'desktop', width: 1280, height: 720 },
-];
+/**
+ * axe audit. Every sitemap URL (see tests/support/utils/urls.ts) at each
+ * viewport in tests/support/config.ts, with the WCAG 2.2 AA and best-practice
+ * tag sets. Beyond the resting page it also runs axe:
+ *
+ *  - inside each overlay in the config (menu, search) once opened;
+ *  - on every hovered link/button at desktop when A11Y_HOVER=1.
+ *
+ * `incomplete` results (contrast over images, link purpose) are kept in the
+ * report for manual review. Any violation fails the run. Output:
+ * tests/output/accessibility-report.html with screenshots of flagged nodes.
+ */
+
+/** An axe result stamped with the state and viewport it was captured in, for the report. */
+type ReportedResult = Result & {
+  reportId?: number;
+  state?: string;
+  viewport?: string;
+};
+
+/** axe output for one URL in one viewport and page state. */
+type PageResult = {
+  url: string;
+  violations: ReportedResult[];
+  incomplete?: Result[];
+  screenshot?: string;
+  viewport: string;
+  state?: string;
+};
+
+/**
+ * axe builder for this suite: the WCAG 2.2 AA + best-practice tags, no
+ * injection into frames (embed content belongs to its provider; the <iframe>
+ * element itself is still checked), and the declared third-party exclusions.
+ */
+const axe = (page: Page): AxeBuilder => {
+  let builder = new AxeBuilder({ page }).withTags(axeTags).options({ iframes: false });
+  for (const selector of excludes) {
+    builder = builder.exclude(selector);
+  }
+  return builder;
+};
 
 test.describe('Accessibility tests', () => {
   const outputDir = path.resolve('./tests/output');
@@ -17,19 +57,16 @@ test.describe('Accessibility tests', () => {
   const reportPath = path.join(outputDir, 'accessibility-report.html');
   let urls: string[] = [];
   let sitemapCounts: Record<string, number> = {};
-  const combinedResults: Array<{
-    url: string;
-    violations: any[];
-    screenshot?: string;
-    viewport: string;
-    state?: string;
-  }> = [];
+  const combinedResults: PageResult[] = [];
 
   test.beforeAll(async ({ baseURL }) => {
     // Get sitemap index
-    const { urls: allUrls, counts } = await processSitemap(`${baseURL}/sitemap_index.xml`);
+    const { urls: allUrls, counts } = await getAuditUrls(baseURL);
     urls = allUrls;
     sitemapCounts = counts;
+    console.log(
+      `Accessibility audit: ${urls.length} URLs x ${viewports.length} viewports, tags ${axeTags.join(', ')}.`,
+    );
 
     if (!fs.existsSync(screenshotsDir)) {
       fs.mkdirSync(screenshotsDir, { recursive: true });
@@ -37,6 +74,10 @@ test.describe('Accessibility tests', () => {
   });
 
   test('Should not have accessibility issues', async ({ page }) => {
+    // One test walks every URL, so size its timeout to the crawl instead of
+    // Playwright's per-test default (60s in playwright.config.ts).
+    test.setTimeout(urls.length * viewports.length * 120_000);
+
     for (const viewport of viewports) {
       await test.step(`Viewport: ${viewport.name}`, async () => {
         await page.setViewportSize({ width: viewport.width, height: viewport.height });
@@ -44,45 +85,48 @@ test.describe('Accessibility tests', () => {
         for (const url of urls) {
           await test.step(`${viewport.name} - ${url}`, async () => {
             await page.goto(url, { waitUntil: 'domcontentloaded' });
-            // Wait a bit for dynamic content to load
-            await page.waitForTimeout(1000);
+            // Scroll through, pin reveal-on-scroll content, wait for media.
+            await settlePage(page);
 
-            const results = await new AxeBuilder({ page })
-              // Level A, and Level AA
-              .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+            // WCAG 2.2 AA + best-practice (heading order, landmark labels,
+            // list semantics) — see tests/support/config.ts.
+            const results = await axe(page).analyze();
 
-              // Level A only
-              // .withTags(['wcag2a', 'wcag21a'])
-              .analyze();
+            // `incomplete` = axe could not decide (contrast over images and
+            // gradients, most link-purpose checks). Report them for manual
+            // review instead of dropping them.
+            if (results.incomplete.length > 0) {
+              combinedResults.push({
+                url,
+                violations: [],
+                incomplete: results.incomplete,
+                viewport: viewport.name,
+                state: 'incomplete',
+              });
+            }
 
-            console.log('URL is: ' + url);
+            console.log(
+              `axe ${viewport.name} ${url}: ${results.violations.length} violations` +
+                (results.violations.length
+                  ? ` (${results.violations.map((v) => v.id).join(', ')})`
+                  : '') +
+                `, ${results.incomplete.length} incomplete`,
+            );
 
             if (results.violations.length > 0) {
-              // Add ada-violation class to highlight each offending node
-              for (const violation of results.violations) {
-                for (const node of violation.nodes) {
-                  const selector = node.target.join(' ');
-                  await page
-                    .$eval(selector, (el) => el.classList.add('ada-violation'))
-                    .catch(() => {});
-                }
-              }
-
-              // Capture screenshot
-              const screenshotPath = path.join(
-                screenshotsDir,
-                `axe-violation-screenshot-${Date.now()}.png`
-              );
-              await page.screenshot({ path: screenshotPath, fullPage: true });
-
-              // Remove ada-violation highlight
-              for (const violation of results.violations) {
-                for (const node of violation.nodes) {
-                  const selector = node.target.join(' ');
-                  await page
-                    .$eval(selector, (el) => el.classList.remove('ada-violation'))
-                    .catch(() => {});
-                }
+              // Screenshots are opt-in (A11Y_SCREENSHOTS=1); the report already
+              // carries each node's selector and HTML.
+              let screenshotPath: string | undefined;
+              if (screenshots) {
+                screenshotPath = path.join(
+                  screenshotsDir,
+                  `axe-${viewport.name}-${Date.now()}.png`,
+                );
+                await capturePage(
+                  page,
+                  screenshotPath,
+                  results.violations.flatMap((v) => v.nodes.map((n) => n.target.join(' '))),
+                );
               }
 
               combinedResults.push({
@@ -96,92 +140,112 @@ test.describe('Accessibility tests', () => {
               console.log('Nothing found.');
             }
 
-            // Hover tests, desktop only
-            if (viewport.name === 'desktop') {
-              // Find hoverable elements
-              const hoverSelectors = await page.$$eval(
-                'button, a, [role="button"], [role="link"], [tabindex]',
-                (elements) =>
-                  elements
-                    .filter((el) => el.offsetParent !== null && !el.disabled)
-                    .map((el) => {
-                      if (el.id) return `#${CSS.escape(el.id)}`;
-                      if (el.className) {
-                        return (
-                          '.' +
-                          el.className
-                            .trim()
-                            .split(/\s+/)
-                            .map((cls) => CSS.escape(cls))
-                            .join('.')
-                        );
-                      }
-                      return el.tagName.toLowerCase();
-                    })
-              );
+            // Overlay states: open each menu/dialog present and re-run axe on
+            // it. Menu and modal findings only exist in this state.
+            for (const overlay of overlays) {
+              const trigger = page.locator(overlay.trigger).first();
+              if (!(await trigger.count()) || !(await trigger.isVisible())) continue;
 
-              console.log(`Found ${hoverSelectors.length} hoverable elements.`);
-              let nextId = combinedResults.length + 1;
+              await test.step(`State: ${overlay.name} open`, async () => {
+                await trigger.click();
+                await page.waitForTimeout(400);
 
-              // Hover each and test
-              for (const selector of hoverSelectors) {
-                await test.step(`Hover: ${selector}`, async () => {
-                  console.log(`Hovering: ${selector}`);
+                const stateResults = await axe(page).include(overlay.container).analyze();
 
-                  const el = await page.$(selector);
-                  if (!el) {
-                    console.log(`Element ${selector} not found — skipping.`);
-                    return;
-                  }
-
-                  await el.hover();
-                  await page.waitForTimeout(300);
-
-                  const hoverResults = await new AxeBuilder({ page })
-                    .include(selector)
-                    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-                    .analyze();
-
-                  console.log(
-                    `Violations for hover ${selector}: ${hoverResults.violations.length}`
-                  );
-
-                  if (hoverResults.violations.length > 0) {
-                    // Add ada-violation highlight class to element
-                    await el.evaluate((node) => node.classList.add('ada-violation'));
-
-                    const screenshotPath = path.join(
+                if (stateResults.violations.length > 0) {
+                  let screenshotPath: string | undefined;
+                  if (screenshots) {
+                    screenshotPath = path.join(
                       screenshotsDir,
-                      `axe-hover-${selector.replace(/[^a-z0-9]/gi, '_')}-${Date.now()}.png`
+                      `axe-state-${overlay.name.replace(/[^a-z0-9]/gi, '_')}-${Date.now()}.png`,
                     );
-                    await page.screenshot({ path: screenshotPath, fullPage: true });
-
-                    // Remove ada-violation highlight class
-                    await el.evaluate((node) => node.classList.remove('ada-violation'));
-
-                    hoverResults.violations.forEach((v) => {
-                      v.reportId = nextId++;
-                      v.state = 'hover';
-                      v.viewport = viewport.name;
-                    });
-
-                    combinedResults.push({
-                      url,
-                      violations: hoverResults.violations,
-                      screenshot: screenshotPath,
-                      viewport: viewport.name,
-                      state: 'hover',
-                    });
-
-                    console.log(`Added hover result for ${selector}`);
+                    await page.screenshot({ path: screenshotPath });
                   }
-                });
+                  combinedResults.push({
+                    url,
+                    violations: stateResults.violations,
+                    screenshot: screenshotPath,
+                    viewport: viewport.name,
+                    state: `${overlay.name} open`,
+                  });
+                }
+
+                await page.keyboard.press('Escape');
+                await page.waitForTimeout(200);
+              });
+            }
+
+            // Hover pass (opt-in: A11Y_HOVER=1), desktop only. Hovers each
+            // distinct visible link/button once and runs axe on it for
+            // hover-state contrast. Header and footer are hovered on the first
+            // URL only, since they repeat on every page. audit-ada-mcp
+            // --states covers hover and focus contrast faster and in more
+            // depth; keep this for spot checks.
+            if (viewport.name === 'desktop' && hoverPass) {
+              const includeChrome = url === urls[0];
+              const targets = await page.$$(
+                'button, a[href], [role="button"], [role="link"], [tabindex]:not([tabindex="-1"])',
+              );
+              let nextId = combinedResults.length + 1;
+              let hovered = 0;
+
+              for (const el of targets) {
+                const info = await el.evaluate((node, chrome) => {
+                  const element = node as HTMLElement;
+                  const visible =
+                    element.offsetParent !== null && !(element as HTMLButtonElement).disabled;
+                  const inChrome = !!element.closest('header, footer');
+                  const classes = Array.from(element.classList).slice(0, 2).join('.');
+                  return {
+                    skip: !visible || (inChrome && !chrome),
+                    label: `${element.tagName.toLowerCase()}${classes ? `.${classes}` : ''}`,
+                  };
+                }, includeChrome);
+                if (info.skip) continue;
+
+                try {
+                  await el.scrollIntoViewIfNeeded({ timeout: 2000 });
+                  await el.hover({ force: true, timeout: 2000 });
+                } catch {
+                  continue;
+                }
+                await page.waitForTimeout(150);
+                hovered += 1;
+
+                // axe needs a selector to scope to: tag the element for the run.
+                await el.evaluate((node) => node.setAttribute('data-a11y-hover', ''));
+                const hoverResults = await axe(page).include('[data-a11y-hover]').analyze();
+                await el.evaluate((node) => node.removeAttribute('data-a11y-hover'));
+
+                if (hoverResults.violations.length > 0) {
+                  combinedResults.push({
+                    url,
+                    violations: hoverResults.violations.map((v) => ({
+                      ...v,
+                      reportId: nextId++,
+                      state: `hover ${info.label}`,
+                      viewport: viewport.name,
+                    })),
+                    viewport: viewport.name,
+                    state: 'hover',
+                  });
+                }
               }
+
+              console.log(`Hover pass ${url}: ${hovered} elements.`);
             }
           });
         }
       });
     }
+  });
+
+  test.afterEach(() => {
+    const violationCount = combinedResults.reduce((n, r) => n + r.violations.length, 0);
+    expect(
+      violationCount,
+      `axe reported ${violationCount} violation(s); see tests/output/accessibility-report.html`,
+    ).toBe(0);
   });
 
   // After all tests, generate a single HTML report
@@ -190,11 +254,16 @@ test.describe('Accessibility tests', () => {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
+    const violationCount = combinedResults.reduce((n, r) => n + r.violations.length, 0);
+    const incompleteCount = combinedResults.reduce((n, r) => n + (r.incomplete?.length ?? 0), 0);
+    console.log(`axe: ${violationCount} violations, ${incompleteCount} incomplete (needs review).`);
+
     if (combinedResults.length > 0) {
       // Combine all results into one object
       const allResults = {
         urls: combinedResults.map((result) => result.url),
         violations: combinedResults.flatMap((result) => result.violations),
+        incomplete: combinedResults.flatMap((result) => result.incomplete ?? []),
       };
 
       let screenshotSummary = '';
@@ -210,11 +279,18 @@ test.describe('Accessibility tests', () => {
       createHtmlReport({
         results: allResults,
         options: {
-          outputDir,
+          // axe-html-reporter joins this onto process.cwd(); an absolute path
+          // would nest the whole path under the theme directory.
+          outputDir: path.relative(process.cwd(), outputDir),
           reportFileName: 'accessibility-report.html',
           customSummary: screenshotSummary,
         },
       });
+
+      if (!fs.existsSync(reportPath)) {
+        console.log('axe-html-reporter wrote no report (no violations to render).');
+        return;
+      }
 
       console.log(`Accessibility report saved at ${reportPath}`);
 
@@ -232,7 +308,7 @@ test.describe('Accessibility tests', () => {
           console.log(`Injecting screenshot for violation ${idNumber} (${ruleId})`);
 
           // Regex to match the <a id="X"> anchor and its violation card
-          const regex = new RegExp(`(<a id=\"${idNumber}\">[\\s\\S]*?<\\/div>)`, 'g');
+          const regex = new RegExp(`(<a id="${idNumber}">[\\s\\S]*?<\\/div>)`, 'g');
 
           const imgTag = `
             <p>
@@ -241,9 +317,9 @@ test.describe('Accessibility tests', () => {
               <strong>State:</strong> ${result.state}
             </p>
 
-            <img src=\"${path.relative(outputDir, result.screenshot)}\"
-              alt=\"Screenshot for violation ${idNumber}\"
-              style=\"max-width: 100%; margin:1rem 0;\"
+            <img src="${path.relative(outputDir, result.screenshot)}"
+              alt="Screenshot for violation ${idNumber}"
+              style="max-width: 100%; margin:1rem 0;"
             />`;
 
           // Replace and inject

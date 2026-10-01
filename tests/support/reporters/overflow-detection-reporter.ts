@@ -2,6 +2,7 @@ import type { Reporter, TestCase } from '@playwright/test/reporter';
 import fs from 'fs';
 import mustache from 'mustache';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -19,7 +20,7 @@ class OverflowReporter implements Reporter {
 
   onTestEnd(test: TestCase) {
     const overflowAnnotations = test.annotations.filter(
-      (annotation) => annotation.type === 'overflow-detection'
+      (annotation) => annotation.type === 'overflow-detection',
     );
 
     overflowAnnotations.forEach((annotation) => {
@@ -35,6 +36,9 @@ class OverflowReporter implements Reporter {
   }
 
   onEnd() {
+    // Nothing to report (spec not run or clean): leave no empty file behind.
+    if (!this.overflowResults.length) return;
+
     const template = this.getTemplate();
 
     // Check if output directory exists
@@ -51,10 +55,7 @@ class OverflowReporter implements Reporter {
     }));
 
     // Combine all selectors
-    const totalElements = adjustedResults.reduce(
-      (acc, curr) => acc + curr.selectors.length,
-      0
-    );
+    const totalElements = adjustedResults.reduce((acc, curr) => acc + curr.selectors.length, 0);
 
     const htmlContent = mustache.render(template, {
       data: adjustedResults,
@@ -69,7 +70,13 @@ class OverflowReporter implements Reporter {
   }
 
   getTemplate() {
-    return fs.readFileSync('./tests/support/templates/overflow-detection-template.html', 'utf8');
+    return fs.readFileSync(
+      path.join(
+        path.dirname(fileURLToPath(import.meta.url)),
+        '../templates/overflow-detection-template.html',
+      ),
+      'utf8',
+    );
   }
 }
 

@@ -152,6 +152,8 @@ function add_svg_sprite_to_footer(): void
   $svg_sprite = get_theme_file_path('dist/sprite.svg');
 
   if (file_exists($svg_sprite)) {
+    // aria-hidden / focusable are stamped on the file at build time by
+    // src/js/build/spriteA11y.ts, so the sprite is already decorative here.
     echo file_get_contents($svg_sprite);
   }
 }

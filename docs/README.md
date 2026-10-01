@@ -6,3 +6,4 @@
 - [Theme](theme.md)
 - [Source](source.md)
 - [Templates](templates.md)
+- [Testing](testing.md)

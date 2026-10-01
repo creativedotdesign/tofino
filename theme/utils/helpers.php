@@ -158,6 +158,77 @@ function is_single_module_page(string $module_name, int $page_id): bool
  * @param string $target The target attribute value from an ACF link field.
  * @return string '_blank' or '_self'.
  */
+/**
+ * Screen-reader-only note for a link that opens a new window (WCAG 2.4.4,
+ * technique G201): " (opens in new window)". Returns '' for any other target,
+ * so templates can call it with the raw ACF/menu target value:
+ *
+ *   <a href="…"<?php echo $target_attr; ?>><?php echo esc_html($label); ?><?php echo new_window_text($link['target']); ?></a>
+ *
+ * Rendered content and menus are covered by announce_new_window_links() and
+ * the nav_menu_item_title filter below, for links no template renders.
+ *
+ * @since 5.0.0
+ *
+ * @param string|null $target The link's target attribute value.
+ * @return string The sr-only span (leading space included), or ''.
+ */
+function new_window_text(?string $target = '_blank'): string
+{
+  if ($target !== '_blank') {
+    return '';
+  }
+
+  return ' <span class="sr-only">' . esc_html__('(opens in new window)', 'tofino') . '</span>';
+}
+
+/**
+ * Appends the new-window note to every <a target="_blank"> in a block of
+ * rendered HTML whose text does not already say so — editor-set "open in a
+ * new tab" links in post content and ACF WYSIWYG fields.
+ *
+ * @since 5.0.0
+ *
+ * @param string $html Rendered content.
+ * @return string Content with the note added where it was missing.
+ */
+function announce_new_window_links(string $html): string
+{
+  if (stripos($html, '_blank') === false) {
+    return $html;
+  }
+
+  return (string) preg_replace_callback(
+    '/<a\b[^>]*\btarget=["\']_blank["\'][^>]*>.*?<\/a>/is',
+    static function (array $match): string {
+      $anchor = $match[0];
+
+      if (preg_match('/new (window|tab)/i', wp_strip_all_tags($anchor))
+        || preg_match('/aria-label=["\'][^"\']*new (window|tab)/i', $anchor)
+      ) {
+        return $anchor;
+      }
+
+      return (string) preg_replace('/<\/a>$/i', new_window_text() . '</a>', $anchor);
+    },
+    $html
+  );
+}
+add_filter('the_content', __NAMESPACE__ . '\\announce_new_window_links', 20);
+add_filter('acf_the_content', __NAMESPACE__ . '\\announce_new_window_links', 20);
+
+/**
+ * Menu items set to open in a new tab announce it (default walker; the child
+ * themes' walkers call new_window_text() themselves).
+ */
+add_filter('nav_menu_item_title', function (string $title, $item): string {
+  if (!empty($item->target) && $item->target === '_blank' && !preg_match('/new (window|tab)/i', $title)) {
+    return $title . new_window_text();
+  }
+
+  return $title;
+}, 10, 2);
+
 function check_target(string $target): string
 {
   return $target === '_blank' ? '_blank' : '_self';

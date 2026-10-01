@@ -2,16 +2,25 @@ import type { Reporter, TestCase } from '@playwright/test/reporter';
 import fs from 'fs';
 import mustache from 'mustache';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import type { Message } from 'html-validate';
 
 dotenv.config();
 
+/** A message as the html spec annotates it: html-validate fields plus snippet, or a bare error message. */
+type ReportMessage = Partial<Message> & { message: string; snippet?: string; ruleUrl?: string };
+
+/**
+ * Collects `html-validation` annotations from the html audit spec and renders
+ * tests/output/html-validation-report.html from the mustache template.
+ */
 class HTMLReporter implements Reporter {
   private outputDir: string = path.resolve('./tests/output');
   public validationResults: Array<{
     testName: string;
     url: string;
-    messages: any[];
+    messages: ReportMessage[];
     screenshot?: string;
   }> = [];
   public timestamp: string = new Date().toLocaleString();
@@ -19,7 +28,7 @@ class HTMLReporter implements Reporter {
 
   onTestEnd(test: TestCase) {
     const validationAnnotations = test.annotations.filter(
-      (annotation) => annotation.type === 'html-validation'
+      (annotation) => annotation.type === 'html-validation',
     );
 
     validationAnnotations.forEach((annotation) => {
@@ -35,6 +44,9 @@ class HTMLReporter implements Reporter {
   }
 
   onEnd() {
+    // Nothing to report (spec not run or clean): leave no empty file behind.
+    if (!this.validationResults.length) return;
+
     const template = this.getTemplate();
 
     // Check if output directory exists
@@ -45,7 +57,7 @@ class HTMLReporter implements Reporter {
     // Adjust screenshot paths
     const adjustedResults = this.validationResults.map((result) => ({
       ...result,
-      messages: result.messages.map((msg: any) => ({
+      messages: result.messages.map((msg) => ({
         ...msg,
         ruleUrl: msg.ruleUrl || '#',
       })),
@@ -55,10 +67,7 @@ class HTMLReporter implements Reporter {
     }));
 
     // Calculate total violations
-    const totalViolations = adjustedResults.reduce(
-      (acc, curr) => acc + curr.messages.length,
-      0
-    );
+    const totalViolations = adjustedResults.reduce((acc, curr) => acc + curr.messages.length, 0);
 
     const htmlContent = mustache.render(template, {
       data: adjustedResults,
@@ -71,7 +80,13 @@ class HTMLReporter implements Reporter {
   }
 
   getTemplate() {
-    return fs.readFileSync('./tests/support/templates/html-validation-template.html', 'utf8');
+    return fs.readFileSync(
+      path.join(
+        path.dirname(fileURLToPath(import.meta.url)),
+        '../templates/html-validation-template.html',
+      ),
+      'utf8',
+    );
   }
 }
 

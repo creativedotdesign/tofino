@@ -3,6 +3,7 @@ import { defineConfig, loadEnv } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap';
+import spriteA11y from './src/js/build/spriteA11y.ts';
 import path from 'node:path';
 import vue from '@vitejs/plugin-vue';
 import { createProxyHandler } from './src/js/build/middleware.ts';
@@ -171,6 +172,8 @@ export default ({ mode }: { mode: string }) => {
           },
         },
       ),
+      // Stamps aria-hidden/focusable on the emitted sprite (see the plugin).
+      spriteA11y(),
       devAssetRewriter({ publicUrl: tunnel?.publicUrl }),
       graphqlLoader(),
       phpFullReload({ patterns: phpWatchPatterns }),

@@ -1,5 +1,7 @@
 import { parseStringPromise } from 'xml2js';
 
+type SitemapEntry = { loc: string[] };
+
 /**
  * Recursively fetches and parses a sitemap or sitemap index into URL entries.
  *
@@ -28,16 +30,16 @@ export const processSitemap = async (
 
   // If Sitemap index
   if (parsedXml.sitemapindex && parsedXml.sitemapindex.sitemap) {
-    const subSitemaps = parsedXml.sitemapindex.sitemap.map((entry: any) => entry.loc[0]);
+    const subSitemaps = parsedXml.sitemapindex.sitemap.map((entry: SitemapEntry) => entry.loc[0]);
     for (const subSitemap of subSitemaps) {
-      const { urls, counts: _ } = await processSitemap(subSitemap, counts);
+      const { urls } = await processSitemap(subSitemap, counts);
       allUrls.push(...urls);
     }
   }
 
   // If URL set
   else if (parsedXml.urlset && parsedXml.urlset.url) {
-    allUrls = parsedXml.urlset.url.map((entry: any) => entry.loc[0]);
+    allUrls = parsedXml.urlset.url.map((entry: SitemapEntry) => entry.loc[0]);
     counts[sitemapUrl] = allUrls.length;
   }
 

@@ -4,7 +4,15 @@
  *
  * @returns CSS-like selector paths for detected overflow issues.
  */
-export const detectOverflow = () => {
+export const detectOverflow = (exclude: string[] = []) => {
+  // Third-party containers (manifest/site `exclude`): skip their contents.
+  const excludeRoots = exclude.flatMap((selector) => {
+    try {
+      return Array.from(document.querySelectorAll<HTMLElement>(selector));
+    } catch {
+      return [];
+    }
+  });
   const issues: string[] = [];
 
   // Track parent elements to skip if a child el is flagged
@@ -87,8 +95,29 @@ export const detectOverflow = () => {
       return;
     }
 
+    if (excludeRoots.some((root) => root !== el && root.contains(el))) {
+      return;
+    }
+
     const isHidden = el.offsetParent === null;
     if (isHidden) {
+      return;
+    }
+
+    // Screen-reader-only text (sr-only / screen-reader-text) is parked
+    // off-canvas by design: 1px, clipped, absolutely positioned. It never
+    // causes a horizontal scrollbar. The same goes for visibility:hidden
+    // measuring nodes and pseudo-element hosts with no box.
+    const style = window.getComputedStyle(el);
+    const clipped =
+      (style.clip && style.clip !== 'auto' && style.clip !== 'none') ||
+      (style.clipPath && style.clipPath !== 'none');
+    if (
+      style.visibility === 'hidden' ||
+      (clipped && style.position === 'absolute') ||
+      (el.offsetWidth <= 1 && el.offsetHeight <= 1) ||
+      /\b(sr-only|screen-reader-text|visually-hidden)\b/.test(el.className)
+    ) {
       return;
     }
 
@@ -110,7 +139,13 @@ export const detectOverflow = () => {
           (info.marginLeft.startsWith('-') ? parseFloat(info.marginLeft) * -1 : 0) +
           (info.marginRight.startsWith('-') ? parseFloat(info.marginRight) * -1 : 0);
 
-        if (el.scrollWidth - adjustment > ancestor.scrollWidth) {
+        // Inline ancestors report scrollWidth 0; fall back to the box width.
+        const ancestorWidth = Math.max(
+          ancestor.scrollWidth,
+          Math.ceil(ancestor.getBoundingClientRect().width),
+        );
+
+        if (el.scrollWidth - adjustment > ancestorWidth) {
           warn(el);
           issues.push(getSelector(el));
           // Skip if parent is already flagged

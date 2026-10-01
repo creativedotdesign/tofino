@@ -48,7 +48,7 @@ For profile and tunnel setup details, see [`docs/dev-profiles.md`](docs/dev-prof
 - Optional GraphQL integration hooks for headless/data workflows.
 - Markdown export integration for module-based page content.
 - Fragment cache integration and utility helpers.
-- Playwright QA suite (smoke, accessibility, HTML, and overflow audits).
+- Playwright QA suite (smoke, axe, HTML, overflow, DOM lint, keyboard focus, overlay and carousel audits) — see [`docs/testing.md`](docs/testing.md).
 - WPML-ready and responsive baseline templates.
 - Composer + npm build pipeline with GitHub Actions release/deploy workflow.
 

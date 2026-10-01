@@ -1,7 +1,19 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+/**
+ * The suite can be run from this theme or from a child theme
+ * (`playwright test --config ../tofino/playwright.config.ts`). The generic
+ * specs always come from here; manifests, reports and .env come from the
+ * working directory, falling back to this theme's .env for the site URL.
+ */
+const themeDir = path.dirname(fileURLToPath(import.meta.url));
+const siteDir = process.cwd();
 
 dotenv.config();
+dotenv.config({ path: path.join(themeDir, '.env') });
 
 /**
  * Read environment variables from file.
@@ -15,8 +27,8 @@ dotenv.config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
-  outputDir: './tests/output/artifacts',
+  testDir: path.join(themeDir, 'tests'),
+  outputDir: path.join(siteDir, 'tests/output/artifacts'),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -31,9 +43,12 @@ export default defineConfig({
   // reporter: 'html',
 
   reporter: [
-    ['html', { open: 'never', outputFolder: './tests/output/playwright' }],
+    // Terminal progress + failure detail; the html reporter alone prints nothing.
+    ['line'],
+    ['html', { open: 'never', outputFolder: path.join(siteDir, 'tests/output/playwright') }],
     ['./tests/support/reporters/html-validation-reporter.ts'],
     ['./tests/support/reporters/overflow-detection-reporter.ts'],
+    ['./tests/support/reporters/dom-lint-reporter.ts'],
   ],
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -56,16 +71,33 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      // The smoke specs exercise this theme's own header/alert markup; a child
+      // theme running the suite has its own header, so skip them there.
+      testIgnore: siteDir === themeDir ? [] : [/smoke\//],
+    },
+
+    // Specs a module or feature keeps in its own folder
+    // (modules/<slug>/a11y.spec.ts, features/<slug>/a11y.spec.ts) for
+    // assertions beyond the generic manifest contract.
+    {
+      name: 'theme',
+      testDir: siteDir,
+      testMatch: /(modules|features)\/[^/]+\/a11y\.spec\.ts$/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+
+    // WebKit is opt-in (`npm run test:webkit`): ADA audits are done with
+    // VoiceOver in Safari, so behavioural specs (overlays, carousels, focus)
+    // should also pass there. The sitemap-wide audits stay Chromium-only.
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+      testIgnore: /audits\/(accessibility|html|overflow|dom-lint)\.spec\.ts/,
     },
 
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
     // },
 
     /* Test against mobile viewports. */
