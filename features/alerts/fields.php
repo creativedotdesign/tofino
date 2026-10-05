@@ -22,6 +22,14 @@ if (!function_exists('acf_add_local_field_group')) {
   return;
 }
 
+add_filter('acf/fields/wysiwyg/toolbars', static function (array $toolbars): array {
+  $toolbars['Alerts'] = [
+    1 => ['bold', 'italic', 'link', 'unlink', 'alignleft', 'aligncenter', 'alignright', 'removeformat'],
+  ];
+
+  return $toolbars;
+});
+
 acf_add_local_field_group([
   'key' => 'group_653fde8f6b970',
   'title' => 'Alerts',
@@ -71,7 +79,7 @@ acf_add_local_field_group([
           'type' => 'wysiwyg',
           'instructions' => '[maxchars:180]',
           'default_value' => '<p>This is a <a href="https://google.ca">test alert</a>.</p>',
-          'toolbar' => 'basic',
+          'toolbar' => 'alerts',
           'media_upload' => 0,
         ],
         [

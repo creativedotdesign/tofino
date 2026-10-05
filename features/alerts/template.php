@@ -3,7 +3,7 @@
   <div class="items-center px-4 py-3 text-sm alert <?php echo esc_attr($args['position']); ?>" data-feature="alerts" data-alert-id="<?php echo esc_attr($args['id']); ?>" data-variant="<?php echo esc_attr($args['variant'] ?? 1); ?>" data-expires="<?php echo esc_attr($args['expires'] ?? ''); ?>" role="alert">
     <div class="flex items-center justify-between gap-4">
       <?php // The message is WYSIWYG (paragraphs), so its wrapper must be a block element. ?>
-      <div><?php echo acf_esc_html($args['message']); ?></div>
+      <div class="min-w-0 flex-1"><?php echo acf_esc_html($args['message']); ?></div>
 
       <button type="button" class="js-close flex h-3 w-3 shrink-0 items-center justify-center" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true"><?php echo svg(['sprite' => 'close', 'class' => 'current-color size-2.5']); ?></span>
