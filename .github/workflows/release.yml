@@ -61,6 +61,21 @@ jobs:
           unzip -t "${ZIP}"
           unzip -q "${ZIP}" -d "${EXTRACT_DIR}"
           test -f "${EXTRACT_DIR}/${SLUG}/dist/.vite/manifest.json"
+          php -r '
+            $loader = require $argv[1];
+            foreach ($loader->getClassMap() as $class => $file) {
+              if (!is_file($file)) {
+                fwrite(STDERR, "Missing autoload file for {$class}: {$file}\n");
+                exit(1);
+              }
+            }
+            foreach (["enshrined\\svgSanitize\\Sanitizer", "League\\HTMLToMarkdown\\HtmlConverter"] as $class) {
+              if (!class_exists($class)) {
+                fwrite(STDERR, "Missing runtime dependency: {$class}\n");
+                exit(1);
+              }
+            }
+          ' "${EXTRACT_DIR}/${SLUG}/vendor/autoload.php"
           grep -R -q --include='*.css' \
             'body.tofino-hide-admin-notices' \
             "${EXTRACT_DIR}/${SLUG}/dist/assets"

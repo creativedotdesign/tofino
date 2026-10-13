@@ -37,7 +37,7 @@ composer.lock
 node_modules/
 
 # Source and tests (compiled assets are deployed from dist/)
-src/
+/src/
 tests/
 test-results/
 playwright-report/
