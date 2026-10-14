@@ -55,7 +55,10 @@ const resizeWysiwyg = (editor: {
   }
 
   const iframe = editor.iframeElement;
-  const height = iframe.contentDocument?.documentElement.scrollHeight || MIN_WYSIWYG_HEIGHT;
+  // Measure the document's own box, not scrollHeight: scrollHeight is never
+  // smaller than the iframe viewport, so it could only ever grow the editor
+  // and left short fields stuck at ACF's 300px starting height.
+  const height = iframe.contentDocument?.documentElement.offsetHeight || MIN_WYSIWYG_HEIGHT;
 
   iframe.style.height = `${Math.max(height, MIN_WYSIWYG_HEIGHT)}px`;
   iframe.style.minHeight = `${MIN_WYSIWYG_HEIGHT}px`;

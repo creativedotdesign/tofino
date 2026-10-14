@@ -60,7 +60,7 @@ add_action('acf/init', function () {
         'label' => 'Company Number',
         'name' => 'company_number',
         'type' => 'text',
-        'instructions' => '[maxchars:40]',
+        'instructions' => 'Official company registration number, if you need to display it on your site. Common for Canadian and European organizations. [maxchars:40]',
       ],
     ],
     'location' => [

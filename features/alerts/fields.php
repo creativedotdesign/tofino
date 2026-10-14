@@ -39,13 +39,14 @@ acf_add_local_field_group([
       'label' => 'Alerts',
       'name' => 'alerts',
       'type' => 'repeater',
-      'layout' => 'row',
+      // Block layout: the short controls pair up two per line (50% wrappers
+      // below) and instructions run full width beneath their labels, so each
+      // alert stays compact instead of one table row per sub-field.
+      'layout' => 'block',
       'min' => 0,
       'max' => 2,
       'instructions' => 'Up to two alerts. The first uses the Alert 1 brand colour, the second uses the darker Alert 2 colour.',
       'button_label' => 'Add Alert',
-      'show_in_graphql' => 1,
-      'graphql_field_name' => 'alerts',
       'sub_fields' => [
         [
           'key' => 'field_653fdeacdf150',
@@ -54,23 +55,26 @@ acf_add_local_field_group([
           'type' => 'true_false',
           'default_value' => 0,
           'ui' => 1,
+          'wrapper' => ['width' => '50'],
         ],
         [
           'key' => 'field_653fded0df151',
           'label' => 'Position',
           'name' => 'position',
           'type' => 'select',
-          'instructions' => 'Alert position. Bottom = Fixed over footer. Top = Fixed above top menu.',
+          'instructions' => 'Top sits above the menu; Bottom is fixed over the footer.',
           'choices' => ['Top' => 'Top', 'Bottom' => 'Bottom'],
+          'wrapper' => ['width' => '50'],
         ],
         [
           'key' => 'field_653fdf15df152',
           'label' => 'Expires',
           'name' => 'expires',
           'type' => 'number',
-          'instructions' => 'Number of days until the alert expires. Set via a cookie.',
+          'instructions' => 'Days before a dismissed alert reappears.',
           'default_value' => 999,
           'max' => 999,
+          'wrapper' => ['width' => '50'],
         ],
         [
           'key' => 'field_653fdf4adf153',
@@ -98,7 +102,9 @@ acf_add_local_field_group([
     [['param' => 'options_page', 'operator' => '==', 'value' => 'alerts']],
   ],
   'style' => 'default',
-  'label_placement' => 'left',
+  // Label on top: a left label column only holds the word "Alerts" and would
+  // take a fifth of the width away from the repeater rows.
+  'label_placement' => 'top',
   'instruction_placement' => 'label',
   'active' => true,
 ]);
