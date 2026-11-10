@@ -34,6 +34,7 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
+/** Serve Markdown twins of supported content and advertise their alternate URLs. */
 class MarkdownExport
 {
   const SUPPORTED_POST_TYPES = ['page', 'post'];
@@ -41,6 +42,7 @@ class MarkdownExport
   /** Original REQUEST_URI captured before `.md` suffix stripping. */
   private ?string $original_request_uri = null;
 
+  /** Normalize Markdown requests before WordPress resolves the queried content. */
   public function __construct()
   {
     // Order matters: the strip rewrites `/path.md` to `?format=markdown`
@@ -53,7 +55,6 @@ class MarkdownExport
     add_action('wp_head', [$this, 'emit_link_alternate_tag'], 5);
   }
 
-
   /**
    * Post types with markdown twins. Child themes extend via the filter.
    *
@@ -63,7 +64,6 @@ class MarkdownExport
   {
     return (array) apply_filters('tofino/machine_readable/post_types', self::SUPPORTED_POST_TYPES);
   }
-
 
   /**
    * Rewrites `/some/path.md` requests to `/some/path` and flags the request
@@ -107,7 +107,7 @@ class MarkdownExport
     $_REQUEST['format'] = 'markdown';
   }
 
-
+  /** Prevent a Markdown response from entering the HTML page cache. */
   private function disable_page_cache_for_markdown(): void
   {
     if ($this->is_markdown_requested() && !defined('DONOTCACHEPAGE')) {
@@ -115,7 +115,7 @@ class MarkdownExport
     }
   }
 
-
+  /** Serve the requested Markdown twin before the HTML template is rendered. */
   public function maybe_output_markdown(): void
   {
     if (!$this->is_markdown_requested() || !$this->is_exportable_view()) {
@@ -124,7 +124,7 @@ class MarkdownExport
 
     $markdown = $this->build_post_markdown(get_queried_object());
 
-    if (!is_string($markdown) || $markdown === '') {
+    if ($markdown === '') {
       return;
     }
 
@@ -136,7 +136,6 @@ class MarkdownExport
     echo trim($markdown);
     exit;
   }
-
 
   /**
    * Emits an HTTP Link header on HTML responses pointing to the .md twin so
@@ -156,7 +155,6 @@ class MarkdownExport
     header('Link: <' . $url . '>; rel="alternate"; type="text/markdown"', false);
     header('Vary: Accept', false);
   }
-
 
   /**
    * Emits a <link rel="alternate" type="text/markdown"> tag inside <head> on
@@ -180,7 +178,6 @@ class MarkdownExport
     );
   }
 
-
   /**
    * Builds the .md twin URL for the current request. Assumes the caller has
    * already verified the view is markdown-exportable.
@@ -199,7 +196,6 @@ class MarkdownExport
 
     return esc_url_raw($url);
   }
-
 
   /**
    * Whether the current view exposes a single supported WP_Post that we can
@@ -222,7 +218,6 @@ class MarkdownExport
     return in_array($post->post_type, $this->supported_post_types(), true);
   }
 
-
   /**
    * Resolves the document H1. Prefers Yoast SEO title (curated for search
    * engines and LLMs), falls back to WP post title.
@@ -238,7 +233,6 @@ class MarkdownExport
     return trim(preg_replace('/\s+/', ' ', $title));
   }
 
-
   /**
    * Resolves the summary line. Prefers Yoast meta description, falls back to
    * a manually-set WP excerpt. Auto-generated excerpts are suppressed.
@@ -251,7 +245,6 @@ class MarkdownExport
     }
     return has_excerpt($post) ? (string) get_the_excerpt($post) : '';
   }
-
 
   /**
    * Builds the "Other languages: [Name](url), …" line from WPML's active
@@ -281,7 +274,6 @@ class MarkdownExport
 
     return '**Other languages:** ' . implode(', ', $links);
   }
-
 
   /**
    * Appends one JSON-line per markdown request to the log file. Silently
@@ -325,7 +317,6 @@ class MarkdownExport
     @file_put_contents($path, wp_json_encode($entry) . "\n", FILE_APPEND | LOCK_EX);
   }
 
-
   /**
    * Coarse vendor label for known AI crawlers and user-fetch agents.
    * Unrecognized agents (including humans) return 'other'.
@@ -364,7 +355,6 @@ class MarkdownExport
     return 'other';
   }
 
-
   /**
    * Which discovery path produced this markdown response.
    */
@@ -383,7 +373,6 @@ class MarkdownExport
     return 'accept-header';
   }
 
-
   /**
    * Fetches a Yoast meta value (title or description) with template
    * placeholders resolved. Returns '' when Yoast is unavailable or empty.
@@ -395,9 +384,8 @@ class MarkdownExport
     }
 
     try {
-      // Called by name — Yoast is an optional plugin, so a static reference
-      // would be an undefined symbol when it isn't installed.
-      $meta = call_user_func('YoastSEO')->meta->for_post($post_id);
+      // The function guard keeps Yoast optional on sites without the plugin.
+      $meta = YoastSEO()->meta->for_post($post_id);
     } catch (\Throwable) {
       return '';
     }
@@ -409,7 +397,7 @@ class MarkdownExport
     return (string) $meta->{$field};
   }
 
-
+  /** Recognize the explicit format parameter or Markdown Accept header. */
   private function is_markdown_requested(): bool
   {
     $format = isset($_GET['format']) ? sanitize_key(wp_unslash((string) $_GET['format'])) : '';
@@ -423,7 +411,7 @@ class MarkdownExport
     return $accept !== '' && str_contains($accept, 'text/markdown');
   }
 
-
+  /** Assemble the metadata and body sections of a post Markdown export. */
   private function build_post_markdown(\WP_Post $post): string
   {
     $title = $this->resolve_seo_title($post);
@@ -471,7 +459,7 @@ class MarkdownExport
     return implode("\n\n", array_filter($sections));
   }
 
-
+  /** Choose module serializers or the regular post-content converter. */
   private function build_body_markdown(\WP_Post $post): string
   {
     if ($post->post_type === 'page') {
@@ -484,7 +472,7 @@ class MarkdownExport
     return convert_html_to_markdown((string) apply_filters('the_content', $post->post_content));
   }
 
-
+  /** Render only flexible-content modules that declare a Markdown serializer. */
   private function build_modules_markdown(int $post_id): string
   {
     if (!have_rows('content_modules', $post_id)) {

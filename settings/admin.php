@@ -14,7 +14,7 @@
 // exists only to redirect the retired slug.
 add_action('admin_menu', function (): void {
   $hook = add_submenu_page(
-    null,
+    '',
     'Options',
     'Options',
     'edit_posts',
@@ -27,8 +27,8 @@ add_action('admin_menu', function (): void {
   }
 
   add_action('load-' . $hook, static function (): void {
-      wp_safe_redirect(admin_url('admin.php?page=menu-options'));
-      exit;
+    wp_safe_redirect(admin_url('admin.php?page=menu-options'));
+    exit;
   });
 });
 

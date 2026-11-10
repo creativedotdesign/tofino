@@ -11,6 +11,7 @@ type PhpFullReloadOptions = {
 const phpFullReload = (options: PhpFullReloadOptions = {}): Plugin => ({
   name: 'php-full-reload',
   apply: 'serve',
+  /** Watch configured paths and reload pages when their PHP templates change. */
   configureServer(server) {
     if (!options.patterns?.length) {
       return;

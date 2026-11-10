@@ -24,16 +24,20 @@ const DECORATIVE_HINT = /\.?\s*Leave empty if the image is purely decorative\.?/
 /** Rendered details views keyed by their root element. */
 const detailsByEl = new WeakMap<HTMLElement, DetailsInstance>();
 
+/** Build the shared inline validation message for an empty alt field. */
 export const messageHtml = (): string => `<span class="req-alt-msg" role="alert">${MESSAGE}</span>`;
 
+/** Treat missing or whitespace-only alt text as empty. */
 export const isBlank = (value: string | undefined): boolean =>
   String(value ?? '').replace(/\s+/g, '').length === 0;
 
+/** Limit alt-text validation to image attachments. */
 const isImage = (model: AttachmentModel): boolean => model.get('type') === 'image';
 
 /** The details view currently shown inside `scope`, if any. */
 export const detailsIn = (scope: ParentNode): DetailsInstance | undefined => {
   const el = scope.querySelector<HTMLElement>('.attachment-details');
+
   return el ? detailsByEl.get(el) : undefined;
 };
 
@@ -41,6 +45,7 @@ export const detailsIn = (scope: ParentNode): DetailsInstance | undefined => {
 export const altField = (view: DetailsInstance): HTMLInputElement | HTMLTextAreaElement | null =>
   view.$el[0]?.querySelector<HTMLInputElement | HTMLTextAreaElement>(ALT_INPUT) ?? null;
 
+/** Check the live input because the attachment model may not have synced yet. */
 export const altMissing = (view: DetailsInstance): boolean =>
   isImage(view.model) && isBlank(altField(view)?.value);
 
@@ -78,6 +83,7 @@ export const validate = (view: DetailsInstance): boolean => {
   } else if (!invalid && message.length) {
     message.remove();
   }
+
   return invalid;
 };
 
@@ -88,23 +94,28 @@ export const validate = (view: DetailsInstance): boolean => {
  */
 const patchDetailsView = (View?: DetailsClass): void => {
   const proto = View?.prototype;
+
   if (!proto) {
     return;
   }
+
   const originalRender = proto.render;
 
   proto.render = function reqAltRender(this: DetailsInstance): unknown {
     const result = originalRender?.call(this);
     const root = this.$el[0];
+
     if (!root || !isImage(this.model)) {
       return result;
     }
 
     detailsByEl.set(root, this);
     const label = this.$el.find(ALT_LABEL).first();
+
     if (label.length && !label.find('.req-alt-star').length) {
       label.append(STAR);
     }
+
     stripDecorativeHint(root);
     validate(this);
 
@@ -116,6 +127,7 @@ const patchDetailsView = (View?: DetailsClass): void => {
         }
       });
     }
+
     return result;
   };
 };
@@ -123,10 +135,13 @@ const patchDetailsView = (View?: DetailsClass): void => {
 /** Patch both details views; false when `wp.media` isn't loaded yet. */
 export const patchMediaViews = (): boolean => {
   const Details = getWp()?.media?.view?.Attachment?.Details;
+
   if (!Details) {
     return false;
   }
+
   patchDetailsView(Details);
   patchDetailsView(Details.TwoColumn);
+
   return true;
 };

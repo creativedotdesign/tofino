@@ -36,6 +36,7 @@ function acf_show_custom_layout_fields(array|false $field): array|false
 
   return $field;
 }
+
 add_filter('acf/prepare_field', __NAMESPACE__ . '\\acf_show_custom_layout_fields');
 
 /**
@@ -61,6 +62,7 @@ function acf_load_layouts_select_options(array $field): array
 
   return $field;
 }
+
 add_filter('acf/load_field/name=module_name', __NAMESPACE__ . '\\acf_load_layouts_select_options');
 
 /**
@@ -86,6 +88,7 @@ function acf_load_layout_names(array $field): array
 
   return $field;
 }
+
 add_filter('acf/load_field/name=page_template', __NAMESPACE__ . '\\acf_load_layout_names');
 
 /**
@@ -105,4 +108,5 @@ function sort_acf_flexible_content_layouts(array $field): array
 
   return $field;
 }
+
 add_filter('acf/load_field/name=content_modules', __NAMESPACE__ . '\\sort_acf_flexible_content_layouts');

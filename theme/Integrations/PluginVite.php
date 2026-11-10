@@ -26,6 +26,18 @@
 
 namespace Tofino\Integrations;
 
+/**
+ * Enqueue plugin-owned assets through the shared development server or their own build.
+ *
+ * @phpstan-type PluginAssets array{
+ *   handle: string,
+ *   plugin_dir: string,
+ *   plugin_url: string,
+ *   src: string,
+ *   manifest_key?: string,
+ *   deps?: array<int, array{id: string, import?: string}|string>
+ * }
+ */
 final class PluginVite
 {
   /** @var array<string, array<string, mixed>> Per-plugin manifest cache. */
@@ -39,7 +51,7 @@ final class PluginVite
    *   handle: string,
    *   plugin_dir: string,
    *   plugin_url: string,
-   *   src: string,
+   *   src?: string,
    *   manifest_key?: string,
    *   deps?: array<int, array{id: string, import?: string}|string>,
    * } $args
@@ -58,6 +70,11 @@ final class PluginVite
     self::enqueue_css($args);
   }
 
+  /**
+   * Enqueue the resolved entry with its shared script-module dependencies.
+   *
+   * @param PluginAssets $args Normalized plugin asset settings.
+   */
   private static function enqueue_script(array $args): void
   {
     $url = self::resolve_entry_url($args);
@@ -74,6 +91,11 @@ final class PluginVite
     );
   }
 
+  /**
+   * Enqueue built plugin styles when the development server is unavailable.
+   *
+   * @param PluginAssets $args Normalized plugin asset settings.
+   */
   private static function enqueue_css(array $args): void
   {
     // In dev, Vite injects CSS over HMR — skip the production stylesheet.
@@ -86,6 +108,11 @@ final class PluginVite
     }
   }
 
+  /**
+   * Find the entry URL in the shared dev server or plugin production manifest.
+   *
+   * @param PluginAssets $args Normalized plugin asset settings.
+   */
   private static function resolve_entry_url(array $args): ?string
   {
     $dev_url = Vite::get_dev_server_url();
@@ -106,6 +133,9 @@ final class PluginVite
   }
 
   /**
+   * Collect the plugin entry styles from its production manifest.
+   *
+   * @param PluginAssets $args Normalized plugin asset settings.
    * @return array<int, string>
    */
   private static function get_css_urls(array $args): array
@@ -127,17 +157,25 @@ final class PluginVite
     return $urls;
   }
 
+  /**
+   * Use the explicit manifest key or derive it from the source entry.
+   *
+   * @param PluginAssets $args Normalized plugin asset settings.
+   */
   private static function manifest_key(array $args): string
   {
     return (string) ($args['manifest_key'] ?? basename($args['src']));
   }
 
+  /** Resolve the production asset base URL for a plugin. */
   private static function dist_url(string $plugin_url): string
   {
     return rtrim($plugin_url, '/') . '/dist/';
   }
 
   /**
+   * Read and cache a plugin production manifest for this request.
+   *
    * @return array<string, array<string, mixed>>
    */
   private static function get_manifest(string $plugin_dir): array

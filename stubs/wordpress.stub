@@ -1,0 +1,23 @@
+<?php
+
+/** Forward declaration required when PHPStan validates stub signatures in isolation. */
+class WP_Term {}
+
+/**
+ * Correct WordPress's menu argument annotation: false disables the container.
+ *
+ * Core's implementation supports false, but the generated upstream stub lists
+ * only string. Keep the other documented arguments checked by PHPStan.
+ *
+ * @param array{
+ *   menu?: int|string|WP_Term, menu_class?: string, menu_id?: string,
+ *   container?: string|false, container_class?: string, container_id?: string,
+ *   container_aria_label?: string, fallback_cb?: callable|false,
+ *   before?: string, after?: string, link_before?: string, link_after?: string,
+ *   echo?: bool, depth?: int, walker?: object, theme_location?: string,
+ *   items_wrap?: string, item_spacing?: string
+ * } $args Menu options, including additional filter-specific arguments.
+ * @return string|false|void
+ */
+function wp_nav_menu($args = []) {}
+

@@ -1,57 +1,52 @@
 <?xml version="1.0"?>
-<ruleset name="Tofino">
-  <description>Tofino Coding Standards</description>
+<ruleset name="Tofino Theme">
+  <description>Readable production PHP using the theme's two-space conventions.</description>
+  <arg name="extensions" value="php"/>
+  <arg name="encoding" value="utf-8"/>
+  <arg value="s"/>
+  <file>404.php</file>
+  <file>archive.php</file>
+  <file>footer.php</file>
+  <file>functions.php</file>
+  <file>header.php</file>
+  <file>home.php</file>
+  <file>index.php</file>
+  <file>page-blank.php</file>
+  <file>page.php</file>
+  <file>single.php</file>
+  <file>theme</file>
+  <file>settings</file>
+  <file>features</file>
+  <file>modules</file>
+  <file>templates</file>
 
-  <!-- Use PSR-2 as a base -->
-  <rule ref="PSR2">
-    <!-- Allow opening and closing braces for functions and classes to be on the same line -->
-    <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
-    <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
-    <exclude name="Squiz.WhiteSpace.ScopeClosingBrace"/>
-
-    <!-- Disable newline after opening brace -->
-    <exclude name="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace"/>
-
-    <!-- Allow multiple PHP statements in the same line (usually in template files) -->
-    <exclude name="Generic.Formatting.DisallowMultipleStatements.SameLine"/>
-
-    <!-- Disable PSR-2 indentation rules that are buggy with 2 spaces -->
-    <exclude name="PSR2.ControlStructures.SwitchDeclaration.BreakIndent"/>
-    <exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>
-
-    <!-- Allow Cross OS line endings -->
-    <exclude name="Generic.Files.LineEndings"/>
-
-    <!-- Exclude camel caps class method name checking -->
-    <exclude name="PSR1.Methods.CamelCapsMethodName"/>
+  <rule ref="Generic.Files.LineEndings">
+    <properties>
+      <property name="eolChar" value="\n"/>
+    </properties>
   </rule>
-
-  <!-- Don't require a blank line after the last `use` in templates/ directory -->
-  <rule ref="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse">
-    <exclude-pattern>templates/*</exclude-pattern>
-  </rule>
-
-  <!-- Exclude Indent Rule in Templates -->
-  <rule ref="Generic.WhiteSpace.ScopeIndent">
-    <exclude-pattern>templates/*</exclude-pattern>
-  </rule>
-
-  <!-- Allow PHP closing tags on templates -->
-  <rule ref="PSR2.Files.ClosingTag.NotAllowed">
-    <exclude-pattern>templates/*</exclude-pattern>
-    <exclude-pattern>404.php</exclude-pattern>
-    <exclude-pattern>archive.php</exclude-pattern>
-    <exclude-pattern>page.php</exclude-pattern>
-    <exclude-pattern>single.php</exclude-pattern>
-    <exclude-pattern>home.php</exclude-pattern>
-  </rule>
-
-  <!-- Force 2 spaces indentation -->
+  <rule ref="Generic.Files.EndFileNewline"/>
+  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
   <rule ref="Generic.WhiteSpace.ScopeIndent">
     <properties>
       <property name="indent" value="2"/>
-      <property name="tabIndent" value="false"/>
+      <property name="exact" value="false"/>
     </properties>
   </rule>
-
+  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+  <rule ref="Squiz.ControlStructures.ControlSignature"/>
+  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+  <rule ref="Squiz.WhiteSpace.FunctionSpacing">
+    <properties>
+      <property name="spacing" value="1"/>
+      <property name="spacingBeforeFirst" value="1"/>
+      <property name="spacingAfterLast" value="0"/>
+    </properties>
+  </rule>
+  <!-- Summaries explain responsibility without duplicate native-type boilerplate. -->
+  <rule ref="Squiz.Commenting.FunctionComment.Missing"/>
+  <rule ref="Squiz.Commenting.FunctionComment.WrongStyle"/>
+  <rule ref="Squiz.Commenting.ClassComment.Missing"/>
+  <rule ref="Squiz.Commenting.ClassComment.WrongStyle"/>
 </ruleset>

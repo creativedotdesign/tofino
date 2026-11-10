@@ -36,4 +36,5 @@ export interface Wp {
   autosave?: { server?: { resume?: () => void } };
 }
 
+/** Read the optional WordPress media API without requiring it on every admin screen. */
 export const getWp = (): Wp | undefined => (window as unknown as { wp?: Wp }).wp;

@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * Static signatures for optional WPGraphQL and Yoast APIs.
+ *
+ * Derived from the installed plugins. PHPStan scans this file; production
+ * never requires it, so neither plugin becomes a runtime dependency.
+ */
+namespace {
+  function graphql_get_endpoint(): string {}
+  function graphql_get_endpoint_url(): string {}
+
+  /** @param array<string, mixed> $config */
+  function register_graphql_object_type(string $type_name, array $config): void {}
+
+  /** @param array<string, mixed> $config */
+  function register_graphql_field(string $type_name, string $field_name, array $config): void {}
+
+  function YoastSEO(): \Yoast\WP\SEO\Main {}
+}
+
+namespace GraphQL\Error {
+  class UserError extends \Exception {}
+}
+
+namespace GraphQL\Executor {
+  class ExecutionResult
+  {
+    /** @return array<string, mixed> */
+    public function toArray(int $debug = 0): array {}
+  }
+}
+
+namespace Yoast\WP\SEO {
+  class Main
+  {
+    public \Yoast\WP\SEO\Surfaces\Meta_Surface $meta;
+  }
+}
+
+namespace Yoast\WP\SEO\Surfaces {
+  class Meta_Surface
+  {
+    public function for_post(int $id): object|false {}
+  }
+}

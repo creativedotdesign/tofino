@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, type ConfigEnv } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import eslintPlugin from '@nabla/vite-plugin-eslint';
 import VitePluginSvgSpritemap from '@spiriit/vite-plugin-svg-spritemap';
@@ -20,9 +20,18 @@ import graphqlLoader from 'vite-plugin-graphql-loader';
 
 const themeDir = import.meta.dirname;
 
-export default ({ mode }: { mode: string }) => {
+export default ({ command, mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), '');
   const devProfile = env.VITE_DEV_PROFILE || 'local';
+  const isBuild = command === 'build';
+  let assetBase = '/';
+
+  if (isBuild) {
+    // Relative production URLs also work in CI and custom WordPress content paths.
+    const themePath = env.VITE_THEME_PATH?.trim().replace(/\/+$/, '');
+
+    assetBase = themePath ? `${themePath}/dist/` : './';
+  }
 
   // Derive feature flags from the active profile — single source of truth.
   const tunnel = devProfile === 'tunnel' ? resolveTunnelConfig(env) : undefined;
@@ -94,12 +103,12 @@ export default ({ mode }: { mode: string }) => {
   return defineConfig({
     publicDir: path.resolve(themeDir, './src/public'),
     root: path.resolve(themeDir, './src'),
-    base: env.NODE_ENV === 'production' ? `${env.VITE_THEME_PATH}/dist/` : '/',
+    base: assetBase,
     build: {
       outDir: path.resolve(themeDir, 'dist'),
       emptyOutDir: true,
       manifest: true,
-      sourcemap: env.NODE_ENV === 'production' ? false : 'inline',
+      sourcemap: isBuild ? false : 'inline',
       target: 'es2022',
       rollupOptions: {
         preserveEntrySignatures: 'exports-only',
@@ -110,6 +119,7 @@ export default ({ mode }: { mode: string }) => {
           vue: '/js/vendor/vue.ts',
           pinia: '/js/vendor/pinia.ts',
         },
+        /** Keep jQuery and the shared Vue runtime external where required. */
         external: (id, importer) => {
           if (id === 'jquery') {
             return true;
@@ -123,6 +133,7 @@ export default ({ mode }: { mode: string }) => {
           globals: {
             jquery: 'jQuery',
           },
+          /** Group vendor packages while keeping Vue and Pinia in stable shared chunks. */
           manualChunks: (id) => {
             // Split vendor chunks by package name
             if (id.includes('node_modules')) {
@@ -150,7 +161,14 @@ export default ({ mode }: { mode: string }) => {
       pluginAtAlias({ themeSrcDir: path.resolve(themeDir, './src') }),
       injectPluginSources({ sources: pluginTailwindSources }),
       tailwindcss(),
-      vue(),
+      vue({
+        template: {
+          compilerOptions: {
+            /** Allow native calendar elements without treating them as Vue components. */
+            isCustomElement: (tag) => tag.startsWith('calendar-'),
+          },
+        },
+      }),
       // Pin ESLint's cwd to this theme: flat-config resolution starts from
       // cwd, and per-site invocations run vite from the child theme dir,
       // which has no eslint.config of its own.
@@ -189,6 +207,7 @@ export default ({ mode }: { mode: string }) => {
       hotFile({ publicUrl: tunnel?.publicUrl }),
       {
         name: 'log-dev-urls',
+        /** Add the active profile and proxy URLs to the development startup log. */
         configureServer(server) {
           if (server.printUrls) {
             const originalPrintUrls = server.printUrls;
@@ -202,6 +221,7 @@ export default ({ mode }: { mode: string }) => {
                   `  ${lightMagenta('➜')}  ${bold('Tunnel:  ')}${lightMagenta(tunnel.publicUrl)}`,
                 );
               }
+
               console.log(
                 `  ${lightMagenta('➜')}  ${bold('Proxy:   ')}${lightMagenta(env.VITE_ASSET_URL + '/' || 'N/A')}`,
               );
@@ -235,6 +255,7 @@ export default ({ mode }: { mode: string }) => {
           target: env.VITE_ASSET_URL,
           changeOrigin: true,
           selfHandleResponse: true,
+          /** Rewrite WordPress URLs in proxied GraphQL responses. */
           configure: (proxy) => {
             proxy.on('proxyRes', createProxyHandler(env.VITE_ASSET_URL));
           },

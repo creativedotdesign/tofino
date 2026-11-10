@@ -11,6 +11,7 @@ if (!defined('ABSPATH')) {
 /** Shared SVG policy for inline rendering, uploads and Brand imports. */
 final class Svg
 {
+
   /**
    * Return sanitized SVG markup, or an error. Callers own paths and file writes.
    */

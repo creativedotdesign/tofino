@@ -1,0 +1,16 @@
+node_modules/
+vendor/
+dist/
+dist-release/
+/build/
+.cache/
+.playwright-cli/
+tests/output/
+tests/support/templates/
+stubs/
+**/*.php
+**/*.svg
+**/*.md
+package-lock.json
+composer.lock
+.env*

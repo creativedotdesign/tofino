@@ -22,6 +22,7 @@ type GlobalState = {
   tunnel?: Tunnel;
   configPath?: string;
   configHash?: string;
+  owner?: symbol;
 };
 
 const GLOBAL_KEY = Symbol.for('cloudflare-tunnel-plugin.state');
@@ -31,7 +32,9 @@ const GLOBAL_KEY = Symbol.for('cloudflare-tunnel-plugin.state');
  */
 const getGlobalState = (): GlobalState => {
   const g = globalThis as Record<symbol, GlobalState>;
+
   g[GLOBAL_KEY] ??= {};
+
   return g[GLOBAL_KEY];
 };
 
@@ -110,8 +113,16 @@ async function ensureBinary(): Promise<void> {
  */
 const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
   const state = getGlobalState();
+  const owner = Symbol('cloudflare-tunnel-owner');
 
+  /** Stop the tunnel only when this Vite server still owns it. */
   const cleanup = (): void => {
+    // A Vite config restart can configure the new server before closing the
+    // old one. Only the current owner may stop a reused tunnel.
+    if (state.owner !== owner) {
+      return;
+    }
+
     state.tunnel?.stop();
     state.tunnel = undefined;
 
@@ -119,6 +130,7 @@ const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
       fs.unlinkSync(state.configPath);
       state.configPath = undefined;
     }
+
     state.configHash = undefined;
   };
 
@@ -126,8 +138,11 @@ const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
     name: 'cloudflare-tunnel',
     apply: 'serve',
 
+    /** Expose the public tunnel URL while sharing the local WebSocket endpoint. */
     config(): UserConfig | undefined {
-      if (!options.enabled) return;
+      if (!options.enabled) {
+        return;
+      }
 
       const serverConfig: UserConfig['server'] = {};
 
@@ -139,20 +154,18 @@ const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
         serverConfig.origin = options.tunnelPublicUrl;
       }
 
-      if (options.tunnelHostname) {
-        serverConfig.hmr = {
-          protocol: 'wss',
-          host: options.tunnelHostname,
-          clientPort: 443,
-          path: '/@vite-hmr',
-        };
-      }
+      // Derive protocol, hostname and port from the Vite client URL so local
+      // and public pages can share one dev server and WebSocket endpoint.
+      serverConfig.ws = { path: '/@vite-hmr' };
 
       return { server: serverConfig };
     },
 
+    /** Reuse a healthy tunnel or start one when the Vite server is listening. */
     async configureServer(server) {
-      if (!options.enabled) return;
+      if (!options.enabled) {
+        return;
+      }
 
       const tunnelId = options.tunnelId?.trim();
       const tunnelName = options.tunnelName?.trim();
@@ -163,6 +176,7 @@ const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
         server.config.logger.error(
           '[cloudflare-tunnel] Missing required env vars: VITE_TUNNEL_ID, VITE_TUNNEL_NAME, VITE_TUNNEL_HOSTNAME, VITE_ASSET_URL.',
         );
+
         return;
       }
 
@@ -175,11 +189,31 @@ const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
         vitePort,
       });
 
+      state.owner = owner;
+      const closeServer = server.close.bind(server);
+
+      server.close = async () => {
+        process.off('SIGINT', cleanup);
+        process.off('SIGTERM', cleanup);
+        cleanup();
+        await closeServer();
+      };
+
+      process.once('SIGINT', cleanup);
+      process.once('SIGTERM', cleanup);
+
       // Reuse existing tunnel if config hasn't changed
-      if (state.tunnel && state.configHash === newHash) {
+      if (
+        state.tunnel &&
+        !state.tunnel.process.killed &&
+        state.tunnel.process.exitCode === null &&
+        state.tunnel.process.signalCode === null &&
+        state.configHash === newHash
+      ) {
         server.config.logger.info(
           `  ${lightMagenta('➜')}  ${bold('Cloudflare:')}${yellow(' reusing existing tunnel')}`,
         );
+
         return;
       }
 
@@ -191,41 +225,44 @@ const cloudflareTunnel = (options: CloudflareTunnelOptions = {}): Plugin => {
       await ensureBinary();
 
       server.httpServer?.once('listening', () => {
+        if (state.owner !== owner) {
+          return;
+        }
+
         state.configPath = path.join(os.tmpdir(), `tofino-cloudflared-${process.pid}.yml`);
         const configPath = state.configPath;
+
         fs.writeFileSync(
           configPath,
           buildIngressYaml(tunnelId, tunnelHostname, vitePort, siteOrigin, parseHost(siteOrigin)),
         );
 
-        state.tunnel = new Tunnel(['tunnel', '--config', configPath, 'run', tunnelName]);
+        const tunnel = new Tunnel(['tunnel', '--config', configPath, 'run', tunnelName]);
+
+        state.tunnel = tunnel;
         state.configHash = newHash;
 
-        state.tunnel.on('connected', (conn) => {
+        tunnel.on('connected', (conn) => {
           server.config.logger.info(
             `  ${lightMagenta('➜')}  ${bold('Cloudflare:')}${yellow(` connected (${conn.location})`)}`,
           );
         });
 
-        state.tunnel.on('error', (err) => {
+        tunnel.on('error', (err) => {
           server.config.logger.error(`[cloudflare-tunnel] ${err.message}`);
         });
 
-        state.tunnel.on('exit', (code) => {
+        tunnel.on('exit', (code) => {
+          if (state.tunnel === tunnel) {
+            state.tunnel = undefined;
+            state.configHash = undefined;
+          }
+
           if (code !== 0) {
             server.config.logger.error(`[cloudflare-tunnel] exited with code ${code}`);
           }
         });
       });
-
-      const closeServer = server.close.bind(server);
-      server.close = async () => {
-        cleanup();
-        await closeServer();
-      };
-
-      process.once('SIGINT', cleanup);
-      process.once('SIGTERM', cleanup);
     },
   };
 };

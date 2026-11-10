@@ -10,9 +10,6 @@
 
 namespace Tofino\Helpers;
 
-
-
-
 /**
  * Gets a post ID from its slug.
  *
@@ -45,7 +42,6 @@ function get_id_by_slug(string $slug, string $post_type = 'page'): ?int
   }
   return null;
 }
-
 
 /**
  * Fixes text orphans by adding a non-breaking space before the last word.
@@ -80,7 +76,6 @@ function fix_text_orphan(string $str = '', int $min_word_count = 3): string
   return $result ?? $str;
 }
 
-
 /**
  * Wraps the last word of a string in a span element with a given class.
  *
@@ -99,7 +94,6 @@ function wrap_last_word(string $string, string $class): string
   return implode(" ", $pieces);
 }
 
-
 /**
  * Gets a sub field from a specific layout within an ACF flexible content field.
  *
@@ -108,7 +102,7 @@ function wrap_last_word(string $string, string $class): string
  * @param string   $flex_field  The flexible content field name.
  * @param string   $flex_layout The layout name to match, or empty to return the first layout.
  * @param int|null $page_id     Optional. The post ID. Defaults to the current post.
- * @return array|null The matched layout field data, or null if not found.
+ * @return array<string, mixed>|null The matched layout field data, or null if not found.
  */
 function get_flex_field_by_page_id(string $flex_field, string $flex_layout = '', ?int $page_id = null): ?array
 {
@@ -125,7 +119,6 @@ function get_flex_field_by_page_id(string $flex_field, string $flex_layout = '',
 
   return null;
 }
-
 
 /**
  * Checks if a page contains only a single ACF flexible content module.
@@ -147,7 +140,6 @@ function is_single_module_page(string $module_name, int $page_id): bool
   return false;
 }
 
-
 /**
  * Normalizes an ACF link target value.
  *
@@ -158,6 +150,7 @@ function is_single_module_page(string $module_name, int $page_id): bool
  * @param string $target The target attribute value from an ACF link field.
  * @return string '_blank' or '_self'.
  */
+
 /**
  * Screen-reader-only note for a link that opens a new window (WCAG 2.4.4,
  * technique G201): " (opens in new window)". Returns '' for any other target,
@@ -214,6 +207,7 @@ function announce_new_window_links(string $html): string
     $html
   );
 }
+
 add_filter('the_content', __NAMESPACE__ . '\\announce_new_window_links', 20);
 add_filter('acf_the_content', __NAMESPACE__ . '\\announce_new_window_links', 20);
 
@@ -229,11 +223,11 @@ add_filter('nav_menu_item_title', function (string $title, $item): string {
   return $title;
 }, 10, 2);
 
+/** Normalize ACF link targets to a supported browsing context. */
 function check_target(string $target): string
 {
   return $target === '_blank' ? '_blank' : '_self';
 }
-
 
 /**
  * Escapes Markdown control characters in plain text.
@@ -265,7 +259,6 @@ function escape_markdown_text(string $text): string
     '>'  => '\>',
   ]);
 }
-
 
 /**
  * Converts HTML content to Markdown.
@@ -311,7 +304,6 @@ function convert_html_to_markdown(string $content): string
   return trim($markdown);
 }
 
-
 /**
  * Resolves a module-local markdown renderer file declared in module.json.
  *
@@ -330,7 +322,6 @@ function get_module_markdown_file(string $layout): ?string
   return \Tofino\Registry\ModuleManifest::file($module, 'markdown');
 }
 
-
 /**
  * Renders a module's Markdown serializer and returns the output string.
  *
@@ -342,7 +333,7 @@ function get_module_markdown_file(string $layout): ?string
  * @since 5.0.0
  *
  * @param string     $layout        The ACF module layout name.
- * @param array|null $template_args Optional data for loop-less rendering.
+ * @param array<string, mixed>|null $template_args Optional data for loop-less rendering.
  * @return string Markdown output for the current module row.
  */
 function render_module_markdown(string $layout, ?array $template_args = null): string
@@ -359,7 +350,6 @@ function render_module_markdown(string $layout, ?array $template_args = null): s
 
   return is_string($output) ? trim($output) : '';
 }
-
 
 /**
  * Renders an ACF flexible content module template file.
@@ -399,7 +389,6 @@ function render_module(string $layout): void
     echo "<!-- Module loaded from plugin -->";
   }
 }
-
 
 /**
  * Gets the display label for an ACF flexible content module layout.

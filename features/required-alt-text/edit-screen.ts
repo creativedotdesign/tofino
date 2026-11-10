@@ -22,23 +22,29 @@ const releaseSubmitButtons = (): void => {
   getWp()?.autosave?.server?.resume?.();
 };
 
+/** Prevent saving an image attachment until its alt text is filled in. */
 export const guardAttachmentEditScreen = (): void => {
   const form = document.querySelector<HTMLFormElement>('body.post-type-attachment form#post');
   const alt = form?.querySelector<HTMLTextAreaElement>('#attachment_alt');
+
   // Images only: the attachment edit screen renders a preview <img> for images.
   if (!form || !alt || !document.querySelector('.wp_attachment_image img')) {
     return;
   }
 
   const label = document.querySelector(`label[for="${alt.id}"]`);
+
   if (label && !label.querySelector('.req-alt-star')) {
     label.insertAdjacentHTML('beforeend', STAR);
   }
+
   stripDecorativeHint(form);
 
+  /** Keep the field styling and inline error message in sync. */
   const showError = (show: boolean): void => {
     alt.classList.toggle('req-alt-invalid', show);
     const message = alt.parentElement?.querySelector('.req-alt-msg');
+
     if (show && !message) {
       alt.insertAdjacentHTML('afterend', messageHtml());
     } else if (!show) {
@@ -50,6 +56,7 @@ export const guardAttachmentEditScreen = (): void => {
     if (!isBlank(alt.value)) {
       return;
     }
+
     event.preventDefault();
     releaseSubmitButtons();
     showError(true);

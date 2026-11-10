@@ -10,11 +10,14 @@ export const menu = (): void => {
   const menuEl = document.getElementById('main-menu');
   const hiddenClass = 'hidden';
 
-  if (!menuEl) return;
+  if (!menuEl) {
+    return;
+  }
 
   const openButton = document.querySelector<HTMLElement>(`[data-menu-open="${menuEl.id}"]`);
   const closeButtons = document.querySelectorAll<HTMLElement>(`[data-menu-close="${menuEl.id}"]`);
 
+  /** Expose the menu state on its toggle for assistive technology. */
   const setExpandedState = (expanded: boolean): void => {
     openButton?.setAttribute('aria-expanded', expanded ? 'true' : 'false');
   };

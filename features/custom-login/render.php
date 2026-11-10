@@ -9,6 +9,7 @@
 
 namespace Tofino;
 
+/** Apply the configured login branding and login-screen styles. */
 class CustomLoginForm
 {
   /** @var array<string, mixed> ACF options for the login screen. */

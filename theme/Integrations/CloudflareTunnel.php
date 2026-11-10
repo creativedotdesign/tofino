@@ -14,6 +14,7 @@
 
 namespace Tofino\Integrations;
 
+/** Rewrite local site URLs for requests received through the development tunnel. */
 class CloudflareTunnel
 {
   /** @var string|null Cached public base URL for the current request. */
@@ -95,8 +96,8 @@ class CloudflareTunnel
    *
    * @since 5.0.0
    *
-   * @param array $uploads The upload directory data array.
-   * @return array The array with url and baseurl rewritten to the tunnel host.
+   * @param array<string, mixed> $uploads The upload directory data array.
+   * @return array<string, mixed> The array with url and baseurl rewritten to the tunnel host.
    */
   public static function rewrite_upload_dir(array $uploads): array
   {

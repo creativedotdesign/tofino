@@ -18,7 +18,9 @@ export const menuScrollReveal = (): void => {
    * @returns void
    */
   const onScroll = (): void => {
-    if (ticking) return;
+    if (ticking) {
+      return;
+    }
 
     ticking = true;
     requestAnimationFrame(() => {

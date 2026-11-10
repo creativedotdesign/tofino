@@ -19,6 +19,7 @@ const keyBySlug = <T>(glob: Record<string, T>, re: RegExp): Record<string, T> =>
   Object.fromEntries(
     Object.entries(glob).flatMap(([path, loader]) => {
       const match = path.match(re);
+
       return match ? [[match[1], loader]] : [];
     }),
   );

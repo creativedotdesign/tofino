@@ -27,8 +27,11 @@ type PluginAtAliasOptions = {
 const pluginAtAlias = ({ themeSrcDir }: PluginAtAliasOptions): Plugin => ({
   name: 'tofino:plugin-at-alias',
   enforce: 'pre',
+  /** Resolve the @ alias against the source root that owns the importing file. */
   async resolveId(source, importer, options) {
-    if (!source.startsWith('@/') || !importer) return null;
+    if (!source.startsWith('@/') || !importer) {
+      return null;
+    }
 
     const [importerPath] = importer.split('?', 1);
     const normalized = importerPath.replace(/^\/@fs\//, '/');
@@ -36,13 +39,16 @@ const pluginAtAlias = ({ themeSrcDir }: PluginAtAliasOptions): Plugin => ({
     let baseDir: string | null = null;
 
     const pluginMatch = normalized.match(/^(.*\/wp-content\/plugins\/[^/]+\/modules\/[^/]+)\//);
+
     if (pluginMatch) {
       baseDir = pluginMatch[1];
     } else if (normalized.includes('/themes/')) {
       baseDir = themeSrcDir;
     }
 
-    if (!baseDir) return null;
+    if (!baseDir) {
+      return null;
+    }
 
     const sourcePath = source.slice(2);
     const [src, query] = sourcePath.split('?', 2);

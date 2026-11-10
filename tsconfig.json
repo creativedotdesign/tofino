@@ -17,8 +17,18 @@
     },
     "types": ["node"],
     "strict": true,
-    "noImplicitAny": false, // Intentionally overrides strict; allows gradual typing
-    "skipLibCheck": true
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "modules/**/*.ts", "modules/**/*.vue", "features/**/*.ts"]
+  "include": [
+    "*.ts",
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "modules/**/*.ts",
+    "modules/**/*.vue",
+    "features/**/*.ts",
+    "features/**/*.vue"
+  ]
 }

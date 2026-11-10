@@ -13,6 +13,7 @@
 
 namespace Tofino\HideAdminNotices;
 
+/** Control notice visibility and the dedicated notices screen by user role. */
 class HideAdminNotices
 {
   private const PAGE_SLUG = 'tofino-admin-notices';
@@ -77,7 +78,7 @@ class HideAdminNotices
 
     $user = wp_get_current_user();
 
-    if (!$user || empty($user->roles)) {
+    if (empty($user->roles)) {
       return false;
     }
 

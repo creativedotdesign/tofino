@@ -23,8 +23,8 @@ function php_version_check()
     wp_die('<div class="error notice"><p>' . __('PHP version >= 8.3.0 is required for this theme to work correctly.', 'tofino') . '</p></div>', 'An error occured.');
   }
 }
-add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
 
+add_action('after_setup_theme', __NAMESPACE__ . '\\php_version_check');
 
 /**
  * Theme setup
@@ -38,8 +38,8 @@ function setup()
   add_theme_support('post-thumbnails'); // Enable featured images for Posts
   add_post_type_support('page', 'excerpt'); // Enable excerpts for Pages
 }
-add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
+add_action('after_setup_theme', __NAMESPACE__ . '\\setup');
 
 /**
  * Check page display settings
@@ -56,8 +56,8 @@ function check_page_display()
     wp_die('Front page display setting is set to Latest Posts but no home.php file exists. Please update the settings selecting a Static page or create the home.php as per the documentation.', 'An error occured.');
   }
 }
-add_action('after_setup_theme', __NAMESPACE__ . '\\check_page_display');
 
+add_action('after_setup_theme', __NAMESPACE__ . '\\check_page_display');
 
 /**
  * Set max content width GLOBAL
@@ -69,15 +69,15 @@ function content_width()
 {
   $GLOBALS['content_width'] = apply_filters(__NAMESPACE__ . '\\content_width', 1440);
 }
-add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 
+add_action('after_setup_theme', __NAMESPACE__ . '\\content_width', 0);
 
 /**
  * Add post_type and post_name to body class
  *
  * @since 1.0.0
- * @param array $classes array of current classes on the body tag
- * @return array updated to include the post_type and post_name
+ * @param list<string> $classes array of current classes on the body tag
+ * @return list<string> updated to include the post_type and post_name
  */
 function add_post_name_body_class(array $classes)
 {
@@ -95,9 +95,8 @@ function add_post_name_body_class(array $classes)
 
   return $classes;
 }
+
 add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
-
-
 
 /**
  * Add Google Tag Manager function call which is
@@ -105,14 +104,14 @@ add_filter('body_class', __NAMESPACE__ . '\\add_post_name_body_class');
  *
  * @since 3.3.0
  */
-function add_custom_body_open_code()
+function add_custom_body_open_code(): void
 {
   if (function_exists('gtm4wp_the_gtm_tag')) {
     gtm4wp_the_gtm_tag();
   }
 }
-add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');
 
+add_action('wp_body_open', __NAMESPACE__ . '\\add_custom_body_open_code');
 
 /**
  * Wraps oEmbed output in a responsive aspect-ratio container.
@@ -129,8 +128,8 @@ function video_embed_wrapper($html)
 
   return $html;
 }
-add_filter('embed_oembed_html', __NAMESPACE__ . '\\video_embed_wrapper', 10, 4);
 
+add_filter('embed_oembed_html', __NAMESPACE__ . '\\video_embed_wrapper', 10, 1);
 
 /**
  * Sets the default excerpt length.
@@ -142,8 +141,8 @@ function truncate_excerpt_length($length)
 {
   return 55;
 }
-add_filter('excerpt_length', __NAMESPACE__ . '\\truncate_excerpt_length');
 
+add_filter('excerpt_length', __NAMESPACE__ . '\\truncate_excerpt_length');
 
 /**
  * Flushes object cache after ACF options save events.
@@ -154,15 +153,18 @@ add_filter('excerpt_length', __NAMESPACE__ . '\\truncate_excerpt_length');
 function clear_cache_options_save($post_id)
 {
   // Check if it's an options page
-	if ($post_id === 'options') {
-		// Flush the object cache
-		wp_cache_flush();
-	}
+  if ($post_id === 'options') {
+    // Flush the object cache
+    wp_cache_flush();
+  }
 }
+
 add_action('acf/save_post', __NAMESPACE__ . '\\clear_cache_options_save', 20);
 
 /**
  * Enforce maxlength on WYSIWYG fields.
+ *
+ * @param array<string, mixed> $field ACF WYSIWYG field settings.
  *
  * ACF's maxlength setting only exists for text/textarea, where the browser
  * and ACF core both enforce it. WYSIWYG fields have no equivalent, so a
@@ -188,4 +190,5 @@ function enforce_wysiwyg_maxlength(bool|string $valid, string $value, array $fie
 
   return $valid;
 }
+
 add_filter('acf/validate_value/type=wysiwyg', __NAMESPACE__ . '\\enforce_wysiwyg_maxlength', 10, 3);

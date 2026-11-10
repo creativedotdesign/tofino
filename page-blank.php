@@ -6,7 +6,7 @@
  *
  * @package Tofino
  * @since 5.0.0
- */ 
+ */
 ?>
 
 <!doctype html>

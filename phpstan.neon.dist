@@ -1,0 +1,30 @@
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+  level: 6
+  phpVersion: 80300
+  tmpDir: .cache/phpstan
+  paths:
+    - 404.php
+    - archive.php
+    - footer.php
+    - functions.php
+    - header.php
+    - home.php
+    - index.php
+    - page-blank.php
+    - page.php
+    - single.php
+    - theme
+    - settings
+    - features
+    - modules
+    - templates
+
+  # Optional plugin signatures are discovered without booting WordPress.
+  scanFiles:
+    - vendor/php-stubs/acf-pro-stubs/acf-pro-stubs.php
+    - stubs/integrations.stub
+  stubFiles:
+    - stubs/wordpress.stub

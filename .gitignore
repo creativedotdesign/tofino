@@ -9,6 +9,9 @@
 !.distignore
 !.github
 !.prettierrc
+!.prettierignore
+!.editorconfig
+!.nvmrc
 
 # ignore node/grunt dependency directories
 node_modules/

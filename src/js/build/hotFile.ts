@@ -7,10 +7,13 @@ type HotFileOptions = {
   publicUrl?: string;
 };
 
+const OWNERS_KEY = Symbol.for('tofino.hot-file.owners');
+
 /**
  * Vite plugin that writes the dev server URL to `{outDir}/hot` when the dev
  * server starts, and removes it on shutdown. WordPress reads this file to
  * detect the dev server without making an HTTP request.
+ * Tunnel mode also writes `hot.local` for requests made directly to Local.
  *
  * @returns A Vite plugin object.
  */
@@ -37,11 +40,23 @@ const hotFile = (options: HotFileOptions = {}): Plugin => {
      */
     configureServer(server) {
       const hotPath = path.join(outDir, 'hot');
+      const localHotPath = `${hotPath}.local`;
+      const globalState = globalThis as Record<symbol, Map<string, symbol>>;
+      const owners = (globalState[OWNERS_KEY] ??= new Map());
+      const owner = Symbol('hot-file-owner');
+      let closed = false;
+
+      owners.set(hotPath, owner);
 
       server.httpServer?.once('listening', () => {
+        if (closed) {
+          return;
+        }
+
         const localAddress = server.resolvedUrls?.local[0];
         const networkAddress = server.resolvedUrls?.network[0];
-        const fallbackAddress = `http://localhost:${server.config.server.port}`;
+        const protocol = server.config.server.https ? 'https' : 'http';
+        const fallbackAddress = `${protocol}://localhost:${server.config.server.port}`;
         const explicitPublicUrl = options.publicUrl?.trim().replace(/\/+$/, '');
 
         const address =
@@ -53,23 +68,48 @@ const hotFile = (options: HotFileOptions = {}): Plugin => {
 
         fs.mkdirSync(path.dirname(hotPath), { recursive: true });
         fs.writeFileSync(hotPath, address);
+        if (explicitPublicUrl) {
+          fs.writeFileSync(localHotPath, localAddress || fallbackAddress);
+        } else if (fs.existsSync(localHotPath)) {
+          fs.unlinkSync(localHotPath);
+        }
       });
 
+      /** Remove hot files only if a replacement server has not taken ownership. */
       const cleanup = (): void => {
-        if (fs.existsSync(hotPath)) {
-          fs.unlinkSync(hotPath);
+        // A replacement server may already own these paths during a restart.
+        if (owners.get(hotPath) !== owner) {
+          return;
+        }
+
+        owners.delete(hotPath);
+        for (const file of [hotPath, localHotPath]) {
+          if (fs.existsSync(file)) {
+            fs.unlinkSync(file);
+          }
         }
       };
 
-      process.on('exit', cleanup);
-      process.on('SIGINT', () => {
+      /** Clean up the owned hot files before exiting on a process signal. */
+      const onSignal = (): void => {
         cleanup();
         process.exit();
-      });
-      process.on('SIGTERM', () => {
+      };
+
+      const closeServer = server.close.bind(server);
+
+      server.close = async () => {
+        closed = true;
+        process.off('exit', cleanup);
+        process.off('SIGINT', onSignal);
+        process.off('SIGTERM', onSignal);
         cleanup();
-        process.exit();
-      });
+        await closeServer();
+      };
+
+      process.once('exit', cleanup);
+      process.once('SIGINT', onSignal);
+      process.once('SIGTERM', onSignal);
     },
   };
 };

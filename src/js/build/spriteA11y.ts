@@ -24,9 +24,11 @@ const spriteA11y = (file = 'sprite.svg') => {
     name: 'tofino-sprite-a11y',
     apply: 'build' as const,
     enforce: 'post' as const,
+    /** Capture the output directory before the build starts. */
     configResolved(config: { root: string; build: { outDir: string } }) {
       outDir = path.resolve(config.root, config.build.outDir);
     },
+    /** Mark the emitted sprite as decorative before it is deployed. */
     closeBundle() {
       const sprite = path.join(outDir, file);
 

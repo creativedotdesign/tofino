@@ -9,7 +9,6 @@
 
 namespace Tofino\Dependencies;
 
-
 /**
  * Returns an admin notice HTML string.
  *
@@ -21,7 +20,6 @@ function render_notice(string $title, string $message): string
 {
   return '<div class="error notice"><p><strong>' . esc_html($title) . '</strong> - ' . esc_html($message) . '</p></div>';
 }
-
 
 /**
  * Returns the admin notice for a missing Composer autoload file.
@@ -36,7 +34,6 @@ function composer_error_notice(): string
   );
 }
 
-
 /**
  * Returns the admin notice for a missing dist directory.
  *
@@ -49,7 +46,6 @@ function missing_dist_error_notice(): string
     __('/dist directory not found. You probably want to run npm install and npm run build on the command line.', 'tofino')
   );
 }
-
 
 /**
  * Returns the admin notice for a missing ACF Pro plugin.
@@ -64,7 +60,6 @@ function missing_acf_plugin_notice(): string
   );
 }
 
-
 /**
  * Returns the admin notice for a missing ACF Extended plugin.
  *
@@ -77,7 +72,6 @@ function missing_acf_extended_plugin_notice(): string
     __('Advanced Custom Fields: Extended plugin not found. Please install it.', 'tofino')
   );
 }
-
 
 /**
  * Checks for the ACF Extended plugin and registers an admin notice if missing.
@@ -97,7 +91,6 @@ function check_acf_extended_plugin(): void
     });
   }
 }
-
 
 // Load Composer autoload or die with a clear error.
 if (file_exists(get_template_directory() . '/vendor/autoload.php')) {

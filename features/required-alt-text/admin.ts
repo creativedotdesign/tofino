@@ -17,11 +17,13 @@ import { patchMediaViews } from './alt-field';
 import { guardAttachmentEditScreen } from './edit-screen';
 import { guardModalActions } from './modal-guard';
 
+/** Install the media-modal and attachment-screen alt-text guards. */
 const requiredAltText = (): void => {
   if (!patchMediaViews()) {
     // media-views can finish loading a tick later on some screens.
     window.addEventListener('load', patchMediaViews, { once: true });
   }
+
   guardModalActions();
   guardAttachmentEditScreen();
 };

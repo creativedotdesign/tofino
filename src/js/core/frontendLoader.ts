@@ -18,6 +18,7 @@ const themeModules = import.meta.glob<ScriptModule>('../frontend/*.ts');
 const runScript = async (label: string, load: ModuleLoader): Promise<void> => {
   try {
     const mod = await load();
+
     mod.default?.();
   } catch (error) {
     console.error(`Failed to load ${label}:`, error);
@@ -43,6 +44,7 @@ export const loadThemeScripts = async (scripts: ThemeScript[]): Promise<void> =>
 
       if (!load) {
         console.error(`Failed to resolve theme script ${src}.`);
+
         return;
       }
 

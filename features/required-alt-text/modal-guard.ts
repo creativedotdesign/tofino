@@ -27,6 +27,7 @@ const modalFor = (el: HTMLElement): HTMLElement | null =>
   el.parentElement?.querySelector<HTMLElement>('.media-modal') ??
   null;
 
+/** Identify modals that autosave the attachment being edited. */
 const isEditModal = (modal: HTMLElement): boolean =>
   modal.matches(ACF_EDIT_MODAL) || Boolean(modal.querySelector(GRID_FRAME));
 
@@ -44,6 +45,7 @@ const toggleSelectionNote = (view: DetailsInstance, show: boolean): void => {
     ?.closest('.media-modal')
     ?.querySelector('.media-frame-toolbar .media-toolbar-primary');
   const note = toolbar?.querySelector('.req-alt-toolbar-msg');
+
   if (show && toolbar && !note) {
     toolbar.insertAdjacentHTML(
       'afterbegin',
@@ -60,12 +62,15 @@ const block = (event: Event, view: DetailsInstance): void => {
   event.stopImmediatePropagation();
   validate(view);
   const field = altField(view);
+
   field?.focus();
   field?.scrollIntoView({ block: 'center' });
 };
 
+/** Guard selection and navigation actions before WordPress handles the click. */
 const onClick = (event: MouseEvent): void => {
   const target = event.target as HTMLElement | null;
+
   if (!target) {
     return;
   }
@@ -74,12 +79,15 @@ const onClick = (event: MouseEvent): void => {
   const button = target.closest<HTMLElement>(PRIMARY_BUTTON);
   const modal = button && modalFor(button);
   const view = modal && detailsIn(modal);
+
   if (view) {
     const hiddenMissing = hiddenSelectionMissingAlt(view);
+
     toggleSelectionNote(view, hiddenMissing);
     if (altMissing(view) || hiddenMissing) {
       block(event, view);
     }
+
     return;
   }
 
@@ -87,6 +95,7 @@ const onClick = (event: MouseEvent): void => {
   const leave = target.closest<HTMLElement>(EDIT_LEAVE);
   const editModal = leave && modalFor(leave);
   const editView = editModal && isEditModal(editModal) ? detailsIn(editModal) : undefined;
+
   if (editView && altMissing(editView)) {
     block(event, editView);
   }
@@ -99,11 +108,13 @@ const onKeydown = (event: KeyboardEvent): void => {
     (event.altKey && (event.key === 'ArrowLeft' || event.key === 'ArrowRight'));
   const editModal = leaving ? openEditModal() : undefined;
   const view = editModal && detailsIn(editModal);
+
   if (view && altMissing(view)) {
     block(event, view);
   }
 };
 
+/** Register capture-phase guards for media selection and modal navigation. */
 export const guardModalActions = (): void => {
   document.addEventListener('click', onClick, true);
   document.addEventListener('keydown', onKeydown, true);

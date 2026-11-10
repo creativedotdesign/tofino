@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { carousel, tabbableSelector } from '../support/config';
 import { getAuditUrls } from '../support/utils/urls';
 import { dismissOverlays } from '../support/utils/page';
+import { hasCarouselLabel, tagCarouselScopes } from '../support/utils/carousel';
 
 /**
  * Carousel audit. For every Swiper instance on the crawled pages:
@@ -11,8 +12,8 @@ import { dismissOverlays } from '../support/utils/page';
  *  - after advancing, slides that are not shown are removed from the tab
  *    order (inert, aria-hidden, or no tabbable content) (2.4.3);
  *  - nothing tabbable sits inside an aria-hidden slide (4.1.2);
- *  - the carousel region is labelled (aria-roledescription or aria-label
- *    on the root or its section) (best practice).
+ *  - each exposed track has an accessible name on itself, its wrapper,
+ *    or its owning section (best practice).
  *
  * Swiper only does part of this even with its A11y module; the inert
  * handling is the theme's job (see facts-rankings/script.ts).
@@ -39,17 +40,9 @@ test.describe('Carousels', () => {
       await page.waitForTimeout(300);
       await dismissOverlays(page);
 
-      // One carousel = one module/section, even when it is built from two
-      // synced Swipers (text + media). Tag each unique scope once.
-      const count = await page.evaluate((rootSel) => {
-        const scopes = new Set<Element>();
-        document.querySelectorAll(rootSel).forEach((root) => {
-          if ((root as HTMLElement).offsetParent === null) return;
-          scopes.add(root.closest('[data-module], section, .module') ?? root.parentElement ?? root);
-        });
-        [...scopes].forEach((scope, i) => scope.setAttribute('data-carousel-scope', String(i)));
-        return scopes.size;
-      }, carousel.root);
+      // An explicit shared wrapper owns its controls and accessible name.
+      // Other modules retain the section scope used for synchronized Swipers.
+      const count = await page.evaluate(tagCarouselScopes, carousel.root);
       if (!count) continue;
 
       for (let i = 0; i < count; i += 1) {
@@ -65,17 +58,6 @@ test.describe('Carousels', () => {
             n
               ? (n.getAttribute('aria-label') || n.textContent || '').replace(/\s+/g, ' ').trim()
               : '';
-          // A module may run two synced Swipers (text + aria-hidden media);
-          // the label belongs on the one exposed to assistive technology.
-          const attrs = ['aria-roledescription', 'aria-label', 'aria-labelledby'];
-          const labelled =
-            attrs.some((a) => el.hasAttribute(a)) ||
-            Array.from(el.querySelectorAll(sel.root)).some(
-              (root) =>
-                root.getAttribute('aria-hidden') === 'true' ||
-                !!root.closest('[aria-hidden="true"]') ||
-                attrs.some((a) => root.hasAttribute(a)),
-            );
           return {
             hasControls: !!prev && !!next,
             prevIsButton: prev?.tagName === 'BUTTON',
@@ -86,14 +68,15 @@ test.describe('Carousels', () => {
               !!prev &&
               !!next &&
               !!(prev.compareDocumentPosition(next) & Node.DOCUMENT_POSITION_FOLLOWING),
-            labelled,
             slides: el.querySelectorAll(sel.slide).length,
           };
         }, carousel);
 
-        if (!info.labelled)
+        const labelled = await scope.evaluate(hasCarouselLabel, carousel.root);
+
+        if (!labelled)
           failures.push(
-            `${label}: carousel has no aria-roledescription / aria-label (Swiper A11y module or a section label).`,
+            `${label}: carousel has no accessible name on its track, wrapper, or section.`,
           );
 
         if (info.hasControls) {

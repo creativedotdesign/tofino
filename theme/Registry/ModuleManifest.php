@@ -13,12 +13,17 @@
 
 namespace Tofino\Registry;
 
+/** Resolve child-first module manifests registered by themes and plugins. */
 final class ModuleManifest
 {
   /** @var array<string, array<string, string>>|null */
   private static ?array $cache = null;
 
-  /** @return array<string, array<string, string>> */
+  /**
+   * Resolve registered modules, giving the first provider of each name precedence.
+   *
+   * @return array<string, array<string, string>>
+   */
   public static function all(): array
   {
     if (self::$cache !== null) {
@@ -53,7 +58,11 @@ final class ModuleManifest
     return self::$cache = $modules;
   }
 
-  /** @return array<string, string>|null */
+  /**
+   * Look up a normalized module by its registered layout name.
+   *
+   * @return array<string, string>|null
+   */
   public static function get(string $name): ?array
   {
     return self::all()[$name] ?? null;
@@ -145,7 +154,11 @@ final class ModuleManifest
     return $module;
   }
 
-  /** @return array<int, string> */
+  /**
+   * Discover child module paths before the parent theme defaults.
+   *
+   * @return array<int, string>
+   */
   private static function theme_manifest_paths(): array
   {
     // Child theme first: all() is first-wins on module name, so a child theme

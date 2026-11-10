@@ -31,9 +31,9 @@ if (!is_admin()) {
  * server-rendered compat fields (the modal's own field is Backbone-rendered and
  * handled in admin.ts).
  *
- * @param array    $fields Attachment form fields.
+ * @param array<string, array<string, mixed>> $fields Attachment form fields.
  * @param \WP_Post $post   The attachment.
- * @return array
+ * @return array<string, array<string, mixed>>
  */
 function mark_alt_required(array $fields, \WP_Post $post): array
 {
@@ -46,4 +46,5 @@ function mark_alt_required(array $fields, \WP_Post $post): array
 
   return $fields;
 }
+
 add_filter('attachment_fields_to_edit', __NAMESPACE__ . '\\mark_alt_required', 10, 2);

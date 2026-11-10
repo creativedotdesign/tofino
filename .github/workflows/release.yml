@@ -19,66 +19,21 @@ jobs:
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
 
-      # Build order matters: npm build produces dist/; composer install
-      # produces vendor/. Both must exist BEFORE the zip step because
-      # .distignore controls what is excluded, not what is included.
-      - uses: actions/setup-node@v4
-        if: hashFiles('package.json') != ''
-        with:
-          node-version: '22'
-          cache: npm
-      - if: hashFiles('package.json') != ''
-        run: npm ci && npm run build
-
+      # Run the quality gate with dev tools installed. Packaging creates a
+      # separate production Composer install before assembling the archive.
       - uses: shivammathur/setup-php@v2
-        if: hashFiles('composer.lock') != ''
         with:
           php-version: '8.3'
           tools: composer
-      - if: hashFiles('composer.lock') != ''
-        run: composer install --no-dev --optimize-autoloader --no-interaction
+      - run: composer install --prefer-dist --no-interaction
 
-      # Build the theme zip ourselves, honouring .distignore.
-      - name: Build theme zip
-        run: |
-          set -euo pipefail
-          SLUG="${{ github.event.repository.name }}"
-          mkdir -p build dist-release
-          rsync -a \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude-from='.distignore' \
-            ./ "build/${SLUG}/"
-          (cd build && zip -rq "../dist-release/${SLUG}.zip" "${SLUG}")
-          ls -la dist-release/
-
-      - name: Verify theme zip
-        run: |
-          set -euo pipefail
-          SLUG="${{ github.event.repository.name }}"
-          ZIP="dist-release/${SLUG}.zip"
-          EXTRACT_DIR="$(mktemp -d)"
-          unzip -t "${ZIP}"
-          unzip -q "${ZIP}" -d "${EXTRACT_DIR}"
-          test -f "${EXTRACT_DIR}/${SLUG}/dist/.vite/manifest.json"
-          php -r '
-            $loader = require $argv[1];
-            foreach ($loader->getClassMap() as $class => $file) {
-              if (!is_file($file)) {
-                fwrite(STDERR, "Missing autoload file for {$class}: {$file}\n");
-                exit(1);
-              }
-            }
-            foreach (["enshrined\\svgSanitize\\Sanitizer", "League\\HTMLToMarkdown\\HtmlConverter"] as $class) {
-              if (!class_exists($class)) {
-                fwrite(STDERR, "Missing runtime dependency: {$class}\n");
-                exit(1);
-              }
-            }
-          ' "${EXTRACT_DIR}/${SLUG}/vendor/autoload.php"
-          grep -R -q --include='*.css' \
-            'body.tofino-hide-admin-notices' \
-            "${EXTRACT_DIR}/${SLUG}/dist/assets"
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run check:release
 
       - uses: softprops/action-gh-release@v2
         with:

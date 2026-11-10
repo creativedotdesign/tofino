@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   acfAutosize();
 
   Object.values(adminFeatureScripts).forEach((load) => {
-    load().then((mod) => mod.default?.());
+    load()
+      .then((mod) => mod.default?.())
+      .catch((error: unknown) => {
+        console.error('Failed to load an admin feature:', error);
+      });
   });
 });

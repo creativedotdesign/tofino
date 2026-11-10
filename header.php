@@ -15,9 +15,9 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'option'); ?>
   wp_body_open();
 
   // Alerts
-  if (function_exists('Tofino\Alerts\render')) {
-    Tofino\Alerts\render('top');
-  }
+if (function_exists('Tofino\Alerts\render')) {
+  Tofino\Alerts\render('top');
+}
 
   // Check if sticky menu
   $menu_sticky = Tofino\Nav\menu_sticky(); ?>
@@ -49,7 +49,7 @@ $scroll_reveal = get_field('menu_scroll_reveal', 'option'); ?>
           <?php echo svg(['sprite' => 'close', 'class' => 'w-full h-full']); ?>
         </button>
 
-        <?php if (has_nav_menu('header_navigation')):
+        <?php if (has_nav_menu('header_navigation')) :
           wp_nav_menu([
             'menu' => 'nav_menu',
             'theme_location' => 'header_navigation',

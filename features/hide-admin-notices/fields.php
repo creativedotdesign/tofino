@@ -66,6 +66,12 @@ acf_add_local_field_group([
 add_filter('acf/load_field/key=field_hide_notices_roles', 'tofino_hide_admin_notices_load_roles');
 add_filter('acf/load_field/key=field_notices_panel_roles', 'tofino_hide_admin_notices_load_roles');
 
+/**
+ * Populate ACF role choices from the registered WordPress roles.
+ *
+ * @param array<string, mixed> $field ACF field configuration.
+ * @return array<string, mixed>
+ */
 function tofino_hide_admin_notices_load_roles(array $field): array
 {
   $field['choices'] = [];

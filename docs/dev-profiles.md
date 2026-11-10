@@ -22,7 +22,7 @@ npm run preview
 Core:
 
 - `VITE_ASSET_URL`: Your local site URL used for proxying (for example `https://tofino.test`).
-- `VITE_THEME_PATH`: Theme path used for production asset base URL.
+- `VITE_THEME_PATH`: Optional production asset base. Builds use portable relative URLs when it is unset.
 - `VITE_DEV_PROFILE`: `local` or `tunnel`.
 
 Tunnel-specific (used with `VITE_DEV_PROFILE=tunnel`):
@@ -44,5 +44,8 @@ Tunnel-specific (used with `VITE_DEV_PROFILE=tunnel`):
 ## Notes
 
 - `dist/hot` is generated in dev and consumed by the theme asset loader.
+- Tunnel mode also writes `dist/hot.local`: direct local requests load Vite
+  assets from localhost, while Cloudflare requests use the public hostname.
+  Both origins share the same server and receive live updates.
 - In production, assets are loaded from `dist/.vite/manifest.json`.
 - Vite defaults to port `5173` unless configured otherwise.

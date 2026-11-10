@@ -1,10 +1,10 @@
 import { createApp } from 'vue';
 import App from './vue/App.vue';
 
-interface TestVueProps {
+type TestVueProps = {
   title: string;
   count?: number;
-}
+};
 
 const defaults: TestVueProps = { title: 'Hello World', count: 0 };
 

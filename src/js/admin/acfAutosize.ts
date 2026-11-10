@@ -26,12 +26,15 @@ const initTextareas = (): void => {
     acf.addAction('append', (el: unknown) => {
       // ACF passes a jQuery-wrapped element; index [0] gives the native DOM node
       const container = (el as ArrayLike<HTMLElement>)[0];
+
       if (!container) {
         return;
       }
+
       const newTextareas = container.querySelectorAll<HTMLTextAreaElement>(
         '.acf-field:not(.no-autosize) textarea',
       );
+
       if (newTextareas.length > 0) {
         autosize(newTextareas);
       }
@@ -47,7 +50,7 @@ const initTextareas = (): void => {
  * @returns void
  */
 const resizeWysiwyg = (editor: {
-  iframeElement: HTMLIFrameElement;
+  iframeElement?: HTMLIFrameElement;
   plugins: { fullscreen?: { isFullscreen: () => boolean } };
 }): void => {
   if (editor.plugins.fullscreen?.isFullscreen()) {
@@ -55,10 +58,17 @@ const resizeWysiwyg = (editor: {
   }
 
   const iframe = editor.iframeElement;
+  const editorDocument = iframe?.contentDocument;
+
+  // ACF can request a resize before TinyMCE creates its iframe, or after removal.
+  if (!iframe || !editorDocument) {
+    return;
+  }
+
   // Measure the document's own box, not scrollHeight: scrollHeight is never
   // smaller than the iframe viewport, so it could only ever grow the editor
   // and left short fields stuck at ACF's 300px starting height.
-  const height = iframe.contentDocument?.documentElement.offsetHeight || MIN_WYSIWYG_HEIGHT;
+  const height = editorDocument.documentElement.offsetHeight || MIN_WYSIWYG_HEIGHT;
 
   iframe.style.height = `${Math.max(height, MIN_WYSIWYG_HEIGHT)}px`;
   iframe.style.minHeight = `${MIN_WYSIWYG_HEIGHT}px`;
@@ -76,13 +86,16 @@ const initWysiwyg = (): void => {
   }
 
   acf.addAction('wysiwyg_quicktags_init', (...args: unknown[]) => {
-    const field = args[3] as { $el: { find: (selector: string) => NodeList } };
+    const field = args[3] as {
+      $el: { find: (selector: string) => ArrayLike<HTMLTextAreaElement> };
+    };
+
     autosize(field.$el.find('textarea.wp-editor-area'));
   });
 
   acf.addAction('wysiwyg_tinymce_init', (...args: unknown[]) => {
     const editor = args[0] as {
-      iframeElement: HTMLIFrameElement;
+      iframeElement?: HTMLIFrameElement;
       plugins: { fullscreen?: { isFullscreen: () => boolean } };
       on: (event: string, callback: () => void) => void;
     };
@@ -94,13 +107,16 @@ const initWysiwyg = (): void => {
       return;
     }
 
+    /** Reuse the editor resize callback across TinyMCE and ACF lifecycle events. */
     const resize = () => resizeWysiwyg(editor);
 
     editor.on('init', () => {
-      const body = editor.iframeElement.contentDocument?.querySelector('body');
+      const body = editor.iframeElement?.contentDocument?.querySelector('body');
+
       if (body) {
         body.setAttribute('data-wysiwyg-slug', field.$el.attr('data-name'));
       }
+
       resize();
     });
 

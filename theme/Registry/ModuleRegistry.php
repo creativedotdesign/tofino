@@ -16,6 +16,7 @@
 
 namespace Tofino\Registry;
 
+/** Load module runtime files and expose their ACF fields as page layouts. */
 final class ModuleRegistry
 {
   /** @var array<string, array{group_key: string, manifest: array<string, string>}> */
@@ -24,6 +25,7 @@ final class ModuleRegistry
   /** @var string[] layout names overridden by manifest-based PHP layouts */
   private array $overridden = [];
 
+  /** Register module loading and layout-override notices at their WordPress hooks. */
   public static function boot(): void
   {
     $instance = new self();
@@ -192,7 +194,7 @@ final class ModuleRegistry
       $group = acf_get_field_group($group_key);
       $fields = acf_get_fields($group_key);
 
-      if (!$group || !is_array($fields) || !$fields) {
+      if (!$group || !$fields) {
         continue;
       }
 
@@ -210,6 +212,7 @@ final class ModuleRegistry
     return $out;
   }
 
+  /** Explain which database layouts are overridden by module manifests. */
   public function render_override_notice(): void
   {
     if (!$this->overridden || !function_exists('get_current_screen')) {

@@ -9,7 +9,6 @@
 
 namespace Tofino\Assets;
 
-
 /**
  * Prints the page-wide CSS cascade-layer order, inline, before any stylesheet.
  *
@@ -39,8 +38,8 @@ function cascade_layer_order(): void
 {
   echo '<style>@layer properties, plugins, theme, base, components, utilities, brand;</style>' . "\n";
 }
-add_action('wp_head', __NAMESPACE__ . '\\cascade_layer_order', 0);
 
+add_action('wp_head', __NAMESPACE__ . '\\cascade_layer_order', 0);
 
 /**
  * Registers shared JavaScript module runtimes that Tofino-only plugins can consume.
@@ -53,9 +52,9 @@ function shared_script_modules(): void
 {
   \Tofino\Integrations\Vite::register_shared_script_modules();
 }
+
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\shared_script_modules', 1);
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\shared_script_modules', 1);
-
 
 /**
  * Enqueues the main front-end Vite assets.
@@ -72,8 +71,8 @@ function main_script(): void
 
   \Tofino\Integrations\Vite::use_vite();
 }
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script', 10);
 
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\main_script', 10);
 
 /**
  * Passes PHP data to front-end JS via an inline script.
@@ -119,8 +118,8 @@ function localize_scripts(): void
     'const tofinoJS = ' . wp_json_encode($data) . ';',
   );
 }
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts', 10);
 
+add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\localize_scripts', 10);
 
 /**
  * Enqueues admin and login Vite assets.
@@ -133,10 +132,9 @@ function admin_scripts(): void
 {
   \Tofino\Integrations\Vite::use_vite('js/admin.ts');
 }
+
 add_action('admin_enqueue_scripts', __NAMESPACE__ . '\\admin_scripts');
 add_action('login_head', __NAMESPACE__ . '\\admin_scripts');
-
-
 
 /**
  * Outputs the SVG spritemap inline in the footer.
@@ -157,4 +155,5 @@ function add_svg_sprite_to_footer(): void
     echo file_get_contents($svg_sprite);
   }
 }
+
 add_action('wp_footer', __NAMESPACE__ . '\\add_svg_sprite_to_footer');

@@ -39,12 +39,16 @@ const setCookie = (name: string, value: string, days?: number): void => {
 const alerts = (): void => {
   const elements = document.querySelectorAll<HTMLElement>('.alert');
 
-  if (!elements.length) return;
+  if (!elements.length) {
+    return;
+  }
 
   elements.forEach((element) => {
     const alertId = element.dataset.alertId;
 
-    if (!alertId) return;
+    if (!alertId) {
+      return;
+    }
 
     const cookieName = `tofino-alert-${alertId}-closed`;
 

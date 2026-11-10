@@ -9,8 +9,10 @@
 
 namespace Tofino\Integrations;
 
+/** Register optional WPGraphQL fields and connection pagination filters. */
 class GraphQL
 {
+
   /**
    * Constructor. Registers WPGraphQL filters when the plugin is active.
    *
@@ -23,13 +25,13 @@ class GraphQL
       return;
     }
 
-    add_filter('graphql_register_types', [$this, 'register']);
+    add_action('graphql_register_types', [$this, 'register']);
     add_filter('graphql_PostObjectsConnectionOrderbyEnum_values', [$this, 'add_offset_ordering']);
     add_filter('graphql_input_fields', [$this, 'add_offset_pagination'], 10, 2);
     add_filter('graphql_post_object_connection_query_args', [$this, 'add_query_args'], 10, 5);
     add_filter('graphql_post_object_connection_query_args', [$this, 'filter_post_by_term_ids'], 10, 5);
     add_filter('graphql_connection_page_info', [$this, 'update_page_info'], 10, 2);
-    add_filter('graphql_connection_max_query_amount', [$this, 'increase_query_limit'], 12, 5);
+    add_filter('graphql_connection_max_query_amount', [$this, 'increase_query_limit'], 12, 1);
     add_filter('graphql_request_results', [$this, 'remove_extensions'], 99, 1);
     add_filter('tofino/localize_data', [$this, 'add_endpoint_to_localize_data']);
   }

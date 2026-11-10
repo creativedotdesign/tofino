@@ -23,13 +23,16 @@ const devAssetRewriter = (options: DevAssetRewriterOptions = {}): Plugin => {
      */
     configResolved(config: ResolvedConfig) {
       const explicitPublicUrl = options.publicUrl?.trim().replace(/\/+$/, '');
+
       if (explicitPublicUrl) {
         devServerUrl = explicitPublicUrl;
+
         return;
       }
 
       const { https, port } = config.server;
       const protocol = https ? 'https' : 'http';
+
       devServerUrl = `${protocol}://localhost:${port}`;
     },
     /**
@@ -40,7 +43,9 @@ const devAssetRewriter = (options: DevAssetRewriterOptions = {}): Plugin => {
      * @returns An object with updated code, or null if no changes were made.
      */
     transform(code: string, id: string) {
-      if (!id.endsWith('.css')) return null;
+      if (!id.endsWith('.css')) {
+        return null;
+      }
 
       const updatedCode = code.replace(
         /url\((['"]?)(\/[^'")]+)\1\)/g,

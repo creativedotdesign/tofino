@@ -16,11 +16,13 @@ type TunnelConfig = {
 export function resolveTunnelConfig(env: TunnelEnv): TunnelConfig {
   const publicUrl = (() => {
     const explicitUrl = env.VITE_TUNNEL_URL?.trim();
+
     if (explicitUrl) {
       return explicitUrl.replace(/\/+$/, '');
     }
 
     const hostname = env.VITE_TUNNEL_HOSTNAME?.trim();
+
     if (hostname) {
       return `https://${hostname}`;
     }
@@ -29,7 +31,10 @@ export function resolveTunnelConfig(env: TunnelEnv): TunnelConfig {
   })();
 
   const hostname = (() => {
-    if (!publicUrl) return undefined;
+    if (!publicUrl) {
+      return undefined;
+    }
+
     try {
       return new URL(publicUrl).hostname;
     } catch {

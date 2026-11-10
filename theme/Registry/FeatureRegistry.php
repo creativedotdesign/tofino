@@ -18,6 +18,7 @@
 
 namespace Tofino\Registry;
 
+/** Discover feature manifests and load enabled runtime and admin settings. */
 final class FeatureRegistry
 {
   private const OPTION_KEY = 'tofino_disabled_features';
@@ -28,6 +29,7 @@ final class FeatureRegistry
   /** @var string[] Slugs that are currently disabled */
   private array $disabled = [];
 
+  /** Initialize feature discovery and register the settings lifecycle hooks. */
   public static function boot(): void
   {
     $instance = new self();
@@ -54,6 +56,7 @@ final class FeatureRegistry
     $this->disabled = get_option(self::OPTION_KEY, []);
   }
 
+  /** Check the persisted feature toggle without depending on ACF initialization. */
   private function is_enabled(string $slug): bool
   {
     return !in_array($slug, $this->disabled, true);
@@ -163,6 +166,8 @@ final class FeatureRegistry
    * single wp_option so is_enabled() can read it at boot time without
    * depending on ACF's internal storage format.
    *
+   * @param int|string $post_id Saved post ID or the options identifier.
+   *
    * Runs on every options save (not just the Features page) but the cost
    * is negligible — a few get_field calls and a conditional update_option.
    */
@@ -190,7 +195,6 @@ final class FeatureRegistry
     // writes for the non-autoloaded options bucket, so bust it explicitly.
     wp_cache_delete(self::OPTION_KEY, 'options');
   }
-
 }
 
 FeatureRegistry::boot();

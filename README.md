@@ -14,8 +14,8 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 
 | Prerequisite      | How to check  | How to install                                  |
 | ----------------- | ------------- | ----------------------------------------------- |
-| PHP >= 3.0        | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
-| Node.js >= 22.0.0 | `node -v`     | [nodejs.org](http://nodejs.org/)                |
+| PHP >= 8.3        | `php -v`      | [php.net](http://php.net/manual/en/install.php) |
+| Node.js 22.22+ or 24+ | `node -v`     | [nodejs.org](http://nodejs.org/)                |
 | Composer >= 2.0.0 | `composer -V` | [getcomposer.org](http://getcomposer.org)       |
 
 ## Quick Start
@@ -25,11 +25,23 @@ Heavily inspired the by awesome WordPress starter theme [Sage](https://github.co
 
 ```bash
 composer install
-npm install
+npm ci
 npm run dev
 ```
 
 Vite runs with HMR in development and serves built assets from `dist/` in production.
+
+Run the read-only quality gate before building or releasing:
+
+```bash
+npm run check
+npm run build
+npm run check:release
+```
+
+The gate checks Vue/TypeScript types, ESLint, Prettier, PHP syntax, PHPStan
+level 6, PHPCS, Composer metadata, and isolated regression tests. See [`docs/code-quality.md`](docs/code-quality.md)
+for the individual checks and fix commands.
 
 For profile and tunnel setup details, see [`docs/dev-profiles.md`](docs/dev-profiles.md).
 
@@ -68,8 +80,10 @@ We use [GitHub Actions](https://github.com/features/actions). Build and deploy w
 
 ```bash
 composer install
-npm install
+npm ci
+npm run check
 npm run build
+npm run check:release
 ```
 
-Review the `.git-ftp-ignore` file to check which files and directories should not be deployed on the server.
+Review the `.distignore` file to check which files and directories should not be deployed on the server.

@@ -9,7 +9,6 @@
 
 namespace Tofino\Nav;
 
-
 /**
  * Register the theme's navigation menu locations.
  *
@@ -22,8 +21,8 @@ function register_menus(): void
     'footer_navigation' => __('Footer Navigation', 'tofino')
   ]);
 }
-add_action('after_setup_theme', __NAMESPACE__ . '\\register_menus');
 
+add_action('after_setup_theme', __NAMESPACE__ . '\\register_menus');
 
 /**
  * Return the sticky-menu CSS class when the theme option is enabled.
@@ -39,12 +38,11 @@ function menu_sticky(): ?string
   return null;
 }
 
-
 /**
  * Append the `menu-fixed` class to the body when the sticky-menu option is on.
  *
- * @param array $classes Existing body classes.
- * @return array
+ * @param list<string> $classes Existing body classes.
+ * @return list<string>
  */
 function add_menu_sticky_class(array $classes): array
 {
@@ -54,15 +52,15 @@ function add_menu_sticky_class(array $classes): array
 
   return $classes;
 }
-add_filter('body_class', __NAMESPACE__ . '\\add_menu_sticky_class');
 
+add_filter('body_class', __NAMESPACE__ . '\\add_menu_sticky_class');
 
 /**
  * Normalize menu item CSS classes to a constrained set.
  *
- * @param array    $classes Existing menu item classes.
- * @param \WP_Post $item    Menu item object.
- * @return array Filtered menu item classes.
+ * @param list<string> $classes Existing menu item classes.
+ * @param \WP_Post&object{current: bool, menu_item_parent: int|string} $item    Menu item object.
+ * @return list<string> Filtered menu item classes.
  */
 function clean_nav_classes(array $classes, \WP_Post $item): array
 {
@@ -92,4 +90,5 @@ function clean_nav_classes(array $classes, \WP_Post $item): array
 
   return $new_classes;
 }
+
 add_filter('nav_menu_css_class', __NAMESPACE__ . '\\clean_nav_classes', 10, 2);

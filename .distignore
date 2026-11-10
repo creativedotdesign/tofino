@@ -1,5 +1,6 @@
 # Local/dev files
 .claude/
+.playwright-cli/
 .vscode/
 .editorconfig
 .eslintcache
@@ -20,8 +21,17 @@ deploy_key
 .gitattributes
 
 # Build/test tool config
-eslint.config.ts
+eslint.config.js
+phpstan.neon.dist
+.prettierignore
+.nvmrc
+.cache/
+stubs/
+scripts/
+build/
+dist-release/
 playwright.config.ts
+vitest.config.ts
 phpcs.xml
 .prettierrc
 tsconfig.json
@@ -46,6 +56,7 @@ accessibility-reports/
 
 # Co-located front-end source (compiled into dist/assets)
 features/**/*.ts
+features/**/*.vue
 features/**/*.css
 features/**/*.svg
 features/*/icons/
@@ -56,6 +67,7 @@ modules/*/vue/
 
 # Dev-only Vite artifact
 dist/hot
+dist/hot.local
 
 # Documentation
 *.md

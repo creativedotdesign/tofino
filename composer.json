@@ -38,6 +38,19 @@
     }
   },
   "require-dev": {
-    "php-stubs/acf-pro-stubs": "^6.0"
+    "php-stubs/acf-pro-stubs": "^6.8",
+    "phpstan/phpstan": "^2.3",
+    "squizlabs/php_codesniffer": "^4.0",
+    "szepeviktor/phpstan-wordpress": "^2.0",
+    "php-stubs/wordpress-stubs": "^7.0"
+  },
+  "scripts": {
+    "analyse:php": "@php vendor/bin/phpstan analyse --configuration=phpstan.neon.dist --no-progress --memory-limit=512M",
+    "lint:php": "@php vendor/bin/phpcs --standard=phpcs.xml",
+    "format:php": "@php vendor/bin/phpcbf --standard=phpcs.xml",
+    "check:php": [
+      "@analyse:php",
+      "@lint:php"
+    ]
   }
 }

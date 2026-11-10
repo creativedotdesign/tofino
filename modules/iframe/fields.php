@@ -35,7 +35,6 @@ acf_add_local_field_group([
   'active' => true,
 ]);
 
-
 /**
  * Append the license field onto the theme's general-options group so the
  * option lives alongside the other theme settings rather than spawning a
@@ -68,8 +67,8 @@ function register_options_field(): void
     'menu_order' => 901,
   ]);
 }
-add_action('acf/init', __NAMESPACE__ . '\\register_options_field');
 
+add_action('acf/init', __NAMESPACE__ . '\\register_options_field');
 
 /**
  * Find the first locally-registered field group targeting the theme's
@@ -93,9 +92,11 @@ function find_options_group_key(): ?string
   return null;
 }
 
-
 /**
  * Inject the iframe-resizer license into the tofinoJS localize payload.
+ *
+ * @param array<string, mixed> $data Existing localized theme settings.
+ * @return array<string, mixed>
  */
 function add_license_to_localize_data(array $data): array
 {
@@ -107,4 +108,5 @@ function add_license_to_localize_data(array $data): array
 
   return $data;
 }
+
 add_filter('tofino/localize_data', __NAMESPACE__ . '\\add_license_to_localize_data');

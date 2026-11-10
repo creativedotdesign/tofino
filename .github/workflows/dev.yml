@@ -20,8 +20,13 @@ jobs:
       - name: Set up Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: "22"
-          cache: "npm"
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
 
       - name: Get Composer Cache Directory
         id: composer-cache
@@ -50,10 +55,16 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install NPM Dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Check code quality
+        run: npm run check
 
       - name: Build Scripts
         run: npm run build
+
+      - name: Prepare production Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction
 
       - name: Get .env Variables
         id: dotenv
@@ -62,8 +73,8 @@ jobs:
 
       - name: Sync Files to Server
         env:
-          dest: "${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.VITE_THEME_PATH }}"
-          deploy: "${{ steps.dotenv.outputs.DEPLOY }}"
+          dest: '${{ steps.dotenv.outputs.SSH_LOGIN }}:${{ steps.dotenv.outputs.DEPLOYMENT_PATH }}${{ steps.dotenv.outputs.VITE_THEME_PATH }}'
+          deploy: '${{ steps.dotenv.outputs.DEPLOY }}'
         if: ${{ steps.dotenv.outcome == 'success' && env.deploy == 'TRUE' }}
         run: |
           echo "${{ secrets.DEPLOY_KEY }}" > deploy_key
@@ -78,6 +89,6 @@ jobs:
 
           rsync -chav --delete \
             -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
-            --exclude-from='.git-ftp-ignore' \
+            --exclude-from='.distignore' \
             --exclude /deploy_key \
             ./ ${{env.dest}}

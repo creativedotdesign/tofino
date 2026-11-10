@@ -12,6 +12,7 @@
 
 namespace Tofino\Registry;
 
+/** Discover child-first feature manifests and validate their local file paths. */
 final class FolderManifest
 {
   /** @var array<string, array<string, array<string, string>>> */
@@ -21,7 +22,11 @@ final class FolderManifest
     'features' => 'feature.json',
   ];
 
-  /** @return array<string, array<string, string>> */
+  /**
+   * Return the validated feature manifests for a supported folder type.
+   *
+   * @return array<string, array<string, string>>
+   */
   public static function all(string $type): array
   {
     if (!isset(self::TYPES[$type])) {
@@ -31,7 +36,11 @@ final class FolderManifest
     return self::discover($type, self::TYPES[$type]);
   }
 
-  /** @return array<string, string>|null */
+  /**
+   * Look up a feature manifest by its folder slug.
+   *
+   * @return array<string, string>|null
+   */
   public static function get(string $type, string $slug): ?array
   {
     $items = self::all($type);

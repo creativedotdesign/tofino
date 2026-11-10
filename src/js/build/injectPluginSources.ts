@@ -27,9 +27,15 @@ const injectPluginSources = (options: InjectPluginSourcesOptions): Plugin => {
     name: 'tofino:inject-plugin-sources',
     apply: 'serve',
     enforce: 'pre',
+    /** Add plugin Tailwind sources to the app stylesheet during development. */
     transform(code, id) {
-      if (!id.endsWith(target)) return;
-      if (!options.sources.length) return;
+      if (!id.endsWith(target)) {
+        return;
+      }
+
+      if (!options.sources.length) {
+        return;
+      }
 
       const directives = options.sources.map((src) => `@source '${src}';`).join('\n');
 

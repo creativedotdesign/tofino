@@ -16,7 +16,9 @@ import path from 'node:path';
  * @returns Absolute paths of Tofino-aligned plugin directories.
  */
 export const findTofinoPluginDirs = (pluginsDir: string): string[] => {
-  if (!fs.existsSync(pluginsDir)) return [];
+  if (!fs.existsSync(pluginsDir)) {
+    return [];
+  }
 
   return fs
     .readdirSync(pluginsDir, { withFileTypes: true })
@@ -36,7 +38,9 @@ export const findTofinoPluginDirs = (pluginsDir: string): string[] => {
  * @returns Absolute paths of Tofino-aligned sibling theme directories.
  */
 export const findSiblingThemeDirs = (themesDir: string, selfDir: string): string[] => {
-  if (!fs.existsSync(themesDir)) return [];
+  if (!fs.existsSync(themesDir)) {
+    return [];
+  }
 
   return fs
     .readdirSync(themesDir, { withFileTypes: true })
@@ -52,7 +56,10 @@ export const findSiblingThemeDirs = (themesDir: string, selfDir: string): string
  */
 const hasTofinoManifest = (pluginDir: string): boolean => {
   const modulesDir = path.join(pluginDir, 'modules');
-  if (!fs.existsSync(modulesDir)) return false;
+
+  if (!fs.existsSync(modulesDir)) {
+    return false;
+  }
 
   return fs
     .readdirSync(modulesDir, { withFileTypes: true })

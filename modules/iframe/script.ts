@@ -11,14 +11,19 @@ import iframeResize from '@iframe-resizer/parent';
 const init = (): void => {
   const modules = document.querySelectorAll<HTMLElement>('[data-module="iframe"]');
 
-  if (!modules.length) return;
+  if (!modules.length) {
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
+        if (!entry.isIntersecting) {
+          return;
+        }
 
         const iframe = entry.target.querySelector<HTMLIFrameElement>('iframe');
+
         iframe?.classList.add('active');
         observer.unobserve(entry.target);
       });
@@ -29,7 +34,9 @@ const init = (): void => {
   modules.forEach((module) => {
     const iframeEl = module.querySelector<HTMLIFrameElement>('iframe');
 
-    if (!iframeEl) return;
+    if (!iframeEl) {
+      return;
+    }
 
     observer.observe(module);
 
@@ -37,14 +44,18 @@ const init = (): void => {
 
     iframeEl.addEventListener('load', () => {
       iframeEl.classList.add('loaded');
-      if (loading) loading.style.display = 'none';
+      if (loading) {
+        loading.style.display = 'none';
+      }
     });
 
     iframeResize(
       {
         checkOrigin: false,
+        /** Translate iframe scroll requests into smooth parent-page scrolling. */
         onScroll: ({ y }) => {
           window.scrollTo({ top: y, behavior: 'smooth' });
+
           return false;
         },
         license: tofinoJS.iframeResizerLicense ?? '',

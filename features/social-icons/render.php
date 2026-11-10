@@ -35,7 +35,7 @@ function social_icons_platforms(): array
  *
  * @since 5.0.0
  *
- * @param array|string $atts {
+ * @param array<string, string>|string $atts {
  *   Optional. Shortcode attributes.
  *   @type string $class     CSS class to add to the UL element.
  *   @type string $platforms Comma-separated list of platforms to display.
@@ -92,4 +92,5 @@ function social_icons(array|string $atts = []): string
 
   return (string) ob_get_clean();
 }
+
 add_shortcode('social_icons', 'social_icons');

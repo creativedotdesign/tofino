@@ -50,6 +50,7 @@ const init = async (): Promise<void> => {
   // Modules overridden by a child theme/plugin ship their own script — skip
   // this theme's copy so handlers aren't double-bound.
   const overridden = typeof tofinoJS !== 'undefined' ? (tofinoJS?.overriddenModules ?? []) : [];
+
   await loadManifestScripts(moduleScripts, 'module', overridden);
 };
 

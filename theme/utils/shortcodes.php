@@ -7,7 +7,6 @@
  * @since 1.0.0
  */
 
-
 /**
  * Renders a copyright symbol with the current year.
  *
@@ -21,8 +20,8 @@ function copyright(): string
 {
   return '&copy; ' . wp_date('Y');
 }
-add_shortcode('copyright', 'copyright');
 
+add_shortcode('copyright', 'copyright');
 
 /**
  * Renders an SVG, either inline from a file or as a sprite reference.
@@ -36,7 +35,7 @@ add_shortcode('copyright', 'copyright');
  *
  * @since 1.0.0
  *
- * @param array|string $atts {
+ * @param array<string, mixed>|string $atts {
  *   Shortcode attributes or a sprite name string.
  *   @type string     $class               CSS class for the SVG element.
  *   @type string     $title               Accessible title for the SVG.
@@ -72,15 +71,15 @@ function svg(array|string $atts): string
 
   return render_svg_sprite($atts);
 }
-add_shortcode('svg', 'svg');
 
+add_shortcode('svg', 'svg');
 
 /**
  * Renders an inline SVG from a file path or attachment ID.
  *
  * @since 4.0.0
  *
- * @param array $atts The parsed shortcode attributes.
+ * @param array<string, mixed> $atts The parsed shortcode attributes.
  * @return string The SVG file contents with attributes applied, or empty string.
  */
 function render_svg_file(array $atts): string
@@ -163,7 +162,6 @@ function render_svg_file(array $atts): string
   return $contents;
 }
 
-
 /**
  * Adds or merges a CSS class onto an SVG element.
  *
@@ -195,7 +193,6 @@ function apply_svg_class(string $svg, string $class): string
   return $svg;
 }
 
-
 /**
  * Adds or replaces a title element inside an SVG.
  *
@@ -222,13 +219,12 @@ function apply_svg_title(string $svg, string $title): string
   return $svg;
 }
 
-
 /**
  * Renders an SVG element using a sprite reference.
  *
  * @since 4.0.0
  *
- * @param array $atts The parsed shortcode attributes.
+ * @param array<string, mixed> $atts The parsed shortcode attributes.
  * @return string SVG markup with a use element referencing the sprite.
  */
 function render_svg_sprite(array $atts): string

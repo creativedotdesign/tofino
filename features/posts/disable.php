@@ -13,8 +13,11 @@
 
 namespace Tofino;
 
+/** Disable the Posts feature while preserving its settings and stored content. */
 class PostsDisabler
 {
+
+  /** Register admin and frontend behavior for the disabled Posts feature. */
   public function __construct()
   {
     // Priority 11 runs after WP's create_initial_post_types() (init priority 0)
@@ -25,16 +28,19 @@ class PostsDisabler
     add_action('template_redirect', [$this, 'redirect_single_post']);
   }
 
+  /** Hide the Posts screen from the admin menu. */
   public function remove_post_menu(): void
   {
     remove_menu_page('edit.php');
   }
 
+  /** Remove the shortcut for creating a new post. */
   public function remove_new_post_admin_bar(\WP_Admin_Bar $wp_admin_bar): void
   {
     $wp_admin_bar->remove_node('new-post');
   }
 
+  /** Make the built-in post type unavailable for public queries and rewriting. */
   private function disable_post_type_props(): void
   {
     global $wp_post_types;
@@ -49,6 +55,7 @@ class PostsDisabler
     $wp_post_types['post']->rewrite = false;
   }
 
+  /** Disable post rewriting in every active WPML language. */
   public function disable_post_type_rewrite(): void
   {
     $this->disable_post_type_props();
@@ -69,6 +76,7 @@ class PostsDisabler
     $sitepress->switch_lang($default_language);
   }
 
+  /** Redirect single-post requests when the Posts feature is disabled. */
   public function redirect_single_post(): void
   {
     if (is_single() && get_post_type() === 'post') {

@@ -7,3 +7,5 @@
 - [Source](source.md)
 - [Templates](templates.md)
 - [Testing](testing.md)
+
+- [Code quality](code-quality.md): static checks, readability rules, and release validation.

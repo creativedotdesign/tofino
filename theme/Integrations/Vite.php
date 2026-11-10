@@ -14,13 +14,13 @@
 
 namespace Tofino\Integrations;
 
+/** Resolve and enqueue parent-theme assets from Vite or the production manifest. */
 class Vite
 {
   private static string $handle = 'tofino';
 
   /** @var array<string, mixed>|null Cached manifest to avoid repeated file reads. */
   private static ?array $manifest_cache = null;
-
 
   /**
    * Enqueues all assets for a given entry point.
@@ -60,7 +60,6 @@ class Vite
     self::enqueue_css($script);
   }
 
-
   /**
    * Loads the dedicated front-end stylesheet entry (js/styles.ts).
    *
@@ -84,7 +83,6 @@ class Vite
 
     self::enqueue_css($entry);
   }
-
 
   /**
    * Registers shared browser module IDs provided by Tofino for Tofino-only plugins.
@@ -113,7 +111,6 @@ class Vite
     }
   }
 
-
   /**
    * Returns the dev server URL from the hot file, or null if not running.
    *
@@ -136,6 +133,12 @@ class Vite
 
       if (file_exists($hot_path)) {
         $dev_url = rtrim(file_get_contents($hot_path), " \t\n\r/");
+        // Direct local requests use the same Vite server without going through
+        // public DNS. Cloudflare requests keep the public URL in dist/hot.
+        $local_hot_path = $hot_path . '.local';
+        if (!isset($_SERVER['HTTP_CF_RAY']) && file_exists($local_hot_path)) {
+          $dev_url = rtrim(file_get_contents($local_hot_path), " \t\n\r/");
+        }
       } else {
         $dev_url = null;
       }
@@ -143,7 +146,6 @@ class Vite
 
     return $dev_url;
   }
-
 
   /**
    * Returns the base URL for production assets.
@@ -157,7 +159,6 @@ class Vite
     return get_template_directory_uri() . '/dist/';
   }
 
-
   /**
    * Resolves the URL for a given entry point.
    *
@@ -167,9 +168,9 @@ class Vite
    * @since 5.0.0
    *
    * @param string $entry The entry point path.
-   * @return string|null The resolved URL, or null if unavailable.
+   * @return string The development or built asset URL.
    */
-  private static function resolve_entry_url(string $entry): ?string
+  private static function resolve_entry_url(string $entry): string
   {
     $dev_url = self::get_dev_server_url();
 
@@ -179,7 +180,6 @@ class Vite
 
     return self::asset_url($entry);
   }
-
 
   /**
    * Enqueues the script module for the entry point.
@@ -205,7 +205,6 @@ class Vite
     wp_enqueue_script_module($handle, $url, [], null);
   }
 
-
   /**
    * Enqueues CSS files extracted from the manifest for the entry point.
    *
@@ -226,7 +225,6 @@ class Vite
       wp_enqueue_style(self::$handle . '-' . sanitize_title($entry), $url);
     }
   }
-
 
   /**
    * Reads and caches the Vite manifest file.
@@ -254,7 +252,6 @@ class Vite
     return self::$manifest_cache;
   }
 
-
   /**
    * Resolves a production asset URL from the manifest.
    *
@@ -271,7 +268,6 @@ class Vite
       ? self::dist_url() . $manifest[$entry]['file']
       : self::dist_url() . $entry;
   }
-
 
   /**
    * Gets CSS file URLs from the manifest for an entry point.
